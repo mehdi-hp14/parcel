@@ -1,0 +1,60 @@
+<rss version="0.91">
+ <channel>
+  <title>Top Rated Internet Titles</title> 
+  <description>Top Rated in Internet from Download.com</description> 
+  <copyright>Copyright 1997-2005 CNET Networks, Inc.</copyright> 
+  <link>http://www.download.com/</link> 
+  <language>en-us</language> 
+  <ttl>24</ttl> 
+<item>
+  <title>Skype</title> 
+  <link>http://www.download.com/Skype/3000-2349_4-10501263.html?tag=pop.feed&part=rss</link> 
+  <description>1,822,182 downloads</description> 
+  </item>
+ <item>
+  <title>Teleport Pro</title> 
+  <link>http://www.download.com/Teleport-Pro/3000-2377_4-10500028.html?tag=pop.feed&part=rss</link> 
+  <description>1,198,509 downloads</description> 
+  </item>
+ <item>
+  <title>HTTrack Website Copier</title> 
+  <link>http://www.download.com/HTTrack-Website-Copier/3000-2377_4-10500021.html?tag=pop.feed&part=rss</link> 
+  <description>880,371 downloads</description> 
+  </item>
+ <item>
+  <title>News Rover</title> 
+  <link>http://www.download.com/News-Rover/3000-2164_4-10500012.html?tag=pop.feed&part=rss</link> 
+  <description>174,198 downloads</description> 
+  </item>
+ <item>
+  <title>Zero Trace</title> 
+  <link>http://www.download.com/Zero-Trace/3000-2144_4-10499911.html?tag=pop.feed&part=rss</link> 
+  <description>31,504 downloads</description> 
+  </item>
+ <item>
+  <title>Net Snippets Professional</title> 
+  <link>http://www.download.com/Net-Snippets-Professional/3000-2366_4-10500011.html?tag=pop.feed&part=rss</link> 
+  <description>10,463 downloads</description> 
+  </item>
+ <item>
+  <title>A-ToolBar</title> 
+  <link>http://www.download.com/A-ToolBar/3000-2381_4-10500010.html?tag=pop.feed&part=rss</link> 
+  <description>79,513 downloads</description> 
+  </item>
+ <item>
+  <title>Advanced Searchbar</title> 
+  <link>http://www.download.com/Advanced-Searchbar/3000-2379_4-10498836.html?tag=pop.feed&part=rss</link> 
+  <description>71,960 downloads</description> 
+  </item>
+ <item>
+  <title>Offline Explorer Pro</title> 
+  <link>http://www.download.com/Offline-Explorer-Pro/3000-2377_4-10498712.html?tag=pop.feed&part=rss</link> 
+  <description>125,689 downloads</description> 
+  </item>
+ <item>
+  <title>Offline Explorer Enterprise</title> 
+  <link>http://www.download.com/Offline-Explorer-Enterprise/3000-2377_4-10498710.html?tag=pop.feed&part=rss</link> 
+  <description>49,941 downloads</description> 
+  </item>
+  </channel>
+  </rss>

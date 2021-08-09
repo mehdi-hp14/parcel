@@ -1,0 +1,72 @@
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>INVOICE</title>
+<style type="text/css">
+.style1 {
+	font-size: x-large;
+	text-align: center;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+.style2 {
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+.style3 {
+	border-width: 0px;
+}
+.style4 {
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+.style5 {
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+.style6 {
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-right-style: solid;
+	border-right-width: 1px;
+}
+.style8 {
+	border-style: solid;
+	border-width: 1px;
+}
+.style9 {
+	border-right-style: solid;
+	border-right-width: 1px;
+}
+.style10 {
+	border-left-style: none;
+	border-left-width: medium;
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+.style11 {
+	border-left-style: solid;
+	border-left-width: 1px;
+	border-right-style: none;
+	border-right-width: medium;
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
+</style>
+</head>
+
+<body>

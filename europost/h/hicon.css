@@ -1,0 +1,122 @@
+html,body {
+background-color:#333;
+background-image:none;
+color:#eee;
+font:normal 1.1em/1.5em Arial, Helvetica, Verdana, sans-serif;
+text-align:center;
+}
+
+* {
+background-image:none!important;
+}
+
+div {
+background-color:transparent!important;
+}
+
+#logo img {
+display:block;
+background:#fff;
+border:20px solid #fff;
+}
+
+#weather table img {
+display:block;
+}
+
+a {
+color:#fc3;
+}
+
+a:hover {
+color:#7abcd4;
+}
+
+a.active {
+background-color:#444;
+}
+
+table {
+background-color:transparent!important;
+border:1px solid #666;
+width:100%;
+margin:.8em 0;
+}
+
+td,th {
+width:auto!important;
+border:1px solid #666;
+padding:20px;
+}
+
+th {
+font-size:1.2em;
+}
+
+#mainCntnt div div {
+border-bottom:1px dotted #ccc;
+padding:.6em 0;
+}
+
+#mainCntnt div div div {
+border:none;
+padding:0;
+}
+
+#fullCol,#extrasCntr,#skip,#ftrCntr {
+width:90%;
+text-align:left;
+margin:0 auto;
+}
+
+h1,h2,h3,h4,h5,h6,.header1,.header2,.header3,.header4,.header5,.header6,.heading_1,.heading_2,.heading_3,.heading_4,.heading_5,.heading_6,.Heading_1,.Heading_2,.Heading_3,.Heading_4,.Heading_5,.Heading_6 {
+line-height:1em;
+color:#fff;
+margin:0;
+padding:.8em 0 0;
+}
+
+h1,.header1,.heading_1,.Heading_1 {
+font-size:1.8em;
+}
+
+h2,.header2,.heading_2,.Heading_2 {
+font-size:1.7em;
+}
+
+h3,.header3,.heading_3,.Heading_3 {
+font-size:1.6em;
+}
+
+h4,.header4,.heading_4,.Heading_4 {
+font-size:1.5em;
+}
+
+h5,.header5,.heading_5,.Heading_5 {
+font-size:1.4em;
+}
+
+h6,.header6,.heading_6,.Heading_6 {
+font-size:1.3em;
+}
+
+p {
+margin:0;
+padding:.2em 0;
+}
+
+.liveinfo span {
+padding:0 20px 0 0;
+}
+
+input,select,button {
+margin-left:20px;
+}
+
+fieldest {
+height:auto!important;
+}
+
+img,object,embed,p.open {
+display:none;
+}

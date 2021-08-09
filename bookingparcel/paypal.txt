@@ -1,0 +1,47 @@
+booking@europostexpress.com
+
+SANDBOX:
+
+Certificate ID: M2L6E2V8ASDAL
+
+https://www.paypal.com/cgi-bin/webscr
+https://www.sandbox.paypal.com/cgi-bin/webscr
+Seller: info_1251820525_biz@thaimassage.ir  14260000
+Buyer:  info_1251820359_per@thaimassage.ir  1426014260
+
+info@thaimassage.ir   heavenhell
+
+
+REAL:
+
+
+
+
+
+
+		<input type="hidden" name="return" value="$DomainURL/payok.cgi">
+		<input type="hidden" name="cancel_return" value="$DomainURL/paycancel.cgi">
+		<input type="hidden" name="receiver_email" value="$paypal_semail">
+		<input type="hidden" name="business" value="$paypal_semail">
+		<input type="hidden" name="login_email"    value="$paypal_bemail">
+		<input type="hidden" name="email"          value="$paypal_bemail">
+		<input type="hidden" name="amount" value="$mytotal_price_pp">
+		<input type="hidden" name="item_name" value="Booking Order">
+		<input type="hidden" name="item_number" value="$orderid">
+		<input type="hidden" name="currency_code" value="GBP">
+		<input type="hidden" name="invoice" value="$orderid">
+		<input type="hidden" name="address1" value="$s_add1">
+		<input type="hidden" name="address2" value="$s_add2">
+		<input type="hidden" name="city" value="$s_city">
+		<input type="hidden" name="country" value="$cscountry">
+		<input type="hidden" name="state" value="$s_state">
+		<input type="hidden" name="zip" value="$s_postcode">
+		<input type="hidden" name="last_name" value="$s_contact">
+		<input type="hidden" name="day_phone_a" value="$tel">
+		|;
+
+		if( $myvat )
+			{
+			print qq|<input type="hidden" name="tax" value="$myvat_pp">
+			|;
+			}

@@ -1,0 +1,145 @@
+﻿<div id="sum_box" class="row mbl">
+	<div class="col-sm-6 col-md-3">
+		<div class="panel profit db mbm">
+			<div class="panel-body">
+				<p class="icon">
+					<i class="icon fa fa-shopping-cart"></i>
+				</p>
+				<h4 class="value">
+					<span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0"><?php echo $this->data['total_order']; ?></span><span class="fa fa-gbp fa-fw"></span></h4>
+				<p class="description">Total orders cost</p>
+				<div class="progress progress-sm mbn">
+				<?php 
+				$orders = $current = $balance = 0;
+				if($this->data['total_order']>0){
+					$current = round(($this->data['total_order']/$this->data['total_pay'])*100);
+				}
+				if($this->data['balance']>0){
+					$balance = round(($this->data['balance']/$this->data['total_pay'])*100);
+				}
+				if($this->data['orders_c']>0){
+					$orders = round(($this->data['orders_c']/$this->data['orders'])*100);
+				}
+				?>
+					<div role="progressbar" aria-valuenow="<?php echo $current; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $current; ?>%;" class="progress-bar progress-bar-success">
+						<span class="sr-only"><?php echo $current; ?>% Complete (success)</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6 col-md-3">
+		<div class="panel income db mbm">
+			<div class="panel-body">
+				<p class="icon">
+					<i class="icon fa fa-money"></i>
+				</p>
+				<h4 class="value">
+					<span><?php echo $this->data['balance']; ?></span><span class="fa fa-gbp fa-fw"></span></h4>
+				<p class="description">Current account balance</p>
+				<div class="progress progress-sm mbn">
+					<div role="progressbar" aria-valuenow="<?php echo $balance; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $balance; ?>%;" class="progress-bar progress-bar-info">
+						<span class="sr-only"><?php echo $balance; ?>% Complete (success)</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6 col-md-3">
+		<div class="panel task db mbm">
+			<div class="panel-body">
+				<p class="icon">
+					<i class="icon fa fa-credit-card"></i>
+				</p>
+				<h4 class="value">
+					<span><?php echo $this->data['total_pay']; ?></span><span class="fa fa-gbp fa-fw"></span></h4>
+				<p class="description">Total pay by now</p>
+				<div class="progress progress-sm mbn">
+					<div role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;" class="progress-bar progress-bar-danger">
+						<span class="sr-only">100% Complete (success)</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6 col-md-3">
+		<div class="panel visit db mbm">
+			<div class="panel-body">
+				<p class="icon">
+					<i class="icon fa fa-signal"></i>
+				</p>
+				<h4 class="value">
+					<span><?php echo $this->data['orders_c']; ?></span></h4>
+				<p class="description">Complete orders (Total orders : <?php echo $this->data['orders']; ?>)</p>
+				<div class="progress progress-sm mbn">
+					<div role="progressbar" aria-valuenow="<?php echo $orders; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $orders; ?>%;" class="progress-bar progress-bar-warning">
+						<span class="sr-only"><?php echo $orders; ?>% Complete (success)</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row mbl">
+	<div class="col-lg-8">
+		<div class="panel">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="mbs">Last 10 Orders</h4>
+						<p class="help-block">Short summary of the last 10 orders....</p><?php
+if(isset($this->Order_info) AND $this->Order_info!=null AND is_array($this->Order_info) AND count($this->Order_info)>0)
+{
+	foreach($this->Order_info as $order)
+	{
+		$style = "background-color:#999;";
+		switch($order['status'])
+		{
+			case 1: $style = "background-color:#066ECD;"; break;
+			case 2: $style = "background-color:#77B32F;"; break;
+			case 3: $style = "background-color:#E40001;"; break;
+			case 4: $style = "background-color:#39A7B6;"; break;
+		}
+		//style="background-color:#77B32F;"
+		echo '<a href="orders.php?oid='.$order['id'].'" class="list-group-item"><div style="'.$style.'color:#ffffff;">';
+		echo '&nbsp;&nbsp;&nbsp;<span style="min-width: 120px; display: inline-block;" class="name">From : '.$order['from'].' - To : '.$order['to'].'</span>&nbsp;&nbsp;';
+		echo '<span>Order Number : '.$order['id'].'</span>&nbsp;&nbsp; - &nbsp;<span style="font-size: 11px;color:#ffffff;" class="text-muted">Tracking ID : '.$order['tid'].'</span>';
+		echo '<span class="time-badge">'.date("Y/m/d H:i:s", $order['timestamp']).'</span><span class="pull-right mrl"></span></div></a>';
+	}	
+}
+else
+{
+	echo '<p class="help-block">No order exists.</p>';
+}
+?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="panel">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="mbs">Last 10 Support Tickets</h4>
+<?php
+if(isset($this->inbox_info) AND $this->inbox_info!=null AND is_array($this->inbox_info) AND count($this->inbox_info)>0)
+{
+	foreach($this->inbox_info as $ticket)
+	{
+		echo '<a href="support.php?tid='.$ticket['id'].'" class="list-group-item">';
+		if($ticket['usr_readed']==0) echo '<b>';
+		echo '&nbsp;&nbsp;&nbsp;<span style="min-width: 120px; display: inline-block;" class="name">'.$ticket['subject'].'</span> ';
+		if($ticket['usr_readed']==0) echo '&nbsp;&nbsp;(Unreaded)</b>&nbsp;&nbsp;';
+		echo '&nbsp;<span style="font-size: 11px;" class="text-muted">'.substr($ticket['content'],0,30).' .....</span>';
+		echo '</a>';
+	}	
+}
+else
+{
+	echo '<p class="help-block">No support ticket exists.</p>';
+}
+?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

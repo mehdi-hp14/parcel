@@ -1,0 +1,151 @@
+
+	strord = strord + "Item:&nbsp;<Input type=\\\"text\\\" name=\\\"item["+ i +"]\\\" style=\\\"width:30px;height:15px;\\\">";
+	strord = strord + "Value:&nbsp;<FONT SIZE=-2>&nbsp;" + theForm.cvalue.options[theForm.cvalue.selectedIndex].value +"</FONT>&nbsp;<Input type=\\\"text\\\" name=\\\"value["+ i +"]\\\" style=\\\"width:30px;height:15px;\\\"><br />";
+	strord = strord + "Contents:&nbsp;<Input type=\\\"text\\\" name=\\\"content["+ i +"]\\\" style=\\\"width:300px;height:15px;\\\"><br />";
+	strord = strord + "Shipper:&nbsp;<textarea name=\\\"shipper["+ i +"]\\\" style=\\\"width:120px;height:60px;\\\">&nbsp;&nbsp;";
+	strord = strord + "Receiver:&nbsp;<textarea name=\\\"receiver["+ i +"]\\\" style=\\\"width:120px;height:60px;\\\">";
+
+
+function copydown(theForm) {
+var count = theForm.elements.length;
+var numhawbs = 0;
+for (i=0; i<count; i++) 
+  {
+  var element = theForm.elements[i];
+  poo = element.name; 
+  if (poo.indexOf('weight') + 1 > 0) {numhawbs = numhawbs +1;} 
+  } 
+for (i=2; i < numhawbs+1; i++) 
+  {
+  theForm.elements["hawb["+i+"]"].value = theForm.elements["hawb["+1+"]"].value;
+  theForm.elements["weight["+i+"]"].value = theForm.elements["weight["+1+"]"].value;
+  theForm.elements["item["+i+"]"].value = theForm.elements["item["+1+"]"].value;
+  theForm.elements["value["+i+"]"].value = theForm.elements["value["+1+"]"].value;
+  theForm.elements["content["+i+"]"].value = theForm.elements["content["+1+"]"].value;
+  theForm.elements["sender["+i+"]"].value = theForm.elements["sender["+1+"]"].value;
+  theForm.elements["receiver["+i+"]"].value = theForm.elements["receiver["+1+"]"].value;
+  }
+}
+
+function isInteger(s){
+	var i;
+    for (i = 0; i < s.length; i++){   
+        // Check that current character is number.
+        var c = s.charAt(i);
+        if (((c < "0") || (c > "9"))) return false;
+    }
+    // All characters are numbers.
+    return true;
+}
+
+function isDecimal(s){
+	var i;
+    for (i = 0; i < s.length; i++){   
+        // Check that current character is number.
+        var c = s.charAt(i);
+        if (((c < "0") || (c > "9")) && c != ".") return false;
+    }
+    // All characters are numbers.
+    return true;
+}
+
+function stripCharsInBag(s, bag){
+	var i;
+    var returnString = "";
+    // Search through string's characters one by one.
+    // If character is not in bag, append to returnString.
+    for (i = 0; i < s.length; i++){   
+        var c = s.charAt(i);
+        if (bag.indexOf(c) == -1) returnString += c;
+    }
+    return returnString;
+}
+
+function daysInFebruary (year){
+	// February has 29 days in any year evenly divisible by four,
+    // EXCEPT for centurial years which are not also divisible by 400.
+    return (((year % 4 == 0) && ( (!(year % 100 == 0)) || (year % 400 == 0))) ? 29 : 28 );
+}
+function DaysArray(n) {
+	for (var i = 1; i <= n; i++) {
+		this[i] = 31
+		if (i==4 || i==6 || i==9 || i==11) {this[i] = 30}
+		if (i==2) {this[i] = 29}
+   } 
+   return this
+}
+
+function isDate(dtStr){
+	var daysInMonth = DaysArray(12)
+	var pos1=dtStr.indexOf(dtCh)
+	var pos2=dtStr.indexOf(dtCh,pos1+1)
+	var strDay=dtStr.substring(0,pos1)
+	var strMonth=dtStr.substring(pos1+1,pos2)
+	var strYear=dtStr.substring(pos2+1)
+	strYr=strYear
+	if (strDay.charAt(0)=="0" && strDay.length>1) strDay=strDay.substring(1)
+	if (strMonth.charAt(0)=="0" && strMonth.length>1) strMonth=strMonth.substring(1)
+	for (var i = 1; i <= 3; i++) {
+		if (strYr.charAt(0)=="0" && strYr.length>1) strYr=strYr.substring(1)
+	}
+	month=parseInt(strMonth)
+	day=parseInt(strDay)
+	year=parseInt(strYr)
+	if (pos1==-1 || pos2==-1){
+		alert("The date format should be : dd/mm/yyyy")
+		return false
+	}
+	if (strMonth.length<1 || month<1 || month>12){
+		alert("Please enter a valid month")
+		return false
+	}
+	if (strDay.length<1 || day<1 || day>31 || (month==2 && day>daysInFebruary(year)) || day > daysInMonth[month]){
+		alert("Please enter a valid day")
+		return false
+	}
+	if (strYear.length != 4 || year==0 || year<minYear || year>maxYear){
+		alert("Please enter a valid 4 digit year between "+minYear+" and "+maxYear)
+		return false
+	}
+	if (dtStr.indexOf(dtCh,pos2+1)!=-1 || isInteger(stripCharsInBag(dtStr, dtCh))==false){
+		alert("Please enter a valid date")
+		return false
+	}
+return true
+}
+
+function validateForm (theForm) {
+
+if( isDate(theForm.ord_date.value) == false ) {theForm.ord_date.focus(); return false;}
+if( isInteger(theForm.ord_awb1.value) == false ) {alert("MAWB part 1 must contain only digits"); theForm.ord_awb1.focus(); return false;}
+if( theForm.ord_awb1.value.length != 3 ) {alert("MAWB part 1 must be exactly 3 digits"); theForm.ord_awb1.focus(); return false;}
+if( isInteger(theForm.ord_awb2.value) == false ) {alert("MAWB part 1 must contain only digits"); theForm.ord_awb2.focus(); return false;}
+if( theForm.ord_awb2.value.length != 8 ) {alert("MAWB part 2 must be exactly 8 digits"); theForm.ord_awb2.focus(); return false;}
+if( theForm.ord_flight.value=="") {	alert("Please enter the Flight No.");theForm.ord_flight.focus();return false;}
+if( theForm.ord_totw.value=="") {	alert("Please enter the Total Weight");theForm.ord_totw.focus();return false;}
+if( isDecimal(theForm.ord_totw.value) == false) { alert("Total Weight must be numeric");theForm.ord_totw.focus();return false;}
+if( theForm.ord_totb.value=="") {	alert("Please enter the Total Bags");theForm.ord_totb.focus();return false;}
+if( isInteger(theForm.ord_totb.value) == false) { alert("Total Bags must be numeric");theForm.ord_totb.focus();return false;}
+
+var count = theForm.elements.length;
+var numords = 0;
+for (i=0; i<count; i++) 
+  {
+  var element = theForm.elements[i];
+  poo = element.name; 
+  if (poo.indexOf('weight') + 1 > 0) {numords = numords +1;} 
+  } 
+
+for (i=1; i < numords+1; i++) 
+  {
+  if (theForm.elements["hawb["+i+"]"].value == "") {alert('Please enter HAWB of row '+ i); return false;}
+  if (isInteger(theForm.elements["hawb["+i+"]"].value) == false) {alert('HAWB must be digits of row '+ i); return false;}
+  if (!(theForm.elements["weight["+i+"]"].value * 1) > 0) {alert('Please enter the weight of row ' + i); return false;}
+  if (!(theForm.elements["item["+i+"]"].value * 1) > 0) {alert('Please enter the item of row ' + i); return false;}
+  if (!(theForm.elements["value["+i+"]"].value * 1) > 0) {alert('Please enter the value of row ' + i); return false;}
+  if (theForm.elements["shipper["+i+"]"].value == "") {alert('Please enter shipper of row '+ i); return false;}
+  if (theForm.elements["receiver["+i+"]"].value == "") {alert('Please enter receiver of row '+ i); return false;}
+  }
+}
+
+

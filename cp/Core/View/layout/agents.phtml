@@ -1,0 +1,261 @@
+﻿<style>
+.chemical{
+	background:url(http://bookingparcel.com/admin/img/chemical.jpg);
+    background-size: 40px 50px;
+    background-repeat: no-repeat;
+	width:40px;
+	height:50px;
+	display: inline-block;
+}
+.battry{
+	background:url(http://bookingparcel.com/admin/img/battry.png);
+    background-size: 40px 50px;
+    background-repeat: no-repeat;
+	width:40px;
+	height:50px;
+	display: inline-block;
+}
+.danger{
+	background:url(http://bookingparcel.com/admin/img/danger.png);
+    background-size: 40px 50px;
+    background-repeat: no-repeat;
+	width:40px;
+	height:50px;
+	display: inline-block;
+}
+</style>
+                        <div class="row mbl">
+                            <div class="col-lg-12">
+                                        <div class="row">
+											<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+												<div class="panel panel-orange">
+													<div class="panel-heading">Agents</div>
+													<div class="panel-body pan">
+														<form action="" method="post" enctype="multipart/form-data">
+														<div class="form-body pal">
+														<?php if(isset($this->error) AND $this->error==true){
+															if($this->error_m!='' AND $this->error_m!=null){
+																?>
+															<div class="alert alert-danger"><strong>System Error!</strong> <?php echo $this->error_m; ?></div>
+																<?php 
+															}
+														} 
+															elseif($this->error_m!='' AND $this->error_m!=null){
+																?>
+															<div class="alert alert-success"><strong>Successful Action!</strong> <?php echo $this->error_m; ?></div>
+																<?php 
+															}
+														
+														?>
+														</div>
+														<?php 
+if(isset($this->ref) AND $this->ref>0)
+{
+?>
+<div class="form-body pal">
+Hello Dear Colleague<br>
+You are kindly requested to advise us your best rate and transit time regarding to the mentioned shipment:<br>
+</div>
+<table border="1" style="margin-left:auto;margin-right:auto;width:90%;border-collapse:collapse;border-color:#777;font-size:12px">
+	<thead>
+		<tr style="text-align:center;">
+			<th colspan="6">The Cargo Details</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr style="background-color:#ccc;text-align:center;color:#3a3a3a">
+			<td colspan='6' style="padding:5px">Collection Details</td>
+		</tr>
+		<tr  >
+			<td style="padding:5px" width="15%">Country</td>
+			<td style="padding:5px" width="20%"><?php echo $this->data['from']; ?></td>
+			<td style="padding:5px" width="15%">State</td>
+			<td style="padding:5px" width="20%"><?php echo $this->data['from_st']; ?></td>
+			<td style="padding:5px" width="15%">Location</td>
+			<td style="padding:5px" width="15%"><?php echo $this->data['from_location']; ?></td>
+		</tr>
+		<tr style="background-color:#ccc;text-align:center;color:#3a3a3a">
+			<td colspan='6' style="padding:5px">Destination Details</td>
+		</tr>
+		<tr >
+			<td style="padding:5px" width="15%">Country</td>
+			<td style="padding:5px" width="20%"><?php echo $this->data['to']; ?></td>
+			<td style="padding:5px" width="15%">State</td>
+			<td style="padding:5px" width="20%"><?php echo $this->data['to_st']; ?></td>
+			<td style="padding:5px" width="15%">Location</td>
+			<td style="padding:5px" width="15%"><?php echo $this->data['to_location']; ?></td>
+		</tr>
+		<tr style="background-color:#ccc;text-align:center;color:#3a3a3a">
+			<td colspan='6' style="padding:5px">Shipping Details</td>
+		</tr>
+		<tr >
+			<td style="padding:5px" width="15%">Item Count : <?php echo $this->data['item_c']; ?></td>
+			<td style="padding:5px" width="15%">Dimensions</td>
+			<td style="padding:5px" colspan="2" width="30%">
+					<?php 
+					if($this->data['dims']!=""){
+						$cities = explode(" kg | ",$this->data['dims']);
+						foreach($cities as $k=>$v){
+							if($v!=''){
+								$tmp = explode(" => ",$v);
+								$ttmp = explode(") ",$tmp[0]);
+								echo '<p>';
+								echo $ttmp[1] ."   :   ";
+								echo $tmp[1] ." KG";
+								echo '</p>';
+							}
+						}
+					}
+					?>
+				</div></td>
+			<td style="padding:5px" width="20%">Package Type : <?php echo $this->data['pack_type']; ?></td>
+			<td style="padding:5px" width="20%">Insurace : <?php echo $this->data['insurance']; ?></td>
+		</tr>
+		<tr >
+			<td style="padding:5px" width="15%">Total Weight : <?php echo $this->data['total_weight']; ?></td>
+			<td style="padding:5px" width="15%">Item Description</td>
+			<td style="padding:5px" width="30%" colspan="2"><?php echo $this->data['item_desc']; ?></td>
+			<td style="padding:5px" width="15%">Note - Goods Value</td>
+			<td style="padding:5px" width="25%"><?php echo $this->data['note']; ?></td>
+		</tr>
+		<tr >
+			<td colspan="2" style="padding:5px" width="30%"><span class="danger"></span><br>Is it your cargo DG (Dangerous Goods)? <?php echo $this->data['danger']; ?></td>
+			<td colspan="2" style="padding:5px" width="40%"><span class="chemical"></span><br>Is there any liquid, gas or chemicals inside of your cargo? <?php echo $this->data['chemical']; ?></td>
+			<td colspan="2" style="padding:5px" width="30%"><span class="battry"></span><br>Is there any lithium battery in the cargo? <?php echo $this->data['lithiumb']; ?></td>
+		</tr>
+	</tbody>
+</table>
+<br>
+<hr>
+														<div class="form-body pal">
+														
+Hereby we confirm our offer for this shipment order all in along with our company profit will be:<br>
+															<div class="row">
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label for="inputName" class="control-label">Name</label>
+																		<div class="input-icon right">
+																			<i class="fa fa-user"></i>
+																			<input name="name" id="inputName" type="text" placeholder="Your Name" class="form-control"></div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label for="inputEmail" class="control-label">Email</label>
+																		<div class="input-icon right">
+																			<i class="fa fa-envelope"></i>
+																			<input name="email" id="inputEmail" type="text" placeholder="Your Email" class="form-control"></div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label for="inputCompany" class="control-label">Company</label>
+																		<div class="input-icon right">
+																			<i class="fa fa-cogs"></i>
+																			<input name="company" id="inputCompany" type="text" placeholder="Your Comapny Name" class="form-control"></div>
+																	</div>
+																</div>
+															</div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+			$(function() {
+				var scntDiv = $('#offers_Div');
+				var i = $('#offers_Div p').size() + 1;
+				
+				$('#addScnt').live('click', function() {
+						$('<p><div class="row" ><div class="col-md-3"><div class="form-group"><label for="inputOffer" class="control-label">Carrier Name</label><div class="input-icon right"><i class="fa fa-money"></i><input name="carrier[]" id="inputOffer" type="text" placeholder="Your Price" size="8" class="form-control"></div></div></div><div class="col-md-3"><div class="form-group"><label for="inputOffer" class="control-label">Offer Price</label><div class="input-icon right"><i class="fa fa-money"></i><input name="offer[]" id="inputOffer" type="text" placeholder="Your Price" size="8" class="form-control"></div></div></div><div class="col-md-2"><div class="form-group"><label for="inputCurrency" class="control-label">Currency</label><select name="currecy[]" id="inputCurrency" class="form-control"><option value="GBP">GBP</option><option value="USD">USD</option><option value="EUR">EUR</option></select></div></div><div class="col-md-1"><div class="form-group"><label for="inputaction" class="control-label">Action</label><a href="#" id="addScnt"><img src="https://bookingparcel.com/post_forms/images/icons/fam/add.png" width="34" height="34"></a><a href="#" id="remScnt"><img src="https://bookingparcel.com/post_forms/images/icons/fam/delete.png" width="34" height="34"></a></div></div></div></p>').appendTo(scntDiv);
+						i++;
+						return false;
+				});
+				
+				$('#remScnt').live('click', function() { 
+						if( i > 2 ) {
+								$(this).parents('p').remove();
+								i--;
+						}
+						return false;
+				});
+			});
+		});
+	</script>
+															<div id="offers_Div">
+															<p>
+																<div class="row" >
+																	<div class="col-md-3">
+																		<div class="form-group">
+																			<label for="inputOffer" class="control-label">Carrier Name</label>
+																			<div class="input-icon right">
+																				<i class="fa fa-money"></i>
+																				<input name="carrier[]" id="inputOffer" type="text" placeholder="Your Price" size="8" class="form-control">
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-md-3">
+																		<div class="form-group">
+																			<label for="inputOffer" class="control-label">Offer Price</label>
+																			<div class="input-icon right">
+																				<i class="fa fa-money"></i>
+																				<input name="offer[]" id="inputOffer" type="text" placeholder="Your Price" size="8" class="form-control">
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-md-2">
+																		<div class="form-group">
+																			<label for="inputCurrency" class="control-label">Currency</label>
+																			<select name="currecy[]" id="inputCurrency" class="form-control">
+																				<option value="GBP">GBP</option>
+																				<option value="USD">USD</option>
+																				<option value="EUR">EUR</option>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="col-md-1">
+																		<div class="form-group">
+																		<label for="inputaction" class="control-label">Action</label>
+																			<a href="#" id="addScnt"><img src="https://bookingparcel.com/post_forms/images/icons/fam/add.png" width="34" height="34"></a>
+																			<a href="#" id="remScnt"><img src="https://bookingparcel.com/post_forms/images/icons/fam/delete.png" width="34" height="34"></a>
+																		</div>
+																	</div>
+																</div>
+																</p>
+															</div>
+															<div class="form-group">
+																<label for="inputMessage" class="control-label">Message</label>
+																<textarea rows="10" name="message" id="inputMessage" class="form-control"></textarea>
+															</div>
+															<div class="form-group">
+																<label for="inputIncludeFile1" class="control-label">Attachment 1</label>
+																<input id="inputIncludeFile1" name="IncludeFile[]" type="file" placeholder="Inlcude some file" accept=".gif,.jpg,.jpeg,.png,.pdf,.zip,.rtf,.doc,.docx,.xls,.xlsx">
+															</div>
+															<div class="form-group">
+																<label for="inputIncludeFile2" class="control-label">Attachment 2</label>
+																<input id="inputIncludeFile2" name="IncludeFile[]" type="file" placeholder="Inlcude some file" accept=".gif,.jpg,.jpeg,.png,.pdf,.zip,.rtf,.doc,.docx,.xls,.xlsx">
+															</div>
+															<div class="form-group">
+																<label for="inputIncludeFile3" class="control-label">Attachment 3</label>
+																<input id="inputIncludeFile3" name="IncludeFile[]" type="file" placeholder="Inlcude some file" accept=".gif,.jpg,.jpeg,.png,.pdf,.zip,.rtf,.doc,.docx,.xls,.xlsx">
+															</div>
+															<div class="form-group">
+																<label for="inputIncludeFile4" class="control-label">Attachment 4</label>
+																<input id="inputIncludeFile4" name="IncludeFile[]" type="file" placeholder="Inlcude some file" accept=".gif,.jpg,.jpeg,.png,.pdf,.zip,.rtf,.doc,.docx,.xls,.xlsx">
+															</div>
+															<div class="form-group">
+																<label for="inputIncludeFile5" class="control-label">Attachment 5</label>
+																<input id="inputIncludeFile5" name="IncludeFile[]" type="file" placeholder="Inlcude some file" accept=".gif,.jpg,.jpeg,.png,.pdf,.zip,.rtf,.doc,.docx,.xls,.xlsx"><br>
+																please note that supported extentions are (.gif,.jpg,.jpeg,.png,.pdf,.zip,.rtf,.doc,.docx,.xls,.xlsx) And maximum size is 32MB per each.<br>
+																If you want attach more files. please compress them in zip format and try.
+																
+															</div>
+														</div>
+														<div class="form-actions text-right pal">
+															<button type="submit" class="btn btn-primary">Submit</button>
+														</div>
+<?php } ?>														
+														</form>
+													</div>
+												</div>
+											</div>										
+                                        </div>
+                            </div>
+                        </div>

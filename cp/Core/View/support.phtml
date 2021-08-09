@@ -1,0 +1,345 @@
+﻿<?php
+if($this->error AND $this->error_m!="")
+{
+?>
+<div class="row mbl">
+	<div class="col-lg-12">
+		<div class="alert alert-danger"><strong>Oops!</strong> <?php echo $this->error_m; ?></div>
+	</div>
+</div>
+<?php
+}
+if($this->action_status AND $this->action_m!="")
+{
+?>
+<div class="row mbl">
+	<div class="col-lg-12">
+		<div class="alert alert-success"><strong>Successfull Action!</strong> <?php echo $this->action_m; ?></div>
+	</div>
+</div>
+<?php
+}
+?>
+<div class="row mbl">
+	<div class="col-sm-3 col-md-2">
+		<a href="support.php?newticket=true" role="button" class="btn btn-danger btn-sm btn-block">New Ticket</a>
+		<div class="mtm mbm"></div>
+		<div class="panel">
+			<div class="panel-body pan">
+				<ul style="background: #fff" class="nav nav-pills nav-stacked">
+					<li <?php if($this->show_inbox) echo 'class="active"'; ?>><a href="support.php"><?php if($this->data['support_c']>0) echo '<span class="badge pull-right">'.$this->data['support_c'].'</span>';?><i class="fa fa-inbox fa-fw mrs"></i>Inbox</a></li>
+					<li <?php if($this->show_new) echo 'class="active"'; ?>><a href="support.php?newticket=true"><i class="fa fa-edit fa-fw mrs"></i>New ticket</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+<?php
+if($this->show_inbox)
+{
+?>
+	<div class="col-sm-9 col-md-10">
+		<div class="tab-content">
+			<div id="home" class="tab-pane fade in active">
+				<div class="list-group mail-box">
+<?php 
+if(isset($this->inbox_info) AND $this->inbox_info!=null AND is_array($this->inbox_info) AND count($this->inbox_info) > 0)
+{
+	foreach($this->inbox_info as $ticket)
+	{
+		echo '<a href="support.php?tid='.$ticket['id'].'" class="list-group-item"><div class="icheckbox_minimal-grey" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">';
+		echo '<ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>';
+		if($ticket['usr_readed']==0) echo '<b>';
+		echo '&nbsp;&nbsp;&nbsp;<span style="min-width: 120px; display: inline-block;" class="name">'.$ticket['subject'].'</span> ';
+		if($ticket['usr_readed']==0) echo '&nbsp;&nbsp;(Unreaded)</b>&nbsp;&nbsp;';
+		echo '<span>Ticket Number : '.$ticket['id'].'</span>&nbsp; - &nbsp;<span style="font-size: 11px;" class="text-muted">'.substr($ticket['content'],0,35).' .....</span>';
+		echo '<span class="time-badge">'.date("Y/m/d H:i:s", $ticket['c_date']).'</span><span class="pull-right mrl"></span></a>';
+	}
+}
+else
+{
+	echo 'No support tickets found.';
+}
+?>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<?php
+}
+elseif($this->show_new)
+{
+?>
+<div class="col-sm-9 col-md-10">
+	<div class="panel panel-blue" style="background:#fff;">
+		<div class="panel-heading">Comment Form</div>
+		<div class="panel-body pan">
+			<form action="" method="post">
+				<div class="form-body pal">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="inputSubject" class="control-label">Subject</label>
+								<div class="input-icon right">
+									<i class="fa fa-tag"></i>
+									<input id="inputSubject" name="subject" type="text" placeholder="" class="form-control" value="<?php if(isset($_POST['subject'])) echo $_POST['subject']; ?>">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label for="inputService" class="control-label">Service</label>
+								<div class="input-icon right">
+									<i class="fa fa-folder-open"></i>
+									<input id="inputService" name="service" type="text" placeholder="Tracking ID " class="form-control" value="<?php if(isset($_POST['service'])) echo $_POST['service']; ?>">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+                        <label for="inputMessage" class="control-label">Message</label>
+						<textarea rows="15" name="content" class="form-control"><?php if(isset($_POST['content'])) echo $_POST['content']; ?></textarea>
+					</div>
+					<div class="form-group mbn">
+						Note : Subject and Message are required. <br>
+						If you want support about specific order please fill the "Tracking ID" field to let us help you better.
+					</div>
+				</div>
+				<div class="form-actions text-right pal">
+					<button type="submit" class="btn btn-primary">Submit the ticket</button>
+				</div>
+			</form>
+	</div>
+</div>
+<?php
+}
+elseif(isset($this->tid) AND $this->tid!=null)
+{
+	
+	if($this->Ticket_info['counter'] == 0)
+	{
+?>
+<div class="col-sm-9 col-md-10">
+	<div class="panel panel-blue" style="background:#fff;">
+		<div class="panel-heading">Access denied</div>
+		<div class="panel-body pan">
+			<div class="alert alert-danger">
+				<strong>Oops!</strong> Something went wrong!<br><br>
+				you can't access this ticket because of the following reasons:<br>
+				1. Ticket does not exist.<br>
+				2. Ticket is not yours.<br>
+				3. You can not access this ticket directly(this ID belongs to a answer to another ticket)
+			</div>
+		</div>
+	</div>
+</div>
+<?php
+	}
+	else
+	{
+
+?>
+<style>
+p.speech
+{
+	position: relative;
+	width: 95%;
+	height: 100px;
+	margin:5px;
+	padding:8px;
+	text-align: ltr;
+	background-color: #fff;
+	border: 8px solid #666;
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+	-webkit-box-shadow: 2px 2px 4px #888;
+	-moz-box-shadow: 2px 2px 4px #888;
+	box-shadow: 2px 2px 4px #888;
+}
+
+.bubble_right 
+{
+float:right;
+position: relative;
+width: 95%;
+margin: 15px;
+padding: 8px;
+background: #FFFFFF;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+border: #7F7F7F solid 2px;
+}
+
+.bubble_right:after 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 15px 0 15px 15px;
+border-color: transparent #FFFFFF;
+display: block;
+width: 0;
+z-index: 1;
+right: -15px;
+top: 17%;
+}
+
+.bubble_right:before 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 16px 0 16px 16px;
+border-color: transparent #7F7F7F;
+display: block;
+width: 0;
+z-index: 0;
+right: -18px;
+top: 17%;
+}
+
+
+.bubble_left 
+{
+position: relative;
+width: 95%;
+margin: 15px;
+padding: 8px;
+background: #FFFFFF;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+border: #7F7F7F solid 2px;
+}
+
+.bubble_left:after 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 15px 15px 15px 0;
+border-color: transparent #FFFFFF;
+display: block;
+width: 0;
+z-index: 1;
+left: -15px;
+top: 17%;
+}
+
+.bubble_left:before 
+{
+content: '';
+position: absolute;
+border-style: solid;
+border-width: 16px 16px 16px 0;
+border-color: transparent #7F7F7F;
+display: block;
+width: 0;
+z-index: 0;
+left: -18px;
+top: 17%;
+}
+.clear
+{
+clear: both;
+}
+</style>
+
+<div class="col-sm-9 col-md-10">
+	<div class="panel panel-blue" style="background:#fff;">
+		<div class="panel-heading"><?php 
+			$stat = "Active";
+			switch($this->Ticket_info['status'])
+			{
+				case 0: $stat = "Active"; break;
+				case 1: $stat = "Close"; break;
+				case 2: $stat = "Hold"; break;
+				case 3: $stat = "Under Process"; break;
+			}
+			echo "Ticket ID: ".$this->tid." => ".$this->Ticket_info['subject'] ."&nbsp;(".$stat.")"; 
+			if($this->Ticket_info['tid']!='') echo "&nbsp;<span style='float:right;'>Tracking ID : ".$this->Ticket_info['tid']."</span>";
+		?></div>
+		<div class="panel-body pan">
+			<div class="row">
+				<div class="col-md-12">
+			
+			<?php 
+			
+			
+			if($this->Ticket_info['user_sent']==1) echo "<p class=\"bubble_left\"><b>You said : </b> <span style='float:right;'>".date("Y/m/d H:i:s", $this->Ticket_info['c_date'])."</span><br>";
+			else echo "<p class=\"bubble_right\"><b>Support said : </b> <span style='float:right;'>".date("Y/m/d H:i:s", $this->Ticket_info['c_date'])."</span><br>";
+			echo "Subject : ".$this->Ticket_info['subject']."<br>";
+			echo nl2br($this->Ticket_info['content'])."<br></p>"; 
+			if(isset($this->answers_info) AND is_array($this->answers_info) AND count($this->answers_info)>0 )
+			{
+				foreach($this->answers_info as $answer)
+				{
+					if($answer['user_sent']==1) echo "<p class=\"bubble_left\"><b>You said : </b> <span style='float:right;'>".date("Y/m/d H:i:s", $answer['c_date'])."</span><br>";
+					else echo "<p class=\"bubble_right\"><b>Support said : </b> <span style='float:right;'>".date("Y/m/d H:i:s", $answer['c_date'])."</span><br>";
+					echo "Subject : ".$answer['subject']."<br>";
+					echo nl2br($answer['content'])."<br></p><div class=\"clear\"></div>"; 
+				}
+			}
+			
+			$status = "close";
+			switch($this->Ticket_info['status'])
+			{
+				case 0: $status = "close"; break;
+				case 1: $status = "active"; break;
+			}
+			?>
+				</div>
+			</div>
+			<div class="row" id="controls">
+				<div class="col-lg-4"></div>
+				<div class="col-lg-4">
+					<?php if($this->Ticket_info['status']!=1){ ?>
+					<button type="button" data-toggle="tooltip" data-placement="top" title="" class="btn btn-default" data-original-title="Post a reply" onclick="document.getElementById('reply').style.display='block';">Reply</button>&nbsp;&nbsp;&nbsp;
+					<?php } ?>
+					<button type="button" data-toggle="tooltip" data-placement="top" title="" class="btn btn-default" data-original-title="Set ticket as <?php echo $status; ?>" onclick="window.location.href='support.php?tid=<?php echo $this->tid;?>&status=<?php echo $status; ?>';"><?php echo ($status=='active' ? "Open" : "Close"); ?> the ticket</button>
+				</div>
+				<div class="col-lg-4"></div>
+			</div>
+			<?php if($this->Ticket_info['status']!=1){ ?>
+			<div class="row">
+				<div id="reply" style="display:none;">
+				<form action="" method="post">
+					<input type="hidden" name="t" value="reply">
+					<div class="form-body pal">
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="inputSubject" class="control-label">Subject</label>
+									<div class="input-icon right">
+										<i class="fa fa-tag"></i>
+										<input id="inputSubject" name="subject" type="text" placeholder="" class="form-control" value="<?php if(isset($_POST['subject'])) echo $_POST['subject']; ?>">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputMessage" class="control-label">Message</label>
+							<textarea rows="15" name="content" class="form-control"><?php if(isset($_POST['content'])) echo $_POST['content']; ?></textarea>
+						</div>
+						<div class="form-group mbn">
+							Note : Message are required. 
+						</div>
+						<div class="form-actions text-right pal">
+							<button type="submit" class="btn btn-primary">Submit the reply</button>
+						</div>
+					</div>
+				</form>
+				</div>
+			</div>
+			<?php } ?>
+		</div>
+	</div>
+</div>
+<?php
+	}
+	
+}
+?>
+</div>

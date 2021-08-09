@@ -1,0 +1,4070 @@
+/*base.css starts here. It also contains layout.css, nav.css, calendar-system.css, portlet.css, function.css in the order specified*/
+html,body {
+height:100%;
+width:100%;
+margin:0;
+padding:0;
+}
+
+body {
+background:#efeff0;
+font:normal 1em/1.4em Arial, Helvetica, Verdana, sans-serif;
+color:#4c4c4c;
+min-width:910px;
+text-align:center;
+}
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,legend,input,select,p,blockquote,th,td,button,.header1,.header2,.header3,.header4,.header5,.header6,.heading_1,.heading_2,.heading_3,.heading_4,.heading_5,.heading_6,.Heading_1,.Heading_2,.Heading_3,.Heading_4,.Heading_5,.Heading_6 {
+border:0;
+font-weight:400;
+line-height:1.3em;
+margin:0;
+padding:0;
+}
+
+ul,ol {
+float:left;
+list-style:none;
+display:inline;
+}
+
+li {
+display:inline;
+list-style:none;
+}
+
+table {
+border-collapse:collapse;
+border-spacing:0;
+font-size:100%;
+}
+
+fieldset,img {
+border:0;
+}
+
+p {
+padding-bottom:.4em;
+}
+
+a {
+color:#0083b3;
+background-repeat:no-repeat;
+text-decoration:none;
+}
+
+a:hover {
+text-decoration:underline;
+color:#0083b3;
+}
+
+button:focus,#breadcrumbs a:focus,.flightInfo th a:focus,#mainCntnt #tertNav li a:focus,#mainCntnt #tertNav li a.pageSubOn:focus,#mainCntnt #tertNav li a.pageOn:focus {
+outline-style:none;
+}
+
+#mainCntnt .categories li a:focus,#mainCntnt a.calendar:focus,span.help a:focus,span.help a#helpSlctr:focus,span.rss a:focus,#accessibility a:focus,#accessibility a.txtMed:focus,#accessibility a.txtLrg:focus,#accessibility a.hiCon:focus,#accessibility a.active:focus {
+outline-style:none;
+background-color:transparent;
+}
+
+#flightTabs li a:focus,#fidFtr a:focus,#fidFtr #allFlights a:focus,#transportlinks .toggler a:focus,#weather .togglerWeather a:focus {
+text-decoration:none;
+border:none;
+background-color:none;
+outline-style:none;
+}
+
+#divider_2_2 .sandc li a:focus,#divider_2_2 .storeFinder li a:focus {
+text-decoration:none;
+background-color:none;
+outline-style:none;
+}
+
+h1,h2,h3,h4,h5,h6,.header1,.header2,.header3,.header4,.header5,.header6,.heading_1,.heading_2,.heading_3,.heading_4,.heading_5,.heading_6,.Heading_1,.Heading_2,.Heading_3,.Heading_4,.Heading_5,.Heading_6 {
+font-family:"Frutiger 65 LT", Arial, "Trebuchet MS", Helvetica, sans-serif;
+font-weight:700;
+color:#333;
+font-size:100%;
+line-height:1.1em;
+clear:both;
+padding:8px;
+}
+
+form {
+display:inline;
+float:left;
+}
+
+form span {
+color:#c00;
+}
+
+label {
+float:left;
+clear:both;
+width:0;
+text-indent:-200000px;
+}
+
+button {
+float:right;
+display:inline;
+background:url(../image/bg_go.gif) no-repeat bottom right;
+width:50px;
+height:17px;
+cursor:pointer;
+text-indent:-200000px;
+}
+
+input,select,textarea {
+border:1px solid #7a7a7a;
+font-size:.9em;
+float:left;
+background:#fff;
+margin:0 0 .2em;
+}
+
+input,select {
+height:1.6em;
+line-height:1.6em;
+}
+
+abbr {
+border-bottom:1px dotted #afacac;
+cursor:help;
+}
+
+iframe {
+border:none;
+width:440px;
+}
+
+.iframe-full {
+border:none;
+width:100%;
+}
+
+#divider_1_1 iframe {
+width:670px;
+}
+
+#logo {
+width:295px;
+height:44px;
+float:left;
+margin-top:20px;
+padding-bottom:30px;
+text-indent:-200000px;
+}
+
+#priNav li {
+float:left;
+width:143px;
+}
+
+#fullCol {
+text-align:left;
+font-size:.7em;
+background:#fff url(../image/bg_body.gif) repeat-y top center;
+position:relative;
+width:900px;
+min-height:100%;
+margin:0 auto -1.8em;
+padding:0 5px;
+}
+
+#priNavCont {
+clear:both;
+float:left;
+display:inline;
+width:858px;
+margin-left:21px;
+
+}
+
+#priNavUlCont {
+clear:both;
+float:left;
+display:inline;
+background:url(../image/bg_prinavtop.png) no-repeat top left;
+
+}
+
+
+#mainCntnt {
+clear:both;
+float:left;
+padding-bottom:20px;
+width:100%;
+}
+
+#ftr {
+min-height:1.8em;
+height:1.8em;
+}
+
+.clearfix:after {
+content:".";
+display:block;
+height:0;
+clear:both;
+visibility:hidden;
+}
+
+* html .clearfix {
+height:1%;
+}
+
+.cta triplet,.OLT_Hero_Block {
+font-size:1.2em;
+margin-top:75px;
+background-position:left 50%;
+padding-right:0;
+padding-left:18px;
+text-align:left;
+font-weight:700;
+background-repeat:no-repeat;
+}
+
+.OLT_Hero_Triplet_Link {
+font-size:1.1em;
+margin-top:77px;
+padding-right:0;
+text-align:left;
+font-weight:700;
+background-repeat:no-repeat;
+background-image:url(../image/cta_gt.gif);
+background-position:0 50%;
+padding-left:18px;
+display:block;
+}
+
+.cta video,.OLT_Video_Link {
+background-image:url(../image/icon_video.gif);
+padding-left:25px;
+background-repeat:no-repeat;
+}
+
+.mpu,.OLT_Advert {
+text-align:center;
+width:440px;
+display:block;
+float:left;
+border-top:1px solid #ddd;
+border-bottom:1px solid #ddd;
+background-repeat:no-repeat;
+margin:6px 0;
+padding:8px 0;
+}
+
+.backToTop,.OLT_Back_To_Top {
+text-align:right;
+border-bottom:1px dotted #a3a3a3;
+padding-bottom:3px;
+width:100%;
+display:block;
+}
+
+#cms {
+font-family:arial, verdana, helvetica, sans-serif;
+font-size:.8em;
+}
+
+#cms a:link {
+color:#00F;
+text-decoration:underline;
+}
+
+#cms a:hover {
+color:#000;
+text-decoration:underline;
+}
+
+#cms a:visited {
+color:purple;
+text-decoration:underline;
+}
+
+#cms table {
+border:solid 1px #000;
+}
+
+#cms td {
+font-size:.7em;
+text-align:center;
+}
+
+#cms th {
+font-size:.7em;
+}
+
+#cms tr {
+background-color:#DDD;
+}
+
+#cms ul {
+list-style-position:inside;
+list-style-type:disc;
+padding-left:1em;
+font-family:arial, verdana, helvetica, sans-serif;
+margin:0;
+}
+
+#cms ol {
+list-style-position:inside;
+padding-left:1em;
+font-family:arial, verdana, helvetica, sans-serif;
+margin:0;
+}
+
+.Content_Box_Grey {
+color:#333;
+font-size:.8em;
+font-family:arial, verdana, helvetica, sans-serif;
+}
+
+.Content_Box_Grey_Bold {
+color:#333;
+font-family:arial, verdana, helvetica, sans-serif;
+font-weight:700;
+}
+
+.Content_Box_White {
+font-size:.8em;
+font-family:arial, verdana, helvetica, sans-serif;
+}
+
+.Content_Box_White_Bold {
+font-family:arial, verdana, helvetica, sans-serif;
+font-weight:700;
+}
+
+.Footnote {
+font-size:.8em;
+font-style:italic;
+}
+
+.header1,.header2,.header3,.header4,.header5,.header6,.Heading_1,.Heading_2,.Heading_3,.Heading_4,.Heading_5,.Heading_6 {
+border:0;
+font-family:"Frutiger 65 LT", Arial, "Trebuchet MS", Helvetica, sans-serif;
+font-weight:700;
+color:#333;
+font-size:100%;
+line-height:1.1em;
+clear:both;
+margin:0;
+padding:8px;
+}
+
+.Image_Caption {
+font-size:.8em;
+}
+
+.Image_Center {
+display:block;
+text-align:center;
+}
+
+.Image_Left {
+float:left;
+margin:.3em;
+}
+
+.Image_Right {
+float:right;
+margin:0.3em -10px 10px 10px;
+}
+
+.Indent {
+padding-left:1em;
+}
+
+.Italic {
+font-style:italic;
+}
+
+.Subscript {
+vertical-align:sub;
+}
+
+.Superscript {
+vertical-align:super;
+}
+
+.Table_Column_Heading_1 {
+text-align:center;
+width:100%;
+font-weight:700;
+font-size:1.2em!important;
+padding:.2em;
+}
+
+.Table_Column_Heading_2 {
+color:#000;
+font-size:1em!important;
+text-align:center;
+font-weight:700;
+width:100%;
+padding:.2em;
+}
+
+.cmsGreyLink,a.cmsGreyLink,a.cmsGreyLink:link {
+color:#666;
+}
+
+a.cmsGreyLink:hover {
+color:#333;
+}
+
+a.cmsWhiteLink:hover {
+color:#DDD;
+}
+
+.wdf_heading {
+font-size:1.85em;
+font-weight:700;
+color:#F60;
+}
+
+.wdf_subheading {
+font-size:.85em;
+font-weight:700;
+color:#699;
+}
+
+.wdf_body {
+font-size:.7em;
+color:#666;
+}
+
+.wdf_brand {
+font-size:.8em;
+font-weight:700;
+color:#699;
+}
+
+.wdf_product {
+font-size:.7em;
+font-weight:700;
+color:#699;
+}
+
+.wdf_airport {
+font-size:.7em;
+font-weight:700;
+color:#000;
+}
+
+.wdf_price {
+font-size:.8em;
+font-weight:700;
+color:#000;
+}
+
+.wdf_saving {
+font-size:.7em;
+font-weight:700;
+color:#C20336;
+}
+
+.wdf_size {
+font-size:.65em;
+color:#666;
+}
+
+.wdf_caption {
+font-size:.7em;
+color:#FFF;
+}
+
+/* ====================================================== */
+/* ================ layout.css starts here ============== */
+/* ====================================================== */
+
+#extrasCntr,#ftrCntr {
+width:100%;
+background:#737373 url(../image/bg_extrasCntr.gif) repeat-y top center;
+text-align:center;
+font-size:.7em;
+}
+
+#extras,#ftr {
+background:#7a7a7a;
+color:#fff;
+width:900px;
+margin:0 auto;
+padding:1px 0;
+}
+
+#secNav {
+margin-right:4px;
+float:right;
+background:#7a7a7a;
+padding:.1em 0;
+}
+
+#accessibility {
+margin-left:10px;
+padding:.25em 0;
+}
+
+#header {
+float:left;
+display:inline;
+background:url(../image/bg_header.gif) no-repeat right top;
+}
+
+#brand {
+float:left;
+display:inline;
+width:100%;
+}
+
+#termSlctr {
+float:right;
+display:inline;
+width:470px;
+margin-right:15px;
+background-repeat:no-repeat;
+background-position:bottom left;
+background-image:url(../image/bg_termSlctr.png);
+}
+
+#breadcrumbs {
+padding:8px 20px;
+}
+
+.portlet,.gt {
+float:left;
+display:inline;
+margin-bottom:8px;
+padding-bottom:6px;
+}
+
+#divider_0_2,#divider_0_1 {
+float:left;
+display:inline;
+margin-left:13px;
+width:178px;
+overflow:hidden;
+}
+
+#divider_1_2 {
+float:left;
+display:inline;
+margin-left:10px;
+width:460px;
+overflow:hidden;
+}
+
+#divider_1_1 {
+float:left;
+display:inline;
+margin-left:10px;
+width:680px;
+overflow:visible;
+}
+
+#divider_2_2 {
+float:left;
+display:inline;
+margin-left:10px;
+width:210px;
+}
+
+#skyscraper {
+position:absolute;
+top:6px;
+right:-130px;
+z-index:3;
+width:120px;
+}
+
+#ftrCntr {
+clear:both;
+position:relative;
+}
+
+/* =========================================================== */
+/* =================== nav.css starts here =================== */
+/* =========================================================== */
+
+#skip {
+position:absolute;
+left:-200000px;
+font-size:.65em;
+color:#fff;
+}
+
+#extras a,#ftr a {
+color:#fff;
+text-decoration:none;
+margin:0 4px;
+}
+
+#accessibility p,#accessibility ul {
+float:left;
+width:auto;
+padding:0 5px 0 0;
+}
+
+#accessibility li {
+float:left;
+line-height:1.3em;
+display:inline;
+margin:0;
+}
+
+#accessibility a {
+width:16px;
+height:16px;
+display:block;
+margin-right:2px;
+text-indent:-200000px;
+background-repeat:no-repeat;
+background-position:top left;
+}
+
+a.txtSml {
+background-image:url(../image/icon_txtSml.gif);
+}
+
+a.txtMed {
+background-image:url(../image/icon_txtMed.gif);
+}
+
+a.txtLrg {
+background-image:url(../image/icon_txtLrg.gif);
+padding-right:10px;
+}
+
+a.hiCon {
+background-image:url(../image/icon_hiCon.gif);
+}
+
+#accessibility a.txtSml:hover,#accessibility a.txtMed:hover,#accessibility a.txtLrg:hover,#accessibility a.hiCon:hover,#accessibility a.active {
+background-position:bottom left;
+}
+
+#termSlctr div {
+float:left;
+background-image:url(../image/bg_termNum.gif);
+background-repeat:no-repeat;
+background-position:0 bottom;
+width:225px;
+height:100%;
+display:block;
+margin-left:15px;
+}
+
+#termSlctr.active {
+background-repeat:no-repeat;
+background-position:bottom left;
+background-image:url(../image/bg_termSlctr_active.png);
+}
+
+#termSlctr h3 {
+font-size:1.3em;
+line-height:1.1em;
+padding:14px 10px 0 0;
+}
+
+#termSlctr h3 span {
+width:30px;
+}
+
+#termSlctr h3.selected {
+padding-top:22px;
+padding-bottom:26px;
+color:#535353;
+}
+
+#termSlctr p {
+padding:0 50px 20px 0;
+}
+
+#termSlctr form {
+float:right;
+width:205px;
+margin:20px 15px 0 0;
+}
+
+#termSlctr legend {
+text-indent:-200000px;
+font-size:0;
+line-height:0;
+}
+
+#termSlctr select {
+width:14em;
+}
+
+#priNavCont ul {
+background:url(../image/bg_prinav.png) 0 bottom no-repeat;
+margin-top:4px;
+}
+
+#priNavCont ul.option1 {
+background-position:-858px bottom;
+}
+
+#priNavCont ul.option2 {
+background-position:-715px bottom;
+}
+
+#priNavCont ul.option3 {
+background-position:-572px bottom;
+}
+
+#priNavCont ul.option4 {
+background-position:-429px bottom;
+}
+
+#priNavCont ul.option5 {
+background-position:-286px bottom;
+}
+
+#priNavCont ul.option6 {
+background-position:-143px bottom;
+}
+
+#priNavCont ul a.on {
+background-position:-600px 50%;
+color:#000;
+}
+
+#priNavCont ul li {
+width:143px;
+float:left;
+overflow:hidden;
+}
+
+#priNavCont ul a {
+background-image:url(../image/bg_arrow.gif);
+background-repeat:no-repeat;
+background-position:0 50%;
+padding-left:30px;
+margin-bottom:8px;
+text-decoration:none;
+display:block;
+cursor:pointer;
+font-weight:700;
+line-height:1.3em;
+color:#555;
+}
+
+#priNavCont ul a:hover {
+background-position:-300px 50%;
+}
+
+#priNavCont ul a.on:hover {
+background-position:-600px 50%;
+}
+
+#tertNav {
+margin-bottom:12px;
+}
+
+#mainCntnt #tertNav li {
+background:#ededed url(../image/bg_tertNavLi.gif) no-repeat bottom left;
+margin-bottom:2px;
+}
+
+#mainCntnt #tertNav li a {
+background-image:url(../image/bg_arrow.gif);
+background-position:0 50%;
+background-color:transparent;
+color:#555;
+padding:.4em 8px .4em 25px;
+}
+
+#mainCntnt #tertNav li a.pageOn {
+background-color:#ffd02e;
+cursor:default;
+color:#000;
+}
+
+#mainCntnt #tertNav li a.pageOn:hover,#mainCntnt #tertNav li a.sectionOn:hover,#mainCntnt #tertNav li a.pageSubOn:hover {
+text-decoration:none;
+}
+
+#mainCntnt #tertNav li a:hover {
+background-position:-300px;
+text-decoration:underline;
+}
+
+#mainCntnt #tertNav li a.pageOn,#mainCntnt #tertNav li a.pageOn:hover {
+background-position:-300px;
+}
+
+#mainCntnt #tertNav li a.pageSubOn,#mainCntnt #tertNav li a.pageSubOn:hover {
+background-position:-600px;
+}
+
+#mainCntnt #tertNav li a.highlightOff {
+background-color:#f4f4f4;
+}
+
+#mainCntnt #tertNav li a.highlightOn {
+background-color:#ffd02e;
+}
+
+#mainCntnt #tertNav li a.sectionOn,#mainCntnt #tertNav li a.sectionOn:hover {
+background-position:-600px;
+background-color:#ffd02e;
+}
+
+#mainCntnt #tertNav ul {
+border-top:1px dotted #e2e2e2;
+background-color:#f4f4f4;
+}
+
+#mainCntnt #tertNav ul li a {
+background-color:#f4f4f4;
+background-position:-885px;
+padding-left:40px;
+}
+
+#divider_0_2 #tertNav ul li a,#divider_0_1 #tertNav ul li a {
+width:122px;
+}
+
+#mainCntnt #tertNav ul li a.sectionOn,#mainCntnt #tertNav ul li a.sectionOn:hover {
+background-position:-1485px;
+}
+
+#mainCntnt #tertNav ul li a.pageSubOn,#mainCntnt #tertNav ul li a.pageSubOn:hover {
+background-position:-1485px;
+background-color:#f4f4f4;
+}
+
+#mainCntnt #tertNav ul ul li a {
+background-position:-1770px;
+padding-left:55px;
+}
+
+#divider_0_2 #tertNav ul ul li a,#divider_0_1 #tertNav ul ul li a {
+width:107px;
+}
+
+#mainCntnt #tertNav ul ul li a:hover {
+background-position:-1170px;
+}
+
+#mainCntnt #tertNav ul ul li a.pageOn,#mainCntnt #tertNav ul ul li a.pageOn:hover {
+background-position:-1770px;
+}
+
+#mainCntnt #tertNav ul ul li a.sectionOn,#mainCntnt #tertNav ul ul li a.sectionOn:hover {
+background-position:-1470px;
+}
+
+#mainCntnt #tertNav ul ul li a.pageSubOn,#mainCntnt #tertNav ul ul li a.pageSubOn:hover {
+background-position:-1470px;
+background-color:#f4f4f4;
+}
+
+#mainCntnt #tertNav ul ul ul li a {
+background-position:-1755px;
+padding-left:70px;
+}
+
+#divider_0_2 #tertNav ul ul ul li a,#divider_0_1 #tertNav ul ul li a {
+width:92px;
+}
+
+#mainCntnt #tertNav ul ul ul li a:hover {
+background-position:-1155px;
+}
+
+#breadcrumbs li {
+margin-right:6px;
+display:inline;
+}
+
+#breadcrumbs li.current {
+color:#0083b3;
+}
+
+#breadcrumbs a {
+text-decoration:none;
+color:#0083b3;
+background:url(../image/bg_breadcrumbLi.gif) no-repeat right 50%;
+padding-right:8px;
+}
+/* ================================================================= */
+/* ========================== portlet.css starts here ============== */
+/* ================================================================= */
+
+.portlet {
+background-image:url(../image/crv_leftBot.gif);
+background-repeat:no-repeat;
+background-position:bottom left;
+background-color:#ededed;
+width:100%;
+}
+
+.portlet div {
+background-image:url(../image/crv_leftTop.gif);
+background-repeat:no-repeat;
+background-position:top left;
+float:left;
+width:100%;
+padding-bottom:10px;
+}
+
+.portlet div div,#divider_2_2 .portlet div div {
+background-image:none;
+padding-bottom:0;
+}
+
+.portlet h3,.portlet .header3,.portlet .heading_3,.portlet .Heading_3 {
+background-image:url(../image/crv_leftTop.gif);
+background-repeat:no-repeat;
+background-position:top left;
+background-color:#e7f0f9;
+border-bottom:1px dotted #afacac;
+clear:both;
+}
+
+h1 span,h2 span,h3 span,h4 span,.header1 span,.header2 span,.header3 span,.header4 span,.heading_1 span,.heading_2 span,.heading_3 span,.heading_4 span,.Heading_1 span,.Heading_2 span,.Heading_3 span,.Heading_4 span {
+float:left;
+width:30px;
+display:block;
+height:22px;
+margin-top:-.2em;
+background-repeat:no-repeat;
+background-position:left 50%;
+}
+
+span.parking, span.OLT_Parking_Icon {background-image:url(../image/icon_parking.gif);}
+span.security, span.OLT_Security_Icon {background-image:url(../image/icon_security.gif);}
+span.flight, span.OLT_Flight_Icon {background-image:url(../image/icon_flight.gif); margin-left: 2px;}
+span.info, span.OLT_Info_Icon {background-image:url(../image/icon_info.gif);}
+span.car, span.OLT_Car_Icon {background-image:url(../image/icon_car.gif);}
+span.bus, span.OLT_Bus_Icon {background-image:url(../image/icon_bus.gif);}
+span.train, span.OLT_Train_Icon {background-image:url(../image/icon_train.gif);}
+span.taxi, span.OLT_Taxi_Icon {background-image:url(../image/icon_taxi.gif);}
+span.meeting, span.OLT_Meeting_Icon {background-image:url(../image/icon_meeting.gif);}
+span.weather, span.OLT_Weather_Icon {background-image:url(../image/icon_weather.gif);}
+span.connect, span.OLT_Connect_Icon {background-image:url(../image/icon_connect.gif);}
+span.security_customs, span.OLT_Security_Customs { background-image: url(../image/icon_security_customs.gif);} /* Added by NM for security and customs icon */
+span.connecting, span.OLT_Connecting_Icon {background-image:url(../image/icon_connecting.gif);}
+span.arriving, span.OLT_Arriving_Icon {background-image:url(../image/icon_arriving.gif);}
+span.departing, span.OLT_Departing_Icon {background-image:url(../image/icon_departing.gif);}
+span.retail, span.OLT_Retail_Icon {background-image:url(../image/icon_retail.gif);}
+
+span.crisis {
+background-image:url(../image/icon_crisis.gif);
+height:42px;
+width:46px;
+margin-top:-.4em;
+}
+
+span.help {
+float:right;
+background-image:url(../image/icon_help.gif);
+background-position:right;
+text-indent:-200000px;
+}
+
+span.rss {
+background-image:url(../image/icon_rss.gif);
+}
+
+span.cta a,span.OLT_Link a,a span.cta,a span.OLT_Link,p span.OLT_Link a {
+padding-left:18px;
+background-image:url(../image/cta_main.gif);
+background-position:0 56%;
+background-repeat:no-repeat;
+}
+
+span.video a,span.OLT_Link_Video a {
+background-image:url(../image/icon_video.gif);
+padding-left:25px;
+}
+
+h3 span a,h4 span a,.header3 span a,.header4 span a,.heading_3 span a,.heading_4 span a,.Heading_3 span a,.Heading_4 span a {
+display:block;
+width:30px;
+height:22px;
+}
+
+#mainCntnt form {
+margin:0 8px;
+}
+
+#mainCntnt form p {
+float:left;
+clear:left;
+width:100%;
+display:block;
+padding:3px 0;
+}
+
+#mainCntnt li {
+float:left;
+display:inline;
+}
+
+#mainCntnt li a {
+display:block;
+padding:.3em 8px .3em 25px;
+}
+
+p.error {
+color:#ed1c24;
+margin-bottom:4px;
+width:90%;
+}
+
+p.error span {
+font-weight:700;
+color:#ed1c24;
+}
+
+#mainCntnt a.calendar, #mainCntnt a.calendarWT {
+background-image:url(../image/icon_calendar.gif);
+background-position:bottom right;
+width:19px;
+height:14px;
+font-size:1px;
+float:left;
+text-indent:-200000px;
+border:1px solid #ddd;
+margin:1px 1px 0 0;
+padding:0;
+}
+
+.gt {
+width:215px;
+z-index:3;
+color:#fff;
+position:relative;
+}
+
+#divider_0_1 .gt,#divider_0_1 .gt div {
+width:180px;
+}
+
+.imgtop,.imgbot {
+background-image:url(../image/crv_centHalfTop.gif);
+background-repeat:no-repeat;
+background-position:top left;
+z-index:4;
+display:block;
+width:215px;
+height:8px;
+position:absolute;
+}
+
+.imgbot {
+background-image:url(../image/crv_centHalfBot.gif);
+background-position:bottom right;
+height:13px;
+bottom:0;
+left:0;
+}
+
+.gt h3,.gt h5,.gt .header3,.gt .header5,.gt .heading_3,.gt .heading_5,.gt .Heading_3,.gt .Heading_5 {
+color:#fff;
+padding-bottom:0;
+padding-top:10px;
+background-color:none;
+font-size:1.3em;
+}
+
+#mainCntnt .gt span.cta a,#mainCntnt .gt span.OLT_Link a,#mainCntnt .gt a span.OLT_Link,#mainCntnt .gt a span.cta,#mainCntnt .hero span.OLT_Hero_Block a {
+background-image:url(../image/cta_gt.gif);
+color:#fff;
+text-decoration:none;
+display:block;
+background-repeat:no-repeat;
+}
+
+#mainCntnt .gt span.video a,#mainCntnt .gt span.OLT_Link_Video a {
+background-image:url(../image/icon_video.gif);
+background-repeat:no-repeat;
+}
+
+#mainCntnt .gt p {
+padding:.3em 5px 0;
+}
+
+.hero .imgtop {
+background-image:url(../image/crv_heroTop.gif);
+}
+
+.hero .imgbot {
+background-image:url(../image/crv_heroBot.gif);
+}
+
+.hero h2,.hero .header2,.hero .heading_2,.hero .Heading_2 {
+color:#fff;
+text-align:right;
+padding:148px 8px 0;
+}
+
+#mainCntnt .hero span.cta a,#mainCntnt .hero span.OLT_Link a,#mainCntnt .hero span.video a,#mainCntnt .hero span.OLT_Link_Video a,#mainCntnt .hero a span.cta,#mainCntnt .hero a span.OLT_Link,#mainCntnt .hero span.OLT_Hero_Block a {
+padding-right:18px;
+padding-left:0;
+background-position:right 50%;
+color:#fff;
+}
+
+#mainCntnt .hero span.video a,#mainCntnt .hero span.OLT_Link_Video a {
+padding-right:25px;
+}
+
+.block h2,.block .header2,.block .heading_2,.block .Heading_2 {
+padding-top:146px;
+color:#fff;
+}
+
+.block img {
+height:190px;
+}
+
+.block table td {
+background-repeat:no-repeat;
+border-left:1px solid #fff;
+border-top:1px solid #fff;
+}
+
+.block table span.cta a,.block table span.OLT_Link a,#mainCntnt .hero span.OLT_Hero_Block a {
+margin-bottom:6px;
+}
+
+#mainCntnt .hero span.triplet a,#mainCntnt .hero span.OLT_Hero_Block a {
+font-size:1.1em;
+margin-top:75px;
+background-position:left 50%;
+padding-right:0;
+padding-left:18px;
+text-align:left;
+font-weight:700;
+overflow:hidden;
+}
+
+#mainCntnt #divider_1_2 .small {
+padding-bottom:0;
+margin:0 0 10px 10px;
+}
+
+.small h5,.small .header5,.small .heading_5,.small .Heading_5,.small .smallContentBoxInstance .Heading_5 {
+padding-top:102px;
+}
+
+#mainCntnt .small div.main,#mainCntnt .small div.smallContentBoxInstance {
+min-height:140px;
+}
+
+#mainCntnt .categories ul {
+float:left;
+margin:12px 0 0;
+padding:0;
+}
+
+#mainCntnt .categories ul li {
+line-height:0;
+float:left;
+clear:none;
+padding-left:0;
+display:block;
+margin:0 3px 3px 0;
+}
+
+#mainCntnt .categories li a {
+border:1px solid #ededed;
+display:inline;
+float:left;
+padding:0;
+}
+
+#mainCntnt .categories li a:hover {
+border-color:#ccc;
+}
+
+.categories li a img {
+margin:0;
+}
+
+#divider_0_2 li a,#divider_0_1 li a {
+width:137px;
+}
+
+#divider_1_2 .portlet {
+background-image:url(../image/crv_centBotPlain.gif);
+background-position:bottom right;
+background-color:#f4f4f4;
+margin-left:10px;
+width:440px;
+}
+
+#divider_1_2 .gt {
+margin:0 0 8px 10px;
+}
+
+.tgt h3,.tgt .header3,.tgt .heading_3,.tgt .Heading_3 {
+border:none;
+background-color:#f4f4f4;
+}
+
+.tgt ul {
+margin-top:.4em;
+}
+
+.tgt li {
+display:block;
+clear:left;
+width:90%;
+}
+
+.tgt li a {
+background-image:url(../image/cta_main.gif);
+background-position:8px 50%;
+}
+
+.tgt li a:hover {
+background-position:8px 50%;
+}
+
+.tgt form p {
+margin-top:.6em;
+}
+
+.tgt select {
+width:140px;
+}
+
+#divider_1_2 .standard,#divider_1_2 .standard div,#divider_1_2 .standard,#divider_1_2 .standard div {
+background-image:none;
+background-color:#fff;
+padding-bottom:2px;
+}
+
+.standard h1,.standard h2,.standard h3,.standard h4,.standard h5,.standard h6,.standard .header1,.standard .header2,.standard .header3,.standard .header4,.standard .header5,.standard .header6,.standard .heading_1,.standard .heading_2,.standard .heading_3,.standard .heading_4,.standard .heading_5,.standard .heading_6,.standard .Heading_1,.standard .Heading_2,.standard .Heading_3,.standard .Heading_4,.standard .Heading_5,.standard .Heading_6 {
+background-image:none;
+background-color:#fff;
+border:none;
+display:block;
+padding:14px 0 4px 10px;
+}
+
+.standard h1,.standard .header1,.standard .heading_1
+.standard .Heading_1 {
+border-bottom:none;
+border-top:1px dotted #afacac;
+text-indent:0;
+position:relative;
+padding:10px;
+}
+
+.standard h2,.standard h3,.standard .header2,.standard .header3,.standard .heading_2,.standard .heading_3,.standard .Heading_2,.standard .Heading_3 {
+border-bottom:1px dotted #afacac;
+padding-bottom:8px;
+padding-top:8px;
+}
+
+.standard img,.storeFinder img {
+margin-right:10px;
+float:left;
+margin-bottom:10px;
+}
+
+.standard img.noFloat {
+float:none;
+margin-left:10px;
+}
+
+.standard p {
+clear:left;
+float:none;
+}
+
+span.backToTop,span.OLT_Back_To_Top {
+text-align:right;
+border-bottom:1px dotted #a3a3a3;
+width:100%;
+display:block;
+clear:both;
+padding:6px 0 3px;
+}
+
+.standard ul {
+list-style:outside disc;
+display:block;
+float:none;
+margin:8px 16px;
+}
+
+#mainCntnt .standard li {
+display:list-item;
+list-style:outside disc;
+margin-left:10px;
+float:none;
+clear:left;
+margin-bottom:5px
+}
+
+#mainCntnt .standard li a {
+display:inline;
+padding:0;
+}
+
+span.mpu,div.mpu,span.OLT_Advert,div.OLT_Advert {
+text-align:center;
+width:440px;
+display:block;
+float:left;
+border-top:1px solid #ddd;
+border-bottom:1px solid #ddd;
+margin:6px 0;
+padding:8px 0;
+}
+
+div.mpu,div.OLT_Advert {
+margin:6px 10px;
+}
+
+span.mpu img,span.OLT_Advert img,div.mpu img,div.OLT_Advert img {
+float:none;
+margin:0;
+}
+
+span.mpu iframe,div.mpu iframe,span.OLT_Advert iframe,div.OLT_Advert iframe {
+margin-left:70px;
+}
+
+#divider_1_1 .standard span.cta a,#divider_1_1 .standard span.OLT_Link a {
+background-image:url(../image/cta_main.gif);
+}
+
+table#timeTable {
+width:100%;
+z-index:1;
+margin:10px 0;
+}
+
+table#timeTable tr th {
+background-color:#e7eff8;
+font-size:1.1em;
+font-weight:700;
+border-left:1px solid #fff;
+border-bottom:1px solid #fff;
+text-align:left;
+padding:2px 4px;
+}
+
+table#timeTable td {
+border-left:1px solid #fff;
+width:auto;
+padding:3px 2px;
+}
+
+table#timeTable tr.altrow {
+background-color:#ededed;
+}
+
+img.img_right {
+float:right;
+margin-right:-8px;
+}
+
+#divider_1_1 .portlet {
+background-image:none;
+background-color:#fff;
+margin-left:10px;
+width:670px;
+}
+
+#divider_2_2 label {
+display:inline;
+width:2.4em;
+height:1.8em;
+}
+
+#mainCntnt #divider_2_2 span.help a {
+background:none;
+padding:0;
+}
+
+#divider_2_2 p {
+float:left;
+}
+
+#bottom_ad {
+padding-bottom:20px;
+margin-left:210px;
+clear:both;
+float:left;
+display:inline;
+}
+
+.listLinks ul {
+margin-top:4px;
+}
+
+.listLinks li a {
+background-position:0 50%;
+background-image:url(../image/bg_listLinkLi.gif);
+color:#0083b3;
+margin-left:0;
+}
+
+.listLinks li a:hover {
+background-position:-230px 50%;
+}
+
+#mainCntnt #divider_0_2 .language {margin-left:8px;}
+
+.language h3,.language .header3,.language .heading_3,.language .Heading_3 {
+border:none;
+background:none;
+}
+
+#mainCntnt #divider_0_2 .language li span a {	
+	width:72px;
+	height:18px;
+	overflow:hidden;
+	line-height:1px;
+	padding:0;
+	margin:0 2px 0 8px;
+	background-position:bottom left;
+	background-repeat:no-repeat;
+	text-indent:-20000px;
+}
+
+#mainCntnt #divider_0_2 .language li span a:hover {
+background-position:top left;
+}
+
+#mainCntnt .language li span.OLT_spanish a {background-image:url(../image/bg_spanish.gif);}
+#mainCntnt .language li span.OLT_french a {background-image:url(../image/bg_french.gif);}
+#mainCntnt .language li span.OLT_portuguese a {background-image:url(../image/bg_portuguese.gif);}
+#mainCntnt .language li span.OLT_dutch a {background-image:url(../image/bg_dutch.gif);}
+#mainCntnt .language li span.OLT_japanese a {background-image:url(../image/bg_japanese.gif);}
+#mainCntnt .language li span.OLT_chinese a {background-image:url(../image/bg_chinese.gif);}
+#mainCntnt .language li span.OLT_russian a {background-image:url(../image/bg_russian.gif);}
+#mainCntnt .language li span.OLT_arabic a {background-image:url(../image/bg_arabic.gif);}
+#mainCntnt .language li span.OLT_urdu a {background-image:url(../image/bg_urdu.gif);}
+#mainCntnt .language li span.OLT_hindi a {background-image:url(../image/bg_hindi.gif);}
+#mainCntnt .language li span.OLT_italian a {background-image:url(../image/bg_italian.gif);}
+#mainCntnt .language li span.OLT_polish a {background-image:url(../image/bg_polish.gif);}
+
+.feelGood {
+background-color:#7ecccc;
+color:#333;
+margin-left:8px;
+}
+
+.feelGood h3,.feelGood .header3,.feelGood .heading_3,.feelGood .Heading_3 {
+background:none;
+border-color:#fff;
+}
+
+.feelGood span.cta a,.feelGood span.OLT_Link a {
+background-image:url(../image/cta_cares.gif);
+color:#fff;
+display:block;
+}
+
+#divider_0_2 .connections,#divider_0_1 .connections {
+background:url(../image/bg_flightConnections2.gif) no-repeat 0 50%;
+width:170px;
+}
+
+#divider_1_2 #flashcontent {
+height:190px;
+margin-bottom:14px;
+width:440px;
+padding-bottom:0;
+}
+
+#divider_1_2 .security,#divider_1_2 .multiLanguage {
+background-color:#fae5e5;
+}
+
+.security h3,.security .header3,.security .heading_3,.security .Heading_3,.multiLanguage h3,.multiLanguage .header3,.multiLanguage .heading_3,.multiLanguage .Heading_3 {
+background-color:#fae5e5;
+border-bottom:1px dotted #c00;
+}
+
+.security a,.security span.cta a,.crisis a,.crisis span.cta a,.security a:hover,.security span.cta a:hover,.crisis a:hover,.crisis span.cta a:hover {
+color:#ed1c24;
+}
+
+.major span.cta a {
+background-image:url(../image/cta_crisis.gif);
+background-repeat:no-repeat;
+}
+
+#divider_1_2 div.crisis {
+background-image:url(../image/crv_crisisBot.gif);
+background-color:transparent;
+}
+
+.crisis div {
+background-image:url(../image/crv_crisisTop.gif);
+padding-bottom:6px;
+}
+
+.crisis div div {
+background:url(../image/bg_crisis.gif) repeat-y top left;
+}
+
+.crisis h2,.crisis .header2,.crisis .heading_2,.crisis .Heading_2 {
+background:url(../image/crv_crisisTop.gif) no-repeat top left;
+border-bottom:1px dotted #ed1c24;
+}
+
+.major h2,.major .header2,.major .heading_2,.major .Heading_2 {
+background:url(../image/crv_crisisTop.gif) no-repeat top left;
+border-bottom:1px dotted #ed1c24;
+font-size:1.8em;
+line-height:1.4em;
+padding-top:.6em;
+color:#ed1c24;
+}
+
+#divider_1_2 .major h3,#divider_1_2 .major .header3,#divider_1_2 .major .heading_3,#divider_1_2 .major .Heading_3 {
+background:transparent;
+border-bottom:none;
+color:#ed1c24;
+}
+
+.major p {
+font-size:1.1em;
+}
+
+#divider_1_2 div.connect {
+background-image:url(../image/crv_connectBot.gif);
+background-color:transparent;
+}
+
+.connect div {
+background-image:url(../image/crv_connectTop.gif);
+padding-bottom:6px;
+}
+
+.connect div div {
+background:url(../image/bg_connect.gif) repeat-y top left;
+}
+
+.connect h2,.connect .header2,.connect .heading_2,.connect .Heading_2 {
+background:#610079 url(../image/crv_centTop.gif) no-repeat top left;
+border-bottom:1px dotted #610079;
+color:#fff;
+}
+
+#divider_1_2 div.airportInfo {
+background-image:url(../image/crv_airportInfoBot.gif);
+background-color:transparent;
+}
+
+.airportInfo div {
+background-image:url(../image/crv_airportInfoTop.gif);
+padding-bottom:6px;
+}
+
+.airportInfo div div {
+background:url(../image/bg_airportInfo.gif) repeat-y top left;
+}
+
+.airportInfo h2,.airportInfo .header2,.airportInfo .heading_2,.airportInfo .Heading_2 {
+background:url(../image/crv_airportInfoTop.gif) no-repeat top left;
+border-bottom:1px dotted #afacac;
+margin-bottom:10px;
+}
+
+#divider_1_2 .airportInfo h3,#divider_1_2 .airportInfo .header3,#divider_1_2 .airportInfo .heading_3,#divider_1_2 .airportInfo .Heading_3 {
+background:transparent;
+border-bottom:none;
+font-size:1.15em;
+display:inline;
+padding:0;
+}
+
+.airportInfo img {
+float:left;
+margin:0 14px;
+}
+
+.airportInfo span.backToTop {
+padding-top:0;
+margin-bottom:4px;
+}
+
+#divider_1_2 .news {
+width:215px;
+background:none;
+padding-bottom:0;
+}
+
+.news h3,.news .header3,.news .heading_3,.news .Heading_3 {
+background:none;
+border-bottom:none;
+border-top:1px dotted #afacac;
+padding-bottom:4px;
+}
+
+#divider_1_2 .news li {
+display:block;
+padding:6px 2px 0;
+}
+
+#divider_1_2 .news li a {
+display:inline;
+font-weight:700;
+background:none;
+padding:0 0 0 2px;
+}
+
+#divider_1_2 .news li p {
+border-bottom:1px dotted #afacac;
+width:211px;
+}
+
+#divider_1_2 .news p {
+float:left;
+padding:.3em 0;
+}
+
+.gt div.main,.halfShort div.main,.gt div.smallContentBoxInstance,.halfShort div.smallContentBoxInstance {
+min-height:190px;
+background-position:top left;
+background-repeat:no-repeat;
+}
+
+.halfShort div.main,.halfShort,.halfShort div.smallContentBoxInstance {
+min-height:100px;
+}
+
+.halfShort {
+min-height:100px;
+background-position:bottom left;
+background-repeat:no-repeat;
+}
+
+.halfShort p {
+font-size:1.3em;
+font-weight:700;
+}
+
+#divider_1_2 .pageActions,#divider_1_2 .pageActions div,#divider_1_1 .pageActions,#divider_1_1 .pageActions div {
+background:none;
+padding-bottom:0;
+margin-bottom:1px;
+}
+
+#divider_1_2 .pageActions ul,#divider_1_1 .pageActions ul {
+width:100%;
+}
+
+#divider_1_2 .pageActions li,#divider_1_1 .pageActions li {
+float:right;
+margin-left:6px;
+}
+
+#mainCntnt li a.emailPage {
+background-image:url(../image/icon_email.gif);
+background-position:0 50%;
+}
+
+#mainCntnt li a.printPage {
+background-image:url(../image/icon_print.gif);
+background-position:0 50%;
+}
+
+#divider_1_2 .listLinks {
+width:215px;
+background-image:url(../image/crv_centHalfBot.gif);
+}
+
+#divider_2_2 .listLinks {
+overflow:hidden;
+}
+
+#divider_0_2 .listLinks {
+width:170px;
+margin-left:8px;
+}
+
+#divider_1_2 .listLinks div,#divider_1_2 .listLinks div h3,#divider_1_2 .listLinks div .header3,#divider_1_2 .listLinks div .heading_3,#divider_1_2 .listLinks div .Heading_3 {
+background-image:url(../image/crv_centHalfTop.gif);
+}
+
+#divider_1_2 .listLinks li a {
+width:160px;
+}
+
+#divider_0_2 .listLinks div .Heading_3 {
+width:170px;
+}
+
+.listLinks span.cta a {
+background-position:-8px 50%;
+background-image:url(../image/bg_listLinkLi.gif);
+display:block;
+}
+
+#divider_1_2 .listLinks span.cta a:hover {
+background-position:-238px 50%;
+}
+
+#divider_1_2 .portlet .tgt {
+width:205px;
+overflow:hidden;
+}
+
+.long div {
+min-height:320px;
+}
+
+.short div {
+min-height:235px;
+width:175px;
+}
+
+.short p img {
+margin-left:-10px;
+margin-right:-15px;
+padding:0;
+}
+
+.short p span.Heading_3 {
+margin-left:-10px;
+margin-right:-15px;
+background-image:transparent;
+}
+
+.wide p {
+width:190px;
+float:left;
+margin-right:10px;
+}
+
+#divider_1_2 .extraFact {
+background-color:#cc7f99;
+color:#333;
+width:215px;
+background-image:url(../image/crv_centHalfBot.gif);
+}
+
+#divider_1_2 .extraFact h3,#divider_1_2 .extraFact .header3,#divider_1_2 .extraFact .heading_3,#divider_1_2 .extraFact .Heading_3 {
+background-color:#cc7f99;
+background-image:url(../image/crv_centHalfTop.gif);
+border-color:#fff;
+}
+
+.connections {
+height:49px;
+display:block;
+}
+
+.connections p {
+margin-left:-5px;
+margin-top:-2px;
+}
+
+.connections a {
+display:block;
+height:100%;
+}
+
+.smallContentBoxInstance {
+background-repeat:no-repeat;
+}
+
+#divider_1_2 .portlet p h1,#divider_1_2 .portlet p .header1,#divider_1_2 .portlet p .heading_1,#divider_1_2 .portlet p .Heading_1,#divider_1_2 .portlet p h2,#divider_1_2 .portlet p .header2,#divider_1_2 .portlet p .heading_2,#divider_1_2 .portlet p .Heading_2,#divider_1_2 .portlet p h3,#divider_1_2 .portlet p .header3,#divider_1_2 .portlet p .heading_3,#divider_1_2 .portlet p .Heading_3,#divider_1_2 .portlet p h4,#divider_1_2 .portlet p .header4,#divider_1_2 .portlet p .heading_3,#divider_1_2 .portlet p .Heading_4,#divider_1_2 .portlet p h5,#divider_1_2 .portlet p .header5,#divider_1_2 .portlet p .heading_3,#divider_1_2 .portlet p .Heading_5,#divider_1_2 .portlet p h6,#divider_1_2 .portlet p .header6,#divider_1_2 .portlet p .heading_3,#divider_1_2 .portlet p .Heading_6 {
+margin:-3px 0;
+}
+
+hr {
+border-bottom:1px solid #ddd;
+height:1px;
+color:#ddd;
+background-color:#ddd;
+}
+
+div.autonomySearch form.autonomyFilter table tbody tr td textarea {
+font-size:1.2em;
+font-family:arial, verdana, helvetica, sans-serif;
+}
+
+div.autonomySearch form.autonomyFilter table tbody tr td p input {
+width:15px;
+border:none;
+}
+
+div.autonomySearch form.autonomyFilter table tbody tr td p {
+margin-right:10px;
+}
+
+.autonomyFilter label {
+width:auto;
+text-indent:5px;
+}
+
+#mainCntnt .functionForm {
+background-color:#e6eff8;
+}
+
+.functionForm div {
+background-image:url(../image/crv_leftTop.gif);
+padding-bottom:0;
+}
+
+.functionForm form {
+padding:8px 0;
+}
+
+.functionForm select {
+width:200px;
+margin-width:10px;
+}
+
+.functionForm label {
+width:8em;
+text-indent:0;
+}
+
+.flightSearch label {
+display:inline;
+width:10em;
+text-indent:0;
+}
+
+.search {
+margin-left:8px;
+}
+
+.functionForm input {
+width:10em;
+font-size:1.2em;
+margin-left:10px;
+}
+
+.functionForm .competition input {
+width:10em;
+margin-left:10px;
+height:auto;
+font-size:1em;
+}
+
+.functionForm .competition textarea {
+font-size:1.2em;
+font-family:Arial, Helvetica, Verdana, Sans-serif;
+height:6em;
+}
+
+.functionForm .competition textarea,.functionForm .competition input {
+width:250px;
+}
+
+#competitionTitle {
+margin-left:10px;
+width:13.5em;
+}
+
+.search input {
+margin-left:0;
+width:95px;
+font-size:.9em;
+}
+
+input.radio {
+border:none;
+background:none;
+margin-left:0;
+margin-right:10px;
+width:1.2em;
+clear:both;
+}
+
+.functionForm p.compTitle,.functionForm p.compInfo {
+font-weight:700;
+padding-bottom:8px;
+}
+
+.functionForm p.compInfo {
+padding-top:14px;
+}
+
+.functionForm label.comments {
+width:auto;
+}
+
+.functionForm textarea {
+margin-left:50px;
+margin-top:6px;
+height:15em;
+font-size:1.2em;
+white-space:normal;
+width:15em;
+}
+
+.functionForm input#feedbackResponseYes,.functionForm input#feedbackResponseNo {
+width:auto;
+float:none;
+border:none;
+background:none;
+margin:0 5px -3px 10px;
+}
+
+.functionForm p.radioInline label {
+float:none;
+clear:right;
+}
+
+.termFinder select {
+width:147px;
+margin-right:2px;
+}
+
+.termFinder select.halfwidth {
+width:47px;
+}
+
+.flightInfo {
+overflow:hidden;
+padding-bottom:0;
+}
+
+.flightInfo h3,.flightInfo .header3,.flightInfo .heading_3,.flightInfo .Heading_3 {
+padding-right:210px;
+}
+
+#mainCntnt .liveinfo {
+float:right;
+margin-top:-2.8em;
+width:210px;
+padding:6px 6px 6px 0;
+}
+
+.liveinfo span {
+border-right:1px solid #bbb;
+float:right;
+display:inline;
+padding:0 4px;
+}
+
+span#refresh {
+border:none;
+padding-right:0;
+}
+
+span#weatherInfo {
+border:none;
+width:7px;
+height:16px;
+float:right;
+margin-left:15px;
+padding:0;
+}
+
+.flightInfo span#weatherInfo img {
+z-index:10000;
+}
+
+.liveinfo img {
+margin-left:4px;
+}
+
+#flightTabs {
+width:100%;
+float:left;
+margin-top:-1.5em;
+border-bottom:6px solid #f8c424;
+position:relative;
+z-index:100;
+}
+
+#flightTabs li {
+display:inline;
+margin:0 1px 0 0;
+padding:0;
+}
+
+#flightTabs li a {
+float:left;
+background:url(../image/tab_leftArr.gif) no-repeat left top;
+text-decoration:none;
+font-size:1.1em;
+margin:0;
+padding:0 0 0 36px;
+}
+
+#flightTabs li a.departures {
+background-image:url(../image/tab_leftDep.gif);
+}
+
+#flightTabs li a:hover,#flightTabs li a.current:hover {
+color:#f8c424;
+}
+
+#flightTabs a span {
+float:left;
+display:block;
+background:url(../image/tab_right.gif) no-repeat right top;
+color:#FFF;
+padding:4px 15px 5px 0;
+}
+
+#flightTabs li a:hover,#flightTabs li a.current {
+background-position:0 -70px;
+}
+
+#flightTabs li a:hover span,#flightTabs li a.current span {
+background-position:100% -70px;
+color:#333;
+}
+
+#divider_1_2 .flightInfo form {
+background:#2d2d2d url(../image/bg_flightInfo.gif) repeat-x;
+color:#fff;
+width:440px;
+height:3.4em;
+margin:0;
+}
+
+.flightInfo fieldset {
+padding:8px 6px;
+}
+
+.flightInfo input {
+margin-left:10px;
+width:10em;
+}
+
+.flightInfo label {
+clear:none;
+text-indent:0;
+width:auto;
+line-height:2em;
+}
+
+.flightInfo button, .transport button {
+background-image:url(../image/bg_flightGo.gif);
+}
+
+.flightInfo table {
+clear:both;
+font-size:10px;
+color:#fff;
+background:#2a2a2a;
+border-bottom:1px solid #000;
+width:440px;
+}
+
+.flightInfo th {
+border-top:1px solid #000;
+background:#2a2a2a;
+text-align:left;
+overflow:hidden;
+}
+
+.flightInfo th.sched,.flightInfo td.sched {
+width:60px;
+}
+
+.flightInfo th.no,.flightInfo td.no {
+width:70px;
+}
+
+.flightInfo th.status,.flightInfo td.status {
+width:120px;
+}
+
+.flightInfo th.terminal,.flightInfo td.terminal {
+width:40px;
+}
+
+.flightInfo th a {
+color:#fac720;
+background:url(../image/icon_fidArrow.gif) no-repeat;
+background-position:bottom right;
+padding-right:8px;
+}
+
+.flightInfo th a:hover {
+color:#0083B3;
+background-color:#333;
+text-decoration:none;
+}
+
+.flightInfo th a.sortDown {
+background-position:top right;
+}
+
+.flightInfo th a.sortUp {
+background-position:right 50%;
+}
+
+.flightInfo tbody td {
+border-top:1px solid #000;
+padding-top:2px;
+padding-bottom:2px;
+}
+
+.flightInfo tbody tr {
+background:#434343;
+height:15px;
+}
+
+.flightInfo tr.altrow {
+background:#5f5f5f;
+}
+
+#disclaimerHide {
+padding-bottom:6px;
+background:#ffd02d url(../image/bg_disclaimer.gif) repeat-x;
+border-bottom:1px dotted #afacac;
+}
+
+#fidFtr {
+background:#f8c424 url(../image/crv_centBot.gif) no-repeat bottom left;
+width:100%;
+color:#6d6d6d;
+padding:4px 0 10px;
+}
+
+#fidFtr li {
+float:left;
+margin-left:6px;
+display:inline;
+}
+
+#fidFtr li a {
+float:left;
+margin-right:6px;
+background:none;
+padding:0;
+}
+
+#fidFtr #allFlights a,#fidFtr li#allFlights a {
+background:url(../image/icon_expand.gif) no-repeat right 50%;
+padding-right:16px;
+}
+
+.transport div,.weather div {
+padding-bottom:0;
+margin-bottom:0;
+}
+
+#divider_2_2 .transport li div,#divider_2_2 .weather li div {
+padding-bottom:6px;
+background:none;
+}
+
+.transport label {
+display:inline;
+width:2.1em;
+text-indent:0;
+}
+
+.transport select {
+margin-right:.5px;
+width:3.9em;
+}
+
+.transport .dayIn,.transport .dayOut {
+width:37px;
+font-size:.85em;
+}
+
+.transport .timeIn,.transport .timeOut {
+width:47px;
+font-size:.85em;
+}
+
+.transport .monthIn,.transport .monthOut {
+width:57px;
+overflow:hidden;
+clip:auto;
+font-size:.85em;
+}
+
+.transport select.chooseTerm {
+width:165px;
+}
+
+#mainCntnt .transport form p {
+padding:2px 0;
+}
+
+#transportlinks li,#weather li {
+background-repeat:no-repeat;
+background-position:left bottom;
+float:left;
+}
+
+#transportlinks li li {
+background-image:none;
+background-color:none;
+}
+
+#transportlinks li.parking {
+background-color:#285daa;
+background-image:url(../image/bg_parking.gif);
+color:#fff;
+min-height:175px;
+}
+
+#transportlinks li.parkingExtra {
+background-color:#285daa;
+background-image:url(../image/crv_parking.gif);
+color:#FFF;
+min-height:175px;
+}
+
+#transportlinks li.train {
+background-color:#fdebb2;
+background-image:url(../image/crv_tube.gif);
+}
+
+#transportlinks li.bus {
+background-color:#fbe18b;
+background-image:url(../image/crv_bus.gif);
+}
+
+#transportlinks li.taxi,#weather li.fiveDay {
+background-color:#fad765;
+background-image:url(../image/crv_taxi.gif);
+}
+
+#transportlinks li.car,#weather li.worldwide {
+background-color:#ffd02d;
+background-image:url(../image/crv_car.gif);
+}
+
+#mainCntnt p.open {
+float:left;
+padding:0;
+}
+
+#mainCntnt .portlet li a.normal,#mainCntnt .portlet li a.close {
+width:180px;
+background:url(../image/icon_expand.gif) no-repeat 95% 35%;
+display:block;
+text-decoration:none;
+padding:3px 15px 10px;
+}
+
+#mainCntnt #transportlinks li span.cta a,#mainCntnt #transportlinks li span.OLT_Link a {
+background-image:url(../image/cta_tab.gif);
+background-position:8px 50%;
+padding:.3em 8px .3em 25px;
+}
+
+#fidFtr #allFlights a.close,#mainCntnt .portlet li a.close {
+background-image:url(../image/icon_contract.gif);
+}
+
+#divider_2_2 .sandc h3,#divider_2_2 .sandc .header3,#divider_2_2 .sandc .heading_3,#divider_2_2 .sandc .Heading_3 {
+background-color:#903;
+color:#fff;
+}
+
+#divider_2_2 .sandc label,#divider_2_2 .storeFinder label,#divider_2_2 .worldwide label {
+width:0;
+}
+
+#divider_2_2 .sandc ul,#divider_2_2 .storeFinder ul {
+background:url(../image/bg_sandcUl.gif) repeat-x bottom;
+width:210px;
+display:inline;
+padding-bottom:4px;
+margin:6px 0 3px;
+}
+
+#divider_2_2 .sandc li,#divider_2_2 .storeFinder li {
+margin-left:5px;
+width:auto;
+}
+
+#divider_2_2 .sandc li a,#divider_2_2 .storeFinder li a {
+background:#dfdfdf;
+font-weight:700;
+border:1px solid #b0b0b0;
+display:block;
+padding:.3em 24px .3em 6px;
+}
+
+#mainCntnt .sandc li.current a,#mainCntnt .storeFinder li.current a {
+background:#f8c424;
+border-bottom:1px solid #f8c424;
+cursor:default;
+color:#555;
+}
+
+#mainCntnt .sandc li a:hover,#mainCntnt .storeFinder li a:hover {
+text-decoration:none;
+cursor:pointer;
+}
+
+.sandc select {
+width:190px;
+}
+
+.storeFinder input {
+width:120px;
+margin-right:6px;
+}
+
+#divider_1_2 .storeFinder form label.searchFlight {
+display:inline;
+}
+
+#divider_2_2 .sandc,#divider_2_2 .storeFinder {
+background-image:url(../image/crv_sandcBot.gif);
+}
+
+#mainCntnt .flightSearch input {
+width:115px;
+}
+
+#mainCntnt .flightSearch select {
+width:118px;
+}
+
+#weather table {
+width:198px;
+font-size:11px;
+margin:6px 6px 0;
+}
+
+#weather table td {
+vertical-align:middle;
+padding:.3em 0;
+}
+
+#weather table td span {
+padding-left:22px;
+background-position:left 50%;
+background-repeat:no-repeat;
+height:17px;
+display:block;
+}
+
+#weather table td span.cloudy {
+background-image:url(../image/icon_cloud.gif);
+}
+
+#weather p a {
+background-image:url(../image/cta_tab.gif);
+background-position:0 50%;
+padding:0 0 0 18px;
+}
+
+#weather li.temperature {
+background-color:#ededed;
+background-image:url(../image/crv_weather.gif);
+padding-bottom:6px;
+}
+
+#temperatureinfo {
+height:auto;
+position:relative;
+font-size:11px;
+}
+
+#weather div#weatherImage {
+width:210px;
+height:80px;
+background-repeat:no-repeat;
+background-position:top left;
+overflow:hidden;
+}
+
+#temperatureinfo dl {
+float:left;
+margin:0 6px;
+}
+
+#temperatureinfo dt,#temperatureinfo dd {
+float:left;
+margin-right:6px;
+width:70px;
+}
+
+#temperatureinfo dt {
+border-right:1px dotted #afacac;
+}
+
+#temperatureinfo p {
+position:absolute;
+top:80px;
+right:0;
+}
+
+#temperatureinfo p a {
+background:none;
+margin:0;
+padding:0;
+}
+
+#divider_1_2 .storeFinder form {
+background-color:#e7eff8;
+width:440px;
+padding-bottom:6px;
+margin:0 0 10px;
+}
+
+.storeFinder table.results {
+border-top:1px dotted #afacac;
+border-bottom:1px dotted #afacac;
+margin:10px 0;
+padding:8px 0;
+}
+
+.storeFinder table td.results {
+padding:2px 0 6px;
+}
+
+.storeFinder h4 {
+padding-left:0;
+padding-top:0;
+color:#666;
+}
+
+.storeFinder h4 a {
+width:auto;
+height:auto;
+display:inline;
+}
+
+.storeFinder h4.shoptitle {
+padding-left:0;
+padding-top:0;
+color:#0083B3;
+}
+
+.storeFinder table span.resultsimg img {
+margin-bottom:12px;
+border:1px solid #ededed;
+margin-left:10px;
+}
+
+.storeFinder table span.keyicon img {
+margin-right:6px;
+width:25px;
+height:25px;
+}
+
+.storeFinder ol {
+width:440px;
+text-align:right;
+}
+
+#mainCntnt #divider_1_2 .storeFinder li {
+margin-left:8px;
+float:right;
+}
+
+#mainCntnt #divider_1_2 .storeFinder li a {
+margin:0;
+padding:0;
+}
+
+#publicationsResults {
+border-bottom:1px dotted #afacac;
+margin:10px 0;
+}
+
+#mainCntnt p.publicationsResultsItem {
+border-top:1px dotted #afacac;
+padding:12px 10px;
+}
+
+.mootabs_panel {
+top:-1px;
+clear:both;
+overflow:none;
+}
+
+#arrivalsOuter,#departuresOuter {
+position:relative;
+background:#2d2d2d;
+}
+
+#arrivals,#departures {
+overflow:hidden;
+overflow-x:hidden;
+margin-top:6.6em;
+}
+
+#arrivalsOuter thead tr,#departuresOuter thead tr {
+position:absolute;
+top:5.7em;
+left:0;
+width:100%;
+}
+
+#arrivalsOuter form,#departuresOuter form {
+position:absolute;
+top:0;
+left:0;
+}
+
+#arrivalsOuter tfoot td,#departuresOuter tfoot td {
+position:absolute;
+width:51.5em;
+bottom:0;
+left:0;
+}
+
+#mainCntnt .flightInfo li a.normal,#mainCntnt .flightInfo li a.close {
+display:inline;
+width:auto;
+padding:0 15px;
+}
+
+div.autocompleter-loading {
+float:left;
+clear:right;
+background:#fff url(images/spinner.gif) no-repeat center;
+width:20px;
+height:16px;
+}
+
+ul.autocompleter-choices {
+position:absolute;
+border:1px solid #eee;
+background-color:#FFF;
+text-align:left;
+z-index:50;
+}
+
+ul.autocompleter-choices li {
+position:relative;
+cursor:pointer;
+float:none;
+display:block;
+font-size:.7em;
+padding:.1em 4px;
+}
+
+ul.autocompleter-choices li.autocompleter-selected {
+background-color:#444;
+color:#fff;
+}
+
+ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
+color:#9fcfff;
+}
+
+#divider_1_2 .autonomySearch form.autonomyFilter {
+background-color:#e7eff8;
+padding-bottom:6px;
+margin:0 0 10px;
+}
+#divider_1_2 .autonomySearch form.autonomyprevnext {
+background-color: #ffffff;
+}
+
+/* ======================================================= */
+/* =========== calendar-system.css starts here*/ ========= */
+/* ======================================================= */
+div.calendar {
+position:relative;
+z-index:10000;
+}
+
+.calendar,.calendar table {
+border:1px solid #556;
+font-size:11px;
+color:#000;
+cursor:default;
+background:#eef;
+font-family:tahoma,verdana,sans-serif;
+}
+
+.calendar .button {
+text-align:center;
+padding:2px;
+}
+
+.calendar .nav {
+background:#778 url(menuarrow.gif) no-repeat 100% 100%;
+}
+
+.calendar thead .title {
+font-weight:700;
+text-align:center;
+background:#fff;
+color:#000;
+padding:2px;
+}
+
+.calendar thead .headrow {
+background:#778;
+color:#fff;
+}
+
+.calendar thead .daynames {
+background:#bdf;
+}
+
+.calendar thead .name {
+border-bottom:1px solid #556;
+text-align:center;
+color:#000;
+padding:2px;
+}
+
+.calendar thead .hilite {
+background-color:#aaf;
+color:#000;
+border:1px solid #04f;
+padding:1px;
+}
+
+.calendar thead .active {
+background-color:#77c;
+padding:2px 0 0 2px;
+}
+
+.calendar tbody .day {
+width:2em;
+color:#456;
+text-align:right;
+padding:2px 4px 2px 2px;
+}
+
+.calendar tbody .day.othermonth {
+font-size:80%;
+color:#bbb;
+}
+
+.calendar tbody .day.othermonth.oweekend {
+color:#fbb;
+}
+
+.calendar table .wn {
+border-right:1px solid #000;
+background:#bdf;
+padding:2px 3px 2px 2px;
+}
+
+.calendar tbody .rowhilite td {
+background:#def;
+}
+
+.calendar tbody .rowhilite td.wn {
+background:#eef;
+}
+
+.calendar tbody td.hilite {
+background:#def;
+border:1px solid #bbb;
+padding:1px 3px 1px 1px;
+}
+
+.calendar tbody td.active {
+background:#cde;
+padding:2px 2px 0;
+}
+
+.calendar tbody td.selected {
+font-weight:700;
+border:1px solid #000;
+background:#fff;
+color:#000;
+padding:1px 3px 1px 1px;
+}
+
+.calendar tbody td.today {
+font-weight:700;
+color:#00f;
+}
+
+.calendar tbody .disabled {
+color:#999;
+}
+
+.calendar tbody .emptycell {
+visibility:hidden;
+}
+
+.calendar tfoot .footrow {
+text-align:center;
+background:#556;
+color:#fff;
+}
+
+.calendar tfoot .ttip {
+background:#fff;
+color:#445;
+border-top:1px solid #556;
+padding:1px;
+}
+
+.calendar tfoot .hilite {
+background:#aaf;
+border:1px solid #04f;
+color:#000;
+padding:1px;
+}
+
+.calendar tfoot .active {
+background:#77c;
+padding:2px 0 0 2px;
+}
+
+.calendar .combo {
+position:absolute;
+display:none;
+top:0;
+left:0;
+width:4em;
+cursor:default;
+border:1px solid #655;
+background:#def;
+color:#000;
+font-size:90%;
+z-index:100;
+}
+
+.calendar .combo .label,.calendar .combo .label-IEfix {
+text-align:center;
+padding:1px;
+}
+
+.calendar .combo .label-IEfix {
+width:4em;
+}
+
+.calendar .combo .hilite {
+background:#acf;
+}
+
+.calendar .combo .active {
+border-top:1px solid #46a;
+border-bottom:1px solid #46a;
+background:#eef;
+font-weight:700;
+}
+
+.calendar td.time {
+border-top:1px solid #000;
+text-align:center;
+background-color:#f4f0e8;
+padding:1px 0;
+}
+
+.calendar td.time .hour,.calendar td.time .minute,.calendar td.time .ampm {
+border:1px solid #889;
+font-weight:700;
+background-color:#fff;
+padding:0 3px 0 4px;
+}
+
+.calendar td.time .colon {
+font-weight:700;
+padding:0 2px 0 3px;
+}
+
+.calendar td.time span.hilite {
+background-color:#667;
+color:#fff;
+border-color:#000;
+}
+
+.calendar td.time span.active {
+background-color:#000;
+color:#0f0;
+border-color:red;
+}
+
+td,.standard table td {
+vertical-align:text-top;
+}
+
+span.disclaimer,span.OLT_Disclaimer,.disclaimer,.OLT_Disclaimer {
+clear:both;
+color:#4c4c4c;
+font-size:.9em;
+}
+
+span.vertspace,span.OLT_Vertspace,.vertspace,.OLT_Vertspace {
+color:#4c4c4c;
+display:block;
+margin-top:2.2em;
+}
+
+span.hideTop,span.OLT_Screenreader_Function,h1,.hideTop,.OLT_Screenreader_Function,#mainCntnt .categories li a span,.search label,.timeTable label,.search h3,.search .header3,.search .heading_3,.search .Heading_3,.calendar tbody .emptyrow {
+display:none;
+}
+
+a:focus,#flightTabs li a#departures:focus,#temperatureinfo p a:focus,select:focus,input:focus,input.radio:focus {
+background-image:none;
+outline-style:none;
+}
+
+h1,.header1,.heading_1,.Heading_1,h1,.header1,.Heading_1 {
+font-size:1.4em;
+position:absolute;
+text-indent:-20000px;
+}
+
+h2,.header2,.heading_2,.Heading_2,h3,.header3,.heading_3,.Heading_3,h2,.header2,.Heading_2,h3,.header3,.Heading_3 {
+font-size:1.25em;
+}
+
+h4,.header4,.heading_4,.Heading_4,h5,.header5,.heading_5,.Heading_5,h4,.header4,.Heading_4,h5,.header5,.Heading_5 {
+font-size:1.2em;
+}
+
+h6,.header6,.heading_6,.Heading_6,h6,.header6,.Heading_6 {
+color:#666;
+font-size:1.15em;
+}
+
+#logo img,span#degrees,span#date,#divider_1_2 table.flightInfoDetails,#fidFtr #allFlights,#mainCntnt .storeFinder form span.imgFloatRight {
+float:right;
+}
+
+#ftr ul,.storeFinder form.flightSearch p img,#flightTabs li a span,#mainCntnt .flightInfo #routeSuggest li {
+float:none;
+}
+
+.clearfix,.portlet h1,.portlet .header1,.portlet .heading_1,.portlet .Heading_1,.portlet .header2,.portlet .heading_2,.portlet .Heading_2,.portlet .header3,.portlet .heading_3,.portlet .Heading_3,.portlet .header4,.portlet .heading_4,.portlet .Heading_4,.portlet .header5,.portlet .heading_5,.portlet .Heading_5,.portlet .header6,.portlet .heading_6,.portlet .Heading_6,.gt .header3,.gt .header5,.gt .heading_3,.gt .heading_5,.gt .Heading_3,.gt .Heading_5,.hero .header2,.hero .heading_2,.hero .Heading_2,.tgt span.cta a {
+display:block;
+}
+
+.OLT_Hero_Triplet_Link a,.OLT_Hero_Triplet_Link a:hover,.cta video a,.OLT_Video_Link a {
+color:#FFF;
+}
+.OLT_Video_Link_Inline a {
+color:#0083B3;
+}
+
+.Bold,.Table_Row_Label_1,dl span,ul.autocompleter-choices span.autocompleter-queried {
+font-weight:700;
+}
+
+.Black_Text,.cmsWhiteLink,a.cmsWhiteLink,a.cmsWhiteLink:link {
+color:#000;
+}
+
+.Blue_Bold,.Bold_Grey {
+color:#666;
+font-weight:700;
+}
+
+#extras a:hover,#ftr a:hover,#breadcrumbs a:hover,#mainCntnt .gt span.cta a:hover,#mainCntnt .gt span.OLT_Link a:hover,#mainCntnt .hero span.OLT_Hero_Block a:hover,#mainCntnt .portlet li a.normal:hover {
+text-decoration:underline;
+}
+
+#termSlctr div.Terminal5,#termSlctr div.t5 {
+background-position:-250px bottom;
+}
+
+#termSlctr div.Terminal4,#termSlctr div.t4 {
+background-position:-500px bottom;
+}
+
+#termSlctr div.Terminal3,#termSlctr div.t3 {
+background-position:-750px bottom;
+}
+
+#termSlctr div.Terminal2,#termSlctr div.t2 {
+background-position:-1000px bottom;
+}
+
+#termSlctr div.Terminal1,#termSlctr div.t1 {
+background-position:-1250px bottom;
+}
+
+#mainCntnt #tertNav li a.sectionOn,#mainCntnt .sandc li.current a:hover,#mainCntnt .storeFinder li.current a:hover {
+cursor:default;
+}
+
+#mainCntnt #tertNav ul li a:hover,#mainCntnt #tertNav ul li a.pageOn,#mainCntnt #tertNav ul li a.pageOn:hover {
+background-position:-1185px;
+}
+
+#mainCntnt #tertNav ul ul,#mainCntnt #tertNav ul ul ul {
+border-top:0;
+}
+
+#mainCntnt #tertNav ul ul ul li a.pageOn,#mainCntnt #tertNav ul ul ul li a.pageOn:hover,#mainCntnt #tertNav ul ul ul li a.sectionOn,#mainCntnt #tertNav ul ul ul li a.sectionOn:hover {
+background-position:-1755px;
+}
+
+#mainCntnt p,.standard table p,#mainCntnt .storeFinder table.results td p {
+padding:3px 10px;
+}
+
+#mainCntnt fieldset,#mainCntnt table,.transport fieldset {
+clear:both;
+}
+
+.gt div,#divider_1_2 .long,#divider_1_2 .short,#divider_1_2 .long div,#divider_1_2 .short div,#divider_1_2 .long div img,#divider_1_2 .short div img {
+width:215px;
+}
+
+#divider_2_2 .gt,#divider_2_2 .gt div,#divider_2_2 ul,#divider_2_2 li {
+width:210px;
+}
+
+#divider_2_2 .imgtop,#divider_2_2 .portlet div,#divider_2_2 .portlet h3,#divider_2_2 .portlet .header3,#divider_2_2 .portlet .heading_3,#divider_2_2 .portlet .Heading_3 {
+background-image:url(../image/crv_rightTop.gif);
+}
+
+#divider_2_2 .imgbot,#divider_2_2 .portlet {
+background-image:url(../image/crv_rightBot.gif);
+}
+
+.hero,.hero div,.wide p .Heading_3 {
+width:440px;
+}
+
+.hero p,#weather td.weatherTemp,#weather th.weatherTemp {
+text-align:right;
+}
+
+#divider_1_2 .portlet h3,#divider_1_2 .portlet .header3,#divider_1_2 .portlet .heading_3,#divider_1_2 .portlet .Heading_3,#divider_1_2 .functionForm div {
+background-image:url(../image/crv_centTop.gif);
+}
+
+.standard span.imgFloatRight img,#mainCntnt .storeFinder form span.imgFloatRight img {
+float:right;
+margin-left:10px;
+margin-right:0;
+}
+
+.standard span.cta a,.standard span.OLT_Link a,.security span.cta a,.crisis span.cta a,.multiLanguage span.cta a,.airportInfo span.cta a {
+background-image:url(../image/cta_language.gif);
+}
+
+#divider_1_1 table#timeTable th.left,.calendar td.time .ampm {
+text-align:center;
+}
+
+table#timeTable tr,#divider_1_2 .storeFinder,#divider_1_2 .autonomySearch {
+background-color:#fff;
+}
+
+#divider_1_2 .crisis h3,#divider_1_2 .crisis .header3,#divider_1_2 .crisis .heading_3,#divider_1_2 .crisis .Heading_3,#divider_1_2 .connect h3,#divider_1_2 .connect .header3,#divider_1_2 .connect .heading_3,#divider_1_2 .connect .Heading_3 {
+background:transparent;
+border-bottom:none;
+font-size:1.15em;
+padding-bottom:0;
+}
+
+#divider_1_2 .news div,.flightInfo div,#disclaimerHide h4,.transport,.weather,#weather h4,#weather .header4,#weather .heading_4 {
+padding-bottom:0;
+}
+
+#divider_1_2 .listLinks div p,#divider_0_2 .listLinks div p,.wide div p img {
+margin-left:-10px;
+}
+
+.functionForm .competition input.radio,.flightInfo th.empty,.flightInfo td.empty {
+width:10px;
+}
+
+.liveinfo span.busygif,span#flightInfoWeather,span#flightInfoRefresh {
+border-right:none;
+}
+
+.flightInfo th.from,.flightInfo td.from,.worldwide select {
+width:130px;
+}
+
+.flightInfo th.sms,.flightInfo td.setwidth {
+width:20px;
+}
+
+#transportlinks li div.accordionTrain,#weather table th {
+border-bottom:1px dotted #afacac;
+}
+
+#transportlinks li.parking h4,#transportlinks li.parking .header4,#transportlinks li.parking .heading_4,#transportlinks li.parkingExtra h4,#transportlinks li.parkingExtra .header4,#transportlinks li.parkingExtra .heading_4 {
+color:#fff;
+}
+
+.storeFinder select,.autonomySearch select {
+margin-right:16px;
+width:160px;
+}
+
+#divider_1_2 .storeFinder fieldset,#divider_1_2 .autonomySearch fieldset {
+margin:0 10px;
+}
+
+#divider_1_2 .storeFinder form label,#divider_1_2 .autonomySearch form label {
+clear:none;
+float:left;
+}
+
+#mainCntnt .storeFinder form span,#mainCntnt .autonomySearch form span {
+color:#4c4c4c;
+float:left;
+margin-right:6px;
+}
+
+.storeFinder table td,#mainCntnt .storeFinder table td p {
+padding:3px 0;
+}
+
+.calendar thead .weekend,.calendar tbody td.weekend {
+color:#a66;
+}
+
+/* =========================================================== */
+/* ================= function.css starts here ================ */
+/* =========================================================== */
+
+#mainCntnt .functionForm {background-color:#e6eff8;}
+
+.functionForm div {
+	background-image:url(../image/crv_leftTop.gif);
+	padding-bottom:0;
+}
+
+#divider_1_2 .functionForm div {background-image:url(../image/crv_centTop.gif);}
+
+.functionForm form {padding:8px 0;}
+
+.functionForm select {width:200px; margin-width:10px;}
+
+.functionForm label {
+	width:8em;
+	text-indent:0;
+}
+.flightSearch label {
+	display:inline;
+	width:10em;
+	text-indent:0;
+}
+.search label, .timeTable label {display:none;}
+.search {
+  margin-left: 8px;
+}
+
+.functionForm input {
+	width:10em;
+	font-size: 1.2em;
+	margin-left:10px;
+	
+}
+
+.functionForm .competition input {
+	width:10em;
+	margin-left:10px;
+	height: auto;
+	font-size: 1.0em;
+}
+
+.functionForm .competition textarea {
+font-size: 1.2em;
+	font-family: Arial, Helvetica, Verdana, Sans-serif;
+	height: 6em;
+}
+
+.functionForm .feedback input, 
+.functionForm .feedback textarea {
+	
+}
+
+.functionForm .competition input.radio {
+width: 10px;
+}
+.functionForm .competition textarea, .functionForm .competition input {
+	width:250px;
+}
+
+#competitionTitle { margin-left:10px; width:13.5em; }
+
+.search input {
+	margin-left:0;
+	width:95px;
+	font-size: 0.9em;
+}
+
+input.radio {
+	border:none;
+	background:none;
+	margin-left:0pt;
+	margin-right:10px;
+	width:1.2em;
+	clear:both;
+}
+
+.functionForm p.compTitle, .functionForm p.compInfo {
+	font-weight:bold;
+	padding-bottom:8px;
+}
+.functionForm p.compInfo {padding-top:14px;}
+
+.search h3,
+.search .header3, 
+.search .heading_3, .search .Heading_3 {display:none;}
+
+.functionForm label.comments {width:auto;}
+.functionForm textarea {
+	margin-left:50px; /* see ie.css also */
+	margin-top:6px;
+	height:15em;
+	font-size:1.2em;
+	white-space:normal;
+	width:15em;
+}
+
+.functionForm input#feedbackResponseYes, .functionForm input#feedbackResponseNo {
+	width:auto;
+	float:none;
+	margin:0 5px -3px 10px;
+	border:none;
+	background:none;
+}
+
+.functionForm p.radioInline label {float:none; clear:right;}
+
+
+/*= terminal finder =*/
+.termFinder select {	
+	width:147px;
+	margin-right:2px;
+}
+
+.termFinder select.halfwidth {width:47px;}
+
+
+/*= FID =*/
+.flightInfo {	
+	overflow:hidden;
+	padding-bottom:0;
+}
+
+.flightInfo div {	
+	/*background:none;*/
+	padding-bottom:0;
+	/*position:relative;*/
+}
+
+.flightInfo h3, 
+.flightInfo .header3, 
+.flightInfo .heading_3, .flightInfo .Heading_3 {padding-right:210px;}
+
+#mainCntnt .liveinfo {	
+	float:right;
+	margin-top:-2.8em;
+	width:210px;
+	padding:6px 6px 6px 0;
+}
+
+.liveinfo span {	
+	padding:0 4px;
+	border-right:1px solid #bbb;
+	float:right;
+	display:inline;
+}
+.liveinfo span.busygif {
+    border-right: none;	
+}
+span#flightInfoWeather {
+   border-right: none;	
+}
+span#flightInfoRefresh {
+   border-right: none;	
+}
+span#refresh {	
+	border:none;
+	padding-right:0;
+}
+
+span#weatherInfo {	
+	/*background:url(../image/icon_sunny.gif) no-repeat top right;*/
+	border:none;
+	width:7px;
+	padding:0;
+	height:16px;
+	float:right;
+	margin-left: 15px;
+	
+}
+.flightInfo span#weatherInfo img {
+	z-index: 10000;
+}
+span#degrees, span#date {float:right;}
+
+.liveinfo img {margin-left:4px;}
+
+#flightTabs {	
+	width:100%;
+	float:left;
+	margin-top:-1.5em;
+	border-bottom:6px solid #f8c424;
+}
+
+#flightTabs li {
+	display:inline;
+	margin:0 1px 0 0;
+	padding:0;
+}
+
+#flightTabs li a {
+	float:left;
+	background:url(../image/tab_leftArr.gif) no-repeat left top;
+	margin:0;
+	padding:0 0 0 36px;
+	text-decoration:none;
+	font-size:1.1em;
+}
+
+#flightTabs li a.departures {background-image:url(../image/tab_leftDep.gif);}
+
+#flightTabs li a:hover, #flightTabs li a.current:hover {color:#f8c424;}
+
+#flightTabs a span {
+	float:left;
+	display:block;
+	background:url(../image/tab_right.gif) no-repeat right top;
+	padding:4px 15px 5px 0;
+	color:#FFF;
+}
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+#flightTabs li a span {float:none;}
+/* End IE5-Mac hack */
+
+#flightTabs li a:hover, #flightTabs li a.current {background-position:0% -70px;}
+#flightTabs li a:hover span, #flightTabs li a.current span {background-position:100% -70px; color:#333;}
+
+#divider_1_2 table.flightInfoDetails {
+	float:right;
+}
+
+#divider_1_2 .flightInfo form {	
+	background:#2d2d2d url(../image/bg_flightInfo.gif) repeat-x;
+	color:#fff;
+	width:440px;
+	margin:0;
+	height:3.4em;
+}
+
+.flightInfo fieldset {padding:8px 6px;}
+
+.flightInfo input {	
+	margin-left:10px;
+	width:10em;
+}
+
+.flightInfo label {	
+	clear:none;
+	text-indent:0;
+	width:auto;
+	line-height:2em;/* see ie7 also */
+}
+
+.flightInfo button {background-image:url(../image/bg_flightGo.gif);}
+
+.flightInfo table {	
+	clear:both;
+	font-size:10px;
+	color:#fff;
+	background:#2a2a2a;
+	border-bottom:1px solid #000;
+	width:440px;
+}
+
+.flightInfo th {
+	border-top:1px solid #000;
+	background:#2a2a2a;
+	/* padding:1px 0 1px 6px; */
+	text-align:left;
+	overflow:hidden;
+
+}
+
+.flightInfo th.sched, .flightInfo td.sched {width:60px;}
+.flightInfo th.no, .flightInfo td.no {width:70px;}
+.flightInfo th.from, .flightInfo td.from {width:130px;}
+.flightInfo th.status, .flightInfo td.status {width:120px;}
+.flightInfo th.terminal, .flightInfo td.terminal {width:40px;}
+.flightInfo th.sms {width:20px;}
+.flightInfo th.empty, .flightInfo td.empty {width:10px;}
+
+.flightInfo th a {
+	color:#fac720;
+	background:url(../image/icon_fidArrow.gif) no-repeat;
+	background-position:bottom right;
+	padding-right:8px;
+}
+.flightInfo th a:hover {
+	color:#0083B3;
+	background-color:#333;
+	text-decoration:none;
+}
+.flightInfo th a.sortDown {background-position:top right;}
+.flightInfo th a.sortUp {background-position:right 50%;}
+
+
+.flightInfo tbody td {	
+	border-top:1px solid #000;
+	/* padding:1px 0 1px 0px; */
+	/* height:15px; */
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.flightInfo td.setwidth {width:20px;}
+.flightInfo tbody tr {background:#434343; height:15px;}
+.flightInfo tr.altrow {background:#5f5f5f;}
+
+#disclaimerHide {
+	padding-bottom:6px;
+	background:#ffd02d url(../image/bg_disclaimer.gif) repeat-x;
+	border-bottom:1px dotted #afacac;
+}
+
+#disclaimerHide h4 {padding-bottom:0;}
+
+#fidFtr {	
+	background:#f8c424 url(../image/crv_centBot.gif) no-repeat bottom left;
+	width:100%;
+	padding:4px 0 10px 0;
+	color:#6d6d6d;
+}
+
+#fidFtr li {	
+	float:left;
+	margin-left:6px;
+	display:inline;
+}
+
+#fidFtr li a {	
+	float:left;
+	margin-right:6px;
+	background:none;
+	padding:0;
+}
+
+#fidFtr #allFlights {float:right;}
+
+#fidFtr #allFlights a, #fidFtr  li#allFlights a {	
+	background:url(../image/icon_expand.gif) no-repeat right 50%;
+	padding-right:16px;
+}
+
+#mainCntnt .flightInfo #routeSuggest li {
+	float:none;
+}
+
+
+/*= Your transport =*/
+.transport, .weather {padding-bottom:0;}
+
+.transport div, .weather div {	
+	padding-bottom:0;
+	margin-bottom:0;
+}
+
+#divider_2_2 .transport li div, #divider_2_2 .weather li div {	
+	padding-bottom:6px;
+	background:none;/*removes curved image at top of div*/
+}
+
+.transport label {	
+	display:inline;
+	width:2.1em; /* Overridden in IE6 by portlet.css */
+	text-indent:0;
+}
+
+.transport select {	
+	margin-right:0.5px;
+	width: 39px;
+	width:3.9em;
+}
+
+.transport .dayIn, .transport .dayOut {
+    width: 37px;
+	font-size: 0.85em;
+}
+.transport .timeIn, .transport .timeOut {
+    width: 47px;
+	font-size: 0.85em;
+}
+.transport .monthIn, .transport .monthOut {
+   width: 57px;
+   overflow: hidden;
+   clip: auto;
+   font-size: 0.85em;
+}
+
+.transport select.chooseTerm {width:165px;}
+
+#mainCntnt .transport form p {padding:2px 0;}
+
+.transport fieldset {clear:both;}
+
+#transportlinks li, #weather li {/* standard settings with train bg color and image definitions*/
+	background-repeat:no-repeat;
+	background-position:left bottom;
+	float:left;
+}
+
+#transportlinks li li {/* removes background from links within sublists*/
+	background-image:none;
+	background-color:none;
+}
+
+#transportlinks li div.accordionTrain {border-bottom:1px dotted #afacac;}
+	
+#transportlinks li.parking {	
+	background-color:#285daa;
+	background-image:url(../image/bg_parking.gif);
+	color:#fff;
+	min-height:175px;
+}
+
+#transportlinks li.parkingExtra {/*alternate parking div*/
+	background-color:#285daa;
+	background-image:url(../image/crv_parking.gif);
+	color:#ffffff;
+	min-height:175px;
+} 
+
+#transportlinks li.parking h4, 
+#transportlinks li.parking .header4, 
+#transportlinks li.parking .heading_4 {color:#fff;} 
+
+#transportlinks li.parkingExtra h4, 
+#transportlinks li.parkingExtra .header4, 
+#transportlinks li.parkingExtra .heading_4 {color:#fff;}
+
+#transportlinks li.train {
+	background-color:#fdebb2;
+	background-image:url(../image/crv_tube.gif);
+}
+
+#transportlinks li.bus {	
+	background-color:#fbe18b;
+	background-image:url(../image/crv_bus.gif);
+}
+
+#transportlinks li.taxi, #weather li.fiveDay {	
+	background-color:#fad765;
+	background-image:url(../image/crv_taxi.gif);
+}
+
+#transportlinks li.car, #weather li.worldwide {	
+	background-color:#ffd02d;
+	background-image:url(../image/crv_car.gif);
+}
+
+#mainCntnt p.open {	
+	padding:0;
+	float:left;
+}
+
+#mainCntnt .portlet li a.normal, #mainCntnt .portlet li a.close {	
+	width:180px;/* see ie 5 also*/
+	background:url(../image/icon_expand.gif) no-repeat 95% 35%;
+	display:block;
+	padding:3px 15px 10px 15px;
+	text-decoration:none;
+}
+
+#mainCntnt .portlet li a.normal:hover {text-decoration:underline;}
+
+#mainCntnt #transportlinks li span.cta a, #mainCntnt #transportlinks li span.OLT_Link a {	
+	padding:0.3em 8px 0.3em 25px;
+	background-image:url(../image/cta_tab.gif);
+	background-position:8px 50%;
+}
+
+#fidFtr #allFlights a.close, #mainCntnt .portlet li a.close {background-image:url(../image/icon_contract.gif);}
+
+
+
+/*= Security Customs and Store Finder =*/
+#divider_2_2 .sandc h3, 
+#divider_2_2 .sandc .header3, 
+#divider_2_2 .sandc .heading_3, 
+#divider_2_2 .sandc .Heading_3{	
+	background-color:#903;
+	color:#fff;
+}
+
+#divider_2_2 .sandc label, #divider_2_2 .storeFinder label, #divider_2_2 .worldwide label {width:0;}
+
+#divider_2_2 .sandc ul, #divider_2_2 .storeFinder ul {	
+	margin:6px 0 3px 0;
+	background:url(../image/bg_sandcUl.gif) repeat-x bottom;
+	width:210px;
+	display:inline;
+	padding-bottom:4px;
+}
+
+#divider_2_2 .sandc li, #divider_2_2 .storeFinder li {	
+	margin-left:5px;
+	width:auto;
+}
+#divider_2_2 .sandc li a, #divider_2_2 .storeFinder li a {	
+	padding:.3em 24px .3em 6px;
+	background:#dfdfdf;
+	font-weight:bold;
+	border:1px solid #b0b0b0;
+	display:block;
+}
+
+#mainCntnt .sandc li.current a , #mainCntnt .storeFinder li.current a {	
+	background:#f8c424;
+	border-bottom:1px solid #f8c424;
+	cursor:default;
+	color:#555;
+}
+
+#mainCntnt .sandc li a:hover, #mainCntnt .storeFinder li a:hover {text-decoration:none; cursor:pointer;}
+
+#mainCntnt .sandc li.current a:hover, 
+#mainCntnt .storeFinder li.current a:hover {cursor:default;}
+
+.sandc select {width:190px;}
+
+.storeFinder select {
+	width:160px;
+	margin-right:16px;
+}
+
+.storeFinder input {
+	width:120px;
+	margin-right:6px;
+}
+
+#divider_1_2 .storeFinder form label.searchFlight {display:inline;}
+
+#divider_2_2 .sandc, #divider_2_2 .storeFinder {
+	background-image:url(../image/crv_sandcBot.gif);
+}
+#mainCntnt .flightSearch input {
+	width: 115px;
+}
+#mainCntnt .flightSearch select {
+	width: 118px;
+}
+/*= weather =*/
+#weather h4, 
+#weather .header4, 
+#weather .heading_4 {padding-bottom:0;}
+
+#weather table {	
+	margin:6px 6px 0 6px;
+	width:198px;
+	font-size:11px;
+}
+
+#weather table th {border-bottom:1px dotted #afacac;}
+
+#weather table td {padding:.3em 0; vertical-align:middle;}
+
+#weather table td span {	
+	padding-left:22px;
+	background-position:left 50%;
+	background-repeat:no-repeat;
+	height:17px;
+	display:block;
+}
+
+#weather table td span.cloudy {background-image:url(../image/icon_cloud.gif);}
+
+#weather p a {	
+	background-image:url(../image/cta_tab.gif);
+	background-position:0 50%;
+	padding:0 0 0 18px;
+}
+
+#weather li.temperature {	
+	background-color:#ededed;
+	background-image:url(../image/crv_weather.gif);
+	padding-bottom:6px;
+}
+
+#temperatureinfo {	
+	height:auto;
+	position:relative;
+	font-size:11px;
+}
+
+#weather div#weatherImage {	
+	width:210px;
+	height:80px;
+	background-repeat:no-repeat;
+	background-position:top left;
+	overflow:hidden;
+}
+#weather td.weatherTemp, #weather th.weatherTemp {
+    text-align: right;
+}
+
+#temperatureinfo dl {	
+	margin:0 6px;
+	float:left;
+}
+
+#temperatureinfo dt, #temperatureinfo dd {	
+	float:left;
+	margin-right:6px;
+	width:70px;
+}
+
+#temperatureinfo dt {border-right:1px dotted #afacac;}
+
+dl span {font-weight:bold;}
+
+#temperatureinfo p {	
+	position:absolute;
+	top:80px;
+	right:0;
+}
+
+#temperatureinfo p a {	
+	background:none;
+	padding:0;
+	margin:0;
+}
+
+.worldwide select {width:130px;}
+
+
+
+/*= store finder - central column full version */
+
+#divider_1_2 .storeFinder {background-color:#fff;}
+
+#divider_1_2 .storeFinder form {	
+	background-color:#e7eff8;
+	width:440px;
+	margin:0 0 10px 0;
+	padding-bottom:6px;
+}
+
+#divider_1_2 .storeFinder fieldset {margin:0 10px;}
+
+#divider_1_2 .storeFinder form label {
+	float:left;
+	clear:none;
+}
+
+#mainCntnt .storeFinder form span {
+	float:left;
+	margin-right:6px;
+	color:#4c4c4c;
+}
+
+.storeFinder table.results {
+	border-top:1px dotted #afacac;
+	border-bottom:1px dotted #afacac;
+	margin:10px 0;
+	padding:8px 0;
+}
+
+.storeFinder table td.results {padding:2px 0 6px 0;}
+#mainCntnt .storeFinder table.results td p {padding:3px 10px;}
+
+.storeFinder table td {padding:3px 0;}
+#mainCntnt .storeFinder table td p {padding:3px 0;}
+.storeFinder h4 {padding-left:0; padding-top:0; color:#666;}
+.storeFinder h4 a {width:auto; height:auto; display:inline;}
+.storeFinder h4.shoptitle {padding-left:0; padding-top:0; color:#0083B3;}
+.storeFinder table span.resultsimg img {margin-bottom:12px; border:1px solid #ededed; margin-left: 10px; }
+.storeFinder table span.keyicon img {margin-right:6px; width:25px; height:25px;}
+
+.storeFinder ol {width:440px; text-align:right;}
+#mainCntnt #divider_1_2 .storeFinder li {margin-left:8px; float:right;}
+#mainCntnt #divider_1_2 .storeFinder li a {margin:0; padding:0;}
+
+#publicationsResults {
+	margin:10px 0;
+	border-bottom:1px dotted #afacac;
+}
+
+#mainCntnt p.publicationsResultsItem {
+	padding:12px 10px;
+	border-top:1px dotted #afacac;
+}
+
+#mainCntnt .storeFinder form span.imgFloatRight {float:right;}
+#mainCntnt .storeFinder form span.imgFloatRight img {float:right; margin-right:0; margin-left:10px;}
+
+.mootabs_panel {
+	top:-1px;
+	clear:both;
+	overflow:none;
+}
+
+#arrivalsOuter, #departuresOuter {
+	position:relative;
+	background:#2d2d2d;
+}
+
+#arrivals, #departures {
+	overflow:hidden;
+	overflow-x: hidden;
+	margin-top:6.6em;
+}
+
+#arrivalsOuter thead tr, #departuresOuter thead tr  {
+	position:absolute;
+	top:5.7em;
+	left:0;
+	width: 100%;
+}
+
+#arrivalsOuter form, #departuresOuter form {
+	position:absolute;
+	top:0px;
+	left:0;
+}
+
+#arrivalsOuter tfoot td, #departuresOuter tfoot td {
+	position:absolute;
+	width:51.5em;
+	bottom:0;
+	left:0
+}
+
+#flightTabs {
+	position: relative;
+	z-index: 100;
+}
+
+#mainCntnt .flightInfo li a.normal, #mainCntnt .flightInfo li a.close {display:inline; width:auto; padding:0 15px;}
+
+/*= auto complete for flightInfo */
+div.autocompleter-loading {
+	float:left;
+	clear:right;
+	background:#fff url(images/spinner.gif) no-repeat center;
+	width:20px;
+	height:16px;
+}
+
+ul.autocompleter-choices {
+	position:absolute;
+	border:1px solid #eee;
+	background-color:white;
+	text-align:left;
+	z-index:50;
+}
+
+ul.autocompleter-choices li {
+	position:relative;
+	padding:0.1em 4px 0.1em 4px;
+	cursor:pointer;
+	float:none;
+	display:block;
+	font-size:.7em;
+}
+
+ul.autocompleter-choices li.autocompleter-selected {
+	background-color:#444;
+	color:#fff;
+}
+
+ul.autocompleter-choices span.autocompleter-queried {font-weight:bold;}
+
+ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {color:#9fcfff;}
+
+.autonomySearch select {
+	width:160px;
+	margin-right:16px;
+}
+
+#divider_1_2 .autonomySearch {background-color:#fff;}
+
+#divider_1_2 .autonomySearch form {	
+	background-color:#e7eff8;
+	margin:0 0 10px 0;
+	padding-bottom:6px;
+}
+
+#divider_1_2 .autonomySearch fieldset {margin:0 10px;}
+
+#divider_1_2 .autonomySearch form label {
+	float:left;
+	clear:none;
+}
+
+#mainCntnt .autonomySearch form span {
+	float:left;
+	margin-right:6px;
+	color:#4c4c4c;
+}
+
+/* = which terminal = */
+.whichTerm div {padding-bottom:4px;}
+.whichTerm {margin-left: 8px;}
+.whichTerm h3, .whichTerm .header3, .whichTerm .heading_3 {background-color:#f9cd3e;}
+span#loading {float:right; }
+.whichTerm h4, .whichTerm .header4, .whichTerm .heading_4 {font-size:1em; padding-bottom:4px;}
+.whichTerm form {width:154px;}
+.whichTerm label {float:none; text-indent:0; width:auto; display:block;}
+.whichTerm form span {color:#666;}
+.whichTerm span.results {float:left; width:170px;}/* add a display none to turn off/on */
+span.results ul {padding:0 8px; width:154px;}
+#mainCntnt .whichTerm span.results ul li, #mainCntnt .whichTerm span.results ul li {
+	list-style:disc inside; 
+	display:list-item; 
+	clear:both; 
+	float:none; 
+	padding-bottom:.2em;
+}
+.whichTerm input {width:152px;}
+.whichTerm select {margin-right:7px;}
+#mainCntnt .whichTerm a.calendar {margin-right:0;}
+
+#divider_0_1 .whichTerm li a, #divider_0_2 .whichTerm li a, a.Tips3 {
+	background:url(../image/bg_listLinkLi.gif) 0 50% no-repeat; 
+	padding:0.2em 8px 0.2em 25px;
+}
+#divider_0_1 .whichTerm li a:hover, #divider_0_2 .whichTerm li a:hover {background-position:-230px 50%;}
+
+#divider_0_2 ul.pagination {border-top:1px dotted #666; padding:2px 8px 0 8px; margin-top:3px; width:154px;}
+#divider_0_2 ul.pagination li a, #divider_0_2 ul.pagination li a:hover {
+	width:auto; 
+	background:url(../image/bg_pagination.gif) 0 50% no-repeat; 
+	display:inline; 
+	padding:0.2em 8px 0.2em 17px; 
+	color:#903;
+}
+#divider_0_2 ul.pagination li.next {float:right;}
+#divider_0_2 ul.pagination li.next a, #divider_0_2 ul.pagination li.next a:hover {
+	background-position:right 50%; 
+	padding:0.2em 17px 0.2em 8px;
+}
+.whichTerm h5, .whichTerm .header5, .whichTerm .heading_5 {font-size:1em; padding:4px 8px;}
+.whichTerm h5.outbound, .whichTerm .header5.outbound, .whichTerm .heading_5.outbound {border-top:1px dotted #666;}
+.whichTerm h6, .whichTerm .header6, .whichTerm .heading_6 {text-align:center; background:#f9cd3e; padding:3px 0; color:#333; margin:4px 8px}
+.wtError {color:#ed1c24;}
+#mainCntnt p.note {background:#dbdbdb; padding:0 2px; margin:8px 8px 4px 8px;}
+a.Tips3, #divider_0_2 .whichTerm .results li span a {width:auto; display:inline; background:none; padding:0;}
+
+span.resultsTable {height:95px; overflow:auto; display:block; margin:4px 0; border-width:1px 0; border-color:#ddd; border-style:solid;}
+.whichTerm table {width:153px; clear:none;}
+.whichTerm table tr {background-color:#fff;}
+.whichTerm table tr.altrow {background-color:#ededed;}
+.whichTerm table td {padding:2px 6px;}
+p#connect {padding-top:0;}
+/* = which terminal = */
+
+
+/* = tooltips = */
+.tool-tip {color:#fff; width:200px; z-index:13000; text-align:left; font-size:.9em;}
+.tool-title {font-weight:bold; padding:8px 8px 4px; background:url(../image/bubble.png) top left; border-bottom:1px dotted #fff;}
+.tool-text {font-size:.7em; padding:4px 8px 8px; background:url(../image/bubble.png) bottom right;}
+/* = tooltips = */
+
+/* = myjourney portlet = */
+#divider_2_2 .myJourney {background-color:#d7d7d7;}
+#divider_2_2 .myJourney div {background:url(../image/bg_myJourney.gif); padding-bottom:6px; background-repeat:no-repeat;}
+#divider_2_2 .myJourney h3, 
+#divider_2_2 .myJourney .header3, 
+#divider_2_2 .myJourney .Heading_3 {border:none; line-height:0; text-indent:-200000px; padding:0; height:136px;}
+#divider_2_2 .myJourney h3 a, 
+#divider_2_2 .myJourney .header3 a, 
+#divider_2_2 .myJourney .Heading_3 a {background-image:url(../image/h3_myJourney.jpg); width:100%; height:136px; margin-bottom:-5px;}
+#divider_2_2 .myJourney h4, 
+#divider_2_2 .myJourney .header4, 
+#divider_2_2 .myJourney .Heading_4 {color:#153068; font-size:1.25em; padding-bottom:4px;}
+.myJourney span.cta a, .myJourney span.OLT_Link a {background:url(../image/bg_listLinkLi.gif) no-repeat -8px 50%; margin-left:0;}
+.myJourney span.cta a:hover {background-position:-238px 50%;}
+#mainCntnt .myJourney li {display:list-item; float:none; list-style:square inside; margin:0 0 0 10px; vertical-align:middle; padding:.2em 0; width:200px;}
+*html #mainCntnt .myJourney li {width:180px;}
+/* = myjourney portlet = */
+
+#banner {
+	display:inline;
+	float:right;
+	margin-right:20px;
+	margin-top:15px;
+	z-index:4;
+}
+
+
+/*= competition enhancements = */
+button.submit {
+	float:right;
+	display:inline;
+	background:url(../image/bg_submit.gif) no-repeat bottom right;
+	width:75px;
+	height:15px;
+	cursor:pointer;
+	text-indent:-200000px;
+}
+
+.functionForm .competition input.competitionNotification {
+	float: none;
+	width: 1.5em;
+	border: none;
+	background-color: #E6EFF8;
+	margin: 0px;
+}
+/*= competition enhancements = */
+
+/*=Enhanced autonomy portlet=*/
+#search_field {width: 155px;} 
+#search_field label {display: block;} 
+
+#divider_1_1 .functionForm div 
+{ background-image:url(../image/crv_centTop.gif);} 
+
+#divider_1_1 #newSearch 
+{
+	width: 440px;
+	margin-left: 120px;
+	background-image:url(../image/crv_centBot.gif);
+	background-repeat:no-repeat;
+	background-position:bottom left;
+}
+
+/*added by sarwar*/
+#newSearch form
+{
+	margin: 0px 0pt;
+	padding: 0px 0pt;
+}
+/*added by sarwar*/
+
+
+#newSearch_field {
+	padding-top: 10px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-left: 20px;
+}
+
+#newSearch_field label 
+{
+	display: inline;
+	float:left;
+	width: 190px;
+}
+
+#newSearch_field select 
+{
+		width: 45px;
+}
+
+#newSearch_field input 
+{
+		width: 200px;
+}
+
+#newSearch_field button 
+{
+		width: 100%;
+}
+
+#results_pagination p 
+{
+	width: 250px;
+	float:left;
+}
+
+#results_pagination 
+{	
+	width:100%;
+	margin-left: -12px;
+}
+
+#results_pagination ol
+ {
+	float: right;
+}
+
+#results_pagination li a 
+{
+	padding-top: 0px;
+	padding-right: 5px;
+	padding-bottom: 0px;
+	padding-left: 5px;	
+}
+
+#results_pagination .active 
+{
+	font-weight: bold;
+	font-size: 1.1em;
+	text-decoration: underline;
+	color:#0083B3;
+}
+
+#results_pagination .highlighted {
+	font-weight: bold;
+	font-size: 1.1em;			
+}
+
+.autonomySearch {
+	padding-left: 17px;}
+
+
+
+	.autonomySearch .Heading_3{
+	background-image: none;
+	background-color: #ffffff;
+	margin-left: -17px;
+	margin-right: 17px;
+	padding-bottom: 10px;}
+
+
+
+
+	#autonomyResults .autonomyResultsItem{
+	background-image: url(../image/ico_blackArrow.gif);
+	background-repeat: no-repeat;
+	background-position: left;
+	padding-left: 20px;
+	margin-top: 5px;}
+
+
+
+	#autonomyResults .autonomyResultsSummary,#autonomyResults .autonomyResultsRelevance {
+
+	padding-left: 20px;}
+
+.searchedKeyword {
+	font-weight: bold;
+}
+
+#flight_info_links {
+	background-color: #ededed;
+	background-image: none;
+	width: 622px;
+	padding: 15px;
+	margin-bottom: 20px;	
+}
+
+
+#flight_info_links ul {
+	margin-left: 18px;	
+	display: block;
+	float:none;
+}
+
+
+#flight_info_links ul li {
+	float: left;
+	display: list-item;
+	list-style: disc;
+	list-style-position: outside;
+	width: 100%;
+}
+
+
+
+#flight_info_links ul li a {
+	float: left;
+	padding: 0px;
+}
+
+.autonomyprevnext {
+       float:none;
+}
+
+
+
+/*=Enhanced autonomy portlet=*/

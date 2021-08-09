@@ -1,0 +1,27 @@
+#fullCol {
+width:910px;
+}
+
+#mainCntnt .portlet li a.normal {
+width:210px;
+}
+
+#mainCntnt #divider_0_2 #tertNav li a,#mainCntnt #divider_0_2 #tertNav li a,#mainCntnt #divider_0_2 #tertNav ul li a,#mainCntnt #divider_0_1 #tertNav ul li a,#mainCntnt #divider_0_2 #tertNav ul ul li a,#mainCntnt #divider_0_1 #tertNav ul ul li a,#mainCntnt #divider_0_2 #tertNav ul ul ul li a,#mainCntnt #divider_0_1 #tertNav ul ul ul li a {
+width:180px;
+}
+
+.liveinfo {
+width:220px;
+}
+
+.block .imgbot {
+margin-bottom:-1px;
+}
+
+#arrivals,#departures {
+margin-top:0;
+}
+
+#arrivalsOuter form,#departuresOuter form {
+position:relative;
+}

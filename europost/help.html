@@ -1,0 +1,238 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Delivery Sheet Import Guide</title>
+<style type="text/css">
+.style1 {
+	direction: ltr;
+}
+.style2 {
+	vertical-align: middle;
+	border: 0;
+}
+.style3 {
+	text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="style1">
+<ol>
+<h3>Delivery Sheet Import Help</h3>How you can import the Delivery Sheet into the "Delivery and Shipment Form" in order to reduce time and effort in creating your order? Here is the step by step guide:<br />
+<br />
+
+<li>At first, you must configure the Microsoft Internet Explorer so that it 
+	can allow scripting for the EuroPostExpress website. (The Import feature can 
+	not be done in other browsers currently). This step is done only once for 
+	any system and after you configured the Internet Explorer, you can skip this 
+	step. Here is the required steps to configure the MS Internet Explorer:<br /><br />
+ <ol type="I">
+<li>Run the Internet Explorer and select the Tools-&gt;Internet 
+	Options Menu.</li><br />
+<li>Select Security Tab. (<a href="img/help/01.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 1</a>)</li><br />
+<li>Select Trusted sites icon. (<a href="img/help/02.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 2</a>)</li><br />
+<li>If you cannot see the &quot;Security Level&quot; slide bar press the 
+	&quot;Default Level&quot; button. However, If you can see the &quot;Security Level&quot; slide 
+	bar, skip this step. (<a href="img/help/03.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 3</a>)</li><br />
+<li>Slide the &quot;Security Level&quot; slide bar to the lowest 
+	position (Low)(<a href="img/help/04.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 4</a>)</li><br />
+<li>Click the &quot;Sites&quot; button. (<a href="img/help/05.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 5</a>)</li><br />
+<li>In the new window, uncheck the &quot;Require server 
+	verification (https:) for all sites in this zone.&quot; check box. (<a href="img/help/06.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 6</a>)</li><br />
+<li>Type 
+	Http://www.euoropostexpress.com in the &quot;Add this website to the zone&quot; 
+	field and click the &quot;Add&quot; button. (<a href="img/help/07.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 7</a>)</li><br />
+<li>Close the window by clicking the &quot;Close&quot; button. (<a href="img/help/08.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 8</a>)</li><br />
+<li>Press &quot;OK&quot; to save the new settings and close the window. (<a href="img/help/09.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 9</a>)</li><br />
+<br />
+</ol>
+<li>Create a &quot;Semicolon Delimited CSV&quot; file.&nbsp; 
+You can download a sample CSV file from <a href="sample.csv">here</a>. The file must contain the 
+following <span class="style3">obligatory</span> fields (The column names are case insensitive. Also, the columns can in in any order):</li><br />
+<br />
+<ol type="square">
+	<table style="width: 100%">
+		<tr>
+			<td width="25%">
+			<li>HAWB</li>
+			</td>
+			<td width="25%">
+			<li>CONTENT</li>
+			</td>
+			<td width="25%">
+			<li>ADDRESS 1</li>
+			</td>
+			<td width="25%">
+			<li>PHONE</li>
+			</td>
+		</tr>
+		<tr>
+			<td width="25%">
+			<li>ITEMS</li>
+			</td>
+			<td width="25%">
+			<li>WEIGHT</li>
+			</td>
+			<td width="25%">
+			<li>LENGTH</li>
+			</td>
+			<td width="25%">
+			<li>WIDTH</li>
+			</td>
+		</tr>
+		<tr>
+			<td width="25%">
+			<li>HEIGHT</li>
+			</td>
+			<td width="25%">
+			<li>HV/LV/MHV</li>
+			</td>
+			<td width="25%">
+			<li>VALUE</li>
+			</td>
+			<td width="25%">
+			<li>CURRENCY</li>
+			</td>
+		</tr>
+	</table>
+</ol>
+<br />
+However it can contain the following <span class="style3">arbitrary</span> fields:<br />
+<br />
+<ol type="square">
+	<table style="width: 100%">
+		<tr>
+			<td width="33%">
+			<li>COMPANY</li>
+			</td>
+			<td width="33%">
+			<li>CONTACT</li>
+			</td>
+			<td width="33%">
+			<li>ADDRESS 2</li>
+			</td>
+		</tr>
+		<tr>
+			<td width="33%">
+			<li>EMAIL</li>
+			</td>
+			<td width="33%">
+			<li>CITY</li>
+			</td>
+			<td width="33%">
+			<li>COUNTRY</li>
+			</td>
+		</tr>
+		<tr>
+			<td width="33%">
+			<li>POSTCODE</li>
+			</td>
+			<td width="33%">
+			<li>TEL NO</li>
+			</td>
+			<td width="33%">
+			<li>NOTE/HOLD/UNHOLD</li>
+			</td>
+		</tr>
+		<tr>
+			<td width="33%">
+			<li>SENDER ADDRESS</li>
+			</td>
+			<td width="33%">
+			<li>COD AMOUNTS</li>
+			</td>
+			<td width="33%">
+			<li>BAG REFS</li>
+			</td>
+		</tr>
+	</table>
+</ol>
+
+	<br />
+	<br />
+		The following steps show you how to 
+create&nbsp; the CSV file using MS-EXCEL application. You can download a sample MS-EXCEL sheet from 
+		<a href="sample.xls">here</a>. <br /><br />
+<ol type="I">
+<li>Create a sheet in MS Excel application.</li><br />
+<li>Name each column in the first row as the above obligatory 
+fields. You may want to add some or all of the above arbitrary fields too. 
+Please consider that the position of columns DOES NOT matter as long as you name 
+the columns exactly the same as the above lists. (<a href="img/help/10.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 10</a>)</li><br />
+<li>Add as many rows as you want to the sheet (The maximum is 
+500 rows). (<a href="img/help/11.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 11</a>)</li><br />
+<li>After creating the sheet, make sure that there is no 
+semicolon character (;) in the sheet. You may check this by replacing all 
+		occurrences of 
+semicolon character into Comma (,) via Edit-&gt;Replcae... menu (Ctrl + H). You 
+		may change it into other character too. (<a href="img/help/12.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 12</a>)</li><br />
+<li>Select File -&gt; Save As... Menu</li><br />
+<li>Locate a folder that you want to save the file, Then name 
+the file in the &quot;File name&quot; field and select &quot;CSV (MS-DOS) (*.csv)&quot; in the &quot;Save 
+as type&quot; list box. Then press Save button. (<a href="img/help/13.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 13</a>)</li><br />
+<li>If you got a message that says: &quot;The selected file type 
+does not support workbooks that contain multiple sheets.&quot;, just press OK button. (<a href="img/help/14.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 14</a>)</li><br />
+<li>If you got a message that says: &quot;[Your filename] may contain 
+features that are not compatible with CSV (MS-DOS). Do you want to keep the 
+workbook in this format?&quot;, just press YES button. ([Your filename] is the name 
+of file to which you assigned before.) (<a href="img/help/15.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 15</a>)</li><br />
+<li>Congratulation! You just created the 
+&quot;Semicolon Delimited CSV file&quot;</li><br />
+</ol>
+	<br />
+	<li>Now that the CSV file is ready, you can click on the &quot;Import Delivery Sheet&quot; 
+link in the new &quot;Delivery and Shipment&quot; form. (<a href="img/help/16.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 16</a>) </li><br />
+	<li>By doing so, a new popup window is 
+opened. You can browse for the CSV file by pressing the &quot;Browse&quot; button. Also you may want to
+ select a delimiter character in which separate the fields. (<a href="img/help/17.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 17</a>)</li><br />
+	<li>Now press &quot;Import&quot; button.</li><br />
+	<li>If a message box is displayed regarding the ActiveX control, select 
+		&quot;Yes&quot; button. (<a href="img/help/18.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 18</a>)</li><br />
+	<li>At this stage the file is being processed and the &quot;Delivery and Shipment 
+fields&quot; are filled in by the CSV file contents. (<a href="img/help/19.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 19</a>)</li><br />
+	<li>If all the contents of the CSV can be imported in the form, a reporting 
+message box is appeared and displays the log. After you close the message box, 
+the Import popup window is dismissed too, indicating that there were no error in 
+the import procedure. (<a href="img/help/20.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 20</a>)</li><br />
+	<li>However, if there were any error while importing, the message box displays a 
+summary of the error. (<a href="img/help/21.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 21</a>) After you close the message box, the Import popup window 
+remains open and you can review the details error log in &quot;Error Log&quot; section. (<a href="img/help/22.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 22</a>)</li><br />
+	<li>Please consider that importing you file doesn&#39;t mean that the file is 
+		sent to our database, instead, you MUST save the form by clicking the 
+		&quot;Save &amp; Finish&quot; button on the form after importing you file. (Make sure 
+		that have filled in all the required fields in the form before saving 
+		it) (<a href="img/help/23.gif" target=_BLANK><img src="img/content/picture.gif" width="23" height="23" class="style2" /> 
+	Image 23</a>)</li><br />
+
+
+</ol>
+
+</div>
+</body>
+
+</html>

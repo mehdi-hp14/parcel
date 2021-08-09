@@ -1,0 +1,625 @@
+﻿<?php
+if($this->error AND $this->error_m!="")
+{
+?>
+<div class="row mbl">
+	<div class="col-lg-12">
+		<div class="alert alert-danger"><strong>Oops!</strong> <?php echo $this->error_m; ?></div>
+	</div>
+</div>
+<?php
+}
+if($this->action_status AND $this->action_m!="")
+{
+?>
+<div class="row mbl">
+	<div class="col-lg-12">
+		<div class="alert alert-success"><strong>Successfull Action!</strong> <?php echo $this->action_m; ?></div>
+	</div>
+</div>
+<?php
+}
+?>
+<div class="row mbl">
+	<div class="col-sm-3 col-md-2">
+		<!--<a href="orders.php?neworder=true" role="button" class="btn btn-danger btn-sm btn-block">New Order</a>-->
+		<div class="mtm mbm"></div>
+		<div class="panel">
+			<div class="panel-body pan">
+				<ul style="background: #fff" class="nav nav-pills nav-stacked">
+					<li <?php if($this->show_inbox) echo 'class="active"'; ?>><a href="orders.php"><i class="fa fa-inbox fa-fw mrs"></i>Orders List</a></li>
+					<!--<li <?php if($this->show_new) echo 'class="active"'; ?>><a href="orders.php?neworder=true"><i class="fa fa-edit fa-fw mrs"></i>New Order</a></li>-->
+				</ul>
+			</div>
+		</div>
+	</div>
+<?php
+if($this->show_inbox)
+{
+?>
+	<div class="col-sm-9 col-md-10">
+		<div class="tab-content">
+			<div id="home" class="tab-pane fade in active">
+				<div class="list-group mail-box">
+<?php 
+if(isset($this->inbox_info) AND $this->inbox_info!=null AND is_array($this->inbox_info) AND count($this->inbox_info) > 0)
+{
+	foreach($this->inbox_info as $order)
+	{
+		$style = "background-color:#999;";
+		switch($order['status'])
+		{
+			case 1: $style = "background-color:#066ECD;"; break;
+			case 2: $style = "background-color:#77B32F;"; break;
+			case 3: $style = "background-color:#E40001;"; break;
+			case 4: $style = "background-color:#39A7B6;"; break;
+		}
+		//style="background-color:#77B32F;"
+		echo '<a href="orders.php?oid='.$order['id'].'" class="list-group-item"><div style="'.$style.'color:#ffffff;">';
+		echo '&nbsp;&nbsp;&nbsp;<span style="min-width: 120px; display: inline-block;" class="name">From : '.$order['from'].' - To : '.$order['to'].'</span>&nbsp;&nbsp;';
+		echo '<span>Order Number : '.$order['id'].'</span>&nbsp;&nbsp; - &nbsp;<span style="font-size: 11px;color:#ffffff;" class="text-muted">Tracking ID : '.$order['tid'].'</span>';
+		echo '<span class="time-badge">'.date("Y/m/d H:i:s", $order['timestamp']).'</span><span class="pull-right mrl"></span></div></a>';
+	}
+}
+else
+{
+	echo 'No support tickets found.';
+}
+?>
+				</div>
+				<div class="row">
+				<?php echo $this->RenderPagination($this->page, $this->total_Page, $this->items_per_page, $this->total_Res); ?>
+				</div>
+				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-2">
+						<span style="width:15px;height:15px;background-color:#999;display: inline-block;"></span>&nbsp;Pending&nbsp;&nbsp;&nbsp;
+					</div>
+					<div class="col-md-2">
+						<span style="width:15px;height:15px;background-color:#066ECD;display: inline-block;"></span>&nbsp;Under Process&nbsp;&nbsp;&nbsp;
+					</div>
+					<div class="col-md-2">
+						<span style="width:15px;height:15px;background-color:#77B32F;display: inline-block;"></span>&nbsp;Active&nbsp;&nbsp;&nbsp;
+					</div>
+					<div class="col-md-2">
+						<span style="width:15px;height:15px;background-color:#E40001;display: inline-block;"></span>&nbsp;Cancelled&nbsp;&nbsp;&nbsp;
+					</div>
+					<div class="col-md-2">
+						<span style="width:15px;height:15px;background-color:#39A7B6;display: inline-block;"></span>&nbsp;Completed&nbsp;&nbsp;&nbsp;
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+<?php
+}
+elseif(isset($this->oid) AND $this->oid!=null)
+{
+	
+	if($this->Order_info['counter'] == 0)
+	{
+?>
+<div class="col-sm-9 col-md-10">
+	<div class="panel panel-blue" style="background:#fff;">
+		<div class="panel-heading">Access denied</div>
+		<div class="panel-body pan">
+			<div class="alert alert-danger">
+				<strong>Oops!</strong> Something went wrong!<br><br>
+				you can't access this ticket because of the following reasons:<br>
+				1. Ticket does not exist.<br>
+				2. Ticket is not yours.<br>
+				3. You can not access this ticket directly(this ID belongs to a answer to another ticket)
+			</div>
+		</div>
+	</div>
+</div>
+<?php
+	}
+	else
+	{
+
+?>
+<script type="text/javascript">
+    $(document).ready(function () {
+		if(window.location.hash) {
+		  // Fragment exists
+			var anchor = window.location.hash;
+			if (anchor && anchor == '#tab-edit')
+			{
+				$('#tab-edit').addClass('active in');
+				$('#tab-info').removeClass('active in');
+				$('#tab-edit-li').addClass('active');
+				$('#tab-info-li').removeClass('active');
+			}
+		} else {
+		  // Fragment doesn't exist
+		}
+    });
+</script>
+<div class="col-sm-9 col-md-10">
+	<ul class="nav nav-tabs">
+		<li id="tab-info-li" class="active"><a href="#tab-info" data-toggle="tab">Information</a></li>
+		<li id="tab-edit-li" class=""><a href="#tab-edit" data-toggle="tab">Your quote and shipment instruction</a></li>
+		<li id="tab-support-li" class=""><a href="#tab-support" data-toggle="tab">Support Messages</a></li>
+		<li id="tab-financial-li" class=""><a href="#tab-financial" data-toggle="tab">Financial Status</a></li>
+		<li id="tab-files-li" class=""><a href="#tab-files" data-toggle="tab">Files And Documents</a></li>
+	</ul>
+	<div id="generalTabContent" class="tab-content">
+		<div id="tab-info" class="tab-pane fade active in">
+			<div class="row mbl">
+				<div class="col-lg-12">
+					<div class="panel panel-blue" style="background:#fff;">
+						<div class="panel-heading"><?php 
+							$stat = "Active";
+							switch($this->Order_info['status'])
+							{
+								case 0: $stat = "Pending"; break;
+								case 1: $stat = "Under Process"; break;
+								case 2: $stat = "Active"; break;
+								case 3: $stat = "Cancelled"; break;
+								case 4: $stat = "Completed"; break;
+							}
+							$style = "background-color:#999;";
+							switch($this->Order_info['status'])
+							{
+								case 1: $style = "background-color:#066ECD;"; break;
+								case 2: $style = "background-color:#77B32F;"; break;
+								case 3: $style = "background-color:#E40001;"; break;
+								case 4: $style = "background-color:#39A7B6;"; break;
+							}
+							
+							echo "Order ID: ".$this->oid." &nbsp;(".$stat.")"; 
+							if($this->Order_info['tid']!='') echo "&nbsp;<span style='float:right;'>Tracking ID : ".$this->Order_info['tid']."</span>";
+						?></div>
+						<div class="panel-body pan">
+							<div class="row">
+								<div class="col-md-12">
+									<div class="panel-body">
+										<table class="table table-hover table-bordered">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Tracking ID</th>
+													<th>Phone</th>
+													<th>Email</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><?php echo $this->Order_info['id']; ?></td>
+													<td><?php echo $this->Order_info['tid']; ?></td>
+													<td><?php echo $this->Order_info['phone']; ?></td>
+													<td><?php echo $this->Order_info['email']; ?></td>
+												</tr>
+											</tbody>
+											<thead>
+												<tr>
+													<th>From</th>
+													<th>From Location</th>
+													<th>To</th>
+													<th>To Location</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><?php echo $this->Order_info['from']; ?></td>
+													<td><?php echo $this->Order_info['from_st'] ."&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;".$this->Order_info['from_location']; ?></td>
+													<td><?php echo $this->Order_info['to']; ?></td>
+													<td><?php echo $this->Order_info['to_st'] ."&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;".$this->Order_info['to_location']; ?></td>
+												</tr>
+											</tbody>
+											<thead>
+												<tr>
+													<th>Item Count</th>
+													<th>Dimensions</th>
+													<th>Total Weight(Kg)</th>
+													<th>Item Description</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><?php echo $this->Order_info['item_c']; ?></td>
+													<td><?php echo str_replace(" | ","<br>",$this->Order_info['dims']); ?></td>
+													<td><?php echo $this->Order_info['total_weight']; ?></td>
+													<td><?php echo nl2br($this->Order_info['item_desc']); ?></td>
+												</tr>
+											</tbody>
+											<thead>
+												<tr>
+													<th>Insurance</th>
+													<th>Chemical</th>
+													<th>Lithium Battery</th>
+													<th>Dangerous Good</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><?php echo $this->Order_info['insurance']; ?></td>
+													<td><?php echo $this->Order_info['chemical']; ?></td>
+													<td><?php echo $this->Order_info['lithiumb']; ?></td>
+													<td><?php echo $this->Order_info['danger']; ?></td>
+												</tr>
+											</tbody>
+											<thead>
+												<tr>
+													<th>Package Type</th>
+													<th>Shipping Type</th>
+													<th>Shipping Sub-Type</th>
+													<th>Shipping Container</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><?php echo $this->Order_info['pack_type']; ?></td>
+													<td><?php echo $this->Order_info['ship_type']; ?></td>
+													<td><?php echo $this->Order_info['shipping_sub_type']; ?></td>
+													<td><?php echo $this->Order_info['ship_container']; ?></td>
+												</tr>
+											</tbody>
+											<thead>
+												<tr>
+													<th>Date</th>
+													<th>Exact Date</th>
+													<th>Status</th>
+													<th>Order Time</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><?php echo $this->Order_info['date']; ?></td>
+													<td><?php echo $this->Order_info['exact_date']; ?></td>
+													<td><span style="width:90%;height:20px;<?php echo $style;?>color:#ffffff;display: inline-block;">&nbsp;&nbsp;&nbsp;<?php echo $stat;?>&nbsp;&nbsp;&nbsp;</span></td>
+													<td><?php echo date("Y/m/d H:i:s",$this->Order_info['timestamp']); ?></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-2"></div>
+								<div class="col-md-2">
+									<span style="width:15px;height:15px;background-color:#999;display: inline-block;"></span>&nbsp;Pending&nbsp;&nbsp;&nbsp;
+								</div>
+								<div class="col-md-2">
+									<span style="width:15px;height:15px;background-color:#066ECD;display: inline-block;"></span>&nbsp;Under Process&nbsp;&nbsp;&nbsp;
+								</div>
+								<div class="col-md-2">
+									<span style="width:15px;height:15px;background-color:#77B32F;display: inline-block;"></span>&nbsp;Active&nbsp;&nbsp;&nbsp;
+								</div>
+								<div class="col-md-2">
+									<span style="width:15px;height:15px;background-color:#E40001;display: inline-block;"></span>&nbsp;Cancelled&nbsp;&nbsp;&nbsp;
+								</div>
+								<div class="col-md-2">
+									<span style="width:15px;height:15px;background-color:#39A7B6;display: inline-block;"></span>&nbsp;Completed&nbsp;&nbsp;&nbsp;
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="tab-edit" class="tab-pane fade">
+				<?php 
+				if(isset($this->Order_info['offered_p']) AND $this->Order_info['offered_p']!='')
+				{
+					$prices = explode(" | ",$this->Order_info['offered_p']);
+					foreach($prices as $k=>$v){
+						if($v!=''){
+							$tmp = explode(") ",$v);
+							$ttmp = explode("=>",$tmp[1]);
+							$confirmed = false;
+							$conf_text = "";
+							if($ttmp[0]=='on')
+							{
+								$conf_text = "You confirmmed the \"".$ttmp[2]." ".$ttmp[3]." by ".$ttmp[1]."\" .<br><br>Consignee Name : ".$this->shipping_info['consignee']."<br><br>Shipper Information : <br>".nl2br($this->shipping_info['shipper']);
+								$confirmed = true;
+								break;
+							}
+						}
+					}
+					if(!$confirmed){
+						
+					?>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="panel-body">
+										<h4 class="mbs">Offered prices for cargo are listed as bellow :</h4>
+										<form method="post" action="orders.php?oid=<?php echo $this->Order_info['id']; ?>">
+											<h3>Price And Carrier</h3>
+
+											<div class="form-group">
+				<?php
+					foreach($prices as $k=>$v){
+						if($v!=''){
+							$tmp = explode(") ",$v);
+							$ttmp = explode("=>",$tmp[1]);
+							echo '<div class="radio"><label class="radio-inline"><input id="p_'.$k.'" type="radio" name="conf_p" value="'.$ttmp[2].'_'.$ttmp[3].'_'.$ttmp[1].'" />&nbsp;'.$ttmp[2].' '.$ttmp[3].' by '.$ttmp[1].'</label></div>';
+						}
+					}
+				?>
+												
+											</div>
+											<hr>
+											<h3>Sender ( Collection ) Information <span style="color:#ff0000;">( Also for HAWB)</span></h3>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputSCName" class="control-label">Company Name<span style="color:#ff0000;">(*)</span></label>
+														<div class="input-icon right">
+															<i class="fa fa-briefcase"></i>
+															<input id="inputSCName" name="inputSCName" type="text" placeholder="Company Name" value="<?php echo ((isset($_POST['inputSCName']) AND $_POST['inputSCName']!='' AND $_POST['inputSCName']!=null) ? $_POST['inputSCName'] : ""); ?>" class="form-control">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputSCPName" class="control-label">Contact Person Name<span style="color:#ff0000;">(*)</span></label>
+														<div class="input-icon right">
+															<i class="fa fa-user"></i>
+															<input id="inputSCPName" name="inputSCPName" type="text" placeholder="Contact Person Name" value="<?php echo ((isset($_POST['inputSCPName']) AND $_POST['inputSCPName']!='' AND $_POST['inputSCPName']!=null) ? $_POST['inputSCPName'] : ""); ?>" class="form-control">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputSeMail" class="control-label">E-mail</label>
+														<div class="input-icon right">
+															<i class="fa fa-envelope"></i>
+															<input id="inputSeMail" name="inputSeMail" type="text" placeholder="Sender E-mail" value="<?php echo ((isset($_POST['inputSeMail']) AND $_POST['inputSeMail']!='' AND $_POST['inputSeMail']!=null) ? $_POST['inputSeMail'] : ""); ?>" class="form-control">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputSPhone" class="control-label">Telephone<span style="color:#ff0000;">(*)</span></label>
+														<div class="input-icon right">
+															<i class="fa fa-phone"></i>
+															<input id="inputSPhone" name="inputSPhone" type="text" placeholder="" value="<?php echo ((isset($_POST['inputSPhone']) AND $_POST['inputSPhone']!='' AND $_POST['inputSPhone']!=null) ? $_POST['inputSPhone'] : ""); ?>" class="form-control">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputScountry" class="control-label">Country<span style="color:#ff0000;">(*)</span></label>
+														<div class="input-icon right">
+															<select class="form-control"  id="inputScountry" name="inputScountry">
+															<?php
+																foreach($this->country_iso as $k=>$v)
+																{
+																	echo "<option value='".$k."' ".(($k==$this->Order_info['from']) ? 'selected="selected"' : '').">".$k."</option>";
+																}
+
+															?>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputSZipCode" class="control-label">Zip Code<span style="color:#ff0000;">(*)</span></label>
+														<div class="input-icon right">
+															<i class="fa fa-globe"></i>
+															<input id="inputSZipCode" name="inputSZipCode" type="text" placeholder="" value="<?php echo ((isset($_POST['inputSZipCode']) AND $_POST['inputSZipCode']!='' AND $_POST['inputSZipCode']!=null) ? $_POST['inputSZipCode'] : ""); ?>" class="form-control">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">Address<span style="color:#ff0000;">(*)</span><br>
+														<textarea id="Sender" name="Sender" rows="10" placeholder="Sender address" class="form-control"><?php echo ((isset($_POST['Sender']) AND $_POST['Sender']!='' AND $_POST['Sender']!=null) ? $_POST['Sender'] : ""); ?></textarea>
+													</div>
+												</div>
+											</div>
+											<hr>
+											<h3>Receiver ( Delivery ) Information <span style="color:#ff0000;">( Also for HAWB)</span></h3>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputSRName" class="control-label">Company Name<span style="color:#ff0000;">(*)</span></label>
+														<div class="input-icon right">
+															<i class="fa fa-briefcase"></i>
+															<input id="inputSRName" name="inputRCName" type="text" placeholder="Company Name" value="<?php echo ((isset($_POST['inputRCName']) AND $_POST['inputRCName']!='' AND $_POST['inputRCName']!=null) ? $_POST['inputRCName'] : ""); ?>" class="form-control">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputRCPName" class="control-label">Contact Person Name<span style="color:#ff0000;">(*)</span></label>
+														<div class="input-icon right">
+															<i class="fa fa-user"></i>
+															<input id="inputRCPName" name="inputRCPName" type="text" placeholder="Contact Person Name" value="<?php echo ((isset($_POST['inputRCPName']) AND $_POST['inputRCPName']!='' AND $_POST['inputRCPName']!=null) ? $_POST['inputRCPName'] : ""); ?>" class="form-control">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputReMail" class="control-label">E-mail</label>
+														<div class="input-icon right">
+															<i class="fa fa-envelope"></i>
+															<input id="inputReMail" name="inputReMail" type="text" placeholder="Receiver E-mail" value="<?php echo ((isset($_POST['inputReMail']) AND $_POST['inputReMail']!='' AND $_POST['inputReMail']!=null) ? $_POST['inputReMail'] : ""); ?>" class="form-control">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputRPhone" class="control-label">Telephone</label>
+														<div class="input-icon right">
+															<i class="fa fa-phone"></i>
+															<input id="inputRPhone" name="inputRPhone" type="text" placeholder="" value="<?php echo ((isset($_POST['inputRPhone']) AND $_POST['inputRPhone']!='' AND $_POST['inputRPhone']!=null) ? $_POST['inputRPhone'] : ""); ?>" class="form-control">
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputRcountry" class="control-label">Country<span style="color:#ff0000;">(*)</span></label>
+														<div class="input-icon right">
+															<select class="form-control" id="inputRcountry" name="inputRcountry">
+															<?php
+																foreach($this->country_iso as $k=>$v)
+																{
+																	echo "<option value='".$k."' ".(($k==$this->Order_info['to']) ? 'selected="selected"' : '').">".$k."</option>";
+																}
+
+															?>
+															</select>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="inputRZipCode" class="control-label">Zip Code</label>
+														<div class="input-icon right">
+															<i class="fa fa-globe"></i>
+															<input id="inputRZipCode" name="inputRZipCode" type="text" placeholder="" value="<?php echo ((isset($_POST['inputRZipCode']) AND $_POST['inputRZipCode']!='' AND $_POST['inputRZipCode']!=null) ? $_POST['inputRZipCode'] : ""); ?>" class="form-control">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+													Address<span style="color:#ff0000;">(*)</span><br>
+														<textarea id="Receiver" name="Receiver" rows="10" placeholder="Receiver address" class="form-control"><?php echo ((isset($_POST['Receiver']) AND $_POST['Receiver']!='' AND $_POST['Receiver']!=null) ? $_POST['Receiver'] : ""); ?></textarea>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="form-group">
+														Note : all the field that are marked by red star , are required.
+													</div>
+												</div>
+											</div>
+											<div class="form-actions pal">
+												<div class="form-group mbn">
+													<div class="col-md-offset-4 col-md-4">
+														<button type="submit" class="btn btn-primary btn-green btn-block">Confirm</button>
+													</div>
+												</div>
+											</div>
+									</form>
+									</div>
+								</div>
+							</div>
+				<?php
+					}
+					else
+					{
+						?>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="panel-body">
+										<h4 class="mbs"><?php echo $conf_text; ?></h4>
+									</div>
+								</div>
+							</div>
+						<?php
+					}
+				}
+				?>
+		</div>
+		<div id="tab-support" class="tab-pane fade">
+			<style>
+
+			.bubble
+			{
+			float:right;
+			position: relative;
+			width: 95%;
+			margin: 15px;
+			padding: 8px;
+			background: #FFFFFF;
+			-webkit-border-radius: 10px;
+			-moz-border-radius: 10px;
+			border-radius: 10px;
+			border: #7F7F7F solid 2px;
+			}
+			</style>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel-body">
+						<h4 class="mbs">Support Messages</h4>
+<?php
+			if(isset($this->answers_info) AND is_array($this->answers_info) AND count($this->answers_info)>0 )
+			{
+				foreach($this->answers_info as $answer)
+				{
+					echo "<div class=\"bubble\"><b>Support said : </b> <span style='float:right;'>".date("Y/m/d H:i:s", $answer['timestamp'])."</span><br>";
+					echo ($answer['message'])."<br></div>"; 
+					echo "<div class=\"clear\"></div>"; 
+				}
+			}
+?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="tab-financial" class="tab-pane fade">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel-body">
+						<h4 class="mbs">Transactions Details</h4>
+<?php
+			if(isset($this->transactions_info) AND is_array($this->transactions_info) AND count($this->transactions_info)>0 )
+			{
+				foreach($this->transactions_info as $transaction)
+				{
+					echo "<div >The order has been paid on <b>".date("Y/m/d H:i:s",$transaction['timestamp'])."</b> with ".$transaction['amount']." (".$transaction['currency'].")";
+					echo "</div>"; 
+				}
+			}
+			else{
+				echo "No transaction found.";
+			}
+?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="tab-files" class="tab-pane fade">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel-body">
+						<h4 class="mbs">Documents</h4>
+<?php
+
+	$dir = dirname(dirname(dirname(__DIR__))) . DIRECTORY_SEPARATOR  ."Documents" . DIRECTORY_SEPARATOR .$this->Order_info['id']. DIRECTORY_SEPARATOR  ."";
+//echo $dir."<br>";
+// Open a directory, and read its contents
+if (is_dir($dir)){
+  if ($dh = opendir($dir)){
+    while (($file = readdir($dh)) !== false){
+		if($file == '.' OR $file=='..' OR $file=='msds') continue;
+		echo "<a href='https://bookingparcel.com". DIRECTORY_SEPARATOR ."Documents" . DIRECTORY_SEPARATOR .$this->Order_info['id']. DIRECTORY_SEPARATOR  . $file."'>".$file."</a> Uploaded On ".date("Y/m/d H:i:s",filemtime($dir.$file))."<br>";
+    }
+    closedir($dh);
+  }
+}
+else{
+	echo "No file is added yet.";
+}
+?>							
+						</tbody>
+					</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php
+	}
+	
+}
+?>
+</div>

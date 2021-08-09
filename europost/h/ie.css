@@ -1,0 +1,126 @@
+
+#fullCol {
+width:900px;
+height:100%;
+}
+
+#logo {
+margin-top:25px;
+padding-bottom:25px;
+}
+
+#termSlctr {
+background-image:url(../image/bg_termSlctr.gif);
+}
+
+#priNavCont {
+/*background-image:url(../image/bg_prinavtop.gif);*/
+
+}
+
+#priNavUlCont {
+background-image:url(../image/bg_prinavtop.gif) ;
+}
+
+.gt div.main,.gt div.smallContentBoxInstance {
+height:190px;
+}
+
+.halfShort div.main,.halfShort,.halfShort div.smallContentBoxInstance {
+height:100px;
+}
+
+.small div.main,.small div.smallContentBoxInstance {
+height:140px;
+}
+
+li#parking {
+height:175px;
+}
+
+h1,h2,h3,h4,h5,h6,.header1,.header2,.header3,.header4,.header5,.header6,.heading_1,.heading_2,.heading_3,.heading_4,.heading_5,.heading_6,.Heading_1,.Heading_2,.Heading_3,.Heading_4,.Heading_5,.Heading_6 {
+line-height:1.2em;
+}
+
+.major h2,.major .header2,.major .heading_2,.major .Heading_2 {
+line-height:1.6em;
+padding-top:.4em;
+}
+
+.termFinder select {
+width:145px;
+}
+
+#termSlctr div {
+margin-left:7px;
+}
+
+#accessibility {
+margin-right:7px;
+}
+
+#termSlctr p {
+padding-right:40px;
+}
+
+.long div {
+height:320px;
+}
+
+.short div {
+height:235px;
+}
+
+.block .imgbot {
+margin-bottom:0;
+}
+
+#skyscraper {
+      position:fixed;
+      width:120px;
+      margin-right:-145px;
+      padding-left:15px;
+      margin-top:-14em;
+}
+
+#bottom_ad {
+padding-bottom:40px;
+}
+
+ul.autocompleter-choices li,ul.autocompleter-choices li a {
+margin-left:-16px;
+display:inline-block;
+}
+
+.search label {
+/*visibility:hidden;*/
+}
+
+.search button {
+margin-right:15px;
+}
+
+#mainCntnt .hero a span.cta,#mainCntnt .hero .smallContentBoxInstance a span.OLT_Link {
+padding-right:18px;
+padding-left:0;
+background-position:right 50%;
+color:#fff;
+}
+
+#mainCntnt .hero a:hover span.cta,#mainCntnt .hero .smallContentBoxInstance a:hover span.OLT_Link {
+text-decoration:none;
+}
+
+#mainCntnt .flightSearch input,#mainCntnt .flightSearch select {
+font-size:1em;
+}
+
+#priNavCont ul,#priNav {
+background-image:url(../image/bg_priNav.gif);
+}
+
+#results_pagination form span, .numresults
+{
+	margin-left:8px;
+}
+

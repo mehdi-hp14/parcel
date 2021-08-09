@@ -1,0 +1,263 @@
+﻿<?php
+if($this->error AND $this->error_m!="")
+{
+?>
+<div class="row mbl">
+	<div class="col-lg-12">
+		<div class="alert alert-danger"><strong>Oops!</strong> <?php echo $this->error_m; ?></div>
+	</div>
+</div>
+<?php
+}
+if($this->action_status AND $this->action_m!="")
+{
+?>
+<div class="row mbl">
+	<div class="col-lg-12">
+		<div class="alert alert-success"><strong>Successfull Action!</strong> <?php echo $this->action_m; ?></div>
+	</div>
+</div>
+<?php
+}
+?>
+<div class="row mbl">
+	<div class="col-lg-12">
+        <div class="row">
+            <div class="col-md-12"><h2>Profile: <?php echo $this->data['fname'] . " " . $this->data['lname'];?></h2>
+				<div class="row mtl">
+					<div class="col-md-3">
+						<div class="form-group">
+							<div class="text-center mbl"><img src="Assets/images/avatar/<?php echo (($this->data['avatar']!=null AND $this->data['avatar']!="") ? $this->data['avatar'] : "def128.png");?>" alt="" class="img-responsive"></div>
+							<!--<div class="text-center mbl"><a href="#" class="btn btn-green"><i class="fa fa-upload"></i>&nbsp;
+								Upload</a></div>-->
+						</div>
+						<table class="table table-striped table-hover">
+							<tbody>
+							<tr>
+								<td>Full Name</td>
+								<td><?php echo $this->data['fname'] . " " . $this->data['lname'];?></td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td><?php echo $this->data['email'];?></td>
+							</tr>
+							<tr>
+								<td>Address</td>
+								<td><?php echo (($this->data['address']!=null AND $this->data['address']!="") ? nl2br($this->data['address']) : "Not Set");?></td>
+							</tr>
+							<tr>
+								<td>Status</td>
+								<td><span class="label label-success">Active</span></td>
+							</tr>
+							<tr>
+								<td>Member Since</td>
+								<td><?php echo date("Y/m/d H:i:s", $this->data['created_at']); ?></td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-md-9">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#tab-info" data-toggle="tab">Information</a></li>
+							<li class=""><a href="#tab-edit" data-toggle="tab">Edit Profile</a></li>
+							<li class=""><a href="#tab-avatar" data-toggle="tab">Avatar Setiing</a></li>
+						</ul>
+                        <div id="generalTabContent" class="tab-content">
+							<div id="tab-info" class="tab-pane fade active in">
+								<div class="row mbl">
+									<div class="col-lg-12">
+<?php
+echo "Gender : ".$this->GenderToText($this->data['gender'])."<br>";
+echo "First Name : ".$this->data['fname']."<br>";
+echo "Last Name : ".$this->data['lname']."<br>";
+echo "Birth Date : ".$this->data['birthday']."<br>";
+echo "About : ".nl2br($this->data['about'])."<br><hr>";
+
+echo "Position : ".$this->PositionToText($this->data['position'])."<br>";
+echo "Company Name : ".$this->data['company']."<br>";
+echo "Website : ".$this->data['site']."<br><hr>";
+echo "Phone : ".$this->data['phone']."<br>";
+echo "E-mail : ".$this->data['email']."<br>";
+echo "Address : ".nl2br($this->data['address'])."<br><hr>";
+echo "Balance : ".$this->data['balance']." <span>$</span><br><hr>";
+echo "Member Since : ".date("Y/m/d H:i:s", $this->data['created_at'])."<br>";
+?>
+									</div>
+								</div>
+							</div>
+							
+							<div id="tab-edit" class="tab-pane fade">
+								<form action="#" class="form-horizontal" method="post">
+									<input type="hidden" name="t" value="0">
+									<h3>Account Setting</h3>
+
+									<div class="form-group"><label class="col-sm-3 control-label">Email</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-9"><input type="email" name="email" placeholder="email@yourcompany.com" class="form-control"></div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"><label class="col-sm-3 control-label">Password</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-4"><input type="password" name="password" placeholder="password" class="form-control"></div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"><label class="col-sm-3 control-label">Confirm Password</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-4"><input type="password" type="passwordc" placeholder="password" class="form-control"></div>
+											</div>
+										</div>
+									</div>
+									<hr>
+									<h3>Profile Setting</h3>
+
+									<div class="form-group"><label class="col-sm-3 control-label">First Name</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-9"><input type="text" name="fname" placeholder="first name" class="form-control"></div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"><label class="col-sm-3 control-label">Last Name</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-9"><input type="text" name="lname" placeholder="last name" class="form-control"></div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"><label class="col-sm-3 control-label">Company</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-9"><input type="text" name="cname" placeholder="Company name" class="form-control"></div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"><label class="col-sm-3 control-label">Gender</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-9">
+													<div class="radio">
+														<label class="radio-inline">
+															<div class="iradio_minimal-grey checked" style="position: relative;">
+																<input type="radio" value="0" name="gender" checked="checked" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
+																<ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+															</div>&nbsp;Male
+														</label>
+														<label class="radio-inline">
+															<div class="iradio_minimal-grey" style="position: relative;">
+																<input type="radio" value="1" name="gender" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
+																<ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins>
+															</div>&nbsp;Female
+														</label>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"><label class="col-sm-3 control-label">Birthday</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-4"><input id="datepicker-normal" type="date" name="birthday" class="form-control"></div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"><label class="col-sm-3 control-label">Position</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-4">
+													<select class="form-control" name="position">
+														<option value="0">CEO</option>
+														<option value="1">CTO</option>
+														<option value="2">Sell-Man</option>
+														<option value="3">Director</option>
+														<option value="4">Manager</option>
+														<option value="5">Staff</option>
+														<option value="6">Office Boy</option>
+													</select>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"><label class="col-sm-3 control-label">About</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-9"><textarea rows="3"  name="about" class="form-control"></textarea></div>
+											</div>
+										</div>
+									</div>
+									<hr>
+									<h3>Contact Setting</h3>
+									<div class="form-group"><label class="col-sm-3 control-label">Address</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-9"><textarea rows="3"  name="address" class="form-control"></textarea></div>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group"><label class="col-sm-3 control-label">Phone</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-9"><input type="text" name="phone" placeholder="office phone" class="form-control"></div>
+											</div>
+										</div>
+									</div>
+									<div class="form-group"><label class="col-sm-3 control-label">Website</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-9"><input type="url" name="site" placeholder="website" class="form-control"></div>
+											</div>
+										</div>
+									</div>
+									<hr>
+									<button type="submit" class="btn btn-green btn-block">Finish</button>
+								</form>
+								<br><div style="color:red;"><b>Note</b> : Please note that this page (Edit Profile) and "Avatar Setting" page are different and wont save at once.</div>
+								<br><div style="color:red;"><b>Note</b> : All fields will be updated one by one and if you do not like to update one so simply ignore it and fill the others.</div>
+							</div>
+							<div id="tab-avatar" class="tab-pane fade">
+								<form action="#" class="form-horizontal" method="post" enctype="multipart/form-data">
+									<input type="hidden" name="t" value="1">
+									<h3>Avatar Setting</h3>
+
+									<div class="form-group"><label class="col-sm-3 control-label">Avatar</label>
+
+										<div class="col-sm-9 controls">
+											<div class="row">
+												<div class="col-xs-9">
+													<input id="inputIncludeFile" name="avatar" type="file" placeholder="Inlcude some file" class="form-control" accept=".gif,.jpg,.jpeg,.png"><br>
+													
+													please note that supported extentions are (.gif,.jpg,.jpeg,.png) And maximum size is 3MB AND must be at most 800x800 px.
+												</div>
+											</div>
+										</div>
+									</div>
+									<hr>
+									<button type="submit" class="btn btn-green btn-block"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+								</form>
+								<br><div style="color:red;"><b>Note</b> : Please note that this page (Avatar Setting) and "Edit Profile" page are different and wont save at once.</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

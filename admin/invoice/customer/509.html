@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Invoice</title>
+
+<script type="text/javascript">
+function printContent(el){
+	var restorepage = document.body.innerHTML;
+	var printcontent = document.getElementById(el).innerHTML;
+	document.body.innerHTML = printcontent;
+	window.print();
+	document.body.innerHTML = restorepage;
+}
+</script>
+</head>
+
+<body yahoo="yahoo">
+<center><button type="button" name="print" class="btn btn-green" onclick="printContent('print')">Print the invoice</button></center><div id="prints">
+	<table cellpadding='5' cellspacing='1' border='0' style='margin-left:auto;margin-right:auto;width:100%;border:0px;font-family:arial;font-size:12px;direction:ltr;border:none'>
+		<tbody>
+			<tr>
+				<td style='background-color:#ffcc33;text-align:left;font-weight:bold;color:#ff3333;' width='80%'>
+					Dear Customer ,<br>Here is the invoice of order by the Tracking ID of EPX- PDE-1246:
+				</td>
+				<td width='20%' bgcolor="#ffffff" align="right" valign="top" style="background-color:#ffffff;text-align:left;font-weight:bold;color:#ff3333;padding:10px 25px 20px 0px">
+					<a href="http://bookingparcel.com/" target="_blank" rel="noreferrer"><img src="http://bookingparcel.com/logo.gif" alt="EuropostExpress" width="237" height="56" border="0" style="display:block"></a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style='background-color:#f5f5f5;padding:25px;' id="print">
+					<table  border='0' style='margin-left:auto;margin-right:auto;width:90%;font-size:12px;text-align:left;'>
+						<tbody>
+							<tr>
+								<td style="padding:5px;" width="55%">
+									<span style="font-family:arial;font-size:13px;"><b>Europost Express (UK) Ltd.</b></span><br>4 Corringham Road,<br>Wembley - Middlesex<br>HA9 9QA- London , UK<br>Tel : +44(0) 7886105417 & +44(0) 2083852177<br>VAT No.: 220335165<br>EORI No: GB220 3351 65000
+								</td>
+								<td style="padding:5px;">
+									<center>
+										<p><a href="http://bookingparcel.com" target="_blank"><img src="http://bookingparcel.com/logo.gif" alt="EuroPost Express" style="margin-top:5px;" title="EuropPost Express"></a></p>
+										<p></p>
+										<p></p>
+										<p><img src="http://bookingparcel.com/paid.png" style="margin-bottom:5px;"></p>
+									</center>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<table style='float:right;margin-left:auto;margin-right:auto;width:88%;font-size:12px;text-align:left;padding-bottom:0px;'>
+										<tr >
+											<td style="padding:5px;font-weight:bold;font-size:2.5em;padding-bottom:0px;" colspan="2">&nbsp; </td>
+										</tr>
+									</table>
+									<table border='1' bordercolor='#777' style='float:left;min-height:166px;margin-left:auto;margin-right:auto;width:97%;border-collapse:collapse;border-color:#777;font-size:12px;text-align:left;'>
+										<tr>
+											<td style="padding:5px;"><b>INVOICE TO </b></td>
+										</tr>
+										<tr>
+											<td style="padding:5px;">
+												<p >Payam Dahi Ertebat (PDE)<br />
+No.35, Haghani Hwy, Before Jahan koudak<br />
+Tehran - Iran<br />
+</p>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td>
+									<table style='float:right;margin-left:auto;margin-right:auto;width:88%;font-size:12px;text-align:left;padding-bottom:0px;'>
+										<tr >
+											<td style="padding:5px;font-weight:bold;font-size:2.5em;padding-bottom:0px;" colspan="2">Invoice </td>
+										</tr>
+									</table>
+									<table border='1' bordercolor='#777' style='padding-top:0px;float:right;min-height:166px;margin-left:auto;margin-right:auto;width:88%;border-collapse:collapse;border-color:#777;font-size:12px;text-align:left;'>
+										<tr>
+											<td style="padding:5px;padding-top:0px;">
+												<span style="font-weight:bold;">DATE :</span>
+											</td>
+											<td style="padding:5px; text-align:center;font-weight:bold;">27.05.2017</td>
+											
+										</tr>
+										<tr>
+											<td style="padding:5px;">
+												<span style="font-weight:bold;">ORDER REF.:</span>
+											</td>
+											<td style="padding:5px; text-align:center;font-weight:bold;">-----</td>
+											
+										</tr>
+										<tr>
+											<td style="padding:5px;">
+												<span style="font-weight:bold;">BOOKING REF.:</span>
+											</td>
+											<td style="padding:5px; text-align:center;font-weight:bold;">EPX- PDE-1246</td>
+											
+										</tr>
+										<tr>
+											<td style="padding:5px; text-align:center;">
+												<span style="font-weight:bold;">INVOICE NO.:</span>
+											</td>
+											<td style="padding:5px; text-align:center;font-weight:bold;">EPX- PDE-1246-509</td>
+											
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"style="padding:5px;min-height:5px;"></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									
+									<table border='1' bordercolor='#777' style='min-height:166px;margin-left:auto;margin-right:auto;width:100%;border-collapse:collapse;border-color:#777;font-size:12px;text-align:left;'>
+										<tr>
+											<td style="padding:15px; text-align:center;font-weight:bold;" width="55%">Description</td>
+											<td style="padding:15px; text-align:center;font-weight:bold;" width="5%">Qty</td>
+											<td style="padding:15px; text-align:center;font-weight:bold;" width="20%">Unit Price(GBP)</td>
+											<td style="padding:15px; text-align:center;font-weight:bold;" width="20%">Total Price(GBP)</td>
+										</tr>
+										<tr>
+											<td style="padding:5px; min-height:100px;">
+												<span style="font-weight:bold;">
+												Collection from <span >Germany - 50169</span> and Delivery to <span >Iran - IKA</span><br>
+												<span >Padide Hoshmand Alborz</span><br><br>MAWB: <span >235-66042196</span><br>
+												HAWB: <span >EPE-2017 0016</span><br><br>
+												Weight: <span >110KG</span></span>
+											</td>
+											<td style="padding:5px; text-align:center;">1</td>
+											<td style="padding:5px; text-align:center;">493.00 GBP</td>
+											<td style="padding:5px; text-align:center;">493.00 GBP</td>
+										</tr>
+										
+										<tr>
+											<td style="padding:5px;" colspan="2">
+												
+											</td>
+											<td style="text-align:center;" colspan="2">
+												
+												<table  border='1' bordercolor='#777' style='min-height:166px;margin-left:auto;margin-right:auto;width:100%;border-collapse:collapse;border-color:#777;font-size:12px;text-align:left;'>
+													<tr>
+														<td style="padding:5px;font-size:10px;" width="50%">SUB TOTAL  (GBP)</td>
+														<td style="padding:5px;" width="50%">493.00 GBP</td>
+													</tr>
+													<tr>
+														<td style="padding:5px;" width="50%">VAT@20.00% (GBP)</td>
+														<td style="padding:5px;" width="50%">0.00 GBP</td>
+													</tr>
+													<tr>
+														<td style="padding:5px; font-weight:bold;" width="50%">TOTAL</td>
+														<td style="padding:5px; font-weight:bold;" width="50%">493.00 GBP</td>
+													</tr>
+												</table>
+											</td>
+											
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" style='background-color:#f5f5f5;padding:3px;'>
+								PLEASE REMIT THE ABOVE AMOUNT TO THE FOLLOWING ACCOUNT:<br>Account Name: Europost Express (UK) Limited<br>Europost Accounts<br>(£) GBP A/C No.: 31892150<br>Sortcode: 40 – 46 – 09<br>IBAN: GB65 MIDL 4046 0931 8921 50<br>BIC: MIDLGB2162K<br>Bank SWIFT Code: MIDLGB22<br>Euro A/C No.: 76899401<br>IBAN: GB08 MIDL 4005 1576 8994 01<br>BIC/SWIFT Code: MIDLGB22<br>($) USD A/C No. 76899393<br>IBAN: GB30 MIDL 4005 1576 8993 93<br>BIC/ SWIFT Code: MIDLGB22
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table></div>
+</body>
+</html>

@@ -1,0 +1,170 @@
+﻿<?php
+//require_once( LANG_UI_PATH."form.php" );
+
+echo "<!DOCTYPE html>\n"; 
+echo "<html lang=\"".$this->CoreConfig['site']['lang']."\">\n"; 
+echo "<head>\n"; 
+echo "\t<title>".$this->title."</title>\n"; 
+foreach($this->meta as $meta){
+	echo "\t<meta ";
+	foreach($meta as $n=>$c){
+		echo $n."=\"".$c."\" ";
+	}
+	echo ">\n";
+}
+//echo "\t<meta charset=\"utf-8\">\n"; 
+echo "\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge,chrome=1\">\n"; 
+echo "\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"; 
+echo "\t<link rel=\"shortcut icon\" href=\"Assets/images/icons/favicon.ico\">\n"; 
+echo "\t<link rel=\"apple-touch-icon\" href=\"Assets/images/icons/favicon.png\">\n"; 
+echo "\t<link rel=\"apple-touch-icon\" sizes=\"72x72\" href=\"Assets/images/icons/favicon-72x72.png\">\n"; 
+echo "\t<link rel=\"apple-touch-icon\" sizes=\"114x114\" href=\"Assets/images/icons/favicon-114x114.png\">\n";
+echo "\t<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js\"></script>"; 
+echo "\t<!--Loading bootstrap css-->\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700\">\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"http://fonts.googleapis.com/css?family=Oswald:400,700,300\">\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"Assets/styles/jquery-ui-1.10.4.custom.min.css\">\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"Assets/styles/font-awesome.min.css\">\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"Assets/styles/bootstrap.min.css\">\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"Assets/styles/animate.css\">\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"Assets/styles/all.css\">\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"Assets/styles/main.css\">\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"Assets/styles/style-responsive.css\">\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"Assets/styles/zabuto_calendar.min.css\">\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"Assets/styles/pace.css\">\n"; 
+echo "\t<link type=\"text/css\" rel=\"stylesheet\" href=\"Assets/styles/jquery.news-ticker.css\">\n"; 
+echo "</head>\n"; 
+echo "<body>\n"; 
+echo "\t<div>\n";
+
+
+echo "\n"; 
+echo "\t\t<!--BEGIN BACK TO TOP-->\n"; 
+echo "\t\t<a id=\"totop\" href=\"#\"><i class=\"fa fa-angle-up\"></i></a>\n"; 
+echo "\t\t<!--END BACK TO TOP-->\n"; 
+echo "\t\t<!--BEGIN TOPBAR-->\n"; 
+echo "\t\t<div id=\"header-topbar-option-demo\" class=\"page-header-topbar\">\n"; 
+echo "\t\t\t<nav id=\"topbar\" role=\"navigation\" style=\"margin-bottom: 0;\" data-step=\"3\" class=\"navbar navbar-default navbar-static-top\">\n"; 
+echo "\t\t\t<div class=\"navbar-header\">\n"; 
+echo "\t\t\t\t<button type=\"button\" data-toggle=\"collapse\" data-target=\".sidebar-collapse\" class=\"navbar-toggle\"><span class=\"sr-only\">Toggle navigation</span><span class=\"icon-bar\"></span><span class=\"icon-bar\"></span><span class=\"icon-bar\"></span></button>\n"; 
+echo "\t\t\t\t<a id=\"logo\" href=\"index.php\" class=\"navbar-brand\"><span class=\"fa fa-rocket\"></span><img src='https://bookingparcel.com/logo.gif' style='margin-top:-15px;margin-left:-15px;width:215px;height:50px;'><!---<span class=\"logo-text\">Booking Parcel</span>---><span style=\"display: none\" class=\"logo-text-icon\">µ</span></a></div>\n"; 
+echo "\t\t\t<div class=\"topbar-main\"><a id=\"menu-toggle\" href=\"#\" class=\"hidden-xs\"><i class=\"fa fa-bars\"></i></a>\n"; 
+echo "\t\t\t\t\n"; 
+if(count($this->newsText)>0){
+	echo "\t\t\t\t<div class=\"news-update-box hidden-xs\"><span class=\"text-uppercase mrm pull-left text-white\">News:</span>\n"; 
+	echo "\t\t\t\t\t<ul id=\"news-update\" class=\"ticker list-unstyled\">\n"; 
+	foreach($this->newsText as $news){
+		echo "\t\t\t\t\t\t<li>".$news."</li>\n"; 
+	}
+	echo "\t\t\t\t\t</ul>\n"; 
+	echo "\t\t\t\t</div>\n"; 
+}
+echo "\t\t\t</div>\n"; 
+echo "\t\t</nav>\n"; 
+echo "\t\t</div>\n"; 
+echo "\t\t<!--END TOPBAR-->\n"; 
+echo "\t\t<div id=\"wrapper\">\n"; 
+echo "\t\t\t<!--BEGIN SIDEBAR MENU-->\n"; 
+echo "\t\t\t<nav id=\"sidebar\" role=\"navigation\" data-step=\"2\" data-intro=\"Template has &lt;b&gt;many navigation styles&lt;/b&gt;\"\n"; 
+echo "\t\t\t\tdata-position=\"right\" class=\"navbar-default navbar-static-side\">\n"; 
+echo "\t\t\t<div class=\"sidebar-collapse menu-scroll\">\n"; 
+echo "\t\t\t\t<ul id=\"side-menu\" class=\"nav\">\n"; 
+echo "\t\t\t\t\t\n"; 
+
+echo "\t\t\t\t\t <div class=\"clearfix\"></div>\n"; 
+echo "\t\t\t\t\t<li ";
+if($this->active_page == "index")	echo "class=\"active\"";
+echo "><a href=\"index.php\"><i class=\"fa fa-home fa-fw\">\n"; 
+echo "\t\t\t\t\t\t<div class=\"icon-bg bg-orange\"></div>\n"; 
+echo "\t\t\t\t\t</i><span class=\"menu-title\">Home</span></a></li>\n"; 
+echo "\t\t\t\t\t<li ";
+if($this->active_page == "signup")	echo "class=\"active\"";
+echo "><a href=\"signup.php\"><i class=\"fa fa-users fa-fw\">\n"; 
+echo "\t\t\t\t\t\t<div class=\"icon-bg bg-pink\"></div>\n"; 
+echo "\t\t\t\t\t</i><span class=\"menu-title\">Signup</span></a>\n"; 
+echo "\t\t\t\t\t   \n"; 
+echo "\t\t\t\t\t</li>\n"; 
+echo "\t\t\t\t\t<li ";
+if($this->active_page == "tos")	echo "class=\"active\"";
+echo "><a href=\"tos.php\"><i class=\"fa fa-check fa-fw\">\n"; 
+echo "\t\t\t\t\t\t<div class=\"icon-bg bg-pink\"></div>\n"; 
+echo "\t\t\t\t\t</i><span class=\"menu-title\">Terms and Conditions</span></a>\n"; 
+echo "\t\t\t\t\t   \n"; 
+echo "\t\t\t\t\t</li>\n"; 
+echo "\t\t\t\t</ul>\n"; 
+echo "\t\t\t</div>\n"; 
+echo "\t\t</nav>\n"; 
+echo "\t\t\t<!--END SIDEBAR MENU-->\n"; 
+echo "\t\t\t<!--BEGIN PAGE WRAPPER-->\n"; 
+echo "\t\t\t<div id=\"page-wrapper\">\n"; 
+echo "\t\t\t\t<!--BEGIN TITLE & BREADCRUMB PAGE-->\n"; 
+echo "\t\t\t\t<div id=\"title-breadcrumb-option-demo\" class=\"page-title-breadcrumb\">\n"; 
+echo "\t\t\t\t\t<div class=\"page-header pull-left\">\n"; 
+echo "\t\t\t\t\t\t<div class=\"page-title\">\n"; 
+echo "\t\t\t\t\t\t\tDashboard</div>\n"; 
+echo "\t\t\t\t\t</div>\n"; 
+echo "\t\t\t\t\t<ol class=\"breadcrumb page-breadcrumb pull-right\">\n"; 
+echo "\t\t\t\t\t\t<li><i class=\"fa fa-home\"></i>&nbsp;<a href=\"".$this->active_page.".php\">".$this->active_page."</a>&nbsp;&nbsp;<i class=\"fa fa-angle-right\"></i>&nbsp;&nbsp;</li>\n"; 
+echo "\t\t\t\t\t\t<li class=\"active\">".$this->active_page."</li>\n"; 
+echo "\t\t\t\t\t</ol>\n"; 
+echo "\t\t\t\t\t<div class=\"clearfix\">\n"; 
+echo "\t\t\t\t\t</div>\n"; 
+echo "\t\t\t\t</div>\n"; 
+echo "\t\t\t\t<!--END TITLE & BREADCRUMB PAGE-->\n"; 
+echo "\t\t\t\t<!--BEGIN CONTENT-->\n"; 
+echo "\t\t\t\t<div class=\"page-content\">\n"; 
+echo "\t\t\t\t\t<div id=\"tab-general\">\n";
+
+
+$this->printContent( );
+
+
+
+
+echo "\t\t\t\t\t</div>\n"; 
+echo "\t\t\t\t</div>\n"; 
+echo "\t\t\t\t<!--END CONTENT-->\n"; 
+echo "\t\t\t\t<!--BEGIN FOOTER-->\n"; 
+echo "\t\t\t\t<div id=\"footer\">\n"; 
+echo "\t\t\t\t\t<div class=\"copyright\">\n"; 
+echo "\t\t\t\t\t\t<a href=\"http://bookingparcel.com\">2016 © Booking Parcel .<br>Theme by : KAdmin, and Programming by: Esmaiel Fakhimi</a></div>\n"; 
+echo "\t\t\t\t</div>\n"; 
+echo "\t\t\t\t<!--END FOOTER-->\n";
+echo "\t\t\t</div>\n"; 
+echo "\t\t\t<!--END PAGE WRAPPER-->\n"; 
+echo "\t\t</div>\n"; 
+echo "\t</div>\n"; 
+echo "\t<script src=\"Assets/script/jquery-1.10.2.min.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/jquery-migrate-1.2.1.min.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/jquery-ui.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/bootstrap.min.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/bootstrap-hover-dropdown.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/html5shiv.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/respond.min.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/jquery.metisMenu.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/jquery.slimscroll.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/jquery.cookie.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/icheck.min.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/custom.min.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/jquery.news-ticker.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/jquery.menu.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/pace.min.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/holder.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/responsive-tabs.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/zabuto_calendar.min.js\"></script>\n"; 
+echo "\t<script src=\"Assets/script/main.js\"></script>\n"; 
+echo "</body>\n"; 
+echo "</html>\n"; 
+echo "\n";
+
+
+
+
+
+
+
+
+
+
+
+?>

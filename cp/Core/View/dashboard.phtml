@@ -1,0 +1,184 @@
+﻿<div id="sum_box" class="row mbl">
+	<div class="col-sm-6 col-md-3">
+		<div class="panel profit db mbm">
+			<div class="panel-body">
+				<p class="icon">
+					<i class="icon fa fa-money"></i>
+				</p>
+				<?php
+
+		//`IRR_total_receive`, `IRR_current_balance`, `IRR_total_order_paid`, 
+		//`GBP_total_receive`, `GBP_current_balance`, `GBP_total_order_paid`, 
+		//`USD_total_receive`, `USD_current_balance`, `USD_total_order_paid`, 
+		//`EUR_total_receive`, `EUR_current_balance`, `EUR_total_order_paid`
+		$this->data['IRR_total_receive'] = 0;
+		$this->data['IRR_current_balance'] = 0;
+		$this->data['IRR_total_order_paid'] = 0;
+		$this->data['GBP_total_receive'] = 0;				
+		$this->data['GBP_current_balance'] = 0;				
+		$this->data['GBP_total_order_paid'] = 0;				
+		$this->data['USD_total_receive'] = 0;				
+		$this->data['USD_current_balance'] = 0;				
+		$this->data['USD_total_order_paid'] = 0;				
+		$this->data['EUR_total_receive'] = 0;				
+		$this->data['EUR_current_balance'] = 0;				
+		$this->data['EUR_total_order_paid'] = 0;				
+				?>
+				<h4 class="value">
+					<span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0"><?php echo $this->data['IRR_current_balance']; ?></span> IRR</h4>
+				<p class="description">Diposite in IRR</p>
+				<div class="progress progress-sm mbn">
+				<?php 
+				//this->data['IRR_total_receive']
+				//this->data['IRR_total_order_paid']
+				//this->data['IRR_current_balance']
+				
+				$current = round(($this->data['IRR_total_order_paid']/$this->data['IRR_total_receive'])*100);
+				
+				?>
+					<div role="progressbar" aria-valuenow="<?php echo $current; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $current; ?>%;" class="progress-bar progress-bar-success">
+						<span class="sr-only"><?php echo $current; ?>% Spent of IRR deposite</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6 col-md-3">
+		<div class="panel income db mbm">
+			<div class="panel-body">
+				<p class="icon">
+					<i class="icon fa fa-money"></i>
+				</p>
+				<h4 class="value">
+					<span><?php echo $this->data['GBP_current_balance']; ?></span><span class="fa fa-gbp fa-fw"></span></h4>
+				<p class="description">Diposite in GBP</p>
+				<div class="progress progress-sm mbn">
+				<?php 
+				//this->data['IRR_total_receive']
+				//this->data['IRR_total_order_paid']
+				//this->data['IRR_current_balance']
+				
+				$current = round(($this->data['GBP_total_order_paid']/$this->data['GBP_total_receive'])*100);
+				
+				?>
+					<div role="progressbar" aria-valuenow="<?php echo $current; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $current; ?>%;" class="progress-bar progress-bar-info">
+						<span class="sr-only"><?php echo $current; ?>% Spent of GBP deposite</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6 col-md-3">
+		<div class="panel task db mbm">
+			<div class="panel-body">
+				<p class="icon">
+					<i class="icon fa fa-money"></i>
+				</p>
+				<h4 class="value">
+					<span><?php echo $this->data['EUR_current_balance']; ?></span><span class="fa fa-eur fa-fw"></span></h4>
+				<p class="description">Diposite in EUR</p>
+				<div class="progress progress-sm mbn">
+				<?php 
+				//this->data['IRR_total_receive']
+				//this->data['IRR_total_order_paid']
+				//this->data['IRR_current_balance']
+				
+				$current = round(($this->data['EUR_total_order_paid']/$this->data['EUR_total_receive'])*100);
+				
+				?>
+					<div role="progressbar" aria-valuenow="<?php echo $current; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $current; ?>%;" class="progress-bar progress-bar-danger">
+						<span class="sr-only"><?php echo $current; ?>% Spent of EUR deposite</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-6 col-md-3">
+		<div class="panel visit db mbm">
+			<div class="panel-body">
+				<p class="icon">
+					<i class="icon fa fa-money"></i>
+				</p>
+				<h4 class="value">
+					<span><?php echo $this->data['USD_current_balance']; ?></span><span class="fa fa-usd fa-fw"></span></h4>
+				<p class="description">Diposite in USD</p>
+				<div class="progress progress-sm mbn">
+				<?php 
+				//this->data['IRR_total_receive']
+				//this->data['IRR_total_order_paid']
+				//this->data['IRR_current_balance']
+				
+				$current = round(($this->data['USD_total_order_paid']/$this->data['USD_total_receive'])*100);
+				
+				?>
+					<div role="progressbar" aria-valuenow="<?php echo $current; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $current; ?>%;" class="progress-bar progress-bar-warning">
+						<span class="sr-only"><?php echo $current; ?>% Spent of USD deposite</span></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row mbl">
+	<div class="col-lg-8">
+		<div class="panel">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="mbs">Last 10 Orders</h4>
+						<p class="help-block">Short summary of the last 10 orders....</p><?php
+if(isset($this->Order_info) AND $this->Order_info!=null AND is_array($this->Order_info) AND count($this->Order_info)>0)
+{
+	foreach($this->Order_info as $order)
+	{
+		$style = "background-color:#999;";
+		switch($order['status'])
+		{
+			case 1: $style = "background-color:#066ECD;"; break;
+			case 2: $style = "background-color:#77B32F;"; break;
+			case 3: $style = "background-color:#E40001;"; break;
+			case 4: $style = "background-color:#39A7B6;"; break;
+		}
+		//style="background-color:#77B32F;"
+		echo '<a href="orders.php?oid='.$order['id'].'" class="list-group-item"><div style="'.$style.'color:#ffffff;">';
+		echo '&nbsp;&nbsp;&nbsp;<span style="min-width: 120px; display: inline-block;" class="name">From : '.$order['from'].' - To : '.$order['to'].'</span>&nbsp;&nbsp;';
+		echo '<span>Order Number : '.$order['id'].'</span>&nbsp;&nbsp; - &nbsp;<span style="font-size: 11px;color:#ffffff;" class="text-muted">Tracking ID : '.$order['tid'].'</span>';
+		echo '<span class="time-badge">'.date("Y/m/d H:i:s", $order['timestamp']).'</span><span class="pull-right mrl"></span></div></a>';
+	}	
+}
+else
+{
+	echo '<p class="help-block">No order exists.</p>';
+}
+?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+		<div class="panel">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="mbs">Last 10 Support Tickets</h4>
+<?php
+if(isset($this->inbox_info) AND $this->inbox_info!=null AND is_array($this->inbox_info) AND count($this->inbox_info)>0)
+{
+	foreach($this->inbox_info as $ticket)
+	{
+		echo '<a href="support.php?tid='.$ticket['id'].'" class="list-group-item">';
+		if($ticket['usr_readed']==0) echo '<b>';
+		echo '&nbsp;&nbsp;&nbsp;<span style="min-width: 120px; display: inline-block;" class="name">'.$ticket['subject'].'</span> ';
+		if($ticket['usr_readed']==0) echo '&nbsp;&nbsp;(Unreaded)</b>&nbsp;&nbsp;';
+		echo '&nbsp;<span style="font-size: 11px;" class="text-muted">'.substr($ticket['content'],0,30).' .....</span>';
+		echo '</a>';
+	}	
+}
+else
+{
+	echo '<p class="help-block">No support ticket exists.</p>';
+}
+?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

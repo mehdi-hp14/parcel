@@ -1,0 +1,26 @@
+0 as zoneid,zone,servid,tt1,tt2,origzone,remotett,document,dutiable,vat,vattext,partcover,countrys,countryd,pcodes,pcoded,fueled,satdelext,satcolext,bookcharge,remotecharge,maxlength,maxgirth,maxweight,invreq,custcharge,volformula,descript
+
+SELECT zoneid , zone , servid , tt1 , tt2 , origzone , remotett , document ,  vat , partcover , countrys , countryd , pcodes , pcoded , fueled , satdelext , satcolext , bookcharge , remotecharge , maxlength , maxgirth , maxweight , invreq , custcharge , volformula   FROM zones where (countrys <> 221 and countryd<> 221) and (pcodes is not null or pcoded is not null) order by servid, zone, countrys, countryd, pcodes, pcoded
+
+SELECT zoneid, zone, servid, tt1, tt2, origzone, remotett, document, vat, partcover, countrys, countryd, pcodes, pcoded, fueled, satdelext, satcolext, bookcharge, remotecharge, maxlength, maxgirth, maxweight, invreq, custcharge, volformula
+FROM zones
+WHERE (countrys =234 or countrys=235 or countrys=221) AND (countryd=234 or countryd =235 or countryd=221) and countrys<> countryd and (countrys=221 or countryd=221) and (servid=8 or servid=10)
+ORDER BY servid, zone, countrys, countryd, pcodes, pcoded
+LIMIT 0 , 30 
+
+
+
+insert into prices select 0 as priceid, 23 as userid, servid, zone, kgs, price, extra from prices where userid=0
+
+insert into zones select 0 as zoneid,zone,10 as servid,tt1,tt2,origzone,remotett,document,dutiable,vat,partcover,countrys,countryd,pcodes,pcoded,nopcodes,nopcoded,fueled,satcolext,satdelext,bookcharge,remotecharge,maxlength,maxgirth,maxweight,invreq,custcharge,volformula,descript from zones where zoneid=1562
+
+
+ SELECT *
+FROM `zones`
+WHERE servid >=8
+AND servid <=10
+AND (
+left( pcodes, 4 ) = 'BT1-'
+OR left( pcoded, 4 ) = 'BT1-'
+)
+LIMIT 0 , 30 

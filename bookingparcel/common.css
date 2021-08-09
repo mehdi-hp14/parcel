@@ -1,0 +1,72 @@
+body {
+background:#FFFFFF url(http://www.mindvisionpk.com/images/sprites_homeOther.gif) repeat-x scroll 0 -2px;
+}
+
+/*body {margin:0;text-align:center;}*/
+a:link{color:#039;}
+a:visited{color:#116593;}
+a:hover{color:#116593;}
+hr{height:1px;}
+dl{margin:0 4px 4px 12px;padding-top:4px;}
+dd{margin-left:12px;}
+ul{padding:0;margin:0 0 0 20px; list-style-image: url(/<?=$domain_url?>/images/eng/style/css_<?=$domain_url?>/images/ul.gif);}
+.padded li{padding-bottom:8px;}
+ul ul{padding:0;list-style-image: url(/<?=$domain_url?>/images/eng/style/css_<?=$domain_url?>/images/ulul.gif);}
+ul ul ul{padding:0;margin:0 0 0 18px;}
+#related #ewindow ul{margin-left:15px;}
+
+
+form{padding:0;margin:0;}
+input, select, textarea {font: 13px Arial;vertical-align: middle;}
+img.sampleborder {border:solid 1px #ccc;}
+img.multimedia {border:solid 1px #ff822e;}
+
+.hideinput{background-color:#fff; border:0;border-bottom:1px solid #ccc;}
+.clearright{clear:right;}
+.floatright{float: right;}
+.floatleft{float: left;}
+#paddedbox{padding:6px;}
+.paddedbox{padding:6px;}
+#box{padding:6px 0 6px 12px;}
+.box{padding:6px 0 6px 12px;}
+.highlight{border-bottom:1px solid #ffe9a9!important;background-color:#fffae2!important;}
+.pane{border:1px solid #ccc;}
+.greybg{background-color:#efefef;}
+.whitebg{background-color:#fff;}
+a.more{background:url('/<?=$domain_url?>/images/eng/style/icon/icon_arrow.gif') left no-repeat;padding:6px 6px 6px 8px;}
+a.top{background:url('/<?=$domain_url?>/images/eng/style/icon/icon_arrow_top.gif') left no-repeat;padding:6px 6px 6px 8px;}
+.hackbox{border-top:1px solid transparent!important; border-top:0; clear:both;}
+.current{color:#f60;}
+
+.default{font-weight:normal!important;color:#000!important;text-decoration: none!important;background:none!important;border:none!important;}
+a.default{text-decoration: underline!important;}
+a:link.default{color:#039!important;}
+a:visited.default{color:#116593!important;}
+a:hover.default{color:#f60!important;}
+
+#column {text-align:center;}
+#column dl{list-style:none;margin:0;padding:0;text-align:left;width:100%;}
+#column #two dd.right{float:right;border-right:none; width:49%;}
+#column #two dd	{margin:0;float:left; width:49%;}
+#column #three dd{margin:0;float:left; width:33.1%;}
+#column #three dd.right {border-right:none;}
+#column #three dd.middle{border-right:1px solid #ccc; border-left:1px solid #ccc;}
+
+.level{ width:100%;}
+.level div{float:left; width:auto;}
+
+a.atm16{padding:10px 10px 10px 16px;line-height:20px;font:0.8em verdana;background:url('http://img.b2bspecial.com/<?=$domain_url?>/images/eng/style/icon/alitalk_16.gif') left no-repeat;}
+a.atm16grey, a.atm16none{padding:5px 5px 5px 20px;line-height:20px;font:0.8em verdana;background:url('http://img.b2bspecial.com/<?=$domain_url?>/images/eng/style/icon/alitalk_16_grey.gif') left no-repeat;}
+a.atm32{padding:10px 10px 10px 32px;line-height:40px;background:url('http://img.b2bspecial.com/<?=$domain_url?>/images/eng/style/icon/alitalk_32.gif') left no-repeat;}
+a.atm32grey, a.atm32none{padding:10px 10px 10px 32px;line-height:40px;background:url('http://img.b2bspecial.com/<?=$domain_url?>/images/eng/style/icon/alitalk_32_grey.gif ') left no-repeat;}
+#list a.atm32{text-align:center;float:right;width:70px;padding:32px 0 0 0;line-height:12px;background:url('http://img.b2bspecial.com/<?=$domain_url?>/images/eng/style/icon/alitalk_32.gif ') top no-repeat;font:10px verdana;}
+#list a.atm32grey, #list a.atm32none{text-align:center;float:right;padding:32px 0 0 0;line-height:12px;background:url('http://img.b2bspecial.com/<?=$domain_url?>/images/eng/style/icon/alitalk_32_grey.gif ') top no-repeat;font:10px verdana;}
+a.atm32logo{display:block;padding:16px;width:0;background:url('http://img.b2bspecial.com/<?=$domain_url?>/images/eng/style/icon/alitalk_32.gif') left no-repeat;}
+a.atm32logogrey{display:block;padding:16px;width:0;background:url('http://img.b2bspecial.com/<?=$domain_url?>/images/eng/style/icon/alitalk_32_grey.gif') left no-repeat;}
+
+.message cite{font-weight:bold;font-style: normal;}
+.message blockquote{background-color:#f6f6f6; border:1px solid #dddddd; margin:0 20px;padding:12px}
+
+a.zoomin img{cursor:url('http://img.b2bspecial.com/<?=$domain_url?>/images/eng/style/icon/icon_zoom_in.cur')}
+a.zoomout img{cursor:url('http://img.b2bspecial.com/<?=$domain_url?>/images/eng/style/icon/icon_zoom_out.cur')}
+.widthfixed{table-layout:fixed; word-wrap:break-word; word-break:break-all; word-break/* */:normal ;}

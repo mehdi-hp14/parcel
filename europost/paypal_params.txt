@@ -1,0 +1,53 @@
+# standard paypal command type
+cmd=_xclick
+# shopping cart
+#cmd=_cart
+
+# your paypal email address
+business=dave_seller@ersatz.biz
+
+# the cert-id from the paypal profile-website-certificate page
+cert_id=M2L6E2V8ASDAL
+
+# item name that shows up to the client
+item_name=Donation
+
+# amount to charge
+amount=10.00
+
+# allow the buyer to tune the quantity
+undefined_quantity=1
+
+# Return URL behavior. Set to "1" to return via GET.  "2" for POST with
+# all transaction variables.  "0" (default) depends on the transaction.
+rm=1
+
+#
+# You may want to add some of the following fields.  See paypal
+# documentation for the list of available fields.
+#
+# When to return to when the buy process finishes:
+# return=https://foo.com/return.html
+#
+# Shipping costs:
+# shipping=4.10
+#
+# Shipping costs to add for the 2nd through nth item:
+# shipping2=1.50
+#
+# Handling costs:
+# handling=0.50
+#
+# Shopping cart wide handling cost:
+# handling_cart=5.25
+#
+# No taxes:
+# tax=0
+#
+# Do not prompt the buyer for a note:
+# no_note=1
+#
+# No shipping costs:
+# no_shipping=1
+#
+

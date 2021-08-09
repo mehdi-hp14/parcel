@@ -1,0 +1,433 @@
+select{font-family:arial,helvetica,sans-serif;border:1 solid red;color:#000;font-size:11px}
+td{font-family:arial,helvetica,sans-serif;font-size:11px;color:#000;vertical-align:top}
+table.submain{width:392px;}
+.hdlnType2{color:#000;font-family:arial;font-weight:600;font-size:11px}
+.cap {color:#000;font-size:11px;padding-left:5;vertical-align: middle;background-color:#E4E4E4}
+.mandCap{background-color: #E4E4E4;color:#000;padding-left:5px;font-family: arial,helvetica,sans-serif;font-weight:600;vertical-align: middle}
+.cbGrey{background-color:#E4E4E4}
+.volbutton{font-family:Arial;background-color:#E4E4E4;color:#000;font-weight: 600;font-size:13px;border:1 solid #000}
+.tableHead {
+background-color:#CC0000;
+font-family:arial,helvetica,sans-serif;
+font-size: 11px;
+font-weight:600; /*NN4*/
+/*line-height:13px; /*To fit 2 lined text in Register-Buttons */
+color:#fff;
+text-decoration:none;
+}.
+.whiteBG{background-color:#fff}
+.border0Right{text-align:right;border:0}
+.ltYellowBgMdl{background-color:#FFE88A;vertical-align:middle;font-weight:600}
+.ltYellowBgMdlImg{background-color:#FFE88A;vertical-align:middle}
+.whiteBGInv{background-color:#fff;font-weight:600}
+.boldTitle{font-size:14px;color:#000;font-weight:600}
+.cbYellow {background-color:#FFCC00;}
+.pageHead {font-family: arial,helvetica,sans-serif;font-size: 16px;color:#ffffff;font-weight:bold;background-color:#CC0000;}
+table.helpMain{padding-right:14px;padding-left:14px;margin-top:14px}
+.txt {
+font-family: arial,helvetica,sans-serif;
+font-size: 11px;
+color:#000000;
+text-decoration:none;
+}
+.right{text-align:right}
+table.main{width:420px;padding-right:14px;padding-left:14px;margin-top:28px}
+a.spcLink11:link{font-family:Arial;font-size:11px;color:#000;text-decoration:none;font-weight:600}
+a.spcLink11:visited{font-family:Arial;font-size:11px;color:#666666;text-decoration:none;font-weight:600}
+.whiteonred{color: #000;background-color: #c9c9c9;font-weight:600}
+.whiteonblack{color: #000;background-color:#f0f0f0;font-weight:600}
+.border{background-color:#cccccc }
+.address {background-color:#f8f8f8; font-size:8pt}
+.bottom {vertical-align:bottom}
+.red{color:#CC0000}
+.blue{color:blue}
+.mandCapTrack{background-color: #E4E4E4;color:#000;font-family: arial,helvetica,sans-serif;font-weight:600;vertical-align: top}
+.alignBottom{vertical-align:bottom}
+.bold {font-weight:600 }
+.title{font-size:14px;color:#CC0000;font-weight:600}
+#trackError{padding-top:3px;height:22px}
+/* drop off : start */
+
+/* drop off : end */
+/* For 3D Tracking: Start*/
+textarea{border:1 solid #000;}
+/* For 3D Tracking: End*/
+.mailbutton{font-family:Arial;background-color:#ffcc00;color:#000;font-weight: 600;font-size:11px;border:1 solid #000}
+
+#emailSubmit, #emailSubmitSelected
+{
+	float:left;
+	cursor:hand;
+	background:#FC0 url(../../artglobaldhl/arrow_b_r_small.gif) no-repeat 1px 50%;
+	border-width:1px;
+	border-style:solid;
+	border-color:white black black #fc0;
+	width:70;
+	font-weight:bold;
+	font-size:11px;
+}
+
+#emailSubmit:hover, #emailSubmitSelected
+{
+	border-color:black white white black;
+	background:#E4E4E4 url(../../artglobaldhl/arrow_w_r_small.gif) no-repeat 1px 50%;
+}
+
+.label
+{
+	background-color: #E4E4E4;
+	color:#000;
+	text-align:left;
+	font-family: arial,helvetica,sans-serif;
+	font-weight:400;
+	vertical-align: middle;
+}
+
+.textbox
+{
+	vertical-align: middle
+}
+
+.para
+{
+	float:left;
+	width:90%;
+	margin-top:50px;
+	font-weight:400;
+	font-size:11px;
+}
+
+#bold
+{
+font-weight:600;
+}
+
+.emailSubmitLow
+{
+	font-family:Arial;
+	background-color:#E4E4E4;
+	font-size:11px;
+}
+/* Begin change - Bhargav.K, 28th Aug, 2008 - NGW-ITS Piece Tracking Results Page */
+
+.linkback {
+	BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 10px; BACKGROUND-IMAGE: url(/eshipping/images/g_arrow_red_back.gif); COLOR: #cc0000; BACKGROUND-REPEAT: no-repeat
+}
+.linkbackdisable {
+	BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 10px; BACKGROUND-IMAGE: url(/eshipping/images/g_arrow_grey_back.gif); COLOR: #999999; BACKGROUND-REPEAT: no-repeat
+}
+.linknext {
+	PADDING-RIGHT: 10px; BACKGROUND-POSITION: right 50%; BACKGROUND-IMAGE: url(/eshipping/images/g_arrow_red.gif); COLOR: #cc0000; BACKGROUND-REPEAT: no-repeat
+}
+.linknextdisable {
+	PADDING-RIGHT: 10px; BACKGROUND-POSITION: right 50%; BACKGROUND-IMAGE: url(/eshipping/images/g_arrow_grey.gif); COLOR: #999999; BACKGROUND-REPEAT: no-repeat
+}
+.bold {
+	FONT-WEIGHT: bold
+}
+.linkregular {
+	BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 10px; BACKGROUND-IMAGE: url(/eshipping/images/g_arrow_red.gif); COLOR: #cc0000; BACKGROUND-REPEAT: no-repeat
+}
+.standardLink {
+	COLOR: #cc0000; TEXT-DECORATION: underline
+}
+.proviewLink {
+	COLOR: #306EFF; TEXT-DECORATION: underline; MARGIN-LEFT: 43px; FONT-SIZE: 1.1em; FLOAT: left
+}
+.summarySpacer {
+	MARGIN-TOP: 5px
+}
+.summarySpacerError {
+            MARGIN-TOP: -5px
+}
+.summaryHeader {
+	PADDING-RIGHT: 5px; BORDER-TOP: #999999 2px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 1px; PADDING-TOP: 2px; HEIGHT: 30px; BACKGROUND-COLOR: #e4e4e4
+}
+.summaryIconGroup {
+	BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 15px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/i_box.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+.summaryWaybillText {
+	FONT-SIZE: 1.2em; WIDTH: 160px
+}
+.summaryProviewText {
+	FONT-SIZE: 1.2em; COLOR: #306EFF
+}
+.summaryProviewGroup {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; PADDING-TOP: 6px; HEIGHT: 20px; BACKGROUND-COLOR: #e4e4e4; FONT-SIZE: 1.1em
+}
+.summaryStatusGroup {
+	FONT-SIZE: 1.4em; WIDTH: 280px; COLOR: #cc0000; HEIGHT: 35px; FONT-WEIGHT:bold
+}
+.summaryDateTimeText {
+	FONT-SIZE: 1.2em; WIDTH: 454px
+}
+.summaryFooter {
+	BORDER-RIGHT: #999999 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #999999 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 1px; BORDER-LEFT: #999999 1px solid; LINE-HEIGHT: 20px; BORDER-BOTTOM: #999999 1px solid; HEIGHT: 20px; BACKGROUND-COLOR: #cccccc; TEXT-ALIGN: right
+}
+.summaryFooterShowLink {
+	PADDING-RIGHT: 21px; BACKGROUND-POSITION: right center; FONT-SIZE: 1.1em; BACKGROUND-IMAGE: url(../../html/art/i_chevron_down.gif); PADDING-BOTTOM: 1px; COLOR: #cc0000; PADDING-TOP: 1px; BACKGROUND-REPEAT: no-repeat; TEXT-DECORATION: none; repeat: no-repeat
+}
+.summaryFooterHideLink {
+	PADDING-RIGHT: 21px; BACKGROUND-POSITION: right center; FONT-SIZE: 1.1em; BACKGROUND-IMAGE: url(../../html/art/i_chevron_up.gif); PADDING-BOTTOM: 1px; COLOR: #cc0000; PADDING-TOP: 1px; BACKGROUND-REPEAT: no-repeat; TEXT-DECORATION: none; repeat: no-repeat
+}
+.trackDateGroup {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #999999 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; BORDER-LEFT: #cccccc 1px solid; LINE-HEIGHT: 20px; PADDING-TOP: 2px; HEIGHT: 20px; BACKGROUND-COLOR: #cccccc
+}
+.trackHeaderColumn1 {
+	FONT-WEIGHT: bold; FONT-SIZE: 1.1em; FLOAT: left; WIDTH: 250px
+}
+.trackHeaderColumn2 {
+	FONT-SIZE: 1.1em; FLOAT: left; WIDTH: 40px
+}
+.trackHeaderColumn3 {
+	FONT-SIZE: 1.1em; FLOAT: left; WIDTH: 30px; TEXT-ALIGN: center
+}
+.trackHeaderColumn4 {
+	FONT-SIZE: 1.1em
+}
+.trackDetailsGroupOddRow {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; BORDER-LEFT: #cccccc 1px solid; LINE-HEIGHT: 12px; PADDING-TOP: 2px; HEIGHT: 25px; BACKGROUND-COLOR: #ffffff
+}
+.trackDetailsGroupEvenRow {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; BORDER-LEFT: #cccccc 1px solid; LINE-HEIGHT: 12px; PADDING-TOP: 2px; HEIGHT: 25px; BACKGROUND-COLOR: #e4e4e4
+}
+.trackDetailsColumn1 {
+	FONT-SIZE: 1em; FLOAT: left; WIDTH: 250px
+}
+.trackDetailsColumn2 {
+	FONT-SIZE: 1em; FLOAT: left; WIDTH: 40px
+}
+.trackDetailsColumn3 {
+	FONT-SIZE: 1em; FLOAT: left; WIDTH: 30px; TEXT-ALIGN: center
+}
+.trackDetailsColumn4 {
+	FONT-SIZE: 1em; overflow: auto
+}
+.trackPieceGroupOddRow {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 5px; PADDING-LEFT: 5px; BORDER-LEFT: #cccccc 1px solid; LINE-HEIGHT: 14px; HEIGHT: 14px; BACKGROUND-COLOR: #ffffff
+}
+.trackPieceGroupEvenRow {
+	BORDER-RIGHT: #cccccc 1px solid; PADDING-RIGHT: 5px; PADDING-LEFT: 5px; BORDER-LEFT: #cccccc 1px solid; LINE-HEIGHT: 14px; HEIGHT: 14px; BACKGROUND-COLOR: #e4e4e4
+}
+.errorText {
+	FONT-WEIGHT: bold; FONT-SIZE: 1.2em; FLOAT: left OVERFLOW: hidden
+}
+.summaryFooterShowAllLink {
+            PADDING-RIGHT: 21px; BACKGROUND-POSITION: right center; FONT-SIZE: 1.0em; FLOAT: right; BACKGROUND-IMAGE: url(../../html/art/i_chevron_down.gif); COLOR: #cc0000; BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+.summaryFooterHideAllLink {
+            PADDING-RIGHT: 21px; BACKGROUND-POSITION: right center; FONT-SIZE: 1.0em; FLOAT: right; BACKGROUND-IMAGE: url(../../html/art/i_chevron_up.gif); COLOR: #cc0000; BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+.trackDuplicateGroupOddRow {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; LINE-HEIGHT: 16px; PADDING-TOP: 2px; HEIGHT: 32px; BACKGROUND-COLOR: #ffffff
+}
+
+.trackDuplicateGroupEvenRow {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; LINE-HEIGHT: 16px; PADDING-TOP: 2px; HEIGHT: 32px; BACKGROUND-COLOR: #e4e4e4
+}
+
+.trackDuplicateColumn1 {
+	FONT-SIZE: 1em; FLOAT: left; WIDTH: 40px
+}
+
+.trackDuplicateColumn2 {
+	FONT-SIZE: 1em; FLOAT: left; WIDTH: 120px
+}
+
+.trackDuplicateColumn3 {
+	FONT-SIZE: 1em; FLOAT: left; WIDTH: 180px
+}
+
+.trackDuplicateColumn4 {
+	FONT-SIZE: 1em; FLOAT: left; WIDTH: 180px
+}
+
+.trackDuplicateGroupHeader {
+	PADDING-RIGHT: 2px; PADDING-LEFT: 2px; FONT-WEIGHT: bold; FONT-SIZE: 1.1em; PADDING-BOTTOM: 2px; LINE-HEIGHT: 12px; PADDING-TOP: 2px; HEIGHT: 12px; BACKGROUND-COLOR: #ffffff
+}
+
+.trackDuplicate1 {
+	FONT-SIZE: 1em; FLOAT: left; WIDTH: 40px
+}
+
+.trackDuplicate2 {
+	FONT-SIZE: 1em; FLOAT: left; WIDTH: 120px
+}
+
+.trackDuplicate3 {
+	FONT-SIZE: 1em; FLOAT: left; WIDTH: 190px
+}
+
+.trackDuplicate4 {
+	FONT-SIZE: 1em; FLOAT: left; WIDTH: 190px
+}
+
+.summarySpacerDuplicate {
+	MARGIN-TOP: 20px
+}
+
+.pieceIdPlus {
+	BACKGROUND-POSITION: center; PADDING-LEFT: 25px; BACKGROUND-IMAGE: url(../../html/art/i_plus.gif); COLOR: #cc0000; BACKGROUND-REPEAT: no-repeat; TEXT-DECORATION: underline
+}
+.pieceIdPlusSummary {
+	BACKGROUND-POSITION: left; PADDING-LEFT: 12px; BACKGROUND-IMAGE: url(../../html/art/i_plus.gif); COLOR: #cc0000; BACKGROUND-REPEAT: no-repeat; TEXT-DECORATION: underline
+}
+
+.pieceIdMinus {
+	BACKGROUND-POSITION: center; PADDING-LEFT: 25px; BACKGROUND-IMAGE: url(../../html/art/i_minus.gif); COLOR: #cc0000; BACKGROUND-REPEAT: no-repeat; TEXT-DECORATION: underline
+}
+
+.pieceIdMinusSummary {
+	BACKGROUND-POSITION: left; PADDING-LEFT: 12px; BACKGROUND-IMAGE: url(../../html/art/i_minus.gif); COLOR: #cc0000; BACKGROUND-REPEAT: no-repeat; TEXT-DECORATION: underline
+}
+.trackWidth {
+	WIDTH: 500px
+}
+
+.trackPieceGroupEvenRowSummary {
+            PADDING-RIGHT: 5px; PADDING-LEFT: 5px; LINE-HEIGHT: 14px; HEIGHT: 14px; BACKGROUND-COLOR: #e4e4e4
+}
+
+.trackPieceDetailsSummary1 {
+            FONT-SIZE: 1em; FLOAT: left; WIDTH: 282px
+}
+
+.trackPieceDetailsSummary2 {
+            FONT-SIZE: 1em; FLOAT: left; WIDTH: 48px
+}
+
+.trackPieceDetailsSummary3 {
+            FONT-SIZE: 1em; FLOAT: left; WIDTH: 218px; TEXT-ALIGN: left
+}
+
+.trackPieceDetailsSummary4 {
+            FONT-SIZE: 1em; FLOAT: left; WIDTH: 2px
+}
+
+.summaryIconGroup_i_box {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/i_box.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_i_right {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/i_right.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_i_caution_red {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/i_caution_red.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_i_process {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/i_process.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_i_up {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/i_up.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_i_process_check {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/i_process_check.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_i_left {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/i_left.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_i_truck {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/i_truck.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_i_dollarsign {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/i_dollarsign.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_i_blank {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/i_blank.bmp); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_dhl_icon_delivered {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/dhl_icon_delivered.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_dhl_icon_in-transit {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/dhl_icon_in-transit.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_dhl_departed {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/dhl_departed.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_dhl_icon_clearance-delay_b {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/dhl_icon_clearance-delay_b.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_dhl_icon_exeption_b {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/dhl_icon_exeption_b.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_dhl_icon_manifest-received_a {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/dhl_icon_manifest-received_a.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_dhl_please_contact {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/dhl_please_contact.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.summaryIconGroup_dhl_shipper_contacted {
+            BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 45px; FLOAT: left; BACKGROUND-IMAGE: url(../../html/art/dhl_shipper_contacted.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.marketingBox {
+	PADDING-RIGHT: 5px;  PADDING-LEFT: 5px; LEFT: 15px; PADDING-BOTTOM: 5px; HEIGHT: 65px; WIDTH:225px; PADDING-TOP: 5px;   MARGIN-TOP: 5px; BACKGROUND-COLOR: FFF380;MARGIN-LEFT: 328px
+}
+
+.marketingTeaserText{
+	PADDING-LEFT: 14px;PADDING-RIGHT: 1px;WIDTH:220px;HEIGHT: 20px;
+}
+
+.boldMarketing {
+	FONT-WEIGHT: bold; TEXT-DECORATION: underline
+}
+
+.marketingImage {
+	BACKGROUND-POSITION: 0px 50%; PADDING-LEFT: 14px; FLOAT: left; BACKGROUND-IMAGE: url(../../artglobaldhl/arrow_b_r_mini.gif); BACKGROUND-REPEAT: no-repeat; repeat: no-repeat
+}
+
+.lineHeight {
+	LINE-HEIGHT: 20px; HEIGHT: 35px
+}
+
+.summarySpacerDuplicateHeader {
+	MARGIN-TOP: 50px
+}
+
+#resolveSubmit, #resolveSubmitSelected {
+	float:right;
+	cursor:hand;
+	font-size:0.95em;
+	font-weight:bold;
+	background:#FC0 url(../../artglobaldhl/arrow_b_r_small.gif) no-repeat 1px 50%;
+	padding:0;
+	border-width:1px;
+	border-style:solid;
+	border-color:white black black #fc0;
+}
+#resolveSubmit:hover, #resolveSubmitSelected {
+	border-color:black white white black;
+	background:#E4E4E4 url(../../artglobaldhl/arrow_w_r_small.gif) no-repeat 1px 50%;
+}
+
+#resolveSubmit0, #resolveSubmitSelected0 {
+	float:right;
+	cursor:hand;
+	font-size:0.95em;
+	font-weight:bold;
+	background:#FC0 url(../../artglobaldhl/arrow_b_r_small.gif) no-repeat 1px 50%;
+	padding:0;
+	border-width:1px;
+	border-style:solid;
+	border-color:white black black #fc0;
+}
+#resolveSubmit0:hover, #resolveSubmitSelected0 {
+	border-color:black white white black;
+	background:#E4E4E4 url(../../artglobaldhl/arrow_w_r_small.gif) no-repeat 1px 50%;
+}

@@ -1,0 +1,166 @@
+/* CSS Document */
+body{
+	margin: 0px;
+	padding: 0px;
+	color: #969696;
+	font: 11px Tahoma, Arial, Helvetica, sans-serif;
+	height: 700px;
+	background: #FFFFFF;
+}
+#content{
+	margin: auto;
+}
+table td{
+	text-align: left;
+	vertical-align: top;
+}
+h1{
+	margin: 0px 0px 5px;
+	font-size: 1px;
+}
+.rt{
+	text-align: right;
+	vertical-align: top;
+}
+.floatl{
+	float: left;
+}
+.floatr{
+	float: right;
+}
+.clear{
+	clear:both;	
+}
+p{
+	margin: 10px 0px 0px;
+	padding: 0px;
+}
+.box {
+	padding: 35px 0px 0px;
+}
+.boxx {
+	padding: 20px 0px 0px;
+}
+.box1 {
+	padding: 0px 15px 0px 0px;
+}
+.box2 {
+	margin: 0px;
+	width: 120px;
+}
+.box21 {
+	margin: 0px;
+	width: 115px;
+}
+.box3{	margin: 0px;
+}
+.img{	margin: 19px 70px 0px 42px;
+}
+.img1{	margin: 0px 15px 0px 0px;
+}
+.img11 {
+	border: 3px solid #929B97;
+}
+.ha1{
+	height: 75px;
+	width: 1000px;
+	margin: auto;
+}
+.ha2{
+	width: 500px;
+	height: 525px;
+	padding: 0px 17px 0px 440px;
+	margin: auto;
+	background: url(../img/content/b_ha2_01.jpg) no-repeat left top;
+}
+
+.ha5{
+	width: 900px;
+	height: 525px;
+	padding: 0px 17px 0px 25px;
+	margin: auto;
+	background: url(../img/content/b_ha2_02.jpg) no-repeat left top;
+}
+
+.ha3{
+	width: 980px;
+	height: 22px;
+	padding: 0px 15px 0px 0px;
+	margin: auto;
+	text-align: center;
+}
+.ha4{
+	height: 25px;
+	width: 1000px;
+	margin: auto;}
+
+.ha9{
+	width: 7000px;
+	height: 525px;
+	padding: 0px 17px 0px 440px;
+	margin: auto;
+	background: url(../img/content/b_ha2_01.jpg) no-repeat left top;
+}
+
+.text1{ 
+	color: #FE8E00;}
+}
+.ha6{
+	height: 20px;
+	width: 1000px;
+}
+.ha7{
+	width: 570px;
+	height: 525px;
+	padding: 0px 17px 0px 440px;
+	margin: auto;
+	background: url(../img/content/b_ha2_03.jpg) no-repeat left top;
+}
+
+.ha8{
+	width: 980px;
+	padding: 10px 10px 10px 10px;
+	margin: auto;
+}
+
+.text11 {
+	color: #189CC9;
+}
+.text2 {
+	font-size: x-small;
+	color: #CC0000;
+}
+
+.red_h5_bold {font-size : 11px; color : #F8D358; font-weight: normal;}
+
+table#timeTable {
+width:100%;
+z-index:1;
+margin:10px 0;
+}
+
+table#timeTable tr th {
+background-color:#F8D358;
+font-size:1.1em;
+font-weight:700;
+border-left:1px solid #9D7B06;
+border-right:1px solid #9D7B06;
+border-top:1px solid #9D7B06;
+border-bottom:1px solid #9D7B06;
+text-align:left;
+padding:2px 4px;
+}
+
+table#timeTable td {
+border-left:1px solid #9D7B06;
+border-right:1px solid #9D7B06;
+border-top:1px solid #9D7B06;
+border-bottom:1px solid #9D7B06;
+background-color:#FBE79F;
+width:auto;
+padding:3px 2px;
+}
+
+table#timeTable tr.altrow {
+background-color:#FDE9BB;
+}

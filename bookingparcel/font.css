@@ -1,0 +1,43 @@
+body {font:80% arial;}
+h1,h2,h3,h4,h5,h6{margin:0;}
+
+#simple h1, #scontent h1, #dcontent h1{font-size:1.5em; font-weight:lighter;padding-left:12px;border-bottom:3px solid #ababab;}
+#gscontent h1{font-size:20px;}
+#breadcrumbs h1{display:inline;font:bold 1em verdana;border:none;}
+
+h2{padding:4px 4px 4px 12px;font-size:1em;background-color:#efefef;border-top:1px solid #fff;border-bottom:1px solid #ccc;}
+h2 a{text-decoration:none;padding-left:6px;}
+h2 a:link, h2 a:visited{color:#039;}
+h2 a:hover{color:#f60;}
+#cwindow h2                             {padding:2px 2px 2px 10px;border-bottom:3px solid #3879A7;border-top:2px solid #fff;background-color:#e7e7e7;font-size:1em;}
+#homeright h2, #related h2, #localnav h2{padding:2px 2px 2px 10px;border-bottom:3px solid #3879A7;border-top:2px solid #fff;background-color:#D9D9D9;font-size:1em;}
+#rwindow h2.featured,#cwindow h2.featured{padding:2px 2px 2px 10px;border-bottom:3px solid #FF822E;border-top:2px solid #fff;background-color:#D9D9D9;font-size:1em;}
+
+#dcontent h3, #scontent h3, #simple h3, #detailbody h3{font-size:1em; margin:6px 0 0 12px;}
+#resourcebody #localnav h3{margin-top:6px;background-color:#d15c19;color:#fff;font: bold 0.8em verdana;padding:3px 3px 3px 6px;border-bottom:2px solid #b5b5b5;}
+#footer	{font:0.8em verdana;text-align:center;}
+#footer p{line-height:5px;}
+
+.break {word-break:break-all;font:normal 0.8em Verdana;}
+.required{font:bold 0.8em Verdana!important;color:red;}
+.remark{font:normal 0.8em Verdana!important;color:#666;}
+.limit{font:normal 0.8em Verdana;color:#900;}
+.alert{color:#f60; font-weight: bold;}
+.keywords{color:#f00;}
+.notice{color:#900;}
+.error{color:red;}
+h1.success{color:#f60;border:none!important;}
+.unable{color:#999;}
+.unable a:link,.unable a:visited{color:#999;}
+.s{font-size:0.8em!important;font-family:verdana;}
+.m{font-size:1.25em!important;}
+.l{font-size:1.5em!important;}
+em{font-style: normal;font-weight: bold;font-family:verdana;}
+
+#forum h1,#forum h2,#forum h3,#forum h4{background:none!important;border:none!important;padding:0!important;margin:0!important;}
+#forum h1{font-size:1.8em;}
+#forum h2{font-size:1.4em!important;font-weight:lighter;}
+#forum h3{font-size:1.17em;}
+#forum h4{font-size:1em;}
+#forum h5{font-size:.83em;}
+#forum h6{font-size:.75em;}

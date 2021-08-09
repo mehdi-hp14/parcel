@@ -1,0 +1,77 @@
+@import base.css;
+
+body {
+font-size:1.15em;
+color:#333;
+}
+
+#termSlctr h3 {
+padding-top:10px;
+font-size:1.25em;
+}
+
+#termSlctr p {
+padding-bottom:16px;
+}
+
+#termSlctr fieldset {
+margin-top:-6px;
+}
+
+#termSlctr button {
+float:right;
+margin-right:8px;
+}
+
+input,select {
+font-size:1.05em;
+}
+
+h1 span,h2 span,h3 span,h4 span,.header1 span,.header2 span,.header3 span,.header4 span,.heading_1 span,.heading_2 span,.heading_3 span,.heading_4 span,.Heading_1 span,.Heading_2 span,.Heading_3 span,.Heading_4 span {
+margin-top:-.12em;
+}
+
+#mainCntnt .liveinfo {
+margin-top:-3em;
+}
+
+#flightTabs {
+margin-top:-1em;
+font-size:.9em;
+}
+
+#skyscraper {
+top:6px;
+}
+
+.gt h3,.gt .header3,.gt .heading_3,.gt .Heading_3 {
+padding-top:6px;
+font-size:1.3em;
+}
+
+.small h5,.small .header5,.small .heading_5,.small .Heading_5 {
+padding-top:100px;
+font-size:1.3em;
+}
+
+#mainCntnt .gt span.cta a {
+line-height:1em;
+}
+
+.block h2,.block .header2,.block .heading_2,.block .Heading_2 {
+padding-top:126px;
+}
+
+#mainCntnt .hero span.triplet a {
+font-size:1.1em;
+margin-bottom:0;
+margin-top:68px;
+}
+
+#divider_2_2 label {
+height:2.2em;
+}
+
+#temperatureinfo,#weather table,.flightInfo table {
+font-size:12px;
+}

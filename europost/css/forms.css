@@ -1,0 +1,40 @@
+form {
+	margin: 0px;
+	padding: 5px;
+	background: #FDF3D0;
+}
+
+.nofrm {
+	margin: 0px;
+	padding: 5px;
+}
+
+.frm {
+	margin: 0px;
+	padding: 5px;
+	background: #FDF3D0;
+}
+
+input, textarea {
+	font: 11px Tahoma, Arial, Helvetica, sans-serif;
+	color: #6A6A6A;
+	border-top: 1px solid #828263;
+	border-right: 1px solid #C9C978;
+	border-bottom: 1px solid #C9C978;
+	border-left: 1px solid #828263;
+	margin: 0px 0px 5px;
+}
+
+.i{ 
+	width:112px;
+	}
+
+.i1 {
+
+	width:145px;
+}
+
+.t{
+	width: 150px;
+	height: 110px;
+}

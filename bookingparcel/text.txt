@@ -1,0 +1,56 @@
+function fetch_add(frm)
+{
+	theForm = frm;
+	if( theForm.address.options[theForm.address.selectedIndex].value != "" && theForm.address.options[theForm.address.selectedIndex].value != "Please select..." )
+		{
+		document.getElementById('addinf').innerHTML = "<img src=\\\"/img/content/loader3.gif\\\" style=\\\"vertical-align: middle;\\\" width=\\\"16\\\" height=\\\"16\\\" border=\\\"0\\\" alt=\\\"Loading...\\\" />";
+
+		xmlhttp2=GetXmlHttpObject();
+		if (xmlhttp2==null)
+		  {
+		  alert ("Your browser does not support XMLHTTP!");
+		  return;
+		  } 
+			
+		var url="$script";
+		url=url+"?cf=book";
+		url=url+"&getadd=1";
+		url=url+"&ipc="+theForm.cookie.value;
+		url=url+"&pb="+theForm.postcode_search.value;
+		url=url+"&add="+theForm.address.options[theForm.address.selectedIndex].value;
+		url=url+"&sid="+Math.random();
+				
+		xmlhttp2.onreadystatechange=stateChanged2;
+		xmlhttp2.open("GET",url,true);
+		xmlhttp2.send(null);
+		}
+	else
+		{
+		alert("Please select an address!");
+		}
+	
+	return false;
+}
+
+
+function stateChanged2()
+{
+	if (xmlhttp2.readyState==4)
+	  {
+	  if( xmlhttp2.responseText.substring(0,6) != "FOUND:" )
+	  	{
+	  	var myArray = xmlhttp2.responseText.substring(6).split("~");
+			document.getElementById('id_contact').value = myArray[0];
+			document.getElementById('id_company').value = myArray[1];
+			document.getElementById('aid_add1').value = myArray[2];
+			document.getElementById('id_add2').value = myArray[3];
+			document.getElementById('aid_town').value = myArray[4];
+			document.getElementById('aid_county').value = myArray[5];
+			document.getElementById('aid_postcode').value = myArray[6];
+		  }
+		else
+			{
+		  alert(xmlhttp2.responseText);
+			}
+	  }
+}

@@ -1,0 +1,44 @@
+id
+servid
+tt1
+tt2
+remote
+remote addition tt
+dutiable
+dutiable text
+vat
+vat text
+partial coverage
+partial coverage text
+zone
+country
+pcode
+nopcode
+service
+fueled
+satdelext
+satcolext
+bookcharge
+maxlength
+maxheight
+maxwidth
+invreq
+custcharge
+volformula
+
+
+settings
+dutiable
+vat
+fuel
+remote
+satdelext
+detcolext
+volformula
+custcharge
+invreq
+maxlength
+maxwidth
+maxheight
+bookcharge
+partcover

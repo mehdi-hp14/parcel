@@ -1,0 +1,63 @@
+#logo {
+margin-top:25px;
+padding-bottom:25px;
+}
+
+#mainCntnt {
+padding-bottom:30px;
+}
+
+#bottom_ad {
+padding-bottom:40px;
+}
+
+select {
+height:2.2em;
+}
+
+#parking label,.flightInfo label {
+line-height:2.4em;
+}
+
+.standard h1,.standard h2,.standard h3,.standard h4,.standard h5,.standard h6,.standard .header1,.standard .header2,.standard .header3,.standard .header4,.standard .header5,.standard .header6,.standard .heading_1,.standard .heading_2,.standard .heading_3,.standard .heading_4,.standard .heading_5,.standard .heading_6,.standard .Heading_1,.standard .Heading_2,.standard .Heading_3,.standard .Heading_4,.standard .Heading_5,.standard .Heading_6 {
+padding:4px 10px;
+}
+
+ul.autocompleter-choices li {
+margin-left:-16px;
+display:inline-block;
+}
+
+.search button {
+margin-left:-10px;
+margin-right:10px;
+}
+
+#myJourney .search button {
+margin-left:10px;
+margin-right:20px;
+}
+
+#tertNav {
+padding-bottom:15px;
+}
+#myJourneyInner {padding-bottom:25px;}
+
+/*=Enhanced Autonomy styles=*/
+#flight_info_links ul {
+	margin-left: 18px;
+	float: none;
+	list-style:disc;
+	display:list-item;
+	list-style-position: outside;	
+}
+
+
+#flight_info_links ul li {
+	float: none;
+	display: list-item;
+	list-style: disc;
+	list-style-position: outside;
+	width: 100%;	
+}
+/*=Enhanced Autonomy styles=*/

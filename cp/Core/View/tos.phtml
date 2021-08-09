@@ -1,0 +1,20 @@
+﻿<div class="row mbl">
+	<div class="col-lg-12">
+		<div class="tab-content">
+		<?php
+		if(isset($this->ToSText) AND is_array($this->ToSText) AND count($this->ToSText)>0)
+		{
+			foreach($this->ToSText as $tos)
+			{
+				echo '<h4 class="block-heading">'.$tos['title'].'</h4>';
+				echo $tos['text'];
+				echo "<br><br>".date("Y/m/d H:i:s",$tos['creation_date'])."<hr>";
+			}
+		}
+		else{
+			echo "No Terms are setted.";
+		}
+		?>
+		</div>
+	</div>
+</div>

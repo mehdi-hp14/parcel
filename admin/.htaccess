@@ -1,0 +1,2 @@
+AuthName "admin"
+AuthUserFile "/home/europost/.htpasswds/public_html/bookingparcel.com/admin/passwd"

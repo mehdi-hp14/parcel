@@ -1,0 +1,10 @@
+[14-Sep-2016 18:02:31 UTC] PHP Warning:  strip_tags() expects parameter 1 to be string, array given in /home/bookingparcel/public_html/admin/CurrencyConv/GoogleCurrencyConvertor.inc.php on line 41
+[14-Sep-2016 18:02:31 UTC] PHP Warning:  Division by zero in /home/bookingparcel/public_html/admin/CurrencyConv/GoogleCurrencyConvertor.inc.php on line 52
+[14-Sep-2016 18:02:54 UTC] PHP Warning:  strip_tags() expects parameter 1 to be string, array given in /home/bookingparcel/public_html/admin/CurrencyConv/GoogleCurrencyConvertor.inc.php on line 41
+[14-Sep-2016 18:02:54 UTC] PHP Warning:  Division by zero in /home/bookingparcel/public_html/admin/CurrencyConv/GoogleCurrencyConvertor.inc.php on line 52
+[14-Sep-2016 18:05:28 UTC] PHP Warning:  Division by zero in /home/bookingparcel/public_html/admin/CurrencyConv/GoogleCurrencyConvertor.inc.php on line 54
+[04-Apr-2018 07:43:32 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE), expecting function (T_FUNCTION) in /home/bookingparcel/public_html/admin/CurrencyConv/GoogleCurrencyConvertor.inc.php on line 25
+[04-Apr-2018 07:44:26 UTC] PHP Warning:  file_get_contents(https://openexchangerates.org/api/latest.json?app_id=&amp;base=EUR): failed to open stream: HTTP request failed! HTTP/1.1 403 Forbidden
+ in /home/bookingparcel/public_html/admin/CurrencyConv/GoogleCurrencyConvertor.inc.php on line 16
+[04-Apr-2018 07:44:26 UTC] PHP Warning:  file_get_contents(https://openexchangerates.org/api/latest.json?app_id=&amp;base=GBP): failed to open stream: HTTP request failed! HTTP/1.1 403 Forbidden
+ in /home/bookingparcel/public_html/admin/CurrencyConv/GoogleCurrencyConvertor.inc.php on line 16

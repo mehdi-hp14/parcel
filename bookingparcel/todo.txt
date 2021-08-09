@@ -1,0 +1,2 @@
+* password must be encrypted
+* buttons must be same appearance

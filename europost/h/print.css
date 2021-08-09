@@ -1,0 +1,85 @@
+/* CSS Document */
+
+#skip, 
+#extrasCntr, 
+#termSlctr, 
+#priNavCont, 
+#divider_0_2, 
+#divider_0_1, 
+#divider_2_2, 
+.pageActions,
+#skyscraper,
+#flashcontent,
+.mpu,
+span.help a,
+#ftr a {display:none;}
+
+body {
+	color:#000;
+	font:normal 12px/16px Frutiger, Arial, Helvetica, Verdana, sans-serif;
+	width:90%;
+}
+
+#divider_1_2, #divider_1_1 {float:none; width:100%;}
+* {margin:0; padding:0; float:none;}
+
+h1, h2, h3, h4, h5, h6, 
+.header1, .header2, .header3, .header4, .header5, .header6, 
+.heading_1, .heading_2, .heading_3, .heading_4, .heading_5, .heading_6 {margin:14px 0 6px 0; font-weight:bold; display:block;}
+
+h1, 
+.header1, 
+.heading_1 {font-size:18px; margin:24px 0 10px;}
+
+h2, 
+.header2, 
+.heading_2 {font-size:16px; margin:18px 0 6px;}
+
+h3, 
+.header3, 
+.heading_3 {font-size:15px; margin:16px 0 6px;}
+
+h4, 
+.header4, 
+.heading_4 {font-size:14px; margin:14px 0 6px;}
+
+h5, 
+.header5, 
+.heading_5 {font-size:13px; margin:12px 0 6px;}
+
+h6, 
+.header6, 
+.heading_6 {font-size:12px; margin:10px 0 6px;}
+
+table {margin:6px 0;}
+
+#mainCntnt div {width:90%; margin:4px 0;}
+a {text-decoration:underline; margin:0 5px;}
+#divider_1_2 a:link:after, #divider_1_2 a:visited:after, #divider_1_1 a:link:after, #divider_1_1 a:visited:after {
+   content: " (" attr(href) ") ";
+   font-size: 90%;
+}
+
+a img {border:0;}
+p {padding:5px 0;}
+
+#brand {float:none; margin:0 0 20px 0; padding:0;}
+#brand img {padding:10px 30px 0 0;}
+#brand a {text-decoration:none;}
+#breadcrumbs {clear:left;}
+#breadcrumbs li, #ftr li {display:inline;}
+
+.portlet, .gt, .tgt {float:none; clear:left;}
+
+fieldset {margin:8px 0; padding:10px; border:none; width:100%;}
+input, select, button {border:1px solid #666; margin-right:10px;}
+label {display:inline; margin-right:10px;}
+table {width:100%; border-top:1px solid #666; border-left:1px solid #666;}
+th, td {padding:6px 3px; border-bottom:1px solid #666; border-right:1px solid #666;}
+
+.fcategories li, .fcategories li a, .fcategories li a img {display:inline; padding:0; margin:0 1px 1px 0;}
+.fcategories li a img {border:1px solid #ddd;}
+
+#ftr {margin-top:20px;}
+
+body#multilingualbody {direction:rtl;}

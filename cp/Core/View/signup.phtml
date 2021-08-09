@@ -1,0 +1,132 @@
+﻿                        <div class="row mbl">
+                            <div class="col-lg-12">
+									<div class="row">
+<?php
+if($this->processed == true)
+{
+?>
+							<div class="col-lg-12">
+                                <div class="panel">
+                                    <div class="panel-body">
+										<div class="well well-lg">
+											<div style="text-align:center;">
+												<p class="icon">
+													<i class="icon fa fa-check"></i>
+												</p>
+												Your registration was successful.<br>
+												An activation e-mail has been sent to your e-mail address (<?php echo $this->email; ?>).<br>
+												Please check your inbox (maybe your junk or spam box). and proceed the activation course!<br> 
+											</div>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+<?php	
+}
+else
+{
+?>
+										<div class="col-lg-8">
+											<div class="panel panel-orange">
+												<div class="panel-heading">SignUp</div>
+												<div class="panel-body pan">
+													<form action="" method="post">
+													<div class="form-body pal">
+													<?php if(isset($this->error) AND $this->error==true){ 
+														foreach($this->error_m as $err){
+															if($err!='' AND $err!=null){?>
+															<div class="alert alert-danger"><strong>Error!</strong> <?php echo $err; ?></div>
+<?php																
+															}
+														}
+													?>
+													<?php } ?>
+													</div>
+													<div class="form-body pal">
+														<div class="form-group">
+															<div class="input-icon right">
+																<i class="fa fa-user"></i>
+																<input id="inputName" type="text" placeholder="Username" name="uname" value="<?php echo $this->uname; ?>" class="form-control" required></div>
+														</div>
+														<div class="form-group">
+															<div class="input-icon right">
+																<i class="fa fa-envelope"></i>
+																<input id="inputEmail" type="text" placeholder="Email address" name="email" value="<?php echo $this->email; ?>" class="form-control" required></div>
+														</div>
+														<div class="form-group">
+															<div class="input-icon right">
+																<i class="fa fa-lock"></i>
+																<input id="inputPassword" type="password" placeholder="Password" name="pass" class="form-control" required></div>
+														</div>
+														<div class="form-group">
+															<div class="input-icon right">
+																<i class="fa fa-lock"></i>
+																<input id="inputConfirmPassword" type="password" placeholder="Confirm Password" name="passc" class="form-control" required></div>
+														</div>
+														<hr>
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="input-icon right">
+																		<i class="fa fa-user"></i>
+																		<input id="inputFirstName" type="text" placeholder="First Name" name="fname" value="<?php echo $this->fname; ?>" class="form-control" required>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="input-icon right">
+																		<i class="fa fa-user"></i>
+																		<input id="inputLastName" type="text" placeholder="Last Name" name="lname" value="<?php echo $this->lname; ?>" class="form-control" required>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<div class="input-icon right">
+																		<i class="fa fa-briefcase"></i>
+																		<input id="inputCompany" type="text" placeholder="Company" name="company" value="<?php echo $this->company; ?>" class="form-control"></div>
+																</div>
+															</div>
+														</div>
+														<div class="form-group">
+															<select class="form-control" name="gender" required>
+																<option>Gender</option>
+																<option value="0" <?php if($this->gender == 0) echo "selected='selected'"; ?>>Male</option>
+																<option value="1" <?php if($this->gender == 1) echo "selected='selected'"; ?>>Female</option>
+																<option value="2" <?php if($this->gender == 2) echo "selected='selected'"; ?>>Other</option>
+															</select></div>
+														<div class="form-group">
+															<div class="checkbox">
+																<label class="">
+																	<div class="icheckbox_minimal-grey" style="position: relative;"><input tabindex="5" value="1" type="checkbox" name="newsletter" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>&nbsp; I want to receive news and special
+																	offers</label></div>
+														</div>
+														<div class="form-group mbn">
+															<div class="checkbox">
+																<label>
+																	<div class="icheckbox_minimal-grey" style="position: relative;"><input tabindex="5" value="1" type="checkbox" name="agb" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);" required><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>&nbsp; I agree with the <a href="tos.php" class="alert-link">Terms and Conditions</a></label></div>
+														</div>
+													</div>
+													<div class="form-actions text-right pal">
+														<button type="submit" class="btn btn-primary">
+															Signup</button>
+													</div>
+													</form>
+												</div>
+											</div>
+										</div>	
+										<div class="col-lg-4">
+											<div class="panel panel-blue" style="background:#fff;">
+												<div class="panel-heading">Login</div>
+												<div class="panel-body pan">
+													<div class="form-body pal">
+														<a href="index.php">Do you have account?</a>
+													</div>
+												</div>
+											</div>
+										</div>		
+<?php } ?>										
+									</div>
+                            </div>
+                        </div>
