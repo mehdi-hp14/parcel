@@ -1,4 +1,4 @@
-<section >
+<div id="shipper-container">
 
     <div id="infoi" style="display:none;"><div class="loader"></div></div>
     <div class="progress">
@@ -112,4 +112,109 @@
             </div>
         </form>
     </div>
-</section>
+</div>
+
+<script>
+    /* SHAME : in case of fix ajax_process remove THIS*/
+
+    function CountryFunction(a,b)
+    {
+        //{firstName:"John", lastName:"Doe", age:46}
+
+        switch(a)
+        {
+            case 'from':
+                $('#from_country').find('option').remove().end().append($('<option>', {
+                    value: 'GBR',
+                    text: 'United Kingdom',
+                    selected : true
+                }));
+                $('#to_country').find('option').remove().end();
+                $.each(Countries, function (i, item) {
+                    if(item.value === 'GBR')
+                    {
+                    }
+                    else
+                    {
+                        $('#to_country').append($('<option>', {
+                            value: item.value,
+                            text : item.text
+                        }));
+                    }
+                });
+                break;
+            case 'to':
+                $('#to_country').find('option').remove().end().append($('<option>', {
+                    value: 'GBR',
+                    text: 'United Kingdom',
+                    selected : true
+                }));
+                $('#from_country').find('option').remove().end();
+                $.each(Countries, function (i, item) {
+                    if(item.value === 'GBR')
+                    {
+                    }
+                    else
+                    {
+                        $('#from_country').append($('<option>', {
+                            value: item.value,
+                            text : item.text
+                        }));
+                    }
+                });
+                break;
+            case 'other':
+                $('#from_country').find('option').remove().end();
+                $('#to_country').find('option').remove().end();
+                $.each(Countries, function (i, item) {
+                    $('#to_country').append($('<option>', {
+                        value: item.value,
+                        text : item.text
+                    }));
+                    $('#from_country').append($('<option>', {
+                        value: item.value,
+                        text : item.text
+                    }));
+                });
+                break;
+        }
+    }
+    function HandleTimeSelection()
+    {
+        var value = $("#when_time").val();
+        if(value == 3)
+        {
+            $("#exact_date").show();
+        }else{
+            $("#exact_date").hide();
+        }
+    }
+    function HandleAirTermSelection()
+    {
+        var value = $("#terms").val();
+        if(value == 3)
+        {
+            $("#other_term").show();
+        }
+    }
+    function HandleTransitSelection()
+    {
+        var value = $("#transit").val();
+        if(value == "Other")
+        {
+            $("#other_transit").show();
+        }
+    }
+    function HandleFCLSelection(a)
+    {
+        if(a == 1)
+        {
+            $("#fcl_div").show();
+        }
+        else
+        {
+            $("#fcl_div").hide();
+        }
+    }
+
+</script>

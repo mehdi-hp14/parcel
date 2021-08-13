@@ -85,8 +85,11 @@
         <div class="title m-b-md">
             Laravel
         </div>
-
+{{--        {{session_start()}}--}}
+{{$_SESSION['ship_method']=1}}
+{{--{{\Illuminate\Support\Facades\Session::put('ship_method',1)}}--}}
         <div class="links">
+            <a href="/admin">Admin</a>
             <a href="https://laravel.com/docs">Docs</a>
             <a href="https://laracasts.com">Laracasts</a>
             <a href="https://laravel-news.com">News</a>
@@ -100,3 +103,4 @@
 </div>
 </body>
 </html>
+{{dd($_SESSION)}}

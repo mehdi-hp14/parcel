@@ -1,0 +1,17 @@
+{
+    "name": "pc/parcel",
+    "autoload": {
+        "psr-4": {
+            "Pc\\Parcel\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mmhp14",
+            "email": "mmhp16@gmail.com"
+        }
+    ],
+    "require": {
+        "phpmailer/phpmailer": "^6.5"
+    }
+}

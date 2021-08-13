@@ -299,7 +299,7 @@ if(isset($_GET['cmd']) AND $_GET['cmd']=='previous')
 		{
 			case 0:
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
@@ -314,13 +314,13 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="0">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div class="required">Your Tracking ID :</div>
-									<div><input name="tracking" type="text"></div>
+									<div><input name="tracking" type="text" class="form-control" ></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div class="required">Your E-mail :</div>
-									<div><input name="email" type="email"></div>
+									<div><input name="email" type="email" class="form-control"></div>
 								</div>
 							</div>
 
@@ -344,18 +344,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 					$(\'#infoi\').hide();
 				}
@@ -372,8 +372,8 @@ $html .= '
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Apply</button></div>
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 my-5">
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Apply</button></div>
 								</div>
 							</div>
 						</form>
@@ -387,7 +387,7 @@ $html .= '
 			case 1:
 			if(!isset($_SESSION['ship_type'])) return;
 			$html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
@@ -402,7 +402,7 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="1">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required ">Please Select&nbsp;:&nbsp;</div>
 									<div>
 										<input type="radio" name="ship_type" value="1"'.((isset($_SESSION['ship_type']) AND $_SESSION['ship_type']==1) ? " checked='checked'" : "").' id="ShipType1" OnClick="CountryFunction(\'from\',\'uk\');" required="true" >&nbsp;<label for="ShipType1">Shipping from the UK</label><br>
@@ -410,7 +410,7 @@ $html .= '
 										<input type="radio" name="ship_type" value="3"'.((isset($_SESSION['ship_type']) AND $_SESSION['ship_type']==3) ? " checked='checked'" : "").' id="ShipType3" OnClick="CountryFunction(\'other\',\'\');" required="true">&nbsp;<label for="ShipType3">Other</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Collection Country&nbsp;:&nbsp;</div>
 									<div>
 										<select class="drop_down" name="from_country" id="from_country" required="true">
@@ -419,7 +419,7 @@ $html .= '
 										</select>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Destination Country&nbsp;:&nbsp;</div>
 									<div>
 										<select class="drop_down" name="to_country" id="to_country" required="true">
@@ -427,7 +427,7 @@ $html .= '
 										</select>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Shipping type&nbsp;:&nbsp;</div>
 									<div>
 										<input type="radio" name="ship_kind" value="1"'.((isset($_SESSION['ship_kind']) AND $_SESSION['ship_kind']==1) ? " checked='checked'" : "").' id="ShipKind1" required="true">&nbsp;<label for="ShipKind1">Comercial</label><br>
@@ -441,7 +441,7 @@ $html .= '
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required"><label for="when_time">When?&nbsp;</label></div>
 									<div>
 										<select id="when_time" name="time" class="drop_down" OnChange="HandleTimeSelection();" required="true">
@@ -455,22 +455,22 @@ $html .= '
 									</div>
 									<div style="display:none;" id="exact_date">
 										<div class="required">Please enter a date :</div>
-										<div><input name="exact_date" type="text"'.((isset($_SESSION['exact_date']) AND $_SESSION['exact_date']!='') ? " value='".$_SESSION['exact_date']."'" : "").'></div>
+										<div><input name="exact_date" type="text" class="form-control" '.((isset($_SESSION['exact_date']) AND $_SESSION['exact_date']!='') ? " value='".$_SESSION['exact_date']."'" : "").'></div>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Collection City&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="collection_city" required="true"'.((isset($_SESSION['collection_city']) AND $_SESSION['collection_city']!='') ? " value='".$_SESSION['collection_city']."'" : "").'>
+										<input type="text" class="form-control"  name="collection_city" required="true"'.((isset($_SESSION['collection_city']) AND $_SESSION['collection_city']!='') ? " value='".$_SESSION['collection_city']."'" : "").'>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Destination City&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="destination_city" required="true"'.((isset($_SESSION['destination_city']) AND $_SESSION['destination_city']!='') ? " value='".$_SESSION['destination_city']."'" : "").'>
+										<input type="text" class="form-control"  name="destination_city" required="true"'.((isset($_SESSION['destination_city']) AND $_SESSION['destination_city']!='') ? " value='".$_SESSION['destination_city']."'" : "").'>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Shipping method&nbsp;:&nbsp;</div>
 									<div>
 										<input type="radio" name="ship_method" value="1"'.((isset($_SESSION['ship_method']) AND $_SESSION['ship_method']==1) ? " checked='checked'" : "").' id="ShipMethod1" required="true">&nbsp;<label for="ShipMethod1">Air</label><br>
@@ -503,18 +503,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -532,10 +532,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" >I have Tracking Code</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" >I have Tracking Code</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -549,7 +549,7 @@ $html .= '
 			case 2:
 			if(!isset($_SESSION['collection_pt'])) return;
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:20%">
@@ -564,16 +564,16 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="2">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div class="required">Collection postcode & town&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="collection_pt" required="true"'.((isset($_SESSION['collection_pt']) AND $_SESSION['collection_pt']!='') ? " value='".$_SESSION['collection_pt']."'" : "").'>
+										<input type="text" class="form-control"  name="collection_pt" required="true"'.((isset($_SESSION['collection_pt']) AND $_SESSION['collection_pt']!='') ? " value='".$_SESSION['collection_pt']."'" : "").'>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Delivery postcode & town&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="delivery_pt" required="true"'.((isset($_SESSION['delivery_pt']) AND $_SESSION['delivery_pt']!='') ? " value='".$_SESSION['delivery_pt']."'" : "").'>
+										<input type="text" class="form-control"  name="delivery_pt" required="true"'.((isset($_SESSION['delivery_pt']) AND $_SESSION['delivery_pt']!='') ? " value='".$_SESSION['delivery_pt']."'" : "").'>
 									</div>
 								</div>
 							</div>
@@ -600,7 +600,7 @@ $html .= '
 										<input type="radio" name="tsa" id="tsa_no" required="true" value="0" '.(($_SESSION['tsa']==0) ? " checked='checked'" : "").'><label for="tsa_no">No</label>&nbsp;&nbsp;&nbsp;
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div  style="width:50%;">
 										<div class="required">Would you prefer to transit this order to the destination Via another country ?&nbsp;</div>
 										<div>
@@ -623,7 +623,7 @@ $html .= '
 										</div>
 										<div style="display:none;" id="other_transit">
 											<div class="required">Please enter the country name :</div>
-											<div><input name="other_transit" type="text"'.((isset($_SESSION['other_transit']) AND $_SESSION['other_transit']!='') ? " value='".$_SESSION['other_transit']."'" : "").'></div>
+											<div><input name="other_transit" type="text" class="form-control" '.((isset($_SESSION['other_transit']) AND $_SESSION['other_transit']!='') ? " value='".$_SESSION['other_transit']."'" : "").'></div>
 										</div>
 									</div>
 								</div>
@@ -668,7 +668,7 @@ $html .= '
 									</div>
 									<div style="display:none;" id="other_term">
 										<div class="required">Please enter your term :</div>
-										<div><input name="other_term" type="text"'.((isset($_SESSION['other_term']) AND $_SESSION['other_term']!='') ? " value='".$_SESSION['other_term']."'" : "").'></div>
+										<div><input name="other_term" type="text" class="form-control" '.((isset($_SESSION['other_term']) AND $_SESSION['other_term']!='') ? " value='".$_SESSION['other_term']."'" : "").'></div>
 									</div>
 								</div>
 							</div>
@@ -714,7 +714,7 @@ $html .= '
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 									<div class="required">Nmber of containers (Default is 1)&nbsp;:&nbsp;</div>
-									<div ><input name="containerCount" type="number" value="'.((isset($_SESSION['containerCount']) AND $_SESSION['containerCount']!='') ? $_SESSION['containerCount'] : "1").'"></div>
+									<div ><input name="containerCount" type="number" class="form-control"  value="'.((isset($_SESSION['containerCount']) AND $_SESSION['containerCount']!='') ? $_SESSION['containerCount'] : "1").'"></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 									<div class="required">FCL (Full Container Load)&nbsp;:&nbsp;</div>
@@ -779,18 +779,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -818,18 +818,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -872,10 +872,10 @@ function onChange() {
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -893,7 +893,7 @@ function onChange() {
 			//var_dump($_SESSION['insurance']);
 $html .= '
 
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
@@ -915,11 +915,11 @@ if(!(isset($_SESSION['containerType']) AND $_SESSION['containerType']==3))
 <script type="text/javascript"> 
 			$(document).ready(function () {
 					var scntDiv = $(\'#dimsID\');
-					var i = $(\'#dimsID div.dims\').size() + 1;
+					var i = $(\'#dimsID div.dims\').length + 1;
 					
 					$(\'#addScnt\').on(\'click\', \'img\', function() {
 						//alert("yes");
-						$(\'<div class="dims"><div class="col-xs-7 col-sm-6 col-md-6 col-lg-6"><input type="text" name="dims[]" size="25" maxlength="50"></div><div class="col-xs-3 col-sm-4 col-md-4 col-lg-4"><input type="text" name="weights[]" size="6" maxlength="6"></div><div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div></div>\').appendTo(scntDiv);
+						$(\'<div class="dims"><div class="col-xs-7 col-sm-6 col-md-6 col-lg-6 mb-5"><input type="text" class="form-control"  name="dims[]" size="25" maxlength="50"></div><div class="col-xs-3 col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control"  name="weights[]" size="6" maxlength="6"></div><div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div></div>\').appendTo(scntDiv);
 						i++;
 						return false;
 					});
@@ -930,7 +930,7 @@ if(!(isset($_SESSION['containerType']) AND $_SESSION['containerType']==3))
 								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 									<div class="required">Nmber of items&nbsp;:&nbsp;</div>
 									<div>
-										<input type="number" name="itemCount" id="itemCount"'.((isset($_SESSION['itemCount']) AND $_SESSION['itemCount']!='') ? " value='".$_SESSION['itemCount']."'" : "").'>
+										<input type="number" class="form-control"  name="itemCount" id="itemCount"'.((isset($_SESSION['itemCount']) AND $_SESSION['itemCount']!='') ? " value='".$_SESSION['itemCount']."'" : "").'>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -950,9 +950,9 @@ if(isset($_SESSION['dims']) AND $_SESSION['dims']!='')
 	{
 $html .= '
 										<div class="dims">
-											<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7"><input type="text" name="dims[]" size="25" maxlength="50" value="'.$v.'"></div>
-											<div class="col-xs-3 col-sm-4 col-md-4 col-lg-4"><input type="text" name="weights[]" size="6" maxlength="6" value="'.$_SESSION['weights'][$k].'"></div>
-											<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+											<div class="col-xs-8 col-sm-7 col-md-7 col-lg-7 mb-5"><input type="text" class="form-control"  name="dims[]" size="25" maxlength="50" value="'.$v.'"></div>
+											<div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 mb-5"><input type="text" class="form-control"  name="weights[]" size="6" maxlength="6" value="'.$_SESSION['weights'][$k].'"></div>
+											<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 mb-5">
 												<a href="#" id="addScnt"><img src="https://bookingparcel.com/images/add.png"></a>
 												<a href="#" id="remScnt"><img src="https://bookingparcel.com/images/delete.png"></a>
 											</div>
@@ -973,20 +973,20 @@ $html .= '
 }
 $html .='
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">Total weight in kg (Approx.)&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="t_weight" id="t_weight"'.((isset($_SESSION['t_weight']) AND $_SESSION['t_weight']!='') ? " value='".$_SESSION['t_weight']."'" : "").'>
+										<input type="text" class="form-control"  name="t_weight" id="t_weight"'.((isset($_SESSION['t_weight']) AND $_SESSION['t_weight']!='') ? " value='".$_SESSION['t_weight']."'" : "").'>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">Are the boxes/Pallets stackable ?</div>
 									<div>
 										<input type="radio" name="stackable" value="1" id="stackable1"'.(($_SESSION['stackable']==1) ? " checked='checked'" : "").'>&nbsp;<label for="stackable1">Yes</label><br>
 										<input type="radio" name="stackable" value="2" id="stackable2"'.(($_SESSION['stackable']==2) ? " checked='checked'" : "").'>&nbsp;<label for="stackable2">No</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">Do you need shipping insurance?</div>
 									<div>
 										<input type="radio" name="insurance" value="1" id="insurance1"'.(($_SESSION['insurance']==1) ? " checked='checked'" : "").'>&nbsp;<label for="insurance1">Yes</label><br>
@@ -994,10 +994,10 @@ $html .='
 										<input type="radio" name="insurance" value="3" id="insurance3"'.(($_SESSION['insurance']==3) ? " checked='checked'" : "").'>&nbsp;<label for="insurance3">Not sure</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Shipment description and commodity name:&nbsp;</div>
 									<div>
-										<textarea name="desc" rows="6" cols="21">'.((isset($_SESSION['desc']) AND $_SESSION['desc']!='') ? "".$_SESSION['desc']."" : "").'</textarea>
+										<textarea class="form-control" name="desc" rows="6" cols="21">'.((isset($_SESSION['desc']) AND $_SESSION['desc']!='') ? "".$_SESSION['desc']."" : "").'</textarea>
 									</div>
 								</div>
 							</div>
@@ -1050,18 +1050,18 @@ $html .='
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -1089,18 +1089,18 @@ $html .='
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -1118,10 +1118,10 @@ $html .='
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -1136,7 +1136,7 @@ $html .='
 			if(!isset($_SESSION['account'])) return;
 			
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%">
@@ -1151,18 +1151,18 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="4">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class=""><b>Note:</b></div>
 									<div>The following contact details are for pricing only, and wont be used for shipping documents.</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Note: having account in <a href="http://cp.bookingparcel.com">User Panel</a> gives you some options such as ticketing and easily tracking and some more.<br>It is not necessary to have account but it is highly recommended.</div>
 									<div>
 										<input type="radio" name="account" value="1"'.(($_SESSION['account']==1) ? " checked='checked'" : "").' id="account1">&nbsp;<label for="account1">I have account in <a href="http://cp.bookingparcel.com">User Panel</a> .</label><br>
 										<input type="radio" name="account" value="2"'.(($_SESSION['account']==2) ? " checked='checked'" : "").' id="account2">&nbsp;<label for="account2">I don\'t have account in <a href="http://cp.bookingparcel.com">User Panel</a> .</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Preferred method of contact:&nbsp;</div>
 									<div>
 										<input type="radio" name="contactMethod" value="1"'.(($_SESSION['contactMethod']==1) ? " checked='checked'" : "").' id="contactMethod1">&nbsp;<label for="contactMethod1">Email</label><br>
@@ -1170,7 +1170,7 @@ $html .= '
 										<input type="radio" name="contactMethod" value="3"'.(($_SESSION['contactMethod']==3) ? " checked='checked'" : "").' id="contactMethod3">&nbsp;<label for="contactMethod3">Any of above</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Preferred time of contact:&nbsp;</div>
 									<div>
 										<input type="radio" name="contactTime" value="1"'.(($_SESSION['contactTime']==1) ? " checked='checked'" : "").' id="contactTime1">&nbsp;<label for="contactTime1">Anytime</label><br>
@@ -1186,25 +1186,25 @@ $html .= '
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">E-mail for receive invoice :</div>
-									<div><input type="email" name="invoiceEmail"'.((isset($_SESSION['invoiceEmail']) AND $_SESSION['invoiceEmail']!='') ? " value='".$_SESSION['invoiceEmail']."'" : "").'></div>
+									<div><input type="email" class="form-control" name="invoiceEmail"'.((isset($_SESSION['invoiceEmail']) AND $_SESSION['invoiceEmail']!='') ? " value='".$_SESSION['invoiceEmail']."'" : "").'></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">E-mail for receive quote :</div>
-									<div><input type="email" name="quoteEmail"'.((isset($_SESSION['quoteEmail']) AND $_SESSION['quoteEmail']!='') ? " value='".$_SESSION['quoteEmail']."'" : "").'></div>
+									<div><input type="email" class="form-control" name="quoteEmail"'.((isset($_SESSION['quoteEmail']) AND $_SESSION['quoteEmail']!='') ? " value='".$_SESSION['quoteEmail']."'" : "").'></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">E-mail for receive prealert :</div>
-									<div><input type="email" name="prealertEmail"'.((isset($_SESSION['prealertEmail']) AND $_SESSION['prealertEmail']!='') ? " value='".$_SESSION['prealertEmail']."'" : "").'></div>
+									<div><input type="email" class="form-control" name="prealertEmail"'.((isset($_SESSION['prealertEmail']) AND $_SESSION['prealertEmail']!='') ? " value='".$_SESSION['prealertEmail']."'" : "").'></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">Other CC Email address :</div>
 									<div>
-									(1):<input type="email" name="cc1"'.((isset($_SESSION['cc1']) AND $_SESSION['cc1']!='') ? " value='".$_SESSION['cc1']."'" : "").'><br>
-									(2):<input type="email" name="cc2"'.((isset($_SESSION['cc2']) AND $_SESSION['cc2']!='') ? " value='".$_SESSION['cc2']."'" : "").'><br>
-									(3):<input type="email" name="cc3"'.((isset($_SESSION['cc3']) AND $_SESSION['cc3']!='') ? " value='".$_SESSION['cc3']."'" : "").'><br>
-									(4):<input type="email" name="cc4"'.((isset($_SESSION['cc4']) AND $_SESSION['cc4']!='') ? " value='".$_SESSION['cc4']."'" : "").'><br>
+									(1):<input type="email" class="form-control" name="cc1"'.((isset($_SESSION['cc1']) AND $_SESSION['cc1']!='') ? " value='".$_SESSION['cc1']."'" : "").'><br>
+									(2):<input type="email" class="form-control" name="cc2"'.((isset($_SESSION['cc2']) AND $_SESSION['cc2']!='') ? " value='".$_SESSION['cc2']."'" : "").'><br>
+									(3):<input type="email" class="form-control" name="cc3"'.((isset($_SESSION['cc3']) AND $_SESSION['cc3']!='') ? " value='".$_SESSION['cc3']."'" : "").'><br>
+									(4):<input type="email" class="form-control" name="cc4"'.((isset($_SESSION['cc4']) AND $_SESSION['cc4']!='') ? " value='".$_SESSION['cc4']."'" : "").'><br>
 									</div>
 								</div>
 							</div>
@@ -1216,11 +1216,11 @@ $html .= '
 							<div class="row">
 								<div class="col-xs-12 col-sm-4 col-md-5 col-lg-5">
 									<div class="">your order reference number&nbsp;:</div>
-									<div><input type="text" name="orderReference"'.((isset($_SESSION['orderReference']) AND $_SESSION['orderReference']!='') ? " value='".$_SESSION['orderReference']."'" : "").'></div>
+									<div><input type="text" class="form-control"  name="orderReference"'.((isset($_SESSION['orderReference']) AND $_SESSION['orderReference']!='') ? " value='".$_SESSION['orderReference']."'" : "").'></div>
 								</div>
 								<div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
 									<div class="">Note - Goods value:</div>
-									<div><textarea name="note" rows="6" cols="21">'.((isset($_SESSION['note']) AND $_SESSION['note']!='') ? "".$_SESSION['note']."" : "").'</textarea></div>
+									<div><textarea class="form-control" name="note" rows="6" cols="21">'.((isset($_SESSION['note']) AND $_SESSION['note']!='') ? "".$_SESSION['note']."" : "").'</textarea></div>
 								</div>
 							</div>
 
@@ -1243,18 +1243,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -1282,18 +1282,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -1311,10 +1311,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -1376,7 +1376,7 @@ elseif(isset($_GET['cmd']) AND $_GET['cmd']=='files')
 			}
 		}
 	}
-	if(count($_SESSION['attachments']) == $_c)
+	if($_SESSION['attachments'] && count($_SESSION['attachments']) == $_c)
 	{
 		$_SESSION['locations'] = $locations;
 	}
@@ -1405,18 +1405,18 @@ $html .= '
 <script type="text/javascript"> 
 			$(document).ready(function () {
 					var scntDiv = $(\'#msdsID\');
-					var i = $(\'#msdsID div.msds\').size() + 1;
+					var i = $(\'#msdsID div.msds\').length + 1;
 					
 					$(\'#addScntmsds\').on(\'click\', \'img\', function() {
 						//alert("yes");
-						$(\'<div class="msds"><div class="col-xs-11 col-sm-10 col-md-10 col-lg-10"><input type="file" name="file[]" size="25" maxlength="50"></div><div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"><a href="#" id="addScntmsds"><img src="https://bookingparcel.com/images/add.png"></a></div></div>\').appendTo(scntDiv);
+						$(\'<div class="msds"><div class="col-xs-11 col-sm-10 col-md-10 col-lg-10"><input type="file" class="mb-5" name="file[]" size="25" maxlength="50"></div><div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"><a href="#" id="addScntmsds"><img src="https://bookingparcel.com/images/add.png"></a></div></div>\').appendTo(scntDiv);
 						i++;
 						return false;
 					});
 			});
 			
 </script>
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
@@ -1447,11 +1447,11 @@ $html .= '
 								</div>
 								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 									<div class="required'.(($errors['un']!='' or $errors['class']!='') ? " error" : "").'">UN Number & Classification :</div>
-									<div><input name="un" type="text" size="10" maxlength="255" placeholder="UN number"><input name="class" type="text" size="12" maxlength="255" placeholder="classification"></div>
+									<div><input name="un" type="text" class="form-control"  size="10" maxlength="255" placeholder="UN number"><input name="class" type="text" class="form-control"  size="12" maxlength="255" placeholder="classification"></div>
 								</div>
 								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 									<div class="required'.($errors['instruction']!='' ? " error" : "").'">Packing Instruction :</div>
-									<div><textarea name="instruction" rows="6" cols="21"></textarea></div>
+									<div><textarea class="form-control" name="instruction" rows="6" cols="21"></textarea></div>
 								</div>
 							</div>
 							<div class="row">
@@ -1465,13 +1465,13 @@ $html .= '
 							<div class="row">
 								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 									<div class="row required'.($errors['upload']!='' ? " error" : "").'">
-										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 my-5">
 											MSDS files :
 										</div>
 									</div>
 									<div class="row" id="msdsID">
 										<div class="msds">
-											<div class="col-xs-11 col-sm-10 col-md-10 col-lg-10"><input type="file" name="file[]" size="25" maxlength="50"></div>
+											<div class="col-xs-11 col-sm-10 col-md-10 col-lg-10"><input type="file" class="mb-5" name="file[]" size="25" maxlength="50"></div>
 											<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2">
 												<a href="#" id="addScntmsds"><img src="https://bookingparcel.com/images/add.png"></a>
 											</div>
@@ -1498,18 +1498,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -1577,18 +1577,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -1608,10 +1608,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -1630,7 +1630,7 @@ else {
 	$_SESSION['class'] = $_POST['class'];
 	$_SESSION['instruction'] = $_POST['instruction'];
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%">
@@ -1645,18 +1645,18 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="4">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class=""><b>Note:</b></div>
 									<div>The following contact details are for pricing only, and wont be used for shipping documents.</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Note: having account in <a href="http://cp.bookingparcel.com">User Panel</a> gives you some options such as ticketing and easily tracking and some more.<br>It is not necessary to have account but it is highly recommended.</div>
 									<div>
 										<input type="radio" name="account" value="1" id="account1">&nbsp;<label for="account1">I have account in <a href="http://cp.bookingparcel.com">User Panel</a> .</label><br>
 										<input type="radio" name="account" value="2" id="account2">&nbsp;<label for="account2">I don\'t have account in <a href="http://cp.bookingparcel.com">User Panel</a> .</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Preferred method of contact:&nbsp;</div>
 									<div>
 										<input type="radio" name="contactMethod" value="1" id="contactMethod1">&nbsp;<label for="contactMethod1">Email</label><br>
@@ -1664,7 +1664,7 @@ $html .= '
 										<input type="radio" name="contactMethod" value="3" id="contactMethod3">&nbsp;<label for="contactMethod3">Any of above</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Preferred time of contact:&nbsp;</div>
 									<div>
 										<input type="radio" name="contactTime" value="1" id="contactTime1">&nbsp;<label for="contactTime1">Anytime</label><br>
@@ -1680,25 +1680,25 @@ $html .= '
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">E-mail for receive invoice :</div>
-									<div><input type="email" name="invoiceEmail"></div>
+									<div><input type="email" class="form-control" name="invoiceEmail"></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">E-mail for receive quote :</div>
-									<div><input type="email" name="quoteEmail"></div>
+									<div><input type="email" class="form-control" name="quoteEmail"></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">E-mail for receive prealert :</div>
-									<div><input type="email" name="prealertEmail"></div>
+									<div><input type="email" class="form-control" name="prealertEmail"></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">Other CC Email address :</div>
 									<div>
-									(1):<input type="email" name="cc1"><br>
-									(2):<input type="email" name="cc2"><br>
-									(3):<input type="email" name="cc3"><br>
-									(4):<input type="email" name="cc4"><br>
+									(1):<input type="email" class="form-control" name="cc1"><br>
+									(2):<input type="email" class="form-control" name="cc2"><br>
+									(3):<input type="email" class="form-control" name="cc3"><br>
+									(4):<input type="email" class="form-control" name="cc4"><br>
 									</div>
 								</div>
 							</div>
@@ -1710,11 +1710,11 @@ $html .= '
 							<div class="row">
 								<div class="col-xs-12 col-sm-4 col-md-5 col-lg-5">
 									<div class="">your order reference number&nbsp;:</div>
-									<div><input type="text" name="orderReference"></div>
+									<div><input type="text" class="form-control"  name="orderReference"></div>
 								</div>
 								<div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
 									<div class="">Note - Goods value:</div>
-									<div><textarea name="note" rows="6" cols="21"></textarea></div>
+									<div><textarea class="form-control" name="note" rows="6" cols="21"></textarea></div>
 								</div>
 							</div>
 							<div class="row">
@@ -1742,18 +1742,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -1781,18 +1781,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -1810,10 +1810,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -1868,7 +1868,7 @@ if(isset($_POST['step']) AND is_numeric($_POST['step']) AND in_array($_POST['ste
 										while($res = mysql_fetch_array($r)){
 $output .= '
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div class="">'.date("Y/m/d H:i:s",$res['timestamp']).'</div>
 									<div>'.$res['message'].'</div>
 								</div>
@@ -1884,7 +1884,7 @@ $output .= '
 									else{
 $output .= '
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div class="">Your order is under process</div>
 								</div>
 							</div>
@@ -1903,7 +1903,7 @@ $output .= '
 			}
 
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
@@ -1963,7 +1963,7 @@ $html .= '
 			
 			if ( ! empty($errors)) {
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%">
@@ -1978,7 +1978,7 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="1">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required '.($errors['ship_type']!='' ? " error" : "").'">Please Select&nbsp;:&nbsp;</div>
 									<div>
 										<input type="radio" name="ship_type" value="1"'.((!isset($errors['ship_type']) AND $_POST['ship_type']==1) ? " checked='checked'" : "").' id="ShipType1" OnClick="CountryFunction(\'from\',\'uk\');" required="true" >&nbsp;<label for="ShipType1">Shipping from the UK</label><br>
@@ -1986,7 +1986,7 @@ $html .= '
 										<input type="radio" name="ship_type" value="3"'.((!isset($errors['ship_type']) AND $_POST['ship_type']==3) ? " checked='checked'" : "").' id="ShipType3" OnClick="CountryFunction(\'other\',\'\');" required="true">&nbsp;<label for="ShipType3">Other</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['from_country']!='' ? " error" : "").'">Collection Country&nbsp;:&nbsp;</div>
 									<div>
 										<select class="drop_down" name="from_country" id="from_country" required="true">
@@ -1995,7 +1995,7 @@ $html .= '
 										</select>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['to_country']!='' ? " error" : "").'">Destination Country&nbsp;:&nbsp;</div>
 									<div>
 										<select class="drop_down" name="to_country" id="to_country" required="true">
@@ -2003,7 +2003,7 @@ $html .= '
 										</select>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['ship_kind']!='' ? " error" : "").'">Shipping type&nbsp;:&nbsp;</div>
 									<div>
 										<input type="radio" name="ship_kind" value="1"'.((!isset($errors['ship_kind']) AND $_POST['ship_kind']==1) ? " checked='checked'" : "").' id="ShipKind1" required="true">&nbsp;<label for="ShipKind1">Comercial</label><br>
@@ -2017,7 +2017,7 @@ $html .= '
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['time']!='' ? " error" : "").'"><label for="when_time">When?&nbsp;</label></div>
 									<div>
 										<select id="when_time" name="time" class="drop_down" OnChange="HandleTimeSelection();" required="true">
@@ -2031,22 +2031,22 @@ $html .= '
 									</div>
 									<div style="display:none;" id="exact_date">
 										<div class="required'.($errors['exact_date']!='' ? " error" : "").'">Please enter a date :</div>
-										<div><input name="exact_date" type="text"'.((!isset($errors['exact_date']) AND $_POST['exact_date']!='') ? " value='".$_POST['exact_date']."'" : "").'></div>
+										<div><input name="exact_date" type="text" class="form-control" '.((!isset($errors['exact_date']) AND $_POST['exact_date']!='') ? " value='".$_POST['exact_date']."'" : "").'></div>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['collection_city']!='' ? " error" : "").'">Collection City&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="collection_city" required="true"'.((!isset($errors['collection_city']) AND $_POST['collection_city']!='') ? " value='".$_POST['collection_city']."'" : "").'>
+										<input type="text" class="form-control"  name="collection_city" required="true"'.((!isset($errors['collection_city']) AND $_POST['collection_city']!='') ? " value='".$_POST['collection_city']."'" : "").'>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['destination_city']!='' ? " error" : "").'">Destination City&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="destination_city" required="true"'.((!isset($errors['destination_city']) AND $_POST['destination_city']!='') ? " value='".$_POST['destination_city']."'" : "").'>
+										<input type="text" class="form-control"  name="destination_city" required="true"'.((!isset($errors['destination_city']) AND $_POST['destination_city']!='') ? " value='".$_POST['destination_city']."'" : "").'>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['ship_method']!='' ? " error" : "").'">Shipping method&nbsp;:&nbsp;</div>
 									<div>
 										<input type="radio" name="ship_method" value="1"'.((!isset($errors['ship_method']) AND $_POST['ship_method']==1) ? " checked='checked'" : "").' id="ShipMethod1" required="true">&nbsp;<label for="ShipMethod1">Air</label><br>
@@ -2079,18 +2079,18 @@ $html .= '
 				//console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -2108,10 +2108,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" >I have Tracking Code</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" >I have Tracking Code</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -2135,7 +2135,7 @@ $html .= '
 				
 				
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:20%">
@@ -2150,16 +2150,16 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="2">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div class="required">Collection postcode & town&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="collection_pt" required="true">
+										<input type="text" class="form-control"  name="collection_pt" required="true">
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Delivery postcode & town&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="delivery_pt" required="true">
+										<input type="text" class="form-control"  name="delivery_pt" required="true">
 									</div>
 								</div>
 							</div>
@@ -2186,7 +2186,7 @@ $html .= '
 										<input type="radio" name="tsa" id="tsa_no" required="true" value="0"><label for="tsa_no">No</label>&nbsp;&nbsp;&nbsp;
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div  style="width:50%;">
 										<div class="required">Would you prefer to transit this order to the destination Via another country ?&nbsp;</div>
 										<div>
@@ -2209,7 +2209,7 @@ $html .= '
 										</div>
 										<div style="display:none;" id="other_transit">
 											<div class="required">Please enter the country name :</div>
-											<div><input name="other_transit" type="text"></div>
+											<div><input name="other_transit" type="text" class="form-control" ></div>
 										</div>
 									</div>
 								</div>
@@ -2254,7 +2254,7 @@ $html .= '
 									</div>
 									<div style="display:none;" id="other_term">
 										<div class="required">Please enter your term :</div>
-										<div><input name="other_term" type="text"></div>
+										<div><input name="other_term" type="text" class="form-control" ></div>
 									</div>
 								</div>
 							</div>
@@ -2300,7 +2300,7 @@ $html .= '
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 									<div class="required">Nmber of containers (Default is 1)&nbsp;:&nbsp;</div>
-									<div ><input name="containerCount" type="number" value="1"></div>
+									<div ><input name="containerCount" type="number" class="form-control"  value="1"></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 									<div class="required">FCL (Full Container Load)&nbsp;:&nbsp;</div>
@@ -2365,18 +2365,18 @@ $html .= '
 				//console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -2404,18 +2404,18 @@ $html .= '
 				//console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -2458,10 +2458,10 @@ function onChange() {
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -2557,7 +2557,7 @@ function onChange() {
 			if ( ! empty($errors)) {
 				
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width:20%">
@@ -2572,16 +2572,16 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="2">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div class="required'.($errors['collection_pt']!='' ? " error" : "").'">Collection postcode & town&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="collection_pt" required="true"'.((!isset($errors['collection_pt']) AND isset($_POST['collection_pt']) AND $_POST['collection_pt']!='') ? " value='".$_POST['collection_pt']."'" : "").'>
+										<input type="text" class="form-control"  name="collection_pt" required="true"'.((!isset($errors['collection_pt']) AND isset($_POST['collection_pt']) AND $_POST['collection_pt']!='') ? " value='".$_POST['collection_pt']."'" : "").'>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['delivery_pt']!='' ? " error" : "").'">Delivery postcode & town&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="delivery_pt" required="true"'.((!isset($errors['delivery_pt']) AND isset($_POST['delivery_pt']) AND $_POST['delivery_pt']!='') ? " value='".$_POST['delivery_pt']."'" : "").'>
+										<input type="text" class="form-control"  name="delivery_pt" required="true"'.((!isset($errors['delivery_pt']) AND isset($_POST['delivery_pt']) AND $_POST['delivery_pt']!='') ? " value='".$_POST['delivery_pt']."'" : "").'>
 									</div>
 								</div>
 							</div>
@@ -2608,7 +2608,7 @@ $html .= '
 										<input type="radio" name="tsa" id="tsa_no" required="true" value="0" '.((!isset($errors['tsa']) AND $_POST['tsa']==0) ? " checked='checked'" : "").'><label for="tsa_no">No</label>&nbsp;&nbsp;&nbsp;
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div  style="width:50%;">
 										<div class="required'.($errors['other_country']!='' ? " error" : "").'">Would you prefer to transit this order to the destination Via another country ?&nbsp;</div>
 										<div>
@@ -2631,7 +2631,7 @@ $html .= '
 										</div>
 										<div style="display:none;" id="other_transit">
 											<div class="required'.($errors['other_transit']!='' ? " error" : "").'">Please enter the country name :</div>
-											<div><input name="other_transit" type="text"></div>
+											<div><input name="other_transit" type="text" class="form-control" ></div>
 										</div>
 									</div>
 								</div>
@@ -2673,7 +2673,7 @@ $html .= '
 									</div>
 									<div style="display:none;" id="other_term">
 										<div class="required'.($errors['other_term']!='' ? " error" : "").'">Please enter your term :</div>
-										<div><input name="other_term" type="text"></div>
+										<div><input name="other_term" type="text" class="form-control" ></div>
 									</div>
 								</div>
 							</div>
@@ -2719,7 +2719,7 @@ $html .= '
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 									<div class="required'.($errors['containerCount']!='' ? " error" : "").'">Nmber of containers (Default is 1)&nbsp;:&nbsp;</div>
-									<div ><input name="containerCount" type="number" value="'.((!isset($errors['containerCount']) AND isset($_POST['containerCount']) AND $_POST['containerCount']!='') ? $_POST['containerCount'] : "1").'"></div>
+									<div ><input name="containerCount" type="number" class="form-control"  value="'.((!isset($errors['containerCount']) AND isset($_POST['containerCount']) AND $_POST['containerCount']!='') ? $_POST['containerCount'] : "1").'"></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 									<div class="required'.($errors['FCLType']!='' ? " error" : "").'">FCL (Full Container Load)&nbsp;:&nbsp;</div>
@@ -2784,18 +2784,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -2823,18 +2823,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -2852,10 +2852,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -2900,7 +2900,7 @@ $html .= '
 				}
 $html .= '
 
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
@@ -2921,11 +2921,11 @@ if(!(isset($_SESSION['containerType']) AND $_SESSION['containerType']==3))
 <script type="text/javascript"> 
 			$(document).ready(function () {
 					var scntDiv = $(\'#dimsID\');
-					var i = $(\'#dimsID div.dims\').size() + 1;
+					var i = $(\'#dimsID div.dims\').length + 1;
 					
 					$(\'#addScnt\').on(\'click\', \'img\', function() {
 						//alert("yes");
-						$(\'<div class="dims"><div class="col-xs-7 col-sm-6 col-md-6 col-lg-6"><input type="text" name="dims[]" size="25" maxlength="50"></div><div class="col-xs-3 col-sm-4 col-md-4 col-lg-4"><input type="text" name="weights[]" size="6" maxlength="6"></div><div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div></div>\').appendTo(scntDiv);
+						$(\'<div class="dims"><div class="col-xs-7 col-sm-6 col-md-6 col-lg-6 mb-5"><input type="text" class="form-control"  name="dims[]" size="25" maxlength="50"></div><div class="col-xs-3 col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control"  name="weights[]" size="6" maxlength="6"></div><div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div></div>\').appendTo(scntDiv);
 						i++;
 						return false;
 					});
@@ -2936,23 +2936,23 @@ if(!(isset($_SESSION['containerType']) AND $_SESSION['containerType']==3))
 								<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 									<div class="required">Nmber of items&nbsp;:&nbsp;</div>
 									<div>
-										<input type="number" name="itemCount" id="itemCount">
+										<input type="number" class="form-control"  name="itemCount" id="itemCount">
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-									<div class="row required">
-										<div class="col-xs-9 col-sm-8 col-md-8 col-lg-8">
+									<div class="row">
+										<div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 required">
 											Dimension LxWxH cm (Approx.)
 										</div>
-										<div class="col-xs-3 col-sm-4 col-md-4 col-lg-4">
+										<div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 required">
 											Weight Kg (Approx.)
 										</div>
 									</div>
 									<div class="row" id="dimsID">
 										<div class="dims">
-											<div class="col-xs-7 col-sm-6 col-md-6 col-lg-6"><input type="text" name="dims[]" size="25" maxlength="50"></div>
-											<div class="col-xs-3 col-sm-4 col-md-4 col-lg-4"><input type="text" name="weights[]" size="6" maxlength="6"></div>
-											<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+											<div class="col-xs-7 col-sm-6 col-md-6 col-lg-6 mb-5"><input type="text" class="form-control"  name="dims[]" size="25" maxlength="50"></div>
+											<div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 mb-5"><input type="text" class="form-control"  name="weights[]" size="6" maxlength="6"></div>
+											<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 mb-5">
 												<a href="#" id="addScnt"><img src="https://bookingparcel.com/images/add.png"></a>
 											</div>
 										</div>
@@ -2968,20 +2968,20 @@ if(!(isset($_SESSION['containerType']) AND $_SESSION['containerType']==3))
 }
 $html .='
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">Total weight in kg (Approx.)&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="t_weight" id="t_weight">
+										<input type="text" class="form-control"  name="t_weight" id="t_weight">
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">Are the boxes/Pallets stackable ?</div>
 									<div>
 										<input type="radio" name="stackable" value="1" id="stackable1">&nbsp;<label for="stackable1">Yes</label><br>
 										<input type="radio" name="stackable" value="2" id="stackable2">&nbsp;<label for="stackable2">No</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">Do you need shipping insurance?</div>
 									<div>
 										<input type="radio" name="insurance" value="1" id="insurance1">&nbsp;<label for="insurance1">Yes</label><br>
@@ -2989,10 +2989,10 @@ $html .='
 										<input type="radio" name="insurance" value="3" id="insurance3">&nbsp;<label for="insurance3">Not sure</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Shipment description and commodity name:&nbsp;</div>
 									<div>
-										<textarea name="desc" rows="6" cols="21"></textarea>
+										<textarea class="form-control" name="desc" rows="6" cols="21"></textarea>
 									</div>
 								</div>
 							</div>
@@ -3044,18 +3044,18 @@ $html .='
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -3083,18 +3083,18 @@ $html .='
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -3112,10 +3112,10 @@ $html .='
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -3179,7 +3179,7 @@ $html .='
 			if ( ! empty($errors)) {
 $html .= '
 
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
@@ -3201,11 +3201,11 @@ if(!(isset($_SESSION['containerType']) AND $_SESSION['containerType']==3))
 <script type="text/javascript"> 
 			$(document).ready(function () {
 					var scntDiv = $(\'#dimsID\');
-					var i = $(\'#dimsID div.dims\').size() + 1;
+					var i = $(\'#dimsID div.dims\').length + 1;
 					
 					$(\'#addScnt\').on(\'click\', \'img\', function() {
 						//alert("yes");
-						$(\'<div class="dims"><div class="col-xs-7 col-sm-6 col-md-6 col-lg-6"><input type="text" name="dims[]" size="25" maxlength="50"></div><div class="col-xs-3 col-sm-4 col-md-4 col-lg-4"><input type="text" name="weights[]" size="6" maxlength="6"></div><div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div></div>\').appendTo(scntDiv);
+						$(\'<div class="dims"><div class="col-xs-7 col-sm-6 col-md-6 col-lg-6 mb-5"><input type="text" class="form-control"  name="dims[]" size="25" maxlength="50"></div><div class="col-xs-3 col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control"  name="weights[]" size="6" maxlength="6"></div><div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div></div>\').appendTo(scntDiv);
 						i++;
 						return false;
 					});
@@ -3216,7 +3216,7 @@ if(!(isset($_SESSION['containerType']) AND $_SESSION['containerType']==3))
 								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 									<div class="required'.($errors['itemCount']!='' ? " error" : "").'">Nmber of items&nbsp;:&nbsp;</div>
 									<div>
-										<input type="number" name="itemCount" id="itemCount"'.((!isset($errors['itemCount']) AND isset($_POST['itemCount']) AND $_POST['itemCount']!='') ? " value='".$_POST['itemCount']."'" : "").'>
+										<input type="number" class="form-control"  name="itemCount" id="itemCount"'.((!isset($errors['itemCount']) AND isset($_POST['itemCount']) AND $_POST['itemCount']!='') ? " value='".$_POST['itemCount']."'" : "").'>
 									</div>
 								</div>
 								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -3236,9 +3236,9 @@ if(!isset($errors['dims']) AND isset($_POST['dims']) AND $_POST['dims']!='')
 	{
 $html .= '
 										<div class="dims">
-											<div class="col-xs-7 col-sm-6 col-md-6 col-lg-6"><input type="text" name="dims[]" size="25" maxlength="50" value="'.$v.'"></div>
-											<div class="col-xs-3 col-sm-4 col-md-4 col-lg-4"><input type="text" name="weights[]" size="6" maxlength="6" value="'.$_POST['weights'][$k].'"></div>
-											<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+											<div class="col-xs-7 col-sm-6 col-md-6 col-lg-6 mb-5"><input type="text" class="form-control"  name="dims[]" size="25" maxlength="50" value="'.$v.'"></div>
+											<div class="col-xs-3 col-sm-4 col-md-4 col-lg-4 mb-5"><input type="text" class="form-control"  name="weights[]" size="6" maxlength="6" value="'.$_POST['weights'][$k].'"></div>
+											<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 mb-5">
 												<a href="#" id="addScnt"><img src="https://bookingparcel.com/images/add.png"></a>
 											</div>
 										</div>
@@ -3258,20 +3258,20 @@ $html .= '
 }
 $html .='
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="'.($errors['t_weight']!='' ? " error" : "").'">Total weight in kg (Approx.)&nbsp;:&nbsp;</div>
 									<div>
-										<input type="text" name="t_weight" id="t_weight"'.((isset($_POST['t_weight']) AND $_POST['t_weight']!='') ? " value='".$_POST['t_weight']."'" : "").'>
+										<input type="text" class="form-control"  name="t_weight" id="t_weight"'.((isset($_POST['t_weight']) AND $_POST['t_weight']!='') ? " value='".$_POST['t_weight']."'" : "").'>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="'.($errors['stackable']!='' ? " error" : "").'">Are the boxes/Pallets stackable ?</div>
 									<div>
 										<input type="radio" name="stackable" value="1" id="stackable1"'.((!isset($errors['stackable']) AND $_POST['stackable']==1) ? " checked='checked'" : "").'>&nbsp;<label for="stackable1">Yes</label><br>
 										<input type="radio" name="stackable" value="2" id="stackable2"'.((!isset($errors['stackable']) AND $_POST['stackable']==2) ? " checked='checked'" : "").'>&nbsp;<label for="stackable2">No</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="'.($errors['insurance']!='' ? " error" : "").'">Do you need shipping insurance?</div>
 									<div>
 										<input type="radio" name="insurance" value="1" id="insurance1">&nbsp;<label for="insurance1"'.((!isset($errors['insurance']) AND $_POST['insurance']==1) ? " checked='checked'" : "").'>Yes</label><br>
@@ -3279,10 +3279,10 @@ $html .='
 										<input type="radio" name="insurance" value="3" id="insurance3">&nbsp;<label for="insurance3"'.((!isset($errors['insurance']) AND $_POST['insurance']==3) ? " checked='checked'" : "").'>Not sure</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['desc']!='' ? " error" : "").'">Shipment description and commodity name:&nbsp;</div>
 									<div>
-										<textarea name="desc" rows="6" cols="21">'.((!isset($errors['desc']) AND isset($_POST['desc']) AND $_POST['desc']!='') ? "".$_POST['desc']."" : "").'</textarea>
+										<textarea class="form-control" name="desc" rows="6" cols="21">'.((!isset($errors['desc']) AND isset($_POST['desc']) AND $_POST['desc']!='') ? "".$_POST['desc']."" : "").'</textarea>
 									</div>
 								</div>
 							</div>
@@ -3335,18 +3335,18 @@ $html .='
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -3374,18 +3374,18 @@ $html .='
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -3403,10 +3403,10 @@ $html .='
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -3449,18 +3449,18 @@ $html .= '
 <script type="text/javascript"> 
 			$(document).ready(function () {
 					var scntDiv = $(\'#msdsID\');
-					var i = $(\'#msdsID div.msds\').size() + 1;
+					var i = $(\'#msdsID div.msds\').length + 1;
 					
 					$(\'#addScntmsds\').on(\'click\', \'img\', function() {
 						//alert("yes");
-						$(\'<div class="msds"><div class="col-xs-11 col-sm-10 col-md-10 col-lg-10"><input type="file" name="file[]" size="25" maxlength="50"></div><div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"><a href="#" id="addScntmsds"><img src="https://bookingparcel.com/images/add.png"></a></div></div>\').appendTo(scntDiv);
+						$(\'<div class="msds"><div class="col-xs-11 col-sm-10 col-md-10 col-lg-10"><input type="file" class="mb-5" name="file[]" size="25" maxlength="50"></div><div class="col-xs-1 col-sm-2 col-md-2 col-lg-2"><a href="#" id="addScntmsds"><img src="https://bookingparcel.com/images/add.png"></a></div></div>\').appendTo(scntDiv);
 						i++;
 						return false;
 					});
 			});
 			
 </script>
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%">
@@ -3491,11 +3491,11 @@ $html .= '
 								</div>
 								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 									<div class="required">UN Number & Classification :</div>
-									<div><input name="un" type="text" size="10" maxlength="255" placeholder="UN number"><input name="class" type="text" size="12" maxlength="255" placeholder="classification"></div>
+									<div><input name="un" type="text" class="form-control mb-5"  size="10" maxlength="255" placeholder="UN number"><input name="class" type="text" class="form-control"  size="12" maxlength="255" placeholder="classification"></div>
 								</div>
 								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 									<div class="required">Packing Instruction :</div>
-									<div><textarea name="instruction" rows="6" cols="21"></textarea></div>
+									<div><textarea class="form-control" name="instruction" rows="6" cols="21"></textarea></div>
 								</div>
 							</div>
 							<div class="row">
@@ -3509,13 +3509,13 @@ $html .= '
 							<div class="row">
 								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 									<div class="row required">
-										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 my-5">
 											MSDS files :
 										</div>
 									</div>
 									<div class="row" id="msdsID">
 										<div class="msds">
-											<div class="col-xs-11 col-sm-10 col-md-10 col-lg-10"><input type="file" name="file[]" size="25" maxlength="50"></div>
+											<div class="col-xs-11 col-sm-10 col-md-10 col-lg-10"><input type="file" class="mb-5" name="file[]" size="25" maxlength="50"></div>
 											<div class="col-xs-1 col-sm-2 col-md-2 col-lg-2">
 												<a href="#" id="addScntmsds"><img src="https://bookingparcel.com/images/add.png"></a>
 											</div>
@@ -3542,18 +3542,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -3621,18 +3621,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -3652,10 +3652,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -3666,7 +3666,7 @@ $html .= '
 }
 else{
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%">
@@ -3681,18 +3681,18 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="4">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class=""><b>Note:</b></div>
 									<div>The following contact details are for pricing only, and wont be used for shipping documents.</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Note: having account in <a href="http://cp.bookingparcel.com">User Panel</a> gives you some options such as ticketing and easily tracking and some more.<br>It is not necessary to have account but it is highly recommended.</div>
 									<div>
 										<input type="radio" name="account" value="1" id="account1">&nbsp;<label for="account1">I have account in <a href="http://cp.bookingparcel.com">User Panel</a> .</label><br>
 										<input type="radio" name="account" value="2" id="account2">&nbsp;<label for="account2">I don\'t have account in <a href="http://cp.bookingparcel.com">User Panel</a> .</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Preferred method of contact:&nbsp;</div>
 									<div>
 										<input type="radio" name="contactMethod" value="1" id="contactMethod1">&nbsp;<label for="contactMethod1">Email</label><br>
@@ -3700,7 +3700,7 @@ $html .= '
 										<input type="radio" name="contactMethod" value="3" id="contactMethod3">&nbsp;<label for="contactMethod3">Any of above</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Preferred time of contact:&nbsp;</div>
 									<div>
 										<input type="radio" name="contactTime" value="1" id="contactTime1">&nbsp;<label for="contactTime1">Anytime</label><br>
@@ -3716,25 +3716,25 @@ $html .= '
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">E-mail for receive invoice :</div>
-									<div><input type="email" name="invoiceEmail"></div>
+									<div><input type="email" class="form-control" name="invoiceEmail"></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">E-mail for receive quote :</div>
-									<div><input type="email" name="quoteEmail"></div>
+									<div><input type="email" class="form-control" name="quoteEmail"></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">E-mail for receive prealert :</div>
-									<div><input type="email" name="prealertEmail"></div>
+									<div><input type="email" class="form-control" name="prealertEmail"></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="">Other CC Email address :</div>
 									<div>
-									(1):<input type="email" name="cc1"><br>
-									(2):<input type="email" name="cc2"><br>
-									(3):<input type="email" name="cc3"><br>
-									(4):<input type="email" name="cc4"><br>
+									(1):<input type="email" class="form-control" name="cc1"><br>
+									(2):<input type="email" class="form-control" name="cc2"><br>
+									(3):<input type="email" class="form-control" name="cc3"><br>
+									(4):<input type="email" class="form-control" name="cc4"><br>
 									</div>
 								</div>
 							</div>
@@ -3746,11 +3746,11 @@ $html .= '
 							<div class="row">
 								<div class="col-xs-12 col-sm-4 col-md-5 col-lg-5">
 									<div class="">your order reference number&nbsp;:</div>
-									<div><input type="text" name="orderReference"></div>
+									<div><input type="text" class="form-control"  name="orderReference"></div>
 								</div>
 								<div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
 									<div class="">Note - Goods value:</div>
-									<div><textarea name="note" rows="6" cols="21"></textarea></div>
+									<div><textarea class="form-control" name="note" rows="6" cols="21"></textarea></div>
 								</div>
 							</div>
 							<div class="row">
@@ -3778,18 +3778,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -3817,18 +3817,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -3846,10 +3846,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -3917,7 +3917,7 @@ $html .= '
 			if ( ! empty($errors)) {
 
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%">
@@ -3932,18 +3932,18 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="4">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class=""><b>Note:</b></div>
 									<div>The following contact details are for pricing only, and wont be used for shipping documents.</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['account']!='' ? " error" : "").'">Note: having account in <a href="http://cp.bookingparcel.com">User Panel</a> gives you some options such as ticketing and easily tracking and some more.<br>It is not necessary to have account but it is highly recommended.</div>
 									<div>
 										<input type="radio" name="account" value="1"'.((!isset($errors['account']) AND $_POST['account']==1) ? " checked='checked'" : "").' id="account1">&nbsp;<label for="account1">I have account in <a href="http://cp.bookingparcel.com">User Panel</a> .</label><br>
 										<input type="radio" name="account" value="2"'.((!isset($errors['account']) AND $_POST['account']==2) ? " checked='checked'" : "").' id="account2">&nbsp;<label for="account2">I don\'t have account in <a href="http://cp.bookingparcel.com">User Panel</a> .</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['contactMethod']!='' ? " error" : "").'">Preferred method of contact:&nbsp;</div>
 									<div>
 										<input type="radio" name="contactMethod" value="1"'.((!isset($errors['contactMethod']) AND $_POST['contactMethod']==1) ? " checked='checked'" : "").' id="contactMethod1">&nbsp;<label for="contactMethod1">Email</label><br>
@@ -3951,7 +3951,7 @@ $html .= '
 										<input type="radio" name="contactMethod" value="3"'.((!isset($errors['contactMethod']) AND $_POST['contactMethod']==3) ? " checked='checked'" : "").' id="contactMethod3">&nbsp;<label for="contactMethod3">Any of above</label>
 									</div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['contactTime']!='' ? " error" : "").'">Preferred time of contact:&nbsp;</div>
 									<div>
 										<input type="radio" name="contactTime" value="1"'.((!isset($errors['contactTime']) AND $_POST['contactTime']==1) ? " checked='checked'" : "").' id="contactTime1">&nbsp;<label for="contactTime1">Anytime</label><br>
@@ -3967,25 +3967,25 @@ $html .= '
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="'.($errors['invoiceEmail']!='' ? " error" : "").'">E-mail for receive invoice :</div>
-									<div><input type="email" name="invoiceEmail"'.((isset($_POST['invoiceEmail']) AND $_POST['invoiceEmail']!='') ? " value='".$_POST['invoiceEmail']."'" : "").'></div>
+									<div><input type="email" class="form-control" name="invoiceEmail"'.((isset($_POST['invoiceEmail']) AND $_POST['invoiceEmail']!='') ? " value='".$_POST['invoiceEmail']."'" : "").'></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="'.($errors['quoteEmail']!='' ? " error" : "").'">E-mail for receive quote :</div>
-									<div><input type="email" name="quoteEmail"'.((isset($_POST['quoteEmail']) AND $_POST['quoteEmail']!='') ? " value='".$_POST['quoteEmail']."'" : "").'></div>
+									<div><input type="email" class="form-control" name="quoteEmail"'.((isset($_POST['quoteEmail']) AND $_POST['quoteEmail']!='') ? " value='".$_POST['quoteEmail']."'" : "").'></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="'.($errors['prealertEmail']!='' ? " error" : "").'">E-mail for receive prealert :</div>
-									<div><input type="email" name="prealertEmail"'.((isset($_POST['prealertEmail']) AND $_POST['prealertEmail']!='') ? " value='".$_POST['prealertEmail']."'" : "").'></div>
+									<div><input type="email" class="form-control" name="prealertEmail"'.((isset($_POST['prealertEmail']) AND $_POST['prealertEmail']!='') ? " value='".$_POST['prealertEmail']."'" : "").'></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="'.(($errors['cc1']!='' OR $errors['cc2']!='' OR $errors['cc3']!='' OR $errors['cc4']!='') ? " error" : "").'">Other CC Email address :</div>
 									<div>
-									(1):<input type="email" name="cc1"'.((isset($_POST['cc1']) AND $_POST['cc1']!='') ? " value='".$_POST['cc1']."'" : "").'><br>
-									(2):<input type="email" name="cc2"'.((isset($_POST['cc2']) AND $_POST['cc2']!='') ? " value='".$_POST['cc2']."'" : "").'><br>
-									(3):<input type="email" name="cc3"'.((isset($_POST['cc3']) AND $_POST['cc3']!='') ? " value='".$_POST['cc3']."'" : "").'><br>
-									(4):<input type="email" name="cc4"'.((isset($_POST['cc4']) AND $_POST['cc4']!='') ? " value='".$_POST['cc4']."'" : "").'><br>
+									(1):<input type="email" class="form-control" name="cc1"'.((isset($_POST['cc1']) AND $_POST['cc1']!='') ? " value='".$_POST['cc1']."'" : "").'><br>
+									(2):<input type="email" class="form-control" name="cc2"'.((isset($_POST['cc2']) AND $_POST['cc2']!='') ? " value='".$_POST['cc2']."'" : "").'><br>
+									(3):<input type="email" class="form-control" name="cc3"'.((isset($_POST['cc3']) AND $_POST['cc3']!='') ? " value='".$_POST['cc3']."'" : "").'><br>
+									(4):<input type="email" class="form-control" name="cc4"'.((isset($_POST['cc4']) AND $_POST['cc4']!='') ? " value='".$_POST['cc4']."'" : "").'><br>
 									</div>
 								</div>
 							</div>
@@ -3997,11 +3997,11 @@ $html .= '
 							<div class="row">
 								<div class="col-xs-12 col-sm-4 col-md-5 col-lg-5">
 									<div class="'.($errors['orderReference']!='' ? " error" : "").'">your order reference number&nbsp;:</div>
-									<div><input type="text" name="orderReference"'.((isset($_POST['orderReference']) AND $_POST['orderReference']!='') ? " value='".$_POST['orderReference']."'" : "").'></div>
+									<div><input type="text" class="form-control"  name="orderReference"'.((isset($_POST['orderReference']) AND $_POST['orderReference']!='') ? " value='".$_POST['orderReference']."'" : "").'></div>
 								</div>
 								<div class="col-xs-12 col-sm-8 col-md-7 col-lg-7">
 									<div class="'.($errors['note']!='' ? " error" : "").'">Note - Goods value:</div>
-									<div><textarea name="note" rows="6" cols="21">'.((!isset($errors['note']) AND isset($_POST['note']) AND $_POST['note']!='') ? "".$_POST['note']."" : "").'</textarea></div>
+									<div><textarea class="form-control" name="note" rows="6" cols="21">'.((!isset($errors['note']) AND isset($_POST['note']) AND $_POST['note']!='') ? "".$_POST['note']."" : "").'</textarea></div>
 								</div>
 							</div>
 
@@ -4024,18 +4024,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -4063,18 +4063,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -4092,10 +4092,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -4152,7 +4152,7 @@ if($_SESSION['account']==1)//yes
 {
 
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%">
@@ -4167,13 +4167,13 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="5">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div class="required">UserName :</div>
-									<div><input name="username" type="text"></div>
+									<div><input name="username" type="text" class="form-control" ></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div class="required">PassWord :</div>
-									<div><input name="password" type="password"></div>
+									<div><input name="password" type="password" class="form-control"></div>
 								</div>
 							</div>
 
@@ -4196,18 +4196,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -4235,18 +4235,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -4264,10 +4264,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -4278,7 +4278,7 @@ $html .= '
 }
 else{
 $html .= $_SESSION['account'].'
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%">
@@ -4293,21 +4293,21 @@ $html .= $_SESSION['account'].'
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="5">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Phone :</div>
-									<div><input name="phone" type="text"></div>
+									<div><input name="phone" type="text" class="form-control" ></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">E-mail :</div>
-									<div><input name="email" type="email"></div>
+									<div><input name="email" type="email" class="form-control"></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Company :</div>
-									<div><input name="company" type="text"></div>
+									<div><input name="company" type="text" class="form-control" ></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required">Name :</div>
-									<div><input name="name" type="text"></div>
+									<div><input name="name" type="text" class="form-control" ></div>
 								</div>
 							</div>
 
@@ -4330,18 +4330,18 @@ $html .= $_SESSION['account'].'
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -4369,18 +4369,18 @@ $html .= $_SESSION['account'].'
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -4398,10 +4398,10 @@ $html .= $_SESSION['account'].'
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -4416,7 +4416,7 @@ $html .= $_SESSION['account'].'
 			break;
 		case 5:
 			if(!isset($_SESSION['account'])) return;
-		
+
 			$con = mysql_connect(DB_HOST,DB_USER,DB_PASS) or die(mysql_error());
 			mysql_select_db(DB_NAME, $con) or die(mysql_error());
 			
@@ -4530,7 +4530,7 @@ $html .= $_SESSION['account'].'
 				{
 
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%">
@@ -4545,13 +4545,13 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="5">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div class="required'.($errors['username']!='' ? " error" : "").'">UserName :</div>
-									<div><input name="username" type="text"'.((!isset($errors['username']) AND isset($_POST['username']) AND $_POST['username']!='') ? " value='".$_POST['username']."'" : "").'></div>
+									<div><input name="username" type="text" class="form-control" '.((!isset($errors['username']) AND isset($_POST['username']) AND $_POST['username']!='') ? " value='".$_POST['username']."'" : "").'></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 my-5">
 									<div class="required'.($errors['username']!='' ? " error" : "").'">PassWord :</div>
-									<div><input name="password" type="password"></div>
+									<div><input name="password" type="password" class="form-control"></div>
 								</div>
 							</div>
 
@@ -4574,18 +4574,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -4613,18 +4613,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -4642,10 +4642,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -4656,7 +4656,7 @@ $html .= '
 				}
 				else{
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div id="infoi" style="display:none;"><div class="loader"></div></div>
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%">
@@ -4671,21 +4671,21 @@ $html .= '
 						<form id="quote_form" method="post" action="ajax_process.php">
 							<input type="hidden" name="step" value="5">
 							<div class="row">
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['phone']!='' ? " error" : "").'">Phone :</div>
-									<div><input name="phone" type="text"></div>
+									<div><input name="phone" type="text" class="form-control" ></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['email']!='' ? " error" : "").'">E-mail :</div>
-									<div><input name="email" type="email"></div>
+									<div><input name="email" type="email" class="form-control"></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['company']!='' ? " error" : "").'">Company :</div>
-									<div><input name="company" type="text"></div>
+									<div><input name="company" type="text" class="form-control" ></div>
 								</div>
-								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
 									<div class="required'.($errors['name']!='' ? " error" : "").'">Name :</div>
-									<div><input name="name" type="text"></div>
+									<div><input name="name" type="text" class="form-control" ></div>
 								</div>
 							</div>
 
@@ -4708,18 +4708,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !=\'\') {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -4747,18 +4747,18 @@ $html .= '
 				console.log(data); 
 				
 				if (data.message !="") {
-					$(\'#forms\').replaceWith(\'\' + data.message + \'\');
+					$(\'#shipper-container\').replaceWith(\'\' + data.message + \'\');
 					if (data.status == false) {
 						var html = "<div class=\"row\">";
 						$.each(data.errors, function(key, value)
 						{
-							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\"><div class=\"alert alert-danger\">";
+							html += "<div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12 my-1\"><div class=\"alert alert-danger\">";
 							html += "<span><strong>"+key+"</strong>&nbsp;:&nbsp;</span>";
 							html += "<span>"+value+"</span>";
 							html += "</div></div>";
 						});
 						html += "</div>";
-						$(\'#forms\').prepend(html);
+						$(\'#shipper-container\').prepend(html);
 					}
 			$(\'#infoi\').hide();
 				}
@@ -4776,10 +4776,10 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn btn-primary" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
+									<div class="pull-left" style="min-width:80%;"><button type="button" class="btn my-btn" style="min-width:80%;" id="PreviousID'.$time.'">Previous</button></div>
 								</div>
 								<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn btn-primary" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
+									<div class="pull-right" style="min-width:80%;"><button type="submit" class="btn my-btn" style="min-width:80%;" id="NextID'.$time.'">Next</button></div>
 								</div>
 							</div>
 						</form>
@@ -5199,7 +5199,7 @@ aircargo@europostexpress.co.uk<br>
 				
 				$mailaddress = $_SESSION['email'];
 
-				require 'admin/mailer/PHPMailerAutoload.php';
+//				require 'admin/mailer/PHPMailerAutoload.php';
 
 				$mail = new PHPMailer;
 				////$mail->IsSMTP();
@@ -5499,7 +5499,7 @@ aircargo@europostexpress.co.uk<br>
 				}
 				session_destroy();
 $html .= '
-					<div id="forms">
+					<div id="shipper-container">
 						<div class="progress">
 						  <div class="progress-bar  progress-bar-primary" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
 							100% complete

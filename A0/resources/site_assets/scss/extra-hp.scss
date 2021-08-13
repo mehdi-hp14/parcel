@@ -22,3 +22,16 @@
     height: 36px;
     font-size: 14px;
 }
+.progress-bar.progress-bar-primary {
+    background-color: #ee1856;
+}
+.required{
+    &::after{
+            content: "*";
+            color:red;
+        display: inline;
+    }
+    &::before{
+        display: inline;
+    }
+}
