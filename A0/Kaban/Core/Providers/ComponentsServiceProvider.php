@@ -15,7 +15,7 @@ class ComponentsServiceProvider extends ServiceProvider {
         $segments = $request->segments();
 
         if ( count( $segments ) ) {
-            if ( ! in_array( ucfirst( $segments[0] ), [ 'Admin', 'Customer' ] ) ) {
+            if ( ! in_array( ucfirst( $segments[0] ), [ 'Admin', 'Customer','Site' ] ) ) {
                 unset( $componentSections['Admin'] );
 //                unset( $componentSections['Customer'] );
 //                unset($componentSections['Agency']);

@@ -10,6 +10,7 @@ return [
             'Base',
         ],
         'Site'    => [
+            'Home'
         ],
         'Customer'    => [
             'Words',

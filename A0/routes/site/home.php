@@ -2,10 +2,18 @@
 
 use Kaban\Models\Role;
 
-Route::group( [ 'middleware' => 'role:developer' ], function () {
+Route::group( [
+    'middleware' => [ 'web'],
+    'namespace'  => '\Kaban\Components\Site\Home\Controllers',
+    'prefix' => '/'
+], function () {
 
-    Route::get( '/', function () {
-        $user = request()->user(); //getting the current logged in customer
+    Route::get( '/', [
+        'as'   => 'site.home',
+        'uses' => 'HomeController@index'
+    ] );
+//    Route::get( '/', function () {
+//        $user = request()->user(); //getting the current logged in customer
 //    dd( $customer );
 //    $customer = \Kaban\Models\User::find( 2 );
 //    dd( $customer, $customer->hasRole( 'create-tasks' ) ); //will return true, if customer has role
@@ -17,6 +25,6 @@ Route::group( [ 'middleware' => 'role:developer' ], function () {
 //    $dev_role = Role::where( 'slug', 'developer' )->first();
 //    $customer->roles()->attach( $dev_role );
 
-        return view( 'welcome' );
-    } );
+//        return view( 'welcome' );
+//    } );
 } );

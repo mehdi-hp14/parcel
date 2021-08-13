@@ -2,6 +2,7 @@ const tasks = [
     'admin',
     'auth' ,
     'customer' ,
+    'site' ,
 ];
 
 // Execute Task by running `npm run watch -- --desktop`
