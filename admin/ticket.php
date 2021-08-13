@@ -1,4 +1,5 @@
-﻿<?php 
+﻿<?php
+require_once "php8support.php";
 
 include("../post_forms/cnf.php");
 include("conf.php");
