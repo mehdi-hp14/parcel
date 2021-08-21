@@ -8,9 +8,9 @@ class PView extends PageView
 	public $error_m = array('uname'=>'', 'pass'=>'');
 	
 	
-    public function PView( )
+    public function __construct( )
     {
-        parent::PageView( );
+        parent::__construct( );
 		$this->active_page = "tos";
         $this->viewFile = "tos.phtml";
         

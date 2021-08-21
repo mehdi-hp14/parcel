@@ -1,4 +1,15 @@
 <?php
+//$options = [
+//    'cost' => 10,
+    //'salt' => $salt
+//];
+//echo password_hash('admin', PASSWORD_BCRYPT, $options);
+
+//echo password_hash('abc',PASSWORD_BCRYPT,);
+//die();
+ini_set('display_errors', 1);
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
 require(__DIR__ ."". DIRECTORY_SEPARATOR ."Core". DIRECTORY_SEPARATOR ."boot.php");
 require_once(MODEL_PATH."index.php");
 
@@ -8,9 +19,9 @@ class PView extends PageView
 	public $error_m = array('uname'=>'', 'pass'=>'');
 	
 	
-    public function PView( )
+    public function __construct( )
     {
-        parent::PageView( );
+        parent::__construct( );
 		$this->active_page = "index";
         $this->viewFile = "index.phtml";
         

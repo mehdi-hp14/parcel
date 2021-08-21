@@ -1,4 +1,6 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'php8support.php';
+
 define( "ROOT_PATH", realpath( dirname( dirname( __FILE__ ) ) ).DIRECTORY_SEPARATOR );
 define( "APP_PATH", ROOT_PATH."Core".DIRECTORY_SEPARATOR );
 define( "VIEW_PATH", APP_PATH."View".DIRECTORY_SEPARATOR );

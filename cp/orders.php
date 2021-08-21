@@ -309,9 +309,9 @@ class PView extends SecurePage
 	public $error = false;
 	public $error_m = "";
 	
-    public function PView( )
+    public function __construct( )
     {
-        parent::SecurePage( );
+        parent::__construct( );
 		$this->active_page = "orders";
         $this->viewFile = "order.phtml";
         

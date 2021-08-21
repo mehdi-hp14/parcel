@@ -11,18 +11,18 @@
 		//`GBP_total_receive`, `GBP_current_balance`, `GBP_total_order_paid`, 
 		//`USD_total_receive`, `USD_current_balance`, `USD_total_order_paid`, 
 		//`EUR_total_receive`, `EUR_current_balance`, `EUR_total_order_paid`
-		$this->data['IRR_total_receive'] = 0;
-		$this->data['IRR_current_balance'] = 0;
-		$this->data['IRR_total_order_paid'] = 0;
-		$this->data['GBP_total_receive'] = 0;				
-		$this->data['GBP_current_balance'] = 0;				
-		$this->data['GBP_total_order_paid'] = 0;				
-		$this->data['USD_total_receive'] = 0;				
-		$this->data['USD_current_balance'] = 0;				
-		$this->data['USD_total_order_paid'] = 0;				
-		$this->data['EUR_total_receive'] = 0;				
-		$this->data['EUR_current_balance'] = 0;				
-		$this->data['EUR_total_order_paid'] = 0;				
+//		$this->data['IRR_total_receive'] = 0;
+//		$this->data['IRR_current_balance'] = 0;
+//		$this->data['IRR_total_order_paid'] = 0;
+//		$this->data['GBP_total_receive'] = 0;
+//		$this->data['GBP_current_balance'] = 0;
+//		$this->data['GBP_total_order_paid'] = 0;
+		$this->data['USD_total_receive'] = 0;
+		$this->data['USD_current_balance'] = 0;
+		$this->data['USD_total_order_paid'] = 0;
+//		$this->data['EUR_total_receive'] = 0;
+//		$this->data['EUR_current_balance'] = 0;
+//		$this->data['EUR_total_order_paid'] = 0;
 				?>
 				<h4 class="value">
 					<span data-counter="" data-start="10" data-end="50" data-step="1" data-duration="0"><?php echo $this->data['IRR_current_balance']; ?></span> IRR</h4>
@@ -32,8 +32,7 @@
 				//this->data['IRR_total_receive']
 				//this->data['IRR_total_order_paid']
 				//this->data['IRR_current_balance']
-				
-				$current = round(($this->data['IRR_total_order_paid']/$this->data['IRR_total_receive'])*100);
+				$current = $this->data['IRR_total_receive'] ==0 ? 0 :round((100/($this->data['IRR_total_receive'] ?: 1))*100);
 				
 				?>
 					<div role="progressbar" aria-valuenow="<?php echo $current; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $current; ?>%;" class="progress-bar progress-bar-success">
@@ -57,9 +56,10 @@
 				//this->data['IRR_total_order_paid']
 				//this->data['IRR_current_balance']
 				
-				$current = round(($this->data['GBP_total_order_paid']/$this->data['GBP_total_receive'])*100);
-				
-				?>
+                $current = $this->data['GBP_total_order_paid'] ==0 ? 0 :round((100/($this->data['GBP_total_receive'] ?: 1))*100);
+
+
+                ?>
 					<div role="progressbar" aria-valuenow="<?php echo $current; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $current; ?>%;" class="progress-bar progress-bar-info">
 						<span class="sr-only"><?php echo $current; ?>% Spent of GBP deposite</span></div>
 				</div>
@@ -81,8 +81,8 @@
 				//this->data['IRR_total_order_paid']
 				//this->data['IRR_current_balance']
 				
-				$current = round(($this->data['EUR_total_order_paid']/$this->data['EUR_total_receive'])*100);
-				
+				$current = round(($this->data['EUR_total_order_paid']/($this->data['EUR_total_receive'] ?: 1))*100);
+
 				?>
 					<div role="progressbar" aria-valuenow="<?php echo $current; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $current; ?>%;" class="progress-bar progress-bar-danger">
 						<span class="sr-only"><?php echo $current; ?>% Spent of EUR deposite</span></div>
@@ -105,9 +105,9 @@
 				//this->data['IRR_total_order_paid']
 				//this->data['IRR_current_balance']
 				
-				$current = round(($this->data['USD_total_order_paid']/$this->data['USD_total_receive'])*100);
-				
-				?>
+                $current = $this->data['USD_total_order_paid'] ==0 ? 0 :round((100/($this->data['USD_total_receive'] ?: 1))*100);
+
+                ?>
 					<div role="progressbar" aria-valuenow="<?php echo $current; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $current; ?>%;" class="progress-bar progress-bar-warning">
 						<span class="sr-only"><?php echo $current; ?>% Spent of USD deposite</span></div>
 				</div>

@@ -13,29 +13,29 @@ class PView extends SecurePage
 	public $page = 1;
 	public $items_per_page = 30;
 	public $tid = null;
-	
+
 	public $action_status = false;
 	public $action_m = "";
-	
+
 	public $error = false;
 	public $error_m = "";
-	
+
 	public $subject = "";
 	public $tracking_id = "";
 	public $content = "";
-	
-    public function PView( )
+
+    public function __construct( )
     {
-        parent::SecurePage( );
+        parent::__construct( );
 		$this->active_page = "support";
         $this->viewFile = "support.phtml";
-        
+
     }
 
     public function load( )
     {
         parent::load( );
-       
+
         var_dump($this->account);
 	   if(isset($_GET['tid']) AND is_numeric($_GET['tid']) AND $_GET['tid']>0)
 	   {
@@ -46,13 +46,13 @@ class PView extends SecurePage
 		   $this->show_inbox = false;
 		   $this->show_new = true;
 	   }
-	   
+
 	   if(isset($this->tid) AND $this->tid!=null)
 	   {
 			$this->show_inbox = false;
 	   }
-	   
-	   
+
+
 	   if($this->show_inbox)
 	   {
 		   if(isset($_GET['page']) AND is_numeric($_GET['page']) AND $_GET['page']>1)
@@ -61,8 +61,8 @@ class PView extends SecurePage
 		   }
 		   $m = new SupportModel();
 		   $this->inbox_info = $m->GetTickets($this->account->uid, $this->page, $this->items_per_page);
-		   
-		   
+
+
 		   $m->dispose();
 	   }
 	   elseif($this->show_new)
@@ -70,7 +70,7 @@ class PView extends SecurePage
 		   if($this->isPost())
 		   {
 			   $this->error = true;
-			   
+
 				if(!isset($_POST['subject']))
 				{
 				   $this->error_m .= "Subject is required.<br>";
@@ -87,8 +87,8 @@ class PView extends SecurePage
 				{
 					$this->subject = $_POST['subject'];
 				}
-			   
-			   
+
+
 				if(!isset($_POST['content']))
 				{
 				   $this->error_m .= "Content is required.<br>";
@@ -105,8 +105,8 @@ class PView extends SecurePage
 				{
 					$this->content = $_POST['content'];
 				}
-			   
-			   
+
+
 				if(isset($_POST['service']) AND (trim($_POST['service'])!='' AND $_POST['service']!=null))
 				{
 					if(!$this->StringSafe($_POST['service']))
@@ -118,12 +118,12 @@ class PView extends SecurePage
 						$this->tracking_id = $_POST['service'];
 					}
 				}
-				
+
 				if($this->subject != "" AND $this->content!="")
 				{
 					if(isset($_POST['service']) AND (trim($_POST['service'])!='' AND $_POST['service']!=null))
 					{
-						if($this->tracking_id != "") 
+						if($this->tracking_id != "")
 						{
 							$this->error = false;
 						}
@@ -133,15 +133,15 @@ class PView extends SecurePage
 						$this->error = false;
 					}
 				}
-				
+
 				if(!$this->error)
 				{
 					$m = new SupportModel();
-					
+
 					$ticket_id = $m->NewTicketSubmit($this->subject, $this->content, $this->tracking_id, $this->account->uid);
-					
+
 					$m->dispose();
-					
+
 					$this->action_status = true;
 					$this->action_m = "<center>Your ticket has been successfully submited and support will answer you soon.<br>Your ticket ID : ".$ticket_id."</center>";
 					unset($_POST['subject']);
@@ -156,7 +156,7 @@ class PView extends SecurePage
 			if($this->isPost())
 			{
 			   $this->error = true;
-			   
+
 				if(isset($_POST['subject']) AND (trim($_POST['subject'])!='' AND $_POST['subject']!=null))
 				{
 					if(!$this->StringSafe($_POST['subject']))
@@ -168,8 +168,8 @@ class PView extends SecurePage
 						$this->subject = $_POST['subject'];
 					}
 				}
-			   
-			   
+
+
 				if(!isset($_POST['content']))
 				{
 				   $this->error_m .= "Content is required.<br>";
@@ -186,7 +186,7 @@ class PView extends SecurePage
 				{
 					$this->content = $_POST['content'];
 				}
-				
+
 				if($this->content!="")
 				{
 					$ticket_id = $m->NewTicketAnswerSubmit($this->subject, $this->content, $this->tid, $this->account->uid);
@@ -203,14 +203,16 @@ class PView extends SecurePage
 			$m->SetTicketAsReaded($this->tid);
 			$this->Ticket_info = $m->GetTicketByID($this->tid);
 			$this->answers_info = $m->GetTicketAnswersByID($this->tid);
-			
+
 			$m->dispose();
 		}
     }
 
-    
+
 
 }
 
 $p = new PView( );
+//echo $p->viewFile;
+//die();
 $p->run( );

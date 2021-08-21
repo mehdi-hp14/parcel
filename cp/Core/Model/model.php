@@ -64,8 +64,8 @@ class Model
 		$resu = $sthh->fetch(PDO::FETCH_ASSOC);
 		
 		$res['support_c'] = $resu['co'];
-		
-		
+
+
 		
 		
 		
@@ -148,9 +148,9 @@ class Model
 		$res['USD_total_receive'] = (float)$inc_row['sum'];
 		$res['USD_current_balance'] = $sum_row['sum'] - $sub_row['subtract'];
 		$res['USD_total_order_paid'] = $res['USD_total_receive'] - $res['USD_current_balance'];
-		
-		
-		
+
+
+
 		
 		
 		return $res;

@@ -2,7 +2,7 @@
 class View
 {
     private $model;
-	private $viewFile = null;
+	public $viewFile = null;
 
     public function __construct($model) {
         $this->controller = $controller;

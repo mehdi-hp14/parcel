@@ -1,4 +1,6 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 require(__DIR__ ."". DIRECTORY_SEPARATOR ."Core". DIRECTORY_SEPARATOR ."boot.php");
 require_once(MODEL_PATH."support.php");
 
@@ -9,9 +11,9 @@ class PView extends SecurePage
 	public $Order_info = null;
 	
 	
-    public function PView( )
+    public function __construct( )
     {
-        parent::SecurePage( );
+        parent::__construct( );
 		$this->active_page = "dashboard";
         $this->viewFile = "dashboard.phtml";
         
@@ -35,4 +37,6 @@ class PView extends SecurePage
 }
 
 $p = new PView( );
+//var_dump([123,$p->viewFile]);
+//die(229);
 $p->run( );

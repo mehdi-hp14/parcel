@@ -63,13 +63,13 @@ class View
 			require(VIEW_PATH . $this->viewFile);
 		}
 		$this->unload();
-		unset($this);
+//		unset($this);
 	}
 	
 	public function redirect($url)
 	{
 		$this->unload();
-		unset($this);
+//		unset($this);
 		header("location: " . $url);
 		exit(0);
 	}
@@ -80,12 +80,13 @@ class View
 }
 
 class MyView extends View {
-	var $title = '';
-	var $active_page;
-	var $meta;
-	var $CoreConfig;
-	var $account= NULL;
-	function MyView() {
+	public $title = '';
+	public $active_page;
+	public $meta;
+	public $CoreConfig;
+	public $account= NULL;
+
+	function __construct() {
 		$this->title = $GLOBALS['Config']['site']['title'];
 		$this->meta = $GLOBALS['Config']['meta'];
 		
@@ -115,7 +116,7 @@ class ClientData
 	public $uiLang = NULL;
 	public $showLevels = FALSE;
 
-	public function ClientData()
+	public function __construct()
 	{
 		
 	}
@@ -148,6 +149,7 @@ class ClientData
 	}
 
 }
+
 class Account
 {
 	public $uid = NULL;
@@ -194,13 +196,12 @@ class Account
 }
 
 class PageView extends MyView {
-	var $contentCssClass = '';
-	var $newsText;
-	var $ToSText;
-	var $globalModel;
+	public $contentCssClass = '';
+	public $newsText;
+	public $ToSText;
 
-	function PageView() {
-		parent::MyView();
+	function __construct() {
+		parent::__construct();
 
 		$this->layoutViewFile = 'layout' . DIRECTORY_SEPARATOR . 'form.phtml';
 		$this->globalModel = new Model();
@@ -219,13 +220,13 @@ class PageView extends MyView {
 }
 
 class SecurePage extends PageView {
-	var $customLogoutAction = FALSE;
-	var $newsText;
-	var $ToSText;
-	var $data;
+	public $customLogoutAction = FALSE;
+	public $newsText;
+	public $ToSText;
+	public $data;
 
-	function SecurePage() {
-		parent::PageView();
+	function __construct() {
+		parent::__construct();
 
 		$this->layoutViewFile = 'layout' . DIRECTORY_SEPARATOR . 'inner.phtml';
 
@@ -242,9 +243,12 @@ class SecurePage extends PageView {
 	{
 		$this->ToSText =  $this->globalModel->getSiteToS();
 		$this->newsText =  $this->globalModel->getSiteNews();
-		$this->data = $this->globalModel->GetBasicData($this->account->uid);
-		if ($this->data == NULL) {
-			$this->account->logout(); 
+		$this->data = $this->globalModel->GetBasicData($this->account->uid) ?? null;
+//		var_dump($this->account);
+//        die();
+
+        if ($this->data == null) {
+			$this->account->logout();
 			$this->redirect('index.php'); return;
 		}	
 	}

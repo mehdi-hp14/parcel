@@ -266,9 +266,9 @@ class PView extends PageView
 		'Test Country'=>'TSTC'
 	);
 	
-    public function PView( )
+    public function __construct( )
     {
-        parent::PageView( );
+        parent::__construct( );
 		$this->active_page = "agents";
         $this->viewFile = "agents.phtml";
         

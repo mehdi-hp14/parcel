@@ -10,9 +10,9 @@ class PView extends SecurePage
 	public $error_m = "";
 	public $error = true;
 	
-    public function PView( )
+    public function __construct( )
     {
-        parent::SecurePage( );
+        parent::__construct( );
 		$this->active_page = "profile";
         $this->viewFile = "profile.phtml";
         

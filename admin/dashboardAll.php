@@ -256,7 +256,7 @@ if(mysql_num_rows($r)>0){
 		if($row['uname']!='' OR $row['uname']!=null)
 		{
 			$row2 = mysql_fetch_array(mysql_query("SELECT avatar FROM `users` WHERE `uname`='".$row['uname']."'"));
-			$output .="<td>".($row2['avatar']!="" ? "<span style='max-width:112px;max-height:48;'><img width=\"112px\" height=\"48px\" src='../cp/Assets/images/avatar/".$row2['avatar']."'></span>" : "None")."</td>";
+			$output .="<td>".($row2 && $row2['avatar']!="" ? "<span style='max-width:112px;max-height:48;'><img width=\"112px\" height=\"48px\" src='../cp/Assets/images/avatar/".$row2['avatar']."'></span>" : "None")."</td>";
 		}
 		else{
 			$output .="<td>None</td>";

@@ -5,9 +5,9 @@ class PView extends SecurePage
 {
 	
 	
-    public function PView( )
+    public function __construct( )
     {
-        parent::SecurePage( );
+        parent::__construct( );
 		$this->active_page = "logout";
         $this->viewFile = "logout.phtml";
         
@@ -17,7 +17,7 @@ class PView extends SecurePage
     {
         parent::load( );
 		
-		$this->account->logout( );
+//		$this->account->logout( );
 		unset( $this->account );
 		$this->account = NULL;
 		

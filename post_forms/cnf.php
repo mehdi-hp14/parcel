@@ -98,6 +98,8 @@ if(isset($_POST) AND count($_POST)>0){
 
 
 define("DB_HOST","localhost");
-define("DB_NAME","bookingp_qdb");
-define("DB_USER","bookingp_qdusr");
-define("DB_PASS",",f[~jvXI~WU)");
+define("DB_NAME","parcel");
+//define("DB_USER","bookingp_qdusr");
+define("DB_USER","root");
+//define("DB_PASS",",f[~jvXI~WU)");
+define("DB_PASS","");

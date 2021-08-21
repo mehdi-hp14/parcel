@@ -28,9 +28,9 @@ class PView extends PageView
 	public $gender = null;
 	
 	
-    public function PView( )
+    public function __construct( )
     {
-        parent::PageView( );
+        parent::__construct( );
 		$this->active_page = "signup";
         $this->viewFile = "signup.phtml";
         
