@@ -1,4 +1,6 @@
 ﻿<?php
+//var_dump($this);
+
 if($this->error AND $this->error_m!="")
 {
 ?>
@@ -76,7 +78,7 @@ else
 						<span style="width:15px;height:15px;background-color:#999;display: inline-block;"></span>&nbsp;Pending&nbsp;&nbsp;&nbsp;
 					</div>
 					<div class="col-md-2">
-						<span style="width:15px;height:15px;background-color:#066ECD;display: inline-block;"></span>&nbsp;Under Process&nbsp;&nbsp;&nbsp;
+						<span style="width:15px;height:15px;background-color:#066ECD;display: inline-block;"></span>&nbsp;Hold&nbsp;&nbsp;&nbsp;
 					</div>
 					<div class="col-md-2">
 						<span style="width:15px;height:15px;background-color:#77B32F;display: inline-block;"></span>&nbsp;Active&nbsp;&nbsp;&nbsp;
@@ -156,7 +158,7 @@ elseif(isset($this->oid) AND $this->oid!=null)
 							switch($this->Order_info['status'])
 							{
 								case 0: $stat = "Pending"; break;
-								case 1: $stat = "Under Process"; break;
+								case 1: $stat = "Hold"; break;
 								case 2: $stat = "Active"; break;
 								case 3: $stat = "Cancelled"; break;
 								case 4: $stat = "Completed"; break;
@@ -284,7 +286,7 @@ elseif(isset($this->oid) AND $this->oid!=null)
 									<span style="width:15px;height:15px;background-color:#999;display: inline-block;"></span>&nbsp;Pending&nbsp;&nbsp;&nbsp;
 								</div>
 								<div class="col-md-2">
-									<span style="width:15px;height:15px;background-color:#066ECD;display: inline-block;"></span>&nbsp;Under Process&nbsp;&nbsp;&nbsp;
+									<span style="width:15px;height:15px;background-color:#066ECD;display: inline-block;"></span>&nbsp;Hold&nbsp;&nbsp;&nbsp;
 								</div>
 								<div class="col-md-2">
 									<span style="width:15px;height:15px;background-color:#77B32F;display: inline-block;"></span>&nbsp;Active&nbsp;&nbsp;&nbsp;
