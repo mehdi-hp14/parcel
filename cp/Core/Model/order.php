@@ -95,10 +95,10 @@ class OrderModel extends ModelBase
 		return $id;
 	}
 	
-	public function InsertShipInfo($oid, $SCName, $SCPName, $SeMail, $SPhone, $Scountry, $SZipCode, $Sender, $RCName, $RCPName, $ReMail, $RPhone, $Rcountry, $RZipCode, $Receiver)
+	public function InsertShipInfo($oid, $SCName, $SCPName, $SeMail, $SPhone, $Scountry, $SZipCode, $Sender, $RCName, $RCPName, $ReMail, $RPhone, $Rcountry, $RZipCode, $Receiver,$companyNationalId,$companyEconomicId)
 	{
-		$q = "INSERT INTO `ship_info` (`ref`, `scompany`, `saddress`, `szipcode`, `scountry`, `scontactp`, `stelephone`, `semail`, `rcompany`, `raddress`, `rpostcode`, `remail`, `rcountry`, `rtelephone`, `rcontactp`) 
-		VALUES (:ref, :scompany, :saddress, :szipcode, :scountry, :scontactp, :stelephone, :semail, :rcompany, :raddress, :rpostcode, :remail, :rcountry, :rtelephone, :rcontactp);";
+		$q = "INSERT INTO `ship_info` (`ref`, `scompany`, `saddress`, `szipcode`, `scountry`, `scontactp`, `stelephone`, `semail`, `rcompany`, `raddress`, `rpostcode`, `remail`, `rcountry`, `rtelephone`, `rcontactp`,`r_natioal_id`,`r_economic_id`) 
+		VALUES (:ref, :scompany, :saddress, :szipcode, :scountry, :scontactp, :stelephone, :semail, :rcompany, :raddress, :rpostcode, :remail, :rcountry, :rtelephone, :rcontactp, :r_natioal_id ,:r_economic_id);";
 		$params = array(
 			':ref'=>$oid,
 			':scompany'=>$SCName,
@@ -115,6 +115,8 @@ class OrderModel extends ModelBase
 			':rcountry'=>$Rcountry,
 			':rpostcode'=>$RZipCode,
 			':raddress'=>$Receiver,
+			':r_national_id'=>$companyNationalId,
+			':r_economic_id'=>$companyEconomicId,
 		);
 		$id = $this->singleInsert($q,$params);
 		

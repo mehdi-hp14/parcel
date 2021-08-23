@@ -283,6 +283,8 @@ class PView extends SecurePage
 	inputRCName:
 	inputRCPName:
 	inputReMail:
+	inputRCNationalId:
+	inputRCEconomicId:
 	inputRPhone:
 	inputRcountry:United Kingdom
 	inputRZipCode:
@@ -300,6 +302,8 @@ class PView extends SecurePage
 	public $inputRCName = null;
 	public $inputRCPName = null;
 	public $inputReMail = null;
+	public $inputRCEconomicId = null;
+	public $inputRCNationalId = null;
 	public $inputRPhone = null;
 	public $inputRcountry = null;
 	public $inputRZipCode = null;
@@ -512,6 +516,35 @@ class PView extends SecurePage
 				{
 					$this->inputRCPName = $_POST['inputRCPName'];
 				}
+
+				/*Company National ID*/
+                if(!isset($_POST['inputRCNationalId']))
+                {
+                    $this->error_m .= "Receiver Company National Id is required.<br>";
+                }
+                elseif(!(trim($_POST['inputRCNationalId'])!='' AND $_POST['inputRCNationalId']!=null))
+                {
+                    $this->error_m .= "Receiver Company National Id is blank!";
+                }
+                else
+                {
+                    $this->inputRCNationalId = $_POST['inputRCNationalId'];
+                }
+
+                /*Company Economic ID*/
+                if(!isset($_POST['inputRCEconomicId']))
+                {
+                    $this->error_m .= "Receiver Company Economic Id is required.<br>";
+                }
+                elseif(!(trim($_POST['inputRCEconomicId'])!='' AND $_POST['inputRCEconomicId']!=null))
+                {
+                    $this->error_m .= "Receiver Company Economic Id is blank!";
+                }
+                else
+                {
+                    $this->inputRCEconomicId = $_POST['inputRCEconomicId'];
+                }
+
 				
 				$this->inputReMail = "";
 				if(!isset($_POST['inputReMail']))
@@ -664,7 +697,8 @@ class PView extends SecurePage
 				$price = str_replace(",","",$price);
 				
 				if($this->inputSCName!=null AND $this->inputSCPName!=null AND $this->inputSPhone!=null AND $this->inputScountry!=null AND 
-				$this->inputSZipCode!=null AND $this->Sender!=null AND $this->inputRCName!=null AND $this->inputRCPName!=null AND 
+				$this->inputSZipCode!=null AND $this->Sender!=null AND $this->inputRCName!=null AND $this->inputRCPName!=null AND
+                $this->inputRCNationalId!=null AND $this->inputRCEconomicId!=null AND
 				$this->inputRcountry!=null AND $this->Receiver!=null AND $this->conf_p!=null AND $config==true AND ($this->data[$currency.'_current_balance'] >= $price OR $this->data['mdp']==1))
 				{
 					
@@ -672,8 +706,19 @@ class PView extends SecurePage
 					if($this->inputRPhone==null) $this->inputRPhone="";
 					if($this->inputReMail==null) $this->inputReMail="";
 					$this->error = false;
-					$iii = $m->InsertShipInfo($this->oid, $this->inputSCName, $this->inputSCPName, $this->inputSeMail, $this->inputSPhone, $this->inputScountry, $this->inputSZipCode, $this->Sender, $this->inputRCName, $this->inputRCPName, $this->inputReMail, $this->inputRPhone, $this->inputRcountry, $this->inputRZipCode, $this->Receiver);
-					
+
+                    $iii = null;
+					try {
+                        $iii = $m->InsertShipInfo(
+                            $this->oid, $this->inputSCName, $this->inputSCPName, $this->inputSeMail, $this->inputSPhone,
+                            $this->inputScountry, $this->inputSZipCode, $this->Sender, $this->inputRCName,
+                            $this->inputRCPName, $this->inputReMail, $this->inputRPhone, $this->inputRcountry,
+                            $this->inputRZipCode, $this->Receiver,$this->inputRCNationalId,$this->inputRCEconomicId);
+
+                    }catch (Exception $exception){
+
+                    }
+
 					//echo $this->data[$currency.'_current_balance']."<b>";
 					//echo $price."<b>";
 					if(!(is_numeric($iii) AND $iii>0))
@@ -700,6 +745,8 @@ class PView extends SecurePage
 							$body .= "Address : ".$this->Sender ."<br><br><br>";
 							$body .= "Receiver ( Delivery ) Information <span style=\"color:#ff0000;\">( Also for HAWB)</span>:<br>";
 							$body .= "Company : ".$this->inputRCName ."<br>";
+							$body .= "Company Economic Id: ".$this->inputRCEconomicId ."<br>";
+							$body .= "Company National Id: ".$this->inputRCNationalId ."<br>";
 							$body .= "Contact Person Name : ".$this->inputRCPName ."<br>";
 							$body .= "E-mail : ".$this->inputReMail ."<br>";
 							$body .= "Telephone : ".$this->inputRPhone ."<br>";
@@ -795,6 +842,8 @@ class PView extends SecurePage
 							$body .= "Address : ".$this->Sender ."<br><br><br>";
 							$body .= "Receiver ( Delivery ) Information <span style=\"color:#ff0000;\">( Also for HAWB)</span>:<br>";
 							$body .= "Company : ".$this->inputRCName ."<br>";
+                            $body .= "Company Economic Id: ".$this->inputRCEconomicId ."<br>";
+                            $body .= "Company National Id: ".$this->inputRCNationalId ."<br>";
 							$body .= "Contact Person Name : ".$this->inputRCPName ."<br>";
 							$body .= "E-mail : ".$this->inputReMail ."<br>";
 							$body .= "Telephone : ".$this->inputRPhone ."<br>";

@@ -531,6 +531,19 @@ if(isset($_POST['t']) AND $_POST['t']=='send')
 					<td >&nbsp;</td>
 					<td  align="left">'.$_POST['rcompany'].'</td>
 				</tr>
+				
+				<tr style="height: 20.1pt" height="26">
+					<td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company National Id</td>
+					<td >&nbsp;</td>
+					<td  align="left">'.$_POST['r_natioal_id'].'</td>
+				</tr>
+				
+				<tr style="height: 20.1pt" height="26">
+					<td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Economic Id</td>
+					<td >&nbsp;</td>
+					<td  align="left">'.$_POST['r_economic_id'].'</td>
+				</tr>
+				
 				<tr style="height: 20.1pt" height="26">
 					<td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td>
 					<td  style="border-top: none">&nbsp;</td>
@@ -678,6 +691,8 @@ if(isset($_POST['t']) AND $_POST['t']=='send')
 		$_POST['stelephone']
 		$_POST['semail']
 		$_POST['rcompany']
+		$_POST['r_national_id']
+		$_POST['r_economic_id']
 		$_POST['raddress']
 		$_POST['rpostcode']
 		$_POST['rcountry']
@@ -701,12 +716,12 @@ if(isset($_POST['t']) AND $_POST['t']=='send')
 			
 			if(mysql_num_rows($ressq)>0){
 				mysql_query("UPDATE `ship_info` SET `scompany`='".$_POST['scompany']."', `saddress`='".$_POST['saddress']."', `szipcode`='".$_POST['szipcode']."', `scountry`='".$_POST['scountry']."', `scontactp`='".$_POST['scontactp']."', `stelephone`='".$_POST['stelephone']."', `semail`='".$_POST['semail']."' WHERE `ref`='".$id."'");
-				mysql_query("UPDATE `ship_info` SET `rcompany`='".$_POST['rcompany']."', `raddress`='".$_POST['raddress']."', `rpostcode`='".$_POST['rpostcode']."', `rcountry`='".$_POST['rcountry']."', `rcontactp`='".$_POST['rcontactp']."', `rtelephone`='".$_POST['rtelephone']."', `remail`='".$_POST['remail']."' WHERE `ref`='".$id."'");
+				mysql_query("UPDATE `ship_info` SET `rcompany`='".$_POST['rcompany']."',`r_national_id`='".$_POST['r_national_id']."',`r_economic_id`='".$_POST['r_economic_id']."', `raddress`='".$_POST['raddress']."', `rpostcode`='".$_POST['rpostcode']."', `rcountry`='".$_POST['rcountry']."', `rcontactp`='".$_POST['rcontactp']."', `rtelephone`='".$_POST['rtelephone']."', `remail`='".$_POST['remail']."' WHERE `ref`='".$id."'");
 				mysql_query("UPDATE `ship_info` SET `col_ref`='".$_POST['col_ref']."' WHERE `ref`='".$id."'");
 			}
 			else{
 				//echo "INSERT INTO `ship_info`(`ref`, `scompany`, `saddress`, `szipcode`, `scountry`, `scontactp`, `stelephone`, `semail`, `rcompany`, `raddress`, `rpostcode`, `rcountry`, `rtelephone`, `rcontactp`, `remail`) VALUES ('".$id."', '".$_POST['scompany']."', '".$_POST['saddress']."', '".$_POST['szipcode']."', '".$_POST['scountry']."', '".$_POST['scontactp']."', '".$_POST['stelephone']."', '".$_POST['semail']."', '".$_POST['rcompany']."', '".$_POST['rpostcode']."', '".$_POST['rcountry']."', '".$_POST['rtelephone']."', '".$_POST['rcontactp']."', '".$_POST['remail']."');<br>";
-				mysql_query("INSERT INTO `ship_info`(`ref`, `scompany`, `saddress`, `szipcode`, `scountry`, `scontactp`, `stelephone`, `semail`, `rcompany`, `raddress`, `rpostcode`, `rcountry`, `rtelephone`, `rcontactp`, `remail`, `col_ref`) VALUES ('".$id."', '".$_POST['scompany']."', '".$_POST['saddress']."', '".$_POST['szipcode']."', '".$_POST['scountry']."', '".$_POST['scontactp']."', '".$_POST['stelephone']."', '".$_POST['semail']."', '".$_POST['rcompany']."', '".$_POST['raddress']."', '".$_POST['rpostcode']."', '".$_POST['rcountry']."', '".$_POST['rtelephone']."', '".$_POST['rcontactp']."', '".$_POST['remail']."', '".$_POST['col_ref']."');");
+				mysql_query("INSERT INTO `ship_info`(`ref`, `scompany`, `saddress`, `szipcode`, `scountry`, `scontactp`, `stelephone`, `semail`, `rcompany`,`r_national_id`,`r_economic_id`, `raddress`, `rpostcode`, `rcountry`, `rtelephone`, `rcontactp`, `remail`, `col_ref`) VALUES ('".$id."', '".$_POST['scompany']."', '".$_POST['saddress']."', '".$_POST['szipcode']."', '".$_POST['scountry']."', '".$_POST['scontactp']."', '".$_POST['stelephone']."', '".$_POST['semail']."', '".$_POST['rcompany']."', '".$_POST['r_national_id']."', '".$_POST['r_economic_id']."', '".$_POST['raddress']."', '".$_POST['rpostcode']."', '".$_POST['rcountry']."', '".$_POST['rtelephone']."', '".$_POST['rcontactp']."', '".$_POST['remail']."', '".$_POST['col_ref']."');");
 			}
 			$resaq = mysql_query("SELECT * FROM `urls` WHERE `ref`=".$id."");
 			if(mysql_num_rows($resaq)>0)
@@ -850,6 +865,19 @@ Collection Ref. : <input type="text" name="col_ref" value="<?php echo $row2['col
 				<td >&nbsp;</td>
 				<td  align="left"><input name="rcompany" type="text" value="<?php echo $row2['rcompany']; ?>"></td>
 			</tr>
+
+            <tr style="height: 20.1pt" height="26">
+                <td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company National Id</td>
+                <td >&nbsp;</td>
+                <td  align="left"><input name="r_national_id" type="text" value="<?php echo $row2['r_national_id']; ?>"></td>
+            </tr>
+
+            <tr style="height: 20.1pt" height="26">
+                <td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Economic Id</td>
+                <td >&nbsp;</td>
+                <td  align="left"><input name="r_economic_id" type="text" value="<?php echo $row2['r_economic_id']; ?>"></td>
+            </tr>
+
 			<tr style="height: 20.1pt" height="26">
 				<td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td>
 				<td  style="border-top: none">&nbsp;</td>

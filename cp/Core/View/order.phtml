@@ -450,7 +450,32 @@ elseif(isset($this->oid) AND $this->oid!=null)
 														</div>
 													</div>
 												</div>
-											</div>
+                                            </div>
+
+                                            <div class="row">
+                                                <!------------------Company National Id------------------->
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="inputRCNationalId" class="control-label">Company National Id<span style="color:#ff0000;">(*)</span></label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa fa-briefcase"></i>
+                                                            <input id="inputRCNationalId" name="inputRCNationalId" type="text" placeholder="Company National Id" value="<?php echo ((isset($_POST['inputRCNationalId']) AND $_POST['inputRCNationalId']!='' AND $_POST['inputRCNationalId']!=null) ? $_POST['inputRCNationalId'] : ""); ?>" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!------------------Company Economic Id------------------->
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="inputRCEconomicId" class="control-label">Company Economic Id<span style="color:#ff0000;">(*)</span></label>
+                                                        <div class="input-icon right">
+                                                            <i class="fa fa-briefcase"></i>
+                                                            <input id="inputRCEconomicId" name="inputRCEconomicId" type="text" placeholder="Company Economic Id" value="<?php echo ((isset($_POST['inputRCEconomicId']) AND $_POST['inputRCEconomicId']!='' AND $_POST['inputRCEconomicId']!=null) ? $_POST['inputRCEconomicId'] : ""); ?>" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
 											<div class="row">
 												<div class="col-md-4">
 													<div class="form-group">
