@@ -1348,7 +1348,7 @@ $st = "Pending";
 $color = "999";
 if($row['status']==1){
 	$color = "066ECD";
-	$st = "Under Process";
+	$st = "Hold";
 }
 elseif($row['status']==2){
 	$color = "77B32F";
@@ -1381,7 +1381,7 @@ $error_m ="";
 			<td style="padding:5px">
 				<select name="status">
 					<option value="0" <?php if($row['status']==0) echo "selected='selected'";?> style="background-color:#999;color:#ffffff;">Pending</option>
-					<option value="1" <?php if($row['status']==1) echo "selected='selected'";?> style="background-color:#066ECD;color:#ffffff;">Under Process</option>
+					<option value="1" <?php if($row['status']==1) echo "selected='selected'";?> style="background-color:#066ECD;color:#ffffff;">Hold</option>
 					<option value="2" <?php if($row['status']==2) echo "selected='selected'";?> style="background-color:#77B32F;color:#ffffff;">Active</option>
 					<option value="3" <?php if($row['status']==3) echo "selected='selected'";?> style="background-color:#E40001;color:#ffffff;">Cancelled</option>
 					<option value="4" <?php if($row['status']==4) echo "selected='selected'";?> style="background-color:#39A7B6;color:#ffffff;">Compeleted</option>
@@ -1525,7 +1525,7 @@ $error_m ="";
 			<td style="padding:5px">
 				<select name="status_user">
 					<option value="0" <?php if($row['status_user']==0) echo "selected='selected'";?> style="background-color:#999;color:#ffffff;">Pending</option>
-					<option value="1" <?php if($row['status_user']==1) echo "selected='selected'";?> style="background-color:#066ECD;color:#ffffff;">Under Process</option>
+					<option value="1" <?php if($row['status_user']==1) echo "selected='selected'";?> style="background-color:#066ECD;color:#ffffff;">Hold</option>
 					<option value="2" <?php if($row['status_user']==2) echo "selected='selected'";?> style="background-color:#77B32F;color:#ffffff;">Active</option>
 					<option value="3" <?php if($row['status_user']==3) echo "selected='selected'";?> style="background-color:#E40001;color:#ffffff;">Cancelled</option>
 					<option value="4" <?php if($row['status_user']==4) echo "selected='selected'";?> style="background-color:#39A7B6;color:#ffffff;">Compeleted</option>
