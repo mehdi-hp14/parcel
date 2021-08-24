@@ -2295,8 +2295,8 @@ else{
 }
 //mysql_close();
 					?>
-				
-<p class="start">Choose a category : 
+
+<p class="start">Choose a category :
 <button class="btn btn-orange" onclick="window.location.href='user.php?id=<?php echo $id; ?>';">All Orders&nbsp;</button>&nbsp;&nbsp;&nbsp;
 <button class="btn btn-grey" onclick="window.location.href='user.php?id=<?php echo $id; ?>&type=0';">Pending&nbsp;</button>&nbsp;&nbsp;&nbsp;
 <button class="btn btn-blue" onclick="window.location.href='user.php?id=<?php echo $id; ?>&type=1';">Under Process&nbsp;</button>&nbsp;&nbsp;&nbsp;
@@ -2338,7 +2338,12 @@ else{
 <?php echo $prev_p .'&nbsp;'. $curr_p .'&nbsp;'. $next_p; 
 echo "<br> Total Pages : ".$max_p;
 ?>
+
 					<div class="clear"></div>
+                    <br>
+                    <br>
+                    <button onclick="printTable()" class="btn btn-primary">print</button>
+
                 </div>
             </div>
         </div>
@@ -2372,6 +2377,22 @@ else
             Copyright <a href="#">BlueWhale Admin</a>. All Rights Reserved.
         </p>
     </div>
+
+    <script type="text/javascript">
+        function printTable(){
+            var restorepage = document.body.innerHTML;
+            var printcontent = document.querySelector('.box.round.first table').outerHTML;
+            document.body.innerHTML = printcontent+` <style>
+            td{padding:2px}
+            table tr td:last-of-type{
+display: none;
+            }
+    </style>`;
+            window.print();
+            document.body.innerHTML = restorepage;
+        }
+
+    </script>
 </body>
 </html>
 

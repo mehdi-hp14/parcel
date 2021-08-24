@@ -10,10 +10,16 @@ class OrderModel extends ModelBase
 	}
 	public function GetOrders($uname, $page, $items_per_page)
 	{
-		$q = "SELECT `from`,`to`, `item_c`, `timestamp`, `status`, `id`, `tid` FROM `quote` WHERE `uname`=:uname ORDER BY `timestamp` DESC, `id` ASC LIMIT ".(($page-1)*$items_per_page).",".$items_per_page."";
-		//echo $q."<br>";
-		$params = array(':uname'=>$uname);
-		return $this->GetRowsInArray($q, $params);
+        $q = "SELECT `from`,`to`, `item_c`, `timestamp`, `status`, `id`, `tid` FROM `quote` WHERE `uname`=:uname";
+
+        if(isset($_GET['type'])){
+            $q .=" AND `status`=".intval($_GET['type']);
+        }
+
+        $q .=" ORDER BY `timestamp` DESC, `id` ASC LIMIT ".(($page-1)*$items_per_page).",".$items_per_page."";
+//        echo $q."<br>";
+        $params = array(':uname'=>$uname);
+        return $this->GetRowsInArray($q, $params);
 	}
 	
 	public function GetOrderByID($uname,$oid)

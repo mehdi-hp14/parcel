@@ -31,7 +31,10 @@ if($this->action_status AND $this->action_m!="")
 				<ul style="background: #fff" class="nav nav-pills nav-stacked">
 					<li <?php if($this->show_inbox) echo 'class="active"'; ?>><a href="orders.php"><i class="fa fa-inbox fa-fw mrs"></i>Orders List</a></li>
 					<!--<li <?php if($this->show_new) echo 'class="active"'; ?>><a href="orders.php?neworder=true"><i class="fa fa-edit fa-fw mrs"></i>New Order</a></li>-->
-				</ul>
+                    <li>
+                        <button type="button" class="btn btn-primary" onclick="printContent('print_area')" style="margin: 15px 0 0 0;width: 100%;">Print the table</button>
+                    </li>
+                </ul>
 			</div>
 		</div>
 	</div>
@@ -42,7 +45,7 @@ if($this->show_inbox)
 	<div class="col-sm-9 col-md-10">
 		<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
-				<div class="list-group mail-box">
+				<div id="print_area" class="list-group mail-box">
 <?php 
 if(isset($this->inbox_info) AND $this->inbox_info!=null AND is_array($this->inbox_info) AND count($this->inbox_info) > 0)
 {
@@ -75,19 +78,29 @@ else
 				<div class="row">
 					<div class="col-md-2"></div>
 					<div class="col-md-2">
+                        <a href="<?= '?type=0'?>">
 						<span style="width:15px;height:15px;background-color:#999;display: inline-block;"></span>&nbsp;Pending&nbsp;&nbsp;&nbsp;
+                        </a>
+                    </div>
+					<div class="col-md-2">
+                        <a href="<?= '?type=1'?>">
+                        <span style="width:15px;height:15px;background-color:#066ECD;display: inline-block;"></span>&nbsp;Hold&nbsp;&nbsp;&nbsp;
+                        </a>
+                    </div>
+					<div class="col-md-2">
+                        <a href="<?= '?type=2'?>">
+                        <span style="width:15px;height:15px;background-color:#77B32F;display: inline-block;"></span>&nbsp;Active&nbsp;&nbsp;&nbsp;
+                        </a>
+                    </div>
+					<div class="col-md-2">
+                        <a href="<?= '?type=3'?>">
+                        <span style="width:15px;height:15px;background-color:#E40001;display: inline-block;"></span>&nbsp;Cancelled&nbsp;&nbsp;&nbsp;
+                        </a>
 					</div>
 					<div class="col-md-2">
-						<span style="width:15px;height:15px;background-color:#066ECD;display: inline-block;"></span>&nbsp;Hold&nbsp;&nbsp;&nbsp;
-					</div>
-					<div class="col-md-2">
-						<span style="width:15px;height:15px;background-color:#77B32F;display: inline-block;"></span>&nbsp;Active&nbsp;&nbsp;&nbsp;
-					</div>
-					<div class="col-md-2">
-						<span style="width:15px;height:15px;background-color:#E40001;display: inline-block;"></span>&nbsp;Cancelled&nbsp;&nbsp;&nbsp;
-					</div>
-					<div class="col-md-2">
-						<span style="width:15px;height:15px;background-color:#39A7B6;display: inline-block;"></span>&nbsp;Completed&nbsp;&nbsp;&nbsp;
+                        <a href="<?= '?type=4'?>">
+                        <span style="width:15px;height:15px;background-color:#39A7B6;display: inline-block;"></span>&nbsp;Completed&nbsp;&nbsp;&nbsp;
+                        </a>
 					</div>
 
 				</div>
@@ -650,3 +663,19 @@ else{
 }
 ?>
 </div>
+
+<script type="text/javascript">
+    function printContent(el){
+        var restorepage = document.body.innerHTML;
+        var printcontent = document.getElementById(el).outerHTML;
+        document.body.innerHTML = printcontent+` <style>
+            #print_area .list-group-item{
+                border: 2px solid #000 !important;
+                margin-bottom: 10px ;
+            }
+    </style>`;
+        window.print();
+        document.body.innerHTML = restorepage;
+    }
+
+</script>
