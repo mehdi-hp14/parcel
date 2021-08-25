@@ -308,7 +308,7 @@ $html .= '
 						</div>
 
 						<div class="form_header">
-							<h1 style="font-size:30px;padding:20px 1em ;">Tracking quote</h1>
+							<h1 style="font-size:30px;padding:20px 1em ;">Tracking id</h1>
 						</div>
 						<div id="form_body">
 						<form id="quote_form" method="post" action="ajax_process.php">

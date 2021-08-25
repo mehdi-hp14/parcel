@@ -103,7 +103,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 my-3">
                     <div class="btn-wrap">
-                        <a href="#" class="my-btn"  id="PreviousID">I have tracking code</a>
+                        <a href="#" class="my-btn"  id="PreviousID">I have tracking id</a>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 my-3">

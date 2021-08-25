@@ -274,7 +274,7 @@ clear: both;
 			if($this->Ticket_info['user_sent']==1) echo "<p class=\"bubble_left\"><b>You said : </b> <span style='float:right;'>".date("Y/m/d H:i:s", $this->Ticket_info['c_date'])."</span><br>";
 			else echo "<p class=\"bubble_right\"><b>Support said : </b> <span style='float:right;'>".date("Y/m/d H:i:s", $this->Ticket_info['c_date'])."</span><br>";
 			echo "Subject : ".$this->Ticket_info['subject']."<br>";
-			echo nl2br($this->Ticket_info['content'])."<br></p>"; 
+			echo nl2br($this->Ticket_info['content'])."<br></p>";
 			if(isset($this->answers_info) AND is_array($this->answers_info) AND count($this->answers_info)>0 )
 			{
 				foreach($this->answers_info as $answer)
@@ -282,7 +282,7 @@ clear: both;
 					if($answer['user_sent']==1) echo "<p class=\"bubble_left\"><b>You said : </b> <span style='float:right;'>".date("Y/m/d H:i:s", $answer['c_date'])."</span><br>";
 					else echo "<p class=\"bubble_right\"><b>Support said : </b> <span style='float:right;'>".date("Y/m/d H:i:s", $answer['c_date'])."</span><br>";
 					echo "Subject : ".$answer['subject']."<br>";
-					echo nl2br($answer['content'])."<br></p><div class=\"clear\"></div>"; 
+					echo nl2br(strip_tags($answer['content']))."<br></p><div class=\"clear\"></div>";
 				}
 			}
 			
