@@ -31,9 +31,15 @@ if($this->action_status AND $this->action_m!="")
 				<ul style="background: #fff" class="nav nav-pills nav-stacked">
 					<li <?php if($this->show_inbox) echo 'class="active"'; ?>><a href="orders.php"><i class="fa fa-inbox fa-fw mrs"></i>Orders List</a></li>
 					<!--<li <?php if($this->show_new) echo 'class="active"'; ?>><a href="orders.php?neworder=true"><i class="fa fa-edit fa-fw mrs"></i>New Order</a></li>-->
+                    <?php if(!isset($_GET['oid'])):?>
                     <li>
                         <button type="button" class="btn btn-primary" onclick="printContent('print_area')" style="margin: 15px 0 0 0;width: 100%;">Print the table</button>
                     </li>
+                    <?php endif; ?>
+
+                    <?php if(isset($_GET['oid'])):?>
+                        <li style="border-top: 5px solid #e5e5e5;"><a href="support.php?newticket=true&tid=<?= $this->Order_info['tid'] ?? '' ?>"><i class="fa fa-edit fa-fw mrs"></i>New ticket</a></li>
+                    <?php endif; ?>
                 </ul>
 			</div>
 		</div>

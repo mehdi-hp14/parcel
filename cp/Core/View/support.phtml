@@ -91,7 +91,10 @@ elseif($this->show_new)
 								<label for="inputService" class="control-label">Service</label>
 								<div class="input-icon right">
 									<i class="fa fa-folder-open"></i>
-									<input id="inputService" name="service" type="text" placeholder="Tracking ID " class="form-control" value="<?php if(isset($_POST['service'])) echo $_POST['service']; ?>">
+									<input id="inputService" name="service" type="text" placeholder="Tracking ID " class="form-control" value="<?php
+                                    if(isset($_POST['service'])) echo $_POST['service'];
+                                    elseif(isset($_GET['tid'])) echo $_GET['tid'];
+                                    ?>">
 								</div>
 							</div>
 						</div>
