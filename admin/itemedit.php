@@ -881,6 +881,9 @@ $q = "SELECT `paid`, `uname`, `offered_p`, `total_weight` FROM `quote` WHERE `id
 $r = mysql_query($q) or die(mysql_error());
 $row = mysql_fetch_array($r);
 if(isset($_POST['t']) AND $_POST['t']==1){
+    if($_POST['status']==3){
+        mysql_query("DELETE FROM `transactions` WHERE oref={$_GET['id']}");
+    }
 	$q_p = array();
 	$tmp = "";
 	$_c = 0;
@@ -1258,7 +1261,7 @@ elseif(isset($_POST['t']) AND $_POST['t']=='upload')
 // echo dirname(__FILE__) ."<br>";
 // echo dirname(dirname(__FILE__)) ."<br>";
 
-if($error_m!=""){
+if(isset($error_m) && $error_m!=""){
 	?>
 <div class="grid_10">
     <div class="box round first">
@@ -1631,7 +1634,7 @@ $error_m ="";
 					<?php
 					}
 					echo "</div>";
-					if($disabled == "disabled")
+					if(isset($disabled) && $disabled == "disabled")
 					{
 ?>
 <script language="javascript">
@@ -1662,7 +1665,7 @@ $(document).ready(function () {
 							  </div>';
 						echo "</div>";
 					}
-					if($disabled == "disabled")
+					if(isset($disabled) && $disabled == "disabled")
 					{
 					?>
 					<div>
@@ -1745,7 +1748,7 @@ $(document).ready(function () {
 					<?php
 					}
 					echo "</div>";
-					if($disabled == "disabled")
+					if(isset($disabled) && $disabled == "disabled")
 					{
 ?>
 <script language="javascript">
@@ -1776,7 +1779,7 @@ $(document).ready(function () {
 							  </div>';
 						echo "</div>";
 					}
-					if($disabled == "disabled")
+					if(isset($disabled) && $disabled == "disabled")
 					{
 					?>
 					<div>
