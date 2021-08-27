@@ -883,6 +883,56 @@ $row = mysql_fetch_array($r);
 if(isset($_POST['t']) AND $_POST['t']==1){
     if($_POST['status']==3){
         mysql_query("DELETE FROM `transactions` WHERE oref={$_GET['id']}");
+    }else if($_POST['status']==4/*completed*/ || $_POST['status']==2 /* active */){
+
+        $currentQuote = "SELECT quote.*, users.id as user_id FROM `quote` LEFT JOIN users on users.uname=quote.uname WHERE quote.id=".$_GET['id'];
+        $currentQuote = mysql_query($currentQuote) or die(mysql_error());
+        $currentQuoteInfo = mysql_fetch_array($currentQuote);
+
+        $currentQuoteTransaction = "SELECT * FROM `transactions` WHERE oref=".$_GET['id'];
+        $currentQuoteTransaction = mysql_query($currentQuoteTransaction) or die(mysql_error());
+        $currentQuoteTransaction = mysql_fetch_array($currentQuoteTransaction);
+
+        $prices = explode(" | ",$currentQuoteInfo['offered_p']);
+        foreach($prices as $k=>$v){
+            if($v!=''){
+                $tmp = explode(") ",$v);
+                $ttmp = explode("=>",$tmp[1]);
+                $disabled = "";
+                if($ttmp[0]=='on')
+                {
+                    $disabled = "disabled";
+                    $currency = $ttmp[3];
+                    $targetMoney = intval($ttmp[2])+intval($_POST['dif_offer']);
+                    break;
+                }
+            }
+        }
+
+        if($currentQuoteInfo['status']==3){    //is cancelled before
+            if($currentQuoteInfo['offered_p']!=""){
+                $desc = 'Transaction has done by system because of moving status from cancelled to active';
+
+                $transactionInsertQuery = "INSERT INTO `transactions` (`oref`, `uref`, `type`, `amount`, `currency`, `timestamp`, `description`) 
+                                    VALUES (".$_GET['id'].", ".$currentQuoteInfo['user_id'].", 0, ".$targetMoney.", '".$currency."', ".time().", '".$desc."');";
+                mysql_query($transactionInsertQuery) or die($transactionInsertQuery ." : ". mysql_error());
+            }
+        } else{
+            /* there is difference between current transaction values and the quote price values so we fix transaction*/
+
+            if($currentQuoteTransaction && intval($currentQuoteTransaction['amount']) !=$targetMoney || $currency != $currentQuoteTransaction['currency']){
+                $desc = 'Transaction has done by system because of difference between current transaction values and the quote price values';
+
+                mysql_query("DELETE FROM `transactions` WHERE oref={$_GET['id']}");
+
+                $transactionInsertQuery = "INSERT INTO `transactions` (`oref`, `uref`, `type`, `amount`, `currency`, `timestamp`, `description`) 
+                                    VALUES (".$_GET['id'].", ".$currentQuoteInfo['user_id'].", 0, ".$targetMoney.", '".$currency."', ".time().", '".$desc."');";
+                mysql_query($transactionInsertQuery) or die($transactionInsertQuery ." : ". mysql_error());
+
+            }
+        }
+
+
     }
 	$q_p = array();
 	$tmp = "";
@@ -1201,6 +1251,13 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 	}
 	if(isset($_POST['dif_offer']) AND $_POST['dif_offer']!=''){
 		$q_p[] = "`dif_offer`='".$_POST['dif_offer']."'";
+	}
+	if(isset($_POST['dif_offer_desc']) AND $_POST['dif_offer_desc']!=''){
+		$q_p[] = "`dif_offer_desc`='".$_POST['dif_offer_desc']."'";
+	}
+
+	if(isset($_POST['dif_receive_desc']) AND $_POST['dif_receive_desc']!=''){
+		$q_p[] = "`dif_receive_desc`='".$_POST['dif_receive_desc']."'";
 	}
 	$error = true;
 	$error_m = "SomeThing went wrong.";
@@ -1633,6 +1690,17 @@ $error_m ="";
 					</p>
 					<?php
 					}
+					?>
+                    <div style="padding: 5px;margin-bottom: 10px;">
+                        Difference Cost : <input type="text" name="dif_receive" value="<?php echo number_format($row['dif_receive'],2); ?>"> <?php echo $currency; ?>
+                    </div>
+                    <div style="padding: 5px;">
+                        <label for="dif_receive_desc">Difference Description:</label>
+                        <div>
+                            <textarea name="dif_receive_desc" id="dif_receive_desc" cols="40" rows="10"><?php echo $row['dif_receive_desc']; ?></textarea>
+                        </div>
+                    </div>
+                    <?php
 					echo "</div>";
 					if(isset($disabled) && $disabled == "disabled")
 					{
@@ -1782,9 +1850,15 @@ $(document).ready(function () {
 					if(isset($disabled) && $disabled == "disabled")
 					{
 					?>
-					<div>
+					<div style="padding: 5px;margin-bottom: 10px;">
 					Difference Cost : <input type="text" name="dif_offer" value="<?php echo number_format($row['dif_offer'],2); ?>"> <?php echo $currency; ?>
 					</div>
+                    <div style="padding: 5px;">
+                        <label for="dif_offer_desc">Difference Description:</label>
+                        <div>
+                            <textarea name="dif_offer_desc" id="dif_offer_desc" cols="40" rows="10"><?php echo $row['dif_offer_desc']; ?></textarea>
+                        </div>
+                    </div>
 					<?php } ?>
 				</td>
 			<td colspan="1"><?php echo $conf_prices; ?></td>
