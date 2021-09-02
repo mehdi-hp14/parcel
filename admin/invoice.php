@@ -102,6 +102,12 @@ function printContent(el){
 	document.body.innerHTML = printcontent;
 	window.print();
 	document.body.innerHTML = restorepage;
+    try {
+        var confirm_and_sent = document.getElementById(`confirm_and_sent`).click();
+        confirm_and_sent.click()
+    }catch (e){
+        alert(`there has been a problem, call the technical team!`)
+    }
 }
 
 		
@@ -1144,7 +1150,7 @@ $dif_cost = $row['dif_offer'];
 	</div>
 <?php } ?>
 	<br>
-	<div style="text-align:center;"><button class="btn" name="submit" type="submit">Confirm And Send</button></div>
+	<div style="text-align:center;visibility: hidden"><button class="btn" name="submit" id="confirm_and_sent" type="submit">Confirm And Send</button></div>
 </form>
                 </div>
             </div>
@@ -1552,7 +1558,7 @@ $accountancy_msg ='
 		</tbody>
 	</table>';
 	$temp_html = $header . $accountancy_msg . $footer;
-	writeStringToFile("/home/bookingparcel/public_html/admin/invoice/accountant/".$invoice_no.".html",$temp_html);
+	writeStringToFile(BASE_DIR."/admin/invoice/accountant/".$invoice_no.".html",$temp_html);
 	echo "<br><a href='invoice/accountant/".$invoice_no.".html'>Accounancy Invoice</a> <br>";
 	if($date == 0){
 		$q = "INSERT INTO `invoices` (`invoice_no`, `invoice_type`, `qref`, `timestamp`) VALUES (".$invoice_no.", 0, ".$id.", ".time().");";
@@ -1580,7 +1586,7 @@ $accountancy_msg ='
 	//$mail->AddCC('cargo@epxcargo.co.uk', "BookingParcel(invoices)");
 	$mail->AddCC('backup1@bookingparcel.com', "BookingParcel(invoices)");
 	$mail->addAddress("account@europostexpress.co.uk", "Invoices");
-	$mail->addAttachment("/home/bookingparcel/public_html/admin/invoice/accountant/".$invoice_no.".html");
+	$mail->addAttachment(BASE_DIR."/admin/invoice/accountant/".$invoice_no.".html");
 	
 	$mail->CharSet ="utf-8";
 	$mail->isHTML(true);
@@ -1791,7 +1797,7 @@ $customer_msg ='
 	</table>';
 	
 	$temp_html = $header . $customer_msg . $footer;
-	writeStringToFile("/home/bookingparcel/public_html/admin/invoice/customer/".$invoice_no.".html",$temp_html);
+	writeStringToFile(BASE_DIR."/admin/invoice/customer/".$invoice_no.".html",$temp_html);
 	echo "<a href='invoice/customer/".$invoice_no.".html'>Customer Invoice</a> <br>";
 	if($date == 0){
 		$q = "INSERT INTO `invoices` (`invoice_no`, `invoice_type`, `qref`, `timestamp`) VALUES (".$invoice_no.", 1, ".$id.", ".time().");";
@@ -1830,7 +1836,7 @@ $customer_msg ='
 	//if($row['cc2']!='') $mail->AddCC($row['cc2'], $row['fname']);
 	//if($row['cc3']!='') $mail->AddCC($row['cc3'], $row['fname']);
 	//if($row['cc4']!='') $mail->AddCC($row['cc4'], $row['fname']);
-	$mail->addAttachment("/home/bookingparcel/public_html/admin/invoice/customer/".$invoice_no.".html");
+	$mail->addAttachment(BASE_DIR."/admin/invoice/customer/".$invoice_no.".html");
 	
 	$mail->CharSet ="utf-8";
 	$mail->isHTML(true);

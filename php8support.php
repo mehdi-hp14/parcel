@@ -1,6 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'autoload.php';
 
+const BASE_DIR = __DIR__;
 function mysql_connect(){return $_SESSION['mysql_connect'] = mysqli_connect(...func_get_args()); }
 function mysql_error($conn=null){
     return mysqli_error($conn ?? $_SESSION['mysql_connect']);
