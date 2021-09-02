@@ -15,7 +15,10 @@ function mysql_query($query){
 }
 function mysql_insert_id(){ return mysqli_insert_id(...func_get_args()); }
 function mysql_num_rows(){ return mysqli_num_rows(...func_get_args()); }
-function mysql_close(){ return mysqli_close(...func_get_args()); }
+
+function mysql_close(){
+    return mysqli_close($_SESSION['mysql_connect']);
+}
 function sql_regcase($string){ return $string.'i'; }
 
 class PHPMailer extends PHPMailer\PHPMailer\PHPMailer{

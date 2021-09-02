@@ -710,7 +710,7 @@ $error_m = "";
 		
 	}
 }
-if($error_m!=""){
+if(isset($error_m)&& $error_m!=""){
 	?>
 <div class="grid_10">
     <div class="box round first">
@@ -1570,7 +1570,7 @@ if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_num
 									</div>
 								</td>
 								
-								<td  style="padding:5px;width:15%;">Active : <input type="checkbox" name="active" value="active" id="active" <?php if($r['active']==1) echo "checked='checked'"; ?>><label for="active">Yes this company is active.</label></td>
+								<td  style="padding:5px;width:15%;">Active : <input type="checkbox" name="active" value="active" id="active" <?php if(isset($r['active']) && $r['active']==1) echo "checked='checked'"; ?>><label for="active">Yes this company is active.</label></td>
 								<td  style="padding:5px;width:355%;">
 									Fixed Agent : <input type="checkbox" name="fixed" value="fixed" id="fixed"><label for="fixed">Yes this company is fixed.</label><br>
 									Official Agent : <input type="checkbox" name="official" value="official" id="official"><label for="official">Yes this company is Europost Express Official Registered Office.</label><br>
