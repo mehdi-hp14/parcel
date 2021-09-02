@@ -512,7 +512,7 @@ Tel : +44(0) 7886105417<br>
 		$mail->AddCC($_POST['aemail'], $_POST['agent']);
 		
 		
-		$mail->AddCC('cargo@epxcargo.co.uk', "BookingParcel(presend)");
+//		$mail->AddCC('cargo@epxcargo.co.uk', "BookingParcel(presend)");
 		$mail->AddCC('backup1@bookingparcel.com', "BookingParcel(presend)");
 		if(!empty($official_agent) AND count($official_agent)>0 AND is_array($official_agent))
 		{

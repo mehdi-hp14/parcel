@@ -1374,7 +1374,7 @@ $accountancy_msg ='
 
 	$mail->setFrom('acc@europostexpress.co.uk', 'Cargo EuroPostExpress');
 	$mail->addReplyTo('cargo@europostexpress.co.uk', 'Cargo EuroPostExpress');
-	$mail->AddCC('cargo@epxcargo.co.uk', "BookingParcel(invoices)");
+//	$mail->AddCC('cargo@epxcargo.co.uk', "BookingParcel(invoices)");
 	$mail->AddCC('backup1@bookingparcel.com', "BookingParcel(invoices)");
 	$mail->addAddress("acc@europostexpress.co.uk", "Invoices");
 	$mail->addAttachment("/home/bookingparcel/public_html/admin/accountant/customer/".$invoice_no.".html");
@@ -1579,7 +1579,7 @@ $customer_msg ='
 
 	$mail->setFrom('acc@europostexpress.co.uk', 'Cargo EuroPostExpress');
 	$mail->addReplyTo('cargo@europostexpress.co.uk', 'Cargo EuroPostExpress');
-	$mail->AddCC('cargo@epxcargo.co.uk', "BookingParcel(invoices)");
+//	$mail->AddCC('cargo@epxcargo.co.uk', "BookingParcel(invoices)");
 	$mail->AddCC('backup1@bookingparcel.com', "BookingParcel(invoices)");
 	if($row['invemail']!=''){
 		$mail->addAddress($row['invemail'], $row['fname']);
