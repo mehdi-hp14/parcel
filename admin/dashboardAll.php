@@ -229,7 +229,10 @@ if($p>1){
 	$prev_p = "<a class=\"btn-icon btn-black btn-arrow-left\" href='?p=".($p-1)."".(($type == 0-1) ? "" : "&type=".$type."")."'><span></span>Previous</a>";
 }
 
-$q = "SELECT * FROM `quote` WHERE TRUE ".(($type == 0-1) ? " " : "AND `status`=".$type." ")."ORDER BY `timestamp` DESC, `id` ASC ".$lim;
+$q = "SELECT * FROM `quote` WHERE TRUE ".(($type == 0-1) ? " " : "AND `status`=".$type." ").
+    (!empty($_GET['from'])? " AND `from` like '{$_GET['from']}' ":'').
+    (!empty($_GET['to'])? " AND `to` like '{$_GET['to']}' ":'').
+    " ORDER BY `timestamp` DESC, `id` ASC ".$lim;
 
 $r = mysql_query($q) or die(mysql_error());
 if(mysql_num_rows($r)>0){
@@ -301,8 +304,8 @@ else{
 			<td >Company</td>
 			<td >Company Logo</td>
 			<td >E-mail</td>
-			<td >From</td>
-			<td >To</td>
+			<td ><input type="text" placeholder="From" id="from-input" class="inline-input" name="from" style="background: #f000;border: none;text-align: center;"></td>
+			<td ><input type="text" placeholder="To" id="to-input" class="inline-input" name="to" style="background: #f000;border: none;text-align: center;"></td>
 			<td >Date</td>
 			<td >Action</td>
 		</tr>
@@ -330,13 +333,18 @@ echo "<br> Total Pages : ".$max_p;
 					The ID&nbsp;:&nbsp;<input name="item_id" size="20" type="text">&nbsp;&nbsp;&nbsp;<hr>
 					Or MAWB&nbsp;:&nbsp;<input name="mawb1" size="3" type="text">&nbsp;-&nbsp;<input name="mawb2" size="9" type="text">&nbsp;&nbsp;&nbsp;<hr>
 					Or HAWB&nbsp;:&nbsp;<input name="hawb1" size="25" type="text">&nbsp;<input name="hawb2" size="15" type="text">&nbsp;&nbsp;&nbsp;<hr>
+					Or From Country :<input name="from_country" size="25" type="text"><hr>
+					Or To Country :<input name="to_country" size="25" type="text"><hr>
 					<button class="btn btn-pink" type="submit">LookUp</button>
 					</form></p>
+
 					<?php
+$fromCondition = !empty($_POST['from_country']) ? ' AND from like \'%'.$_POST['from_country']."%'":'';
+$toCondition = !empty($_POST['to_country']) ? ' AND to like \'%'.$_POST['to_country']."%'":'';
 
 if(isset($_POST['t']) AND $_POST['t']==3){
 	if(isset($_POST['tid']) AND $_POST['tid']!='' and !(isset($_POST['item_id']) AND $_POST['item_id']!='')){
-		$q = "SELECT id,count(*) as cc FROM `quote` WHERE `tid`='".$_POST['tid']."'";
+		$q = "SELECT id,count(*) as cc FROM `quote` WHERE `tid`='".$_POST['tid']."'".$fromCondition.$toCondition;
 		$rr = mysql_fetch_array(mysql_query($q));
 		if($rr['cc']>0){
 			header("Location: item.php?id=".$rr['id']."");
@@ -348,7 +356,7 @@ if(isset($_POST['t']) AND $_POST['t']==3){
 	}
 	else if(isset($_POST['item_id']) AND $_POST['item_id']!='')
 	{
-		$q = "SELECT id,count(*) as cc FROM `quote` WHERE `id`='".$_POST['item_id']."'";
+		$q = "SELECT id,count(*) as cc FROM `quote` WHERE `id`='".$_POST['item_id']."'".$fromCondition.$toCondition;
 		$rr = mysql_fetch_array(mysql_query($q));
 		if($rr['cc']>0){
 			header("Location: item.php?id=".$rr['id']."");
@@ -360,7 +368,7 @@ if(isset($_POST['t']) AND $_POST['t']==3){
 	}
 	elseif(isset($_POST['mawb1']) AND $_POST['mawb1']!='' AND isset($_POST['mawb2']) AND $_POST['mawb2']!='')
 	{
-		$q = "SELECT id,count(*) as cc FROM `quote` WHERE `mawb1`='".$_POST['mawb1']."' AND `mawb2`='".$_POST['mawb2']."'";
+		$q = "SELECT id,count(*) as cc FROM `quote` WHERE `mawb1`='".$_POST['mawb1']."' AND `mawb2`='".$_POST['mawb2']."'".$fromCondition.$toCondition;
 		$rr = mysql_fetch_array(mysql_query($q));
 		if($rr['cc']>0){
 			header("Location: item.php?id=".$rr['id']."");
@@ -373,7 +381,7 @@ if(isset($_POST['t']) AND $_POST['t']==3){
 	elseif(isset($_POST['hawb1']) AND $_POST['hawb1']!='' AND isset($_POST['hawb2']) AND $_POST['hawb2']!='')
 	{
 		$tmp = $_POST['hawb1'].' => '.$_POST['hawb2'].'|';
-		$q = "SELECT id,count(*) as cc FROM `quote` WHERE `hawb` LIKE '%".$tmp."%'";
+		$q = "SELECT id,count(*) as cc FROM `quote` WHERE `hawb` LIKE '%".$tmp."%'".$fromCondition.$toCondition;
 		
 		$rr = mysql_fetch_array(mysql_query($q));
 		if($rr['cc']>0){
@@ -384,6 +392,19 @@ if(isset($_POST['t']) AND $_POST['t']==3){
 			echo "<p>Order not found</p>";
 		}
 	}
+    elseif(isset($_POST['from_country']) OR isset($_POST['to_country']))
+    {
+        $q = "SELECT id,count(*) as cc FROM `quote` WHERE ".preg_replace('/AND/','',$fromCondition.$toCondition,1);
+
+        $rr = mysql_fetch_array(mysql_query($q));
+        if($rr['cc']>0){
+            header("Location: item.php?id=".$rr['id']."");
+            exit("Item....<br><a href='item.php?id=".$rr['id']."'>click here</a>");
+        }
+        else{
+            echo "<p>Order not found</p>";
+        }
+    }
 	else{
 		echo "<p>Invalid info</p>";
 	}
@@ -404,6 +425,24 @@ if(isset($_POST['t']) AND $_POST['t']==3){
     </div>
 </body>
 </html>
+    <script>
+        $('.inline-input').keypress(function (e){
+            if(e.keyCode==13){
+                var url = new URL(window.location.href);
+                url.searchParams.delete('from');
+                url.searchParams.delete('to');
+
+                if($('#from-input').val()){
+                    url.searchParams.set('from', $('#from-input').val());
+                }
+
+                if($('#to-input').val()){
+                    url.searchParams.set('to', $('#to-input').val());
+                }
+                window.location.href = url.href
+            }
+        })
+    </script>
 <?php
 mysql_close();
 include("footer.php");

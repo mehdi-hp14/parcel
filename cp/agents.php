@@ -760,74 +760,13 @@ public function getTheMaxNumber($total_weight)
 } 
 public function GetOfferPriceFromReceive($rprice, $currency="EUR", $tocurrency="GBP",$extra_c=0,$percent=0,$total_weight=0)
 {
-	//echo $rprice."<br>";
-	$rprice = str_replace(",","",$rprice);
-	//echo $rprice."<br>";
-	
-	$extra =$eextra = 0;
-	
-	if($currency=='EUR' OR $currency=='USD' OR $currency=='GBP')
-	{
-		//echo "total_weight : ". $total_weight ."<br>";
-		if($total_weight<=50)
-		{
-			$extra = 30;
-		}
-		elseif($total_weight<=300)
-		{
-			$extra = 100;
-		}
-		else
-		{
-			$extra = 100;
-			$extra += (ceil(($total_weight - 300) / 300) * 40);
-			//echo "aaaa : ".ceil(($total_weight - 300) / 300)."<br>";
-		}
-		
-		if($tocurrency=='GBP')
-		{
-			if($currency=='USD')
-			{
-				$eextra += 20;
-			}
-			elseif($currency=='EUR')
-			{
-				$eextra += 5;
-			}
-		}
-		elseif($tocurrency=='EUR')
-		{
-			if($currency=='USD')
-			{
-				$eextra += 19;
-			}
-			elseif($currency=='EUR')
-			{
-				$eextra += 5;
-			}
-		}
-		
-		$rate = 1;
-		if($currency != $tocurrency){
-			$googleCurrencyConvertor = new GoogleCurrencyConvertor("1",$currency,$tocurrency);
-			$rate = $googleCurrencyConvertor->getRate();
-		}
-		$rprice = ceil($rprice * $rate);
-		
-		$rate = 1;
-		if($tocurrency != 'GBP'){
-			$googleCurrencyConvertor = new GoogleCurrencyConvertor("1",'GBP',$tocurrency);
-			$rate = $googleCurrencyConvertor->getRate();
-		}
-		$extra = ceil($extra * $rate);
-		
-		
-		$temp = 1 + ($percent / 100);
-		$rprice *= $temp;
-	}
-	//echo number_format(ceil($rprice + $extra + $eextra + $extra_c),2)."<br><br><br>";
-	
-	return (ceil($rprice + $extra + $eextra + $extra_c));
+    $q = "SELECT * FROM `settings` WHERE `keyword`='quote-formula'";
+    $r = mysql_query($q) or die(mysql_error());
+    $quoteFormula = mysqli_fetch_object($r);
+
+    eval($quoteFormula->value);
+
+    return $result;
 }
 /*
 public function GetOfferPriceFromReceive($rprice, $currency="EUR", $tocurrency="GBP",$extra_c=0,$percent=0)

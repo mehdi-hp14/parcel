@@ -1,7 +1,10 @@
-<?php 
+<?php
 
 include("../post_forms/cnf.php");
 include("conf.php");
+
+$con = mysql_connect(DB_HOST,DB_USER,DB_PASS) or die(mysql_error());
+mysql_select_db(DB_NAME, $con) or die(mysql_error());
 
 if(!(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSION['loged_in']==true AND $_SESSION['loged_in_t']>=time())){
 
@@ -226,6 +229,17 @@ $post_c = array(
 	'Radio-193'=>'Zambia',
 	'Radio-194'=>'Zimbabwe'
 );
+
+$q = "SELECT * FROM `settings` WHERE `keyword`='quote-formula'";
+$r = mysql_query($q) or die(mysql_error());
+$quoteFormula = mysqli_fetch_object($r);
+
+if(isset($_POST['save-formula'])){
+    $saveFormula = mysqli_real_escape_string($con,$_POST['save-formula']);
+    $saveQuery = "UPDATE `settings` SET `value` = '{$saveFormula}' WHERE keyword='quote-formula'";
+    mysqli_query($con,$saveQuery);
+    $quoteFormula->value = $_POST['save-formula'];
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -273,7 +287,7 @@ $post_c = array(
 <style>
 input[type=number]{
     width: 60px;
-} 
+}
 
 .settings {
   display: table;
@@ -392,17 +406,17 @@ input.cmn-toggle-yes-no:checked + label:after {
 			function checkTime(i) {
 				return (i < 10) ? "0" + i : i;
 			}
-$('#checkall').click(function(event) {   
+$('#checkall').click(function(event) {
     if(this.checked) {
         // Iterate each checkbox
         $(':checkbox').each(function() {
-            this.checked = true;                        
+            this.checked = true;
         });
     }
 	else{
         // Iterate each checkbox
         $(':checkbox').each(function() {
-            this.checked = false;                        
+            this.checked = false;
         });
 	}
 });
@@ -421,14 +435,14 @@ $('#checkall').click(function(event) {
 $(function() {
         var scntDiv = $('#dimss_d');
         var i = $('#dimss_d p').size() + 1;
-        
+
         $('#addScnt').live('click', function() {
                 $('<p><label for="dimss"><input type="text" id="dimss" size="20" name="dimss[]" value="" placeholder="Dimensions" /><input type="text" id="weights" size="3" name="weights[]" value="" placeholder="Weight" /></label><a href="#" id="addScnt"><img src="../post_forms/images/icons/fam/add.png"></a><a href="#" id="remScnt"><img src="../post_forms/images/icons/fam/delete.png"></a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
-        
-        $('#remScnt').live('click', function() { 
+
+        $('#remScnt').live('click', function() {
                 if( i > 2 ) {
                         $(this).parents('p').remove();
                         i--;
@@ -437,14 +451,14 @@ $(function() {
         });
         var scntDiv2 = $('#HAWB_d');
         var i = $('#HAWB_d p').size() + 1;
-        
+
         $('#addScnt2').live('click', function() {
                 $('<p><label ><input type="text"  size="40" name="hawb1[]" value="" placeholder="Consignee\'s name" />&nbsp;-&nbsp;<input type="text"  size="15" name="hawb2[]" value="" placeholder="reference" /></label>&nbsp;<a href="#" id="addScnt2"><img src="../post_forms/images/icons/fam/add.png"></a>&nbsp;<a href="#" id="remScnt2"><img src="../post_forms/images/icons/fam/delete.png"></a>&nbsp;&nbsp;&nbsp;</p>').appendTo(scntDiv2);
                 i++;
                 return false;
         });
-        
-        $('#remScnt2').live('click', function() { 
+
+        $('#remScnt2').live('click', function() {
                 if( i > 2 ) {
                         $(this).parents('p').remove();
                         i--;
@@ -453,14 +467,14 @@ $(function() {
         });
         var scntDiv3 = $('#prices_d');
         var iii = $('#prices_d p').size() + 1;
-        
+
         $('#addScnt3').live('click', function() {
                 $('<p><label for="prices"><input type="radio" name="r_price_r" id="r_price_r" value="'+ (iii - 1) +'">&nbsp;<input type="text" name="r_price_n[]" id="r_price_n" value="" placeholder="Method Name">&nbsp;<input type="text" name="r_price_p[]" id="r_price_p" value="" placeholder="Price" size="6">&nbsp;<select name="r_price_c[]"><option value="GBP">GBP</option><option value="USD">USD</option><option value="EUR" selected="selected">EUR</option><option value="IRR">IRR</option><option value="CHF">CHF</option><option value="DKK">DKK</option><option value="HKD">HKD</option><option value="SGD">SGD</option><option value="SEK">SEK</option><option value="CAD">CAD</option><option value="AED">AED</option><option value="JYP">JYP</option><option value="CNH">CNH</option><option value="TRY">TRY</option><option value="PUR">PUR</option></select></label><a href="#" id="addScnt3"><img src="../post_forms/images/icons/fam/add.png"></a><a href="#" id="remScnt3"><img src="../post_forms/images/icons/fam/delete.png"></a></p>').appendTo(scntDiv3);
                 iii++;
                 return false;
         });
-        
-        $('#remScnt3').live('click', function() { 
+
+        $('#remScnt3').live('click', function() {
                 if( iii > 2 ) {
                         $(this).parents('p').remove();
                         iii--;
@@ -469,14 +483,14 @@ $(function() {
         });
         var scntDiv4 = $('#oprices_d');
         var iiii = $('#oprices_d p').size() + 1;
-        
+
         $('#addScnt4').live('click', function() {
                 $('<p><label for="oprices"><input type="radio" name="o_price_r" id="o_price_r" value="'+ (iiii - 1) +'">&nbsp;<input type="text" name="o_price_n[]" id="o_price_n" value="" placeholder="Method Name">&nbsp;<input type="text" name="o_price_p[]" id="o_price_p" value="" placeholder="Price" size="6">&nbsp;<select name="o_price_c[]"><option value="GBP">GBP</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="IRR">IRR</option></select></label><a href="#" id="addScnt4"><img src="../post_forms/images/icons/fam/add.png"></a><a href="#" id="remScnt4"><img src="../post_forms/images/icons/fam/delete.png"></a></p>').appendTo(scntDiv4);
                 iiii++;
                 return false;
         });
-        
-        $('#remScnt4').live('click', function() { 
+
+        $('#remScnt4').live('click', function() {
                 if( iii > 2 ) {
                         $(this).parents('p').remove();
                         iiii--;
@@ -533,7 +547,7 @@ $(function() {
                                 <li><a href="premessages.php">Pre-Defined Messages Page</a> </li>
                                 <li><a href="files.php">Files Management</a> </li>
                                 <li><a href="logout.php">logout</a> </li>
-                              
+
                             </ul>
                         </li>
                     </ul>
@@ -543,220 +557,6 @@ $(function() {
                     <?php
 
 require_once("CurrencyConv/GoogleCurrencyConvertor.inc.php");
-/*
-function GetOfferPriceFromReceive($rprice, $currency="EUR")
-{
-	$rprice = str_replace(",","",$rprice);
-	
-	$extra = 0;
-	if($currency=='EUR' OR $currency=='USD')
-	{
-			//$mult = ceil($rprice/600);
-			//$mult = max(1,$mult);
-			$extra = 0;
-			if($rprice<=1200)
-			{
-				$extra +=20;
-			}
-			else
-			{
-				$extra +=20;
-				$mult = ceil(($rprice - 1200)/1000);
-				$mult = max(1,$mult);
-				$extra += ($mult * 7);
-			}
-		
-		$googleCurrencyConvertor = new GoogleCurrencyConvertor("1",$currency,"GBP");
-		$rate = $googleCurrencyConvertor->getRate();
-		$rprice = ceil($rprice * $rate);
-	}
-	
-	$extra_price = ($rprice * 0.43);
-	
-	switch($currency)
-	{
-		case 'USD' :
-			if($rprice <= 1000)
-				$extra_price = max(150, $extra_price);
-			elseif($rprice>1000)
-				$extra_price = max(250, $extra_price);
-		case 'EUR' :
-			if($rprice <= 1000)
-				$extra_price = max(120, $extra_price);
-			elseif($rprice>1000)
-				$extra_price = max(300, $extra_price);
-	}
-	
-	return number_format(ceil($rprice + $extra_price  + $extra),2);
-}
-*/
-/*
-function GetOfferPriceFromReceive($rprice, $currency="EUR",$extra_c=0,$percent=0,$tocurrency="GBP")
-{
-	$rprice = str_replace(",","",$rprice);
-	
-	$extra =$eextra = 0;
-	
-	if($currency=='EUR' OR $currency=='USD' OR $currency=='GBP')
-	{
-		$tmp = (int)$rprice;
-		if($tmp>0 AND $tmp<=300)
-		{
-			$extra = 120;
-		}
-		elseif($tmp<=600)
-		{
-			$extra = 160;
-		}
-		elseif($tmp<=1000)
-		{
-			$extra = 200;
-		}
-		elseif($tmp<=1400)
-		{
-			$extra = 250;
-		}
-		elseif($tmp<=1800)
-		{
-			$extra = 300;
-		}
-		elseif($tmp<=2300)
-		{
-			$extra = 400;
-		}
-		elseif($tmp<=2600)
-		{
-			$extra = 500;
-		}
-		elseif($tmp<=2900)
-		{
-			$extra = 600;
-		}
-		elseif($tmp<=4000)
-		{
-			$extra = 800;
-		}
-		elseif($tmp<=6000)
-		{
-			$extra = 1000;
-		}
-		elseif($tmp<=8000)
-		{
-			$extra = 1200;
-		}
-		elseif($tmp<=10000)
-		{
-			$extra = 1400;
-		}
-		elseif($tmp<=12000)
-		{
-			$extra = 1600;
-		}
-		elseif($tmp<=14000)
-		{
-			$extra = 1800;
-		}
-		elseif($tmp<=16000)
-		{
-			$extra = 2000;
-		}
-		elseif($tmp<=18000)
-		{
-			$extra = 2200;
-		}
-		elseif($tmp<=20000)
-		{
-			$extra = 2400;
-		}
-		elseif($tmp<=22000)
-		{
-			$extra = 2600;
-		}
-		elseif($tmp<=24000)
-		{
-			$extra = 2800;
-		}
-		elseif($tmp<=26000)
-		{
-			$extra = 3000;
-		}
-		elseif($tmp<=28000)
-		{
-			$extra = 3200;
-		}
-		elseif($tmp<=30000)
-		{
-			$extra = 3400;
-		}
-		
-		
-		if($tocurrency=='GBP')
-		{
-			if($currency=='USD')
-			{
-				$eextra += 20;
-			}
-			elseif($currency=='EUR')
-			{
-				$eextra += 5;
-			}
-		}
-		elseif($tocurrency=='EUR')
-		{
-			if($currency=='USD')
-			{
-				$eextra += 19;
-			}
-			elseif($currency=='EUR')
-			{
-				$eextra += 5;
-			}
-		}
-		
-		
-		
-		echo "currency ".$currency."<br>";
-		echo "tocurrency ".$tocurrency."<br>";
-		echo "rprice ".$rprice."<br>";
-		echo "extra ".$extra."<br>";
-		echo "extra_c ".$extra_c."<br>";
-		echo "percent ".$percent."<br>";
-		
-		
-			$rate = 1;
-			if($currency != $tocurrency){
-				$googleCurrencyConvertor = new GoogleCurrencyConvertor("1",$currency,$tocurrency);
-				$rate = $googleCurrencyConvertor->getRate();
-			}
-			$rprice = ceil($rprice * $rate);
-		echo "rate ".$rate."<br>";
-			$rate = 1;
-			if($tocurrency != 'GBP'){
-				$googleCurrencyConvertor = new GoogleCurrencyConvertor("1",'GBP',$tocurrency);
-				$rate = $googleCurrencyConvertor->getRate();
-			}
-			$extra = ceil($extra * $rate);
-		
-		
-		
-		
-		echo "rate ".$rate."<br>";
-		echo "currency ".$currency."<br>";
-		echo "tocurrency ".$tocurrency."<br>";
-		echo "rprice ".$rprice."<br>";
-		echo "extra ".$extra."<br>";
-		echo "extra_c ".$extra_c."<br>";
-		echo "percent ".$percent."<br>";
-	
-		
-		$temp = 1 + ($percent / 100);
-		$rprice *= $temp;
-	}
-		echo "result ".number_format(ceil($rprice + $extra + $eextra + $extra_c),2)."<br><br><br><br>";
-	
-	return number_format(ceil($rprice + $extra + $eextra + $extra_c),2);
-}
-*/
 
 function getTheMaxNumber($total_weight)
 {
@@ -779,156 +579,87 @@ function getTheMaxNumber($total_weight)
 		}
 		return $max;
 	}
-	
+
 	return 1;
-} 
-function GetOfferPriceFromReceive($rprice, $currency="EUR",$extra_c=0,$percent=0,$tocurrency="GBP",$total_weight=0)
+}
+function GetOfferPriceFromReceive($rprice, $currency="EUR",$extra_c=0,$percent=0,$tocurrency="GBP",$totalWeight=0)
 {
-	$rprice = str_replace(",","",$rprice);
-	
-	$extra =$eextra = 0;
-	
-	if($currency=='EUR' OR $currency=='USD' OR $currency=='GBP')
-	{
-		echo "total_weight : ". $total_weight ."<br>";
-		if($total_weight<=50)
-		{
-			$extra = 30;
-		}
-		elseif($total_weight<=300)
-		{
-			$extra = 100;
-		}
-		else
-		{
-			$extra = 100;
-			$extra += (ceil(($total_weight - 300) / 300) * 40);
-			echo "aaaa : ".ceil(($total_weight - 300) / 300)."<br>";
-		}
-		
-		if($tocurrency=='GBP')
-		{
-			if($currency=='USD')
-			{
-				$eextra += 20;
-			}
-			elseif($currency=='EUR')
-			{
-				$eextra += 5;
-			}
-		}
-		elseif($tocurrency=='EUR')
-		{
-			if($currency=='USD')
-			{
-				$eextra += 19;
-			}
-			elseif($currency=='EUR')
-			{
-				$eextra += 5;
-			}
-		}
-		
-		
-		
-		echo "currency ".$currency."<br>";
-		echo "tocurrency ".$tocurrency."<br>";
-		echo "rprice ".$rprice."<br>";
-		echo "extra ".$extra."<br>";
-		echo "extra_c ".$extra_c."<br>";
-		echo "percent ".$percent."<br>";
-		
-		
-		$rate = 1;
-		if($currency != $tocurrency){
-			$googleCurrencyConvertor = new GoogleCurrencyConvertor("1",$currency,$tocurrency);
-			$rate = $googleCurrencyConvertor->getRate();
-		}
-		$rprice = ceil($rprice * $rate);
-		echo "rate ".$rate."<br>";
-		$rate = 1;
-		if($tocurrency != 'GBP'){
-			$googleCurrencyConvertor = new GoogleCurrencyConvertor("1",'GBP',$tocurrency);
-			$rate = $googleCurrencyConvertor->getRate();
-		}
-		$extra = ceil($extra * $rate);
-		
-		
-		
-		
-		echo "rate ".$rate."<br>";
-		echo "currency ".$currency."<br>";
-		echo "tocurrency ".$tocurrency."<br>";
-		echo "rprice ".$rprice."<br>";
-		echo "extra ".$extra."<br>";
-		echo "extra_c ".$extra_c."<br>";
-		echo "percent ".$percent."<br>";
-	
-		
-		$temp = 1 + ($percent / 100);
-		$rprice *= $temp;
-	}
-		echo "result ".number_format(ceil($rprice + $extra + $eextra + $extra_c),2)."<br><br><br><br>";
-	
-	return number_format(ceil($rprice + $extra + $eextra + $extra_c),2);
+    $q = "SELECT * FROM `settings` WHERE `keyword`='quote-formula'";
+    $r = mysql_query($q) or die(mysql_error());
+    $quoteFormula = mysqli_fetch_object($r);
+
+    eval($quoteFormula->value);
+
+    return $result;
 }
 
 
-$con = mysql_connect(DB_HOST,DB_USER,DB_PASS) or die(mysql_error());
-mysql_select_db(DB_NAME, $con) or die(mysql_error());
+
 
 $q = "SELECT `paid`, `uname`, `offered_p`, `total_weight` FROM `quote` WHERE `id`=".$id."";
 $r = mysql_query($q) or die(mysql_error());
 $row = mysql_fetch_array($r);
 if(isset($_POST['t']) AND $_POST['t']==1){
-    if($_POST['status']==3){
+
+    $currentQuote = "SELECT quote.*, users.id as user_id FROM `quote` LEFT JOIN users on users.uname=quote.uname WHERE quote.id=".$_GET['id'];
+    $currentQuote = mysql_query($currentQuote) or die(mysql_error());
+    $currentQuoteInfo = mysql_fetch_array($currentQuote);
+    $prices = explode(" | ",$currentQuoteInfo['offered_p']);
+    $difOffer = $_POST['dif_offer'] ?? $currentQuoteInfo['dif_offer'];
+
+    foreach($prices as $k=>$v){
+        if($v!=''){
+            $tmp = explode(") ",$v);
+            $ttmp = explode("=>",$tmp[1]);
+            $disabled = "";
+            if($ttmp[0]=='on')
+            {
+                $disabled = "disabled";
+                $currency = $ttmp[3];
+                $targetMoney = intval($ttmp[2])+intval($difOffer);
+                break;
+            }
+        }
+    }
+
+    if($_POST['status']==3 || (!isset($targetMoney) && !isset($_POST['o_price_r']))){
         mysql_query("DELETE FROM `transactions` WHERE oref={$_GET['id']}");
     }else if($_POST['status']==4/*completed*/ || $_POST['status']==2 /* active */){
-
-        $currentQuote = "SELECT quote.*, users.id as user_id FROM `quote` LEFT JOIN users on users.uname=quote.uname WHERE quote.id=".$_GET['id'];
-        $currentQuote = mysql_query($currentQuote) or die(mysql_error());
-        $currentQuoteInfo = mysql_fetch_array($currentQuote);
 
         $currentQuoteTransaction = "SELECT * FROM `transactions` WHERE oref=".$_GET['id'];
         $currentQuoteTransaction = mysql_query($currentQuoteTransaction) or die(mysql_error());
         $currentQuoteTransaction = mysql_fetch_array($currentQuoteTransaction);
 
-        $prices = explode(" | ",$currentQuoteInfo['offered_p']);
-        foreach($prices as $k=>$v){
-            if($v!=''){
-                $tmp = explode(") ",$v);
-                $ttmp = explode("=>",$tmp[1]);
-                $disabled = "";
-                if($ttmp[0]=='on')
-                {
-                    $disabled = "disabled";
-                    $currency = $ttmp[3];
-                    $targetMoney = intval($ttmp[2])+intval($_POST['dif_offer']);
-                    break;
-                }
-            }
+
+        if(isset($_POST['o_price_r'])){ // select price is not disabled so we know which price is main
+            $targetMoney = ($_POST['o_price_p'][intval($_POST['o_price_r'])])+intval($difOffer);
+            $currency = $_POST['o_price_c'][intval($_POST['o_price_r'])];
         }
 
-        if($currentQuoteInfo['status']==3){    //is cancelled before
-            if($currentQuoteInfo['offered_p']!=""){
-                $desc = 'Transaction has done by system because of moving status from cancelled to active';
 
-                $transactionInsertQuery = "INSERT INTO `transactions` (`oref`, `uref`, `type`, `amount`, `currency`, `timestamp`, `description`) 
-                                    VALUES (".$_GET['id'].", ".$currentQuoteInfo['user_id'].", 0, ".$targetMoney.", '".$currency."', ".time().", '".$desc."');";
-                mysql_query($transactionInsertQuery) or die($transactionInsertQuery ." : ". mysql_error());
-            }
-        } else{
-            /* there is difference between current transaction values and the quote price values so we fix transaction*/
 
-            if($currentQuoteTransaction && intval($currentQuoteTransaction['amount']) !=$targetMoney || $currency != $currentQuoteTransaction['currency']){
-                $desc = 'Transaction has done by system because of difference between current transaction values and the quote price values';
+        if(isset($targetMoney)){
+            if($currentQuoteInfo['status']==3){    //is cancelled before
+                if($currentQuoteInfo['offered_p']!=""){
+                    $desc = 'Transaction has done by system because of moving status from cancelled to active';
 
-                mysql_query("DELETE FROM `transactions` WHERE oref={$_GET['id']}");
+                    $transactionInsertQuery = "INSERT INTO `transactions` (`oref`, `uref`, `type`, `amount`, `currency`, `timestamp`, `description`) 
+                                        VALUES (".$_GET['id'].", ".$currentQuoteInfo['user_id'].", 0, ".$targetMoney.", '".$currency."', ".time().", '".$desc."');";
+                    mysql_query($transactionInsertQuery) or die($transactionInsertQuery ." : ". mysql_error());
+                }
+            } else{
+                /* there is difference between current transaction values and the quote price values so we fix transaction*/
 
-                $transactionInsertQuery = "INSERT INTO `transactions` (`oref`, `uref`, `type`, `amount`, `currency`, `timestamp`, `description`) 
-                                    VALUES (".$_GET['id'].", ".$currentQuoteInfo['user_id'].", 0, ".$targetMoney.", '".$currency."', ".time().", '".$desc."');";
-                mysql_query($transactionInsertQuery) or die($transactionInsertQuery ." : ". mysql_error());
+                if(!isset($currentQuoteTransaction) || (intval($currentQuoteTransaction['amount']) !=$targetMoney || $currency != $currentQuoteTransaction['currency'])){
+                    $desc = 'Transaction has done by system because of difference between current transaction values and the quote price values';
 
+                    mysql_query("DELETE FROM `transactions` WHERE oref={$_GET['id']}");
+
+                    $transactionInsertQuery = "INSERT INTO `transactions` (`oref`, `uref`, `type`, `amount`, `currency`, `timestamp`, `description`) 
+                                        VALUES (".$_GET['id'].", ".$currentQuoteInfo['user_id'].", 0, ".$targetMoney.", '".$currency."', ".time().", '".$desc."');";
+                    mysql_query($transactionInsertQuery) or die($transactionInsertQuery ." : ". mysql_error());
+
+                }
             }
         }
 
@@ -1095,7 +826,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 	if(isset($_POST['lithiumb']) AND $_POST['lithiumb']!=''){
 		$q_p[] = "`lithiumb`='".$_POST['lithiumb']."'";
 	}
-	
+
 	if(isset($_POST['offer_price']) AND $_POST['offer_price']!=''){
 		$q_p[] = "`offer_price`='".$_POST['offer_price']."'";
 	}
@@ -1130,15 +861,15 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 			}
 			if($price!="" AND $currency!="")
 			{
-				
+
 				$rot = mysql_query("SELECT * FROM `transactions` WHERE `oref`='".$id."'");
-				
+
 				$ro = mysql_query("SELECT * FROM `users` WHERE `uname`='".$row['uname']."'");
 				if(mysql_num_rows($ro)>0)
 				{
 					$row2 = mysql_fetch_array($ro);
-					
-				
+
+
 					$qqqq = "SELECT SUM(`amount`) as sum FROM `transactions` WHERE `uref`=".$row2['id']." AND `currency`='".$currency."' AND (`type`=1)";
 					$inc_row = mysql_fetch_array(mysql_query($qqqq));
 					$qq = "SELECT SUM(`amount`) as sum FROM `transactions` WHERE `uref`=".$row2['id']." AND `currency`='".$currency."' AND (`type`=1 or `type`=2 or `type`=4)";
@@ -1148,7 +879,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 					$ctotal_pay = (float)$inc_row['sum'];
 					$ccurrent_dep = $sum_row['sum'] - $sub_row['subtract'];
 					$corder_paid = $ctotal_pay - $ccurrent_dep;
-					
+
 					if(isset($ccurrent_dep) AND (($ccurrent_dep >0 AND $ccurrent_dep >=$price)  OR $row2['mdp']==1))
 					{
 						//echo "1<br>";
@@ -1161,7 +892,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 						//echo "2<br>";
 						$q = "UPDATE `users` SET `".$currency."_current_balance`= `".$currency."_current_balance` - '".$price."', `".$currency."_total_order_paid`= `".$currency."_total_order_paid` + '".$price."' WHERE `id`=".$row2['id']."";
 						mysql_query($q) or die(mysql_error());
-						
+
 						$q_p[] = "`paid`='".$_POST['paid']."'";
 					}
 					else
@@ -1279,9 +1010,9 @@ elseif(isset($_POST['t']) AND $_POST['t']=='upload')
 	if(isset($_FILES['uploaded_file']['name']) AND is_array($_FILES['uploaded_file']['name']) AND count($_FILES['uploaded_file']['name'])>0){
 		foreach($_FILES['uploaded_file']['name'] as $k => $upload){
 			if(isset($_FILES['uploaded_file']['name'][$k]) AND $_FILES['uploaded_file']['name'][$k] !="" AND $_FILES['uploaded_file']['name'][$k]!=null){
-				
+
 				$target_dir = $locations;
-				
+
 				$target_file = $target_dir . basename($_FILES['uploaded_file']['name'][$k]);
 				$uploadOk = 1;
 				$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -1294,13 +1025,13 @@ elseif(isset($_POST['t']) AND $_POST['t']=='upload')
 				} elseif($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" && $imageFileType != "rtf" && $imageFileType != "zip" && $imageFileType != "pdf" && $imageFileType != "doc" && $imageFileType != "docx" && $imageFileType != "xls" && $imageFileType != "xlsx") {
 					$error_m .= basename( $_FILES['uploaded_file']['name'][$k])."Invalid file format<br>";
 					$uploadOk = 0;
-				} 
+				}
 				if ($uploadOk == 0) {
 					$error_m .= basename( $_FILES['uploaded_file']['name'][$k])." Sorry, your file was not uploaded.<br>";
 				} else {
 					if (move_uploaded_file($_FILES['uploaded_file']['tmp_name'][$k], $target_file)) {
 						$error_m .= "The file ". basename( $_FILES['uploaded_file']['name'][$k]). " has been uploaded.<br>";
-						
+
 					}
 				}
 			}
@@ -1336,7 +1067,7 @@ if(isset($error_m) && $error_m!=""){
 				<p><?php foreach($q_p as $k=>$v) {
 					$tmp = explode("'",$v);
 					echo $tmp[1]."<br>";
-					
+
 				} ?></p>
 			</div>
 		<?php } if($error == true){ ?>
@@ -1346,7 +1077,7 @@ if(isset($error_m) && $error_m!=""){
 					<?php echo $error_m; ?>
 				</p>
 			</div>
-			
+
 		<?php } ?>
 		</div>
 	</div>
@@ -1389,7 +1120,7 @@ else{
             <div class="box round first">
                 <h2>Edit Order</h2>
                 <div class="block">
-<?php				
+<?php
 if($_c==1){
 	echo "Item ID : ".$id."<br>";
 	echo "Tracking ID : ".$row['tid']."<br>";
@@ -1512,7 +1243,7 @@ $error_m ="";
 			<td style="padding:5px">Dimensions</td>
 			<td style="padding:5px" colspan="2">
 				<div id="dimss_d">
-					<?php 
+					<?php
 					if($row['dims']!=""){
 						$cities = explode(" kg | ",$row['dims']);
 						$_c = 1;
@@ -1523,9 +1254,9 @@ $error_m ="";
 					?>
 					<p>
 						<label for="dimss"><input type="text" id="dimss" size="20" name="dimss[]" value="<?php echo $ttmp[1]; ?>" placeholder="Dimensions" /><input type="text" id="weights" size="3" name="weights[]" value="<?php echo $tmp[1]; ?>" placeholder="Weight" /></label>
-						<?php 
+						<?php
 							echo '<a href="#" id="addScnt"><img src="../post_forms/images/icons/fam/add.png"></a><a href="#" id="remScnt"><img src="../post_forms/images/icons/fam/delete.png"></a>';
-					
+
 							echo '</p>';
 							$_c++;
 							}
@@ -1610,7 +1341,7 @@ $error_m ="";
 			<td colspan="2" style="padding:5px">
 				<div id="prices_d">
 					<input type="checkbox" name="auto_off" value="yes">&nbsp;&nbsp;Auto add offered prices?<br>
-					<?php 
+					<?php
 					$_c = 0;
 					$currency ="";
 					if($row['received_p']!=""){
@@ -1708,7 +1439,7 @@ $error_m ="";
 <script language="javascript">
 var status = '<?php echo $disabled; ?>';
 $(document).ready(function () {
-	$('#cmn-toggle-1').click(function(event) {   
+	$('#cmn-toggle-1').click(function(event) {
 		if(status==='disabled')
 		{
 			$('#prices_d p label :input').removeAttr('disabled');
@@ -1740,11 +1471,13 @@ $(document).ready(function () {
 					Difference Cost : <input type="text" name="dif_receive" value="<?php echo number_format($row['dif_receive'],2); ?>"> <?php echo $currency; ?>
 					</div>
 					<?php } ?>
-			</td>
+                    <div id="change-formula">change formula</div>
+
+            </td>
 			<td colspan="1"><label for="offer_price">Our Offer Price : </label></td>
 			<td colspan="3">
 				<div id="oprices_d">
-					<?php 
+					<?php
 					$conf_prices = "";
 					$currency = "";
 					$_c = 0;
@@ -1822,7 +1555,7 @@ $(document).ready(function () {
 <script language="javascript">
 var status2 = '<?php echo $disabled; ?>';
 $(document).ready(function () {
-	$('#cmn-toggle-2').click(function(event) {   
+	$('#cmn-toggle-2').click(function(event) {
 		if(status2==='disabled')
 		{
 			$('#oprices_d p label :input').removeAttr('disabled');
@@ -1868,7 +1601,7 @@ $(document).ready(function () {
 			<td colspan="2" style="padding:5px">
 				<input type="text" name="agent_name" id="keyword" size="10" autocomplete="off" value="<?php echo $row['agent_name']; ?>" placeholder="Enter agent name">
 				<input type="text" name="agent_company" id="keyword2" size="10" autocomplete="off" value="<?php echo $row['agent_company']; ?>" placeholder="Enter agent Company">
-				
+
 			</td>
 			<td colspan="1" style="padding:5px">User Confirmmed The Order?</td>
 			<td colspan="2" style="padding:5px">
@@ -1898,7 +1631,7 @@ $(document).ready(function () {
 				<input type="radio" id="international" name="export" value="international" <?php if($row['export']=='international') echo "checked ='true'";?> ><label for="international">International Export</label>&nbsp;&nbsp;&nbsp;
 				<input type="radio" id="domestic" name="export" value="domestic" <?php if($row['export']=='domestic') echo "checked ='true'";?> ><label for="domestic">Domestic</label>&nbsp;&nbsp;&nbsp;
 			</td>
-			
+
 		</tr>
 		<tr style="background-color:#ccc;text-align:center;color:#3a3a3a">
 			<td colspan='8' style="padding:5px">Shipping Details</td>
@@ -1913,7 +1646,7 @@ $(document).ready(function () {
 			<td colspan="1" style="padding:5px">HAWB</td>
 			<td colspan="4" style="padding:5px">
 				<div id="HAWB_d">
-					<?php 
+					<?php
 					if($row['hawb']!=""){
 						$hawbs = explode("|",$row['hawb']);
 						foreach($hawbs as $k=>$v){
@@ -1947,12 +1680,12 @@ $(document).ready(function () {
 		<?php if($row['paid']=='yes'){?>
 			<td style="padding:5px;text-align:center;" colspan="4"><button class="btn btn-green" name="submit" type="button" onclick="window.open('invoice.php?id=<?php echo $id;?>&type=1','invoice','scrollbars=yes,status=yes,resizable=yes,toolbar=yes,width=980,height=600');return false;">Create Invoice For Customer</button></td>
 			<td style="padding:5px;text-align:center;" colspan="4"><button class="btn btn-teal" name="submit" type="button" onclick="window.open('invoice.php?id=<?php echo $id;?>&type=0','invoice','scrollbars=yes,status=yes,resizable=yes,toolbar=yes,width=980,height=600');return false;">Create Invoice For Office</button></td>
-		<?php 
+		<?php
 		}
 		else{?>
 			<td style="padding:5px;text-align:center;" colspan="4"><button class="btn btn-grey " name="submit" type="button">Create Invoice For Customer (Not Paid Yet)</button></td>
 			<td style="padding:5px;text-align:center;" colspan="4"><button class="btn btn-grey " name="submit" type="button">Create Invoice For Office (Not Paid Yet)</button></td>
-		<?php 
+		<?php
 		}
 		?>
 		</tr>
@@ -1969,7 +1702,7 @@ $(document).ready(function () {
 			</td>
 			<td style="padding:5px;text-align:center;" colspan="2">
 				<button class="btn btn-teal" name="submit" type="button" onclick="window.open('shipping.php?id=<?php echo $id;?>','invoice','scrollbars=yes,status=yes,resizable=yes,toolbar=yes,width=980,height=600');return false;">
-					Step 3: Shipper instruction 
+					Step 3: Shipper instruction
 				</button>
 			</td>
 		</tr>
@@ -1983,7 +1716,7 @@ $(document).ready(function () {
                 </div>
             </div>
         </div>
-		
+
         <div class="grid_10">
             <div class="box round first">
                 <h2>Upload New Files</h2>
@@ -2045,7 +1778,7 @@ else{
 	echo "<td colspan='4' style=\"padding:5px;\">No file is added yet.</td>";
 	echo "</tr>";
 }
-?>							
+?>
 						</tbody>
 					</table>
                 </div>
@@ -2088,7 +1821,7 @@ else{
 	echo "<td colspan='4' style=\"padding:5px;\">No file is added yet.</td>";
 	echo "</tr>";
 }
-?>							
+?>
 						</tbody>
 					</table>
                 </div>
@@ -2125,9 +1858,68 @@ if(mysql_num_rows($inv_q)>0){
             Copyright <a href="#">BlueWhale Admin</a>. All Rights Reserved.
         </p>
     </div>
+
+    <div class="formula-wrapper" style="display: none">
+        <div class="formula-modal">
+            <form action="<?= $_SERVER['REQUEST_URI'] ?>" method="post">
+            <textarea id="formula-textarea" cols="30" rows="10" name="save-formula"><?= $quoteFormula->value ?></textarea>
+            <div style="margin: 0 57px;">
+                <button>save</button>
+                <button class="cancel-button">cancel</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        $('#change-formula').click(function (){
+            $('.formula-wrapper').show()
+        })
+        $('.cancel-button,.formula-wrapper').click(function (e){
+            if(e.target !== e.currentTarget) return;
+            e.preventDefault();
+            $('.formula-wrapper').hide()
+        })
+    </script>
+    <style>
+        .formula-wrapper{
+            background: rgba(0, 0, 0, 0.77);
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            z-index: 100;
+            top: 0;
+            left: 0;
+        }
+        .formula-modal{
+            background: rgb(236, 236, 236);
+            height: 90vh;
+            width: 90vw;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+        #formula-textarea{
+            width: 80vw;
+            height: 80vh;
+            position: relative;
+            margin: 20px auto;
+            display: flex;
+        }
+        #change-formula{
+            padding: 10px;
+            width: 95px;
+            background: #3c3;
+            margin: 10px;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+        }
+    </style>
+
 </body>
 </html>
 
-<?php 
+<?php
 include("footer.php");
 ?>
