@@ -1,4 +1,4 @@
-﻿<?php 
+﻿<?php
 include("../post_forms/cnf.php");
 include("conf.php");
 
@@ -11,7 +11,7 @@ if(!(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSI
 if(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSION['loged_in']==true AND $_SESSION['loged_in_t']>=time()){
 	$_SESSION['loged_in_t'] = time()+time_out;
 }
-$post_c = array(
+$post_c = $countriesOriginal = array(
 	'Radio-00'=>'Test Country',
 	'Radio-0'=>'Afghanistan',
 	'Radio-1'=>'Albania',
@@ -210,6 +210,11 @@ $post_c = array(
 	'Radio-193'=>'Zambia',
 	'Radio-194'=>'Zimbabwe'
 );
+
+if (isset($_GET['post_c_key'])) {
+    $post_c = [$_GET['post_c_key'] => $post_c[$_GET['post_c_key']]];
+    $_GET['start'] = substr($post_c[$_GET['post_c_key']],0,1);
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -259,19 +264,19 @@ $post_c = array(
 
 
         });
-		
+
 		$(document).ready(function () {
-			$('#checkall').click(function(event) {   
+			$('#checkall').click(function(event) {
 				if(this.checked) {
 					// Iterate each checkbox
 					$(':checkbox').each(function() {
-						this.checked = true;                        
+						this.checked = true;
 					});
 				}
 				else{
 					// Iterate each checkbox
 					$(':checkbox').each(function() {
-						this.checked = false;                        
+						this.checked = false;
 					});
 				}
 			});
@@ -298,14 +303,14 @@ function ConfirmFuncOfficial(a,b) {
 $(function() {
         var scntDiv = $('#ccities');
         var i = $('#ccities p').size() + 1;
-        
+
         $('#addScnt').live('click', function() {
                 $('<p><label for="ccities"><input type="text" id="ccity" size="20" name="ccity[]" value="" placeholder="New City" /></label> <a href="#" id="remScnt"><img src="../post_forms/images/icons/fam/delete.png"></a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
-        
-        $('#remScnt').live('click', function() { 
+
+        $('#remScnt').live('click', function() {
                 if( i > 2 ) {
                         $(this).parents('p').remove();
                         i--;
@@ -314,14 +319,14 @@ $(function() {
         });
 });
 
- 
+
 function ajax_msg(){
-	
+
 	var choosemsgemail = document.getElementById('choosemsgemail');
 	var p = choosemsgemail.options[choosemsgemail.selectedIndex].value;
-	
+
 	if(p!='-'){
-	
+
 		var dataString = 'mid='+p;
 		$.ajax({
 			type: "POST",
@@ -338,7 +343,7 @@ function ajax_msg(){
 					}
 				}
 			}
-		});	
+		});
 	}
 }
 
@@ -397,7 +402,7 @@ function printContent(el){
                                 <li><a href="agents.php">Agents Management Page</a> </li>
                                 <li><a href="premessages.php">Pre-Defined Messages Page</a> </li>
                                 <li><a href="logout.php">logout</a> </li>
-                              
+
                             </ul>
                         </li>
                         <!--<li><a class="menuitem">Menu 2</a>
@@ -435,7 +440,7 @@ function printContent(el){
                                 <li><a>Submenu 8</a> </li>
                                 <li><a>Submenu 9</a> </li>
                                 <li><a>Submenu 10</a> </li>
-                    
+
                             </ul>
                         </li>-->
                     </ul>
@@ -479,7 +484,7 @@ $error_m = "";
 	switch($_POST['t']){
 		case 1:
 		$error = true;
-			
+
 			if(isset($_POST['country']) AND $_POST['country']!="" AND $_POST['country']!=null AND array_key_exists($_POST['country'],$post_c) AND $post_c[$_POST['country']]!=""){
 				if(isset($_POST['emails']) AND $_POST['emails']!="" AND $_POST['emails']!=null){
 					if(isset($_POST['deliver']) AND $_POST['deliver']!="" AND $_POST['deliver']!=null AND is_array($_POST['deliver']) AND count($_POST['deliver'])>0){
@@ -506,7 +511,7 @@ $error_m = "";
 						$desc = $_POST['desc'];
 						$country = $post_c[$_POST['country']];
 						$error = false;
-						
+
 						mysql_query("INSERT INTO `agents` (`fname`, `cname`, `country`, `city`, `address`, `phones`, `emails`, `desc`, `ship_air`, `ship_sea`, `ship_land`, `ship_rail`, `ship_charter`, `special`, `time`,`active`,`fixed`, `official`, `cover_city`) VALUES ('".$fname."','".$cname."','".$country."','".$city."','".$address."','".$phones."','".$emails."','".$desc."','".$air."','".$sea."','".$land."','".$rail."','".$charter."','".$special."','".time()."','".$active."','".$fixed."', '".$official."','".$ccity."');");
 						$aid = mysql_insert_id();
 						if($official == 1) mysql_query("INSERT INTO `agents_official` (`aid`, `uname`, `pw`, `fname`,`lname`, `active`) values ('".$aid."', '". str_replace(" ", "_",strtolower($fname."_".$cname))."', 'sasdaq', '".$fname."', '', '1'); ");
@@ -527,7 +532,7 @@ $error_m = "";
 		case 2:
 		$error = true;
 			if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_numeric($_GET['edit']) AND $_GET['edit']>0){
-				
+
 				$q = "SELECT count(*) as c FROM `agents` WHERE `id`=".$_GET['edit']."";
 				$r = mysql_fetch_array(mysql_query($q));
 				if($r['c']>0){
@@ -557,12 +562,12 @@ $error_m = "";
 								$desc = $_POST['desc'];
 								$country = $post_c[$_POST['country']];
 								$error = false;
-								
+
 								mysql_query("UPDATE `agents` SET `ship_air` = '".$air."', `ship_sea`= '".$sea."', `ship_land`= '".$land."', `ship_rail`= '".$rail."', `ship_charter`= '".$charter."', `special`= '".$special."' WHERE `id`=".$_GET['edit']."");
 								mysql_query("UPDATE `agents` SET `fname` = '".$fname."', `cname`= '".$cname."', `city`= '".$city."' WHERE `id`=".$_GET['edit']."");
 								mysql_query("UPDATE `agents` SET `address` = '".$address."', `country`= '".$country."', `phones`= '".$phones."' WHERE `id`=".$_GET['edit']."");
 								mysql_query("UPDATE `agents` SET `emails` = '".$emails."', `desc`= '".$desc."', `time`= '".time()."' WHERE `id`=".$_GET['edit']."");
-								mysql_query("UPDATE `agents` SET `cover_city` = '".$ccity."', `active`= '".$active."', `fixed`= '".$fixed."', `official`= '".$official."' WHERE `id`=".$_GET['edit']."");					
+								mysql_query("UPDATE `agents` SET `cover_city` = '".$ccity."', `active`= '".$active."', `fixed`= '".$fixed."', `official`= '".$official."' WHERE `id`=".$_GET['edit']."");
 								if($official == 1) mysql_query("INSERT INTO `agents_official` (`aid`, `uname`, `pw`, `fname`,`lname`, `active`) values ('".$_GET['edit']."', '". str_replace(" ", "_",strtolower($fname."_".$cname))."', 'sasdaq', '".$fname."', '', '1'); ");
 								$error_m = "Agent Successfully Edited.";
 							}
@@ -587,7 +592,7 @@ $error_m = "";
 			if(isset($_POST['submit']) AND $_POST['submit']!='' AND $_POST['submit']!=null){
 				$error = true;
 				if(isset($_GET['fixed']) AND $_GET['fixed']!='' AND $_GET['fixed']!=null AND $_GET['fixed']="show"){
-					
+
 					$emails = array();
 					if(isset($_POST['agents']) AND is_array($_POST['agents']) AND count($_POST['agents'])>0){
 						foreach($_POST['agents'] as $agent){
@@ -598,16 +603,16 @@ $error_m = "";
 							}
 						}
 					}
-					
+
 					if(isset($_POST['title']) AND $_POST['title']!='' AND $_POST['title']!=null){
 						if(isset($_POST['message']) AND $_POST['message']!='' AND $_POST['message']!=null){
 							$has_attach = false;
 							$send = false;
-							
+
 							$Attachments = array();
-							
+
 							if(isset($_FILES['uploaded_file']['name']) AND is_array($_FILES['uploaded_file']['name']) AND count($_FILES['uploaded_file']['name'])>0){
-								
+
 								$target_dir = __DIR__ . DIRECTORY_SEPARATOR  ."attachments" . DIRECTORY_SEPARATOR;
 								$uploaded_c = 0;
 								foreach($_FILES['uploaded_file']['name'] as $k => $upload){
@@ -626,14 +631,14 @@ $error_m = "";
 										} elseif($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" && $imageFileType != "rtf" && $imageFileType != "zip" && $imageFileType != "pdf" && $imageFileType != "doc" && $imageFileType != "docx" && $imageFileType != "xls" && $imageFileType != "xlsx") {
 											$error_m .= basename( $_FILES['uploaded_file']['name'][$k])."Invalid file format<br>";
 											$uploadOk = 0;
-										} 
+										}
 										if ($uploadOk == 0) {
 											$error_m .= basename( $_FILES['uploaded_file']['name'][$k])." Sorry, your file was not uploaded.<br>";
 										} else {
 											if (move_uploaded_file($_FILES['uploaded_file']['tmp_name'][$k], $target_file)) {
 												$uploaded_c++;
 												$error_m .= "The file ". basename( $_FILES['uploaded_file']['name'][$k]). " has been uploaded.<br>";
-												
+
 												$Attachments[] = $target_file;
 											}
 										}
@@ -642,11 +647,11 @@ $error_m = "";
 							}
 							if(($uploaded_c==count($_FILES['uploaded_file']['name']) AND $has_attach) OR !$has_attach){
 								$send = true;
-							} 
-							
+							}
+
 							if($send){
 								mb_internal_encoding("UTF-8");
-								
+
 								$txt = "<?php \n";
 								$txt .= "\n";
 								$txt .= '$subject=\''.$_POST['title'].'\';';
@@ -673,8 +678,8 @@ $error_m = "";
 								}
 								unlink("mail_content.php");
 								writeStringToFile("mail_content.php",$txt);
-								
-								
+
+
 								$txt = "<?php \n";
 								$txt .= "\n";
 								$txt .= '$mails=array( ';
@@ -684,12 +689,12 @@ $error_m = "";
 									foreach($email as $e)
 									{
 										$txt .= "\t'".trim($e)."' => array('company'=>'".$cname."','country'=>'".$country."','name'=>'".$fname."','ref'=>'','id'=>'".$id."','setparam'=>'false'),\n";
-								
+
 									}
 								}
 								$txt .= ");\n";
 								$txt .= "?>";
-								
+
 								unlink("mail_address.php");
 								writeStringToFile("mail_address.php",$txt);
 								$error = false;
@@ -707,7 +712,7 @@ $error_m = "";
 				}
 			}
 		break;
-		
+
 	}
 }
 if(isset($error_m)&& $error_m!=""){
@@ -720,7 +725,7 @@ if(isset($error_m)&& $error_m!=""){
 			<div class="message success">
 				<h5>Success!</h5>
 				<p>
-					<?php 
+					<?php
 					if($send) header( "refresh:5;url=sendmail.php" );
 					echo $error_m; ?>
 				</p>
@@ -732,7 +737,7 @@ if(isset($error_m)&& $error_m!=""){
 					<?php echo $error_m; ?>
 				</p>
 			</div>
-			
+
 		<?php } ?>
 		</div>
 	</div>
@@ -740,7 +745,7 @@ if(isset($error_m)&& $error_m!=""){
 	<?php
 }
 if(isset($_GET['fixed']) AND $_GET['fixed']!='' AND $_GET['fixed']!=null AND $_GET['fixed']=='show'){
-	
+
 	if(isset($_POST['report']) AND $_POST['report']!='' AND $_POST['report']!=null){
 		if(isset($_POST['agents']) AND is_array($_POST['agents']) AND count($_POST['agents'])>0){
 			echo '
@@ -765,7 +770,7 @@ if(isset($_GET['fixed']) AND $_GET['fixed']!='' AND $_GET['fixed']!=null AND $_G
 					foreach($_POST['agents'] as $agent){
 						$qq = "SELECT * FROM `agents` WHERE `id` = ".$agent."";
 						$roww = mysql_fetch_array(mysql_query($qq));
-						
+
 						echo "<tr ".($roww['special']==1 ? "style=\"background-color:#99ccff;text-align:ltr;color:#3a3a3a\"" : ($roww['active']==0 ? "style=\"background-color:#e0e0d2;text-align:ltr;color:#3a3a3a\"" : "")).">";
 						echo "<td style=\"padding:5px\">".$roww['country']."</td>";
 						echo "<td style=\"padding:5px\">".$roww['city']."</td>";
@@ -795,12 +800,12 @@ if(isset($_GET['fixed']) AND $_GET['fixed']!='' AND $_GET['fixed']!=null AND $_G
 		}
 	}
 	else{
-		
+
 	$q = "SELECT * FROM `agents` WHERE `fixed`=1 ORDER BY `country` ASC,`id` ASC";
 	$r = mysql_query($q);
 	if(mysql_num_rows($r)>0)
 	{
-		
+
 ?>
         <div class="grid_10">
             <div class="box round first">
@@ -833,7 +838,7 @@ if(isset($_GET['fixed']) AND $_GET['fixed']!='' AND $_GET['fixed']!=null AND $_G
 							$output .= "<td>".nl2br($row['desc'])."</td>";
 							$output .= "<td><a href='?edit=".$row['id']."'>Edit</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='#' OnClick=\"ConfirmFunc('".$row['cname']."','".$row['id']."');\">Delete</a></td>";
 							$output .= "</tr>";
-						}					
+						}
 					?>
 <table border="1" style="margin-left:auto;margin-right:auto;width:98%;border-collapse:collapse;border-color:#777;font-size:12px">
 	<tbody>
@@ -871,7 +876,7 @@ if(isset($_GET['fixed']) AND $_GET['fixed']!='' AND $_GET['fixed']!=null AND $_G
 								<td width='25%'>
 									<select  name="choosemsgemail" id="choosemsgemail"  onchange="ajax_msg();">
 										<option value="-">Choose a message</option>
-										<?php 
+										<?php
 										$q = "SELECT `id`,`title` FROM `prenotes` WHERE `type`=3 ORDER BY `id` ASC";
 										$r = mysql_query($q);
 										if(mysql_num_rows($r)>0){
@@ -883,10 +888,10 @@ if(isset($_GET['fixed']) AND $_GET['fixed']!='' AND $_GET['fixed']!=null AND $_G
 									</select>
 								</td>
 							</tr>
-							
-							
-							
-							
+
+
+
+
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td style="padding:5px;">Message</td>
 								<td colspan="3" style="padding:5px;"><textarea name="message" id="message" class="ckeditor" style="margin: 5px; height: 525px; width:96%;"></textarea></td>
@@ -911,7 +916,7 @@ if(isset($_GET['fixed']) AND $_GET['fixed']!='' AND $_GET['fixed']!=null AND $_G
 									<button class="btn" name="submit" type="submit" value="send">Send</button>
 								</td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 					</form>
@@ -920,11 +925,11 @@ if(isset($_GET['fixed']) AND $_GET['fixed']!='' AND $_GET['fixed']!=null AND $_G
 		</div>
 <?php
 	}
-	
+
 	}
 }
 elseif(isset($_GET['official']) AND $_GET['official']!='' AND $_GET['official']!=null AND $_GET['official']=='show'){
-	
+
 		if(isset($_GET['oedit']) AND is_numeric($_GET['oedit']) AND $_GET['oedit']>0)
 		{
 			$q = "SELECT * FROM `agents` WHERE `official`=1 AND `id`=".$_GET['oedit']." ORDER BY `country` ASC,`id` ASC";
@@ -932,7 +937,7 @@ elseif(isset($_GET['official']) AND $_GET['official']!='' AND $_GET['official']!
 			if(mysql_num_rows($r)>0)
 			{
 				$oarow = mysql_fetch_array($r);
-				
+
 				$q = "SELECT COUNT(*) as ac FROM `agents_official_meta` WHERE `aid`='".$_GET['oedit']."'";
 				$r = mysql_query($q);
 				$oamrow = mysql_fetch_array($r);
@@ -1003,8 +1008,8 @@ elseif(isset($_GET['official']) AND $_GET['official']!='' AND $_GET['official']!
 								$tmp_arr = $_POST['cc_name'];
 								$tmp_arr[] = $oarow['country'];
 								$cc_name = implode("|",$tmp_arr);
-								
-								
+
+
 								if(isset($_POST['master_email']) AND $_POST['master_email']!=null AND $_POST['master_email']!='')
 								{
 									$master_email = $_POST['master_email'];
@@ -1020,7 +1025,7 @@ elseif(isset($_GET['official']) AND $_GET['official']!='' AND $_GET['official']!
 												if(isset($_POST['comision']) AND $_POST['comision']!=null AND $_POST['comision']!='')
 												{
 													$comision = $_POST['comision'];
-										
+
 													$q = "SELECT COUNT(*) as ac FROM `agents_official_meta` WHERE `aid`='".$_GET['oedit']."'";
 													$r = mysql_query($q);
 													$oamrow = mysql_fetch_array($r);
@@ -1051,7 +1056,7 @@ elseif(isset($_GET['official']) AND $_GET['official']!='' AND $_GET['official']!
 					if(mysql_num_rows($r)>0)
 					{
 						$loarow = mysql_fetch_array($r);
-						
+
 ?>
         <div class="grid_10">
             <div class="box round first">
@@ -1070,10 +1075,10 @@ elseif(isset($_GET['official']) AND $_GET['official']!='' AND $_GET['official']!
 				</div>
 			</div>
 		</div>
-<?php 
+<?php
 					}
 				}
-						
+
 ?>
         <div class="grid_10">
             <div class="box round first">
@@ -1089,7 +1094,7 @@ elseif(isset($_GET['official']) AND $_GET['official']!='' AND $_GET['official']!
 						<button class="btn" name="submit" type="submit" value="apply">create new login</button>
 					</form>
 					<div>
-<?php 
+<?php
 	$q = "SELECT * FROM `agents_official` WHERE `aid`=".$_GET['oedit']." ORDER BY `id` ASC";
 	$r = mysql_query($q);
 	if(mysql_num_rows($r)>0)
@@ -1103,7 +1108,7 @@ elseif(isset($_GET['official']) AND $_GET['official']!='' AND $_GET['official']!
 			$output .= "<td>".($row['last_login']!=0 ? date("Y/m/d H:i:s",$row['last_login']) : '---')."</td>";
 			$output .= "<td><a href='?official=show&oedit=".$_GET['oedit']."&ledit=".$row['id']."'>Login Edit</a>&nbsp;&nbsp;</td>";
 			$output .= "</tr>";
-		}					
+		}
 	?>
 <table border="1" style="margin-left:auto;margin-right:auto;width:98%;border-collapse:collapse;border-color:#777;font-size:12px">
 	<tbody>
@@ -1134,7 +1139,7 @@ elseif(isset($_GET['official']) AND $_GET['official']!='' AND $_GET['official']!
 						<label for="memail">Master Email</label> : <input type="email" name="master_email" value="<?php echo $oamrow['master_email']; ?>" id="memail"><br>
 						<label for="bemail">Backup Email</label> : <input type="email" name="backup_email" value="<?php echo $oamrow['backup_email']; ?>" id="bemail"><br>
 						<label for="oname">Office Name</label> : <input type="text" name="oname" value="<?php echo $oamrow['oname']; ?>" id="oname"><br>
-						<label for="currency">Default Currency</label> : 
+						<label for="currency">Default Currency</label> :
 						<select name="currency" id="currency">
 							<option value="GBP" <?php echo ($oamrow['currency']=='GBP' ? 'selected="true"' : ''); ?>>GBP</option>
 							<option value="USD" <?php echo ($oamrow['currency']=='USD' ? 'selected="true"' : ''); ?>>USD</option>
@@ -1155,7 +1160,7 @@ elseif(isset($_GET['official']) AND $_GET['official']!='' AND $_GET['official']!
 						<label for="comision">Office Comision</label> : <input type="text" name="comision" value="<?php echo $oamrow['comision']; ?>" id="comision"> (Amount for every 1000 units of currency)<br>
 						<label for="country_id">Cover Countries :</label>
 						<div><input type="checkbox" name="" value="" id="c_id_def" disabled checked="true"><input type="hidden" name="cc_name[]" value="<?php echo $oarow['country']; ?>"><?php echo $oarow['country']; ?></div>
-						<?php 
+						<?php
 						$___cc = 0;
 						$cover_counteries = explode("|",$oamrow['cover_counteries']);
 						foreach($post_c as $k=>$v)
@@ -1180,7 +1185,7 @@ elseif(isset($_GET['official']) AND $_GET['official']!='' AND $_GET['official']!
 				<div class="box round first">
 					<h2>Logs</h2>
 					<div class="block">
-						<?php 
+						<?php
 if(!(isset($_GET['logpage']) AND $_GET['logpage']!='' AND $_GET['logpage']!=null AND is_numeric($_GET['logpage']) AND $_GET['logpage']>0)){
 	$logpage = 1;
 }
@@ -1239,7 +1244,7 @@ else{
 		<?php echo $output; ?>
 	</tbody>
 </table>
-<?php echo $prev_p .'&nbsp;'. $curr_p .'&nbsp;'. $next_p; 
+<?php echo $prev_p .'&nbsp;'. $curr_p .'&nbsp;'. $next_p;
 echo "<br> Total Pages : ".$max_p;
 ?>
 					</div>
@@ -1253,7 +1258,7 @@ echo "<br> Total Pages : ".$max_p;
 	$r = mysql_query($q);
 	if(mysql_num_rows($r)>0)
 	{
-		
+
 ?>
         <div class="grid_10">
             <div class="box round first">
@@ -1285,7 +1290,7 @@ echo "<br> Total Pages : ".$max_p;
 							$output .= "<td>".nl2br($row['desc'])."</td>";
 							$output .= "<td><a href='?official=show&oedit=".$row['id']."'>Official Management</a>&nbsp;&nbsp;|<a href='?edit=".$row['id']."'>Edit</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='#' OnClick=\"ConfirmFuncOfficial('".$row['cname']."','".$row['id']."');\">Delete</a></td>";
 							$output .= "</tr>";
-						}					
+						}
 					?>
 <table border="1" style="margin-left:auto;margin-right:auto;width:98%;border-collapse:collapse;border-color:#777;font-size:12px">
 	<tbody>
@@ -1319,7 +1324,7 @@ echo "<br> Total Pages : ".$max_p;
 								<td width='25%'>
 									<select  name="choosemsgemail" id="choosemsgemail"  onchange="ajax_msg();">
 										<option value="-">Choose a message</option>
-										<?php 
+										<?php
 										$q = "SELECT `id`,`title` FROM `prenotes` WHERE `type`=3 ORDER BY `id` ASC";
 										$r = mysql_query($q);
 										if(mysql_num_rows($r)>0){
@@ -1331,10 +1336,10 @@ echo "<br> Total Pages : ".$max_p;
 									</select>
 								</td>
 							</tr>
-							
-							
-							
-							
+
+
+
+
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td style="padding:5px;">Message</td>
 								<td colspan="3" style="padding:5px;"><textarea name="message" id="message" class="ckeditor" style="margin: 5px; height: 525px; width:96%;"></textarea></td>
@@ -1359,7 +1364,7 @@ echo "<br> Total Pages : ".$max_p;
 									<button class="btn" name="submit" type="submit" value="send">Send</button>
 								</td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 				</div>
@@ -1368,7 +1373,7 @@ echo "<br> Total Pages : ".$max_p;
 <?php
 	}
 	else{
-		
+
 ?>
         <div class="grid_10">
             <div class="box round first">
@@ -1383,13 +1388,13 @@ echo "<br> Total Pages : ".$max_p;
 	}
 }
 else
-{	
+{
 if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_numeric($_GET['edit']) AND $_GET['edit']>0){
-	
+
 	$q = "SELECT *,count(*) as c FROM `agents` WHERE `id`=".$_GET['edit']."";
 	$r = mysql_fetch_array(mysql_query($q));
 	if($r['c']>0){
-	
+
 ?>
         <div class="grid_10">
             <div class="box round first">
@@ -1405,10 +1410,10 @@ if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_num
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td style="padding:5px;width:15%;">Country(*) : </td>
 								<td style="padding:5px;width:35%;"><select name="country" id="select"><?php foreach($post_c as $k=>$v){ echo "<option value='".$k."' ".($r['country']==$v ? "selected='selected'" : "").">".$v."</option>"; } ?></select></td>
-								
+
 								<td  style="padding:5px;width:15%;">City : </td>
 								<td  style="padding:5px;width:355%;"><input type="text" id="city" name="city" value="<?php echo $r['city']; ?>"></td>
-								
+
 							</tr>
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td  style="padding:5px">Company : </td>
@@ -1437,16 +1442,16 @@ if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_num
 									<input type="checkbox" name="deliver[]" value="rail" id="rail" <?php if($r['ship_rail']==1) echo "checked='checked'"; ?>><label for="rail">Rail Way</label>
 									<input type="checkbox" name="deliver[]" value="charter" id="charter" <?php if($r['ship_charter']==1) echo "checked='checked'"; ?>><label for="charter">Charter Broker</label>
 								</td>
-								
+
 								<td  style="padding:5px;width:15%;">Special : </td>
 								<td  style="padding:5px;width:355%;"><input type="checkbox" name="special" value="special" id="special" <?php if($r['special']==1) echo "checked='checked'"; ?>><label for="special">Yes this company is our favorite.</label></td>
-								
+
 							</tr>
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td style="padding:5px;width:15%;">Cover Cities : <a href="#" id="addScnt"><img src="../post_forms/images/icons/fam/add.png"></a></td>
 								<td style="padding:5px;width:35%;">
 									<div id="ccities">
-										<?php 
+										<?php
 										if($r['cover_city']!=""){
 											$cities = explode(" | ",$r['cover_city']);
 											$_c = 1;
@@ -1454,9 +1459,9 @@ if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_num
 										?>
 										<p>
 											<label for="ccities"><input type="text" id="ccities" size="20" name="ccity[]" value="<?php echo $v; ?>" placeholder="New City" /></label>
-											<?php 
+											<?php
 												if($_c>1) echo '<a href="#" id="remScnt"><img src="../post_forms/images/icons/fam/delete.png"></a>';
-										
+
 												echo '</p>';
 												$_c++;
 											}
@@ -1471,20 +1476,20 @@ if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_num
 										?>
 									</div>
 								</td>
-								
+
 								<td  style="padding:5px;width:15%;">Active : <input type="checkbox" name="active" value="active" id="active" <?php if($r['active']==1) echo "checked='checked'"; ?>><label for="active">Yes this company is active.</label></td>
 								<td  style="padding:5px;width:35%;">
 									Fixed Agent : <input type="checkbox" name="fixed" value="fixed" id="fixed" <?php if($r['fixed']==1) echo "checked='checked'"; ?>><label for="fixed">Yes this company is fixed.</label><br>
 									Official Office : <input type="checkbox" name="official" value="official" id="official" <?php if($r['official']==1) echo "checked='checked'"; ?>><label for="official">Yes this company is Europost Express Official Registered Office.</label><br>
 								</td>
-								
+
 							</tr>
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td colspan="4">
 									<button class="btn" name="submit" type="submit">Save agent details</button>
 								</td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 				</form>
@@ -1492,7 +1497,7 @@ if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_num
                 </div>
             </div>
         </div>
-<?php 
+<?php
 	}
 }
 
@@ -1523,10 +1528,10 @@ if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_num
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td style="padding:5px;width:15%;">Country(*) : </td>
 								<td style="padding:5px;width:35%;"><select name="country" id="select"><?php foreach($post_c as $k=>$v){ echo "<option value='".$k."'>".$v."</option>"; } ?></select></td>
-								
+
 								<td  style="padding:5px;width:15%;">City : </td>
 								<td  style="padding:5px;width:355%;"><input type="text" id="city" name="city"></td>
-								
+
 							</tr>
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td  style="padding:5px">Company : </td>
@@ -1555,10 +1560,10 @@ if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_num
 									<input type="checkbox" name="deliver[]" value="rail" id="rail"><label for="rail">Rail Way</label>
 									<input type="checkbox" name="deliver[]" value="charter" id="charter"><label for="charter">Charter Broker</label>
 								</td>
-								
+
 								<td  style="padding:5px;width:15%;">Special : </td>
 								<td  style="padding:5px;width:355%;"><input type="checkbox" name="special" value="special" id="special"><label for="special">Yes this company is our favorite.</label></td>
-								
+
 							</tr>
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td style="padding:5px;width:15%;">Cover Cities : <a href="#" id="addScnt"><img src="../post_forms/images/icons/fam/add.png"></a></td>
@@ -1569,21 +1574,21 @@ if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_num
 										</p>
 									</div>
 								</td>
-								
+
 								<td  style="padding:5px;width:15%;">Active : <input type="checkbox" name="active" value="active" id="active" <?php if(isset($r['active']) && $r['active']==1) echo "checked='checked'"; ?>><label for="active">Yes this company is active.</label></td>
 								<td  style="padding:5px;width:355%;">
 									Fixed Agent : <input type="checkbox" name="fixed" value="fixed" id="fixed"><label for="fixed">Yes this company is fixed.</label><br>
 									Official Agent : <input type="checkbox" name="official" value="official" id="official"><label for="official">Yes this company is Europost Express Official Registered Office.</label><br>
-								
+
 								</td>
-								
+
 							</tr>
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td colspan="4">
 									<button class="btn" name="submit" type="submit">Add new agent</button>
 								</td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 				</form>
@@ -1591,13 +1596,30 @@ if(isset($_GET['edit']) AND $_GET['edit']!='' AND $_GET['edit']!=null AND is_num
                 </div>
             </div>
         </div>
-        <div class="grid_10">
+
+    <div class="grid_10">
+        <div class="box round first">
+            <h2>Search By country</h2>
+            <form method="get" action="<?= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . '://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>">
+                <div class="input-group" style="margin-top: 10px">
+                    <select name="post_c_key" id="post_c_key" autocomplete="on">
+                        <?php foreach ($countriesOriginal as $key=>$countryName) {
+                            echo "<option value='$key'>$countryName</option>";
+                        } ?>
+                    </select>
+                    <button class="btn btn-primary">search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="grid_10">
             <div class="box round first">
                 <h2>Your Agents</h2>
                 <div class="block">
 				<p class="start">Here is a list of our agents in order of country names, if you don't see any agent in specific country that means that you did not add it to your list, so please use the form above.</p>
 				<p>Note : The special agents are marked by blue color and stared on their name.<br>Note : The In-Active agents are marked by gray color.</p>
-				
+
 <?php
 if(isset($_GET['start']) AND $_GET['start']!='' AND $_GET['start']!=null AND strlen($_GET['start'])==1 AND in_array($_GET['start'],range('A','Z'))){
 	$key = $_GET['start'];
@@ -1667,7 +1689,7 @@ foreach($post_c as $k=>$v){
 		echo "</pre>";
 	}
 	else{
-		
+
 		echo "<pre>";
 		echo $v . " (Agents Count : ".$row['ca'].")<br>";
 		echo "</pre>";
@@ -1695,6 +1717,6 @@ mysql_close();
     </div>
 </body>
 </html>
-<?php 
+<?php
 include("footer.php");
 ?>
