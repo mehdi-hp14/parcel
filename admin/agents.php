@@ -211,7 +211,7 @@ $post_c = $countriesOriginal = array(
     'Radio-194' => 'Zimbabwe'
 );
 
-if (isset($_GET['post_c_key'])) {
+if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
     $post_c = [$_GET['post_c_key'] => $post_c[$_GET['post_c_key']]];
     $_GET['start'] = substr($post_c[$_GET['post_c_key']], 0, 1);
 }
@@ -1568,7 +1568,7 @@ if (isset($_GET['post_c_key'])) {
                         <div class="input-group" style="margin-top: 10px">
                             <label for="post_c_key">Country</label>
                             <select name="post_c_key" id="post_c_key" autocomplete="on" style="margin-right: 10px">
-                                <?php foreach ($countriesOriginal as $key => $countryName) {
+                                <?php foreach (([0 => 'dont apply country'] + $countriesOriginal) as $key => $countryName) {
                                     echo "<option value='$key' " . (isset($_GET['post_c_key']) && $_GET['post_c_key'] === $key ? "selected='selected'" : '') . ">$countryName</option>";
                                 } ?>
                             </select>
@@ -1608,7 +1608,8 @@ if (isset($_GET['post_c_key'])) {
                         //SELECT * FROM `agents` WHERE `country` LIKE 'B%';
                         foreach ($post_c as $k => $v) {
                             if (substr($v, 0, 1) != $key) continue;
-                            $q = "SELECT count(*) as ca FROM `agents` WHERE `country`='" . $v . "' ";
+                            $q = "SELECT count(*) as ca FROM `agents` WHERE 1=1";
+                            (!isset($_GET['post_c_key']) || $_GET['post_c_key'] != 0) ? $q .= " AND `country`='" . $v . "'" : null;
                             isset($_GET['mail']) ? $q .= " AND emails like '%" . $_GET['mail'] . "%'" : null;
                             $q .= " ORDER BY `id` ASC";
                             $r = mysql_query($q);
@@ -1616,7 +1617,8 @@ if (isset($_GET['post_c_key'])) {
                             if ($row['ca'] > 0) {
                                 echo "<pre>";
                                 echo $v . " (Agents Count : " . $row['ca'] . ")<br>";
-                                $q = "SELECT * FROM `agents` WHERE `country`='" . $v . "'";
+                                $q = "SELECT * FROM `agents` WHERE 1=1 ";
+                                (!isset($_GET['post_c_key']) || $_GET['post_c_key'] != 0) ? $q .= " AND `country`='" . $v . "'" : null;
                                 isset($_GET['mail']) ? $q .= " AND emails like '%" . $_GET['mail'] . "%'" : null;
                                 isset($_GET['cname']) ? $q .= " AND cname like '%" . $_GET['cname'] . "%'" : null;
                                 $q .= " ORDER BY `id` ASC";

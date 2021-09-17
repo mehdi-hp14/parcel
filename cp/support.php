@@ -36,7 +36,6 @@ class PView extends SecurePage
     {
         parent::load( );
 
-        var_dump($this->account);
 	   if(isset($_GET['tid']) AND is_numeric($_GET['tid']) AND $_GET['tid']>0)
 	   {
 		   $this->tid = $_GET['tid'];
