@@ -1,4 +1,4 @@
-﻿<?php 
+﻿<?php
 include("../post_forms/cnf.php");
 include("conf.php");
 
@@ -132,7 +132,7 @@ function ConfirmFunc(a,b) {
                                 <li><a href="files.php">Files Management</a> </li>
                                 <li><a href="insreport.php">Instructure Report</a> </li>
                                 <li><a href="logout.php">logout</a> </li>
-                              
+
                             </ul>
                         </li>
                         <!--<li><a class="menuitem">Menu 2</a>
@@ -170,7 +170,7 @@ function ConfirmFunc(a,b) {
                                 <li><a>Submenu 8</a> </li>
                                 <li><a>Submenu 9</a> </li>
                                 <li><a>Submenu 10</a> </li>
-                    
+
                             </ul>
                         </li>-->
                     </ul>
@@ -251,7 +251,7 @@ if(mysql_num_rows($r)>0){
 		elseif($row['status']==4){
 			$color = "39A7B6";
 		}
-		
+
 		$output .="<tr style=\"background-color:#".$color.";\">";
 		$output .="<td >".$_c."</td><td >".$row['id']."</td><td >".$row['tid']."".($row['danger']=='Yes' ? "&nbsp;<span class=\"danger_small\"></span>" : "")."".($row['chemical']=='Yes' ? "&nbsp;<span class=\"chemical_small\"></span>" : "")."".($row['lithiumb']=='Yes' ? "&nbsp;<span class=\"battry_small\"></span>" : "")."</td><td >".$row['fname']."</td><td >".$row['company']."</td>";
 //		<td >".$row['phone']."</td>
@@ -276,7 +276,7 @@ else{
 }
 //mysql_close();
 					?>
-<p class="start">Choose a category : 
+<p class="start">Choose a category :
 <button class="btn btn-orange" onclick="window.location.href='dashboard.php';">All Orders&nbsp;</button>&nbsp;&nbsp;&nbsp;
 <button class="btn btn-grey" onclick="window.location.href='dashboard.php?type=0';">Pending&nbsp;</button>&nbsp;&nbsp;&nbsp;
 <button class="btn btn-blue" onclick="window.location.href='dashboard.php?type=1';">Under Process&nbsp;</button>&nbsp;&nbsp;&nbsp;
@@ -312,10 +312,10 @@ else{
 		<tr style="background-color:#fff;text-align:center;font-weight:bold">
 			<?php echo $output; ?>
 		</tr>
-		
+
 	</tbody>
 </table>
-<?php echo $prev_p .'&nbsp;'. $curr_p .'&nbsp;'. $next_p; 
+<?php echo $prev_p .'&nbsp;'. $curr_p .'&nbsp;'. $next_p;
 echo "<br> Total Pages : ".$max_p;
 ?>
                 </div>
@@ -333,8 +333,8 @@ echo "<br> Total Pages : ".$max_p;
 					The ID&nbsp;:&nbsp;<input name="item_id" size="20" type="text">&nbsp;&nbsp;&nbsp;<hr>
 					Or MAWB&nbsp;:&nbsp;<input name="mawb1" size="3" type="text">&nbsp;-&nbsp;<input name="mawb2" size="9" type="text">&nbsp;&nbsp;&nbsp;<hr>
 					Or HAWB&nbsp;:&nbsp;<input name="hawb1" size="25" type="text">&nbsp;<input name="hawb2" size="15" type="text">&nbsp;&nbsp;&nbsp;<hr>
-					Or From Country :<input name="from_country" size="25" type="text"><hr>
-					Or To Country :<input name="to_country" size="25" type="text"><hr>
+<!--					Or From Country :<input name="from_country" size="25" type="text"><hr>-->
+<!--					Or To Country :<input name="to_country" size="25" type="text"><hr>-->
 					<button class="btn btn-pink" type="submit">LookUp</button>
 					</form></p>
 
@@ -382,7 +382,7 @@ if(isset($_POST['t']) AND $_POST['t']==3){
 	{
 		$tmp = $_POST['hawb1'].' => '.$_POST['hawb2'].'|';
 		$q = "SELECT id,count(*) as cc FROM `quote` WHERE `hawb` LIKE '%".$tmp."%'".$fromCondition.$toCondition;
-		
+
 		$rr = mysql_fetch_array(mysql_query($q));
 		if($rr['cc']>0){
 			header("Location: item.php?id=".$rr['id']."");
@@ -423,8 +423,6 @@ if(isset($_POST['t']) AND $_POST['t']==3){
             Copyright <a href="#">BlueWhale Admin</a>. All Rights Reserved.
         </p>
     </div>
-</body>
-</html>
     <script>
         $('.inline-input').keypress(function (e){
             if(e.keyCode==13){
@@ -443,6 +441,9 @@ if(isset($_POST['t']) AND $_POST['t']==3){
             }
         })
     </script>
+</body>
+</html>
+
 <?php
 mysql_close();
 include("footer.php");
