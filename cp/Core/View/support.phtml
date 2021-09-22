@@ -41,9 +41,21 @@ if($this->show_inbox)
 		<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
 				<div class="list-group mail-box">
-<?php 
+<?php
 if(isset($this->inbox_info) AND $this->inbox_info!=null AND is_array($this->inbox_info) AND count($this->inbox_info) > 0)
 {
+    $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    ?>
+                    <form action="<?= $actual_link ?>" method="get">
+                        <div class="search-box">
+                            <div><input type="text" class="non-visible"></div>
+                            <div class="search-tid"><input type="text" name="search-tid" placeholder="tracking id" value="<?= $_GET['search-tid'] ?>"><button>search</button></div>
+                            <div></div>
+                        </div>
+                    </form>
+
+    <hr>
+    <?php
 	foreach($this->inbox_info as $ticket)
 	{
 		echo '<a href="support.php?tid='.$ticket['id'].'" class="list-group-item"><div class="icheckbox_minimal-grey" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">';
@@ -51,7 +63,8 @@ if(isset($this->inbox_info) AND $this->inbox_info!=null AND is_array($this->inbo
 		if($ticket['usr_readed']==0) echo '<b>';
 		echo '&nbsp;&nbsp;&nbsp;<span style="min-width: 120px; display: inline-block;" class="name">'.$ticket['subject'].'</span> ';
 		if($ticket['usr_readed']==0) echo '&nbsp;&nbsp;(Unreaded)</b>&nbsp;&nbsp;';
-		echo '<span>Ticket Number : '.$ticket['id'].'</span>&nbsp; - &nbsp;<span style="font-size: 11px;" class="text-muted">'.substr($ticket['content'],0,35).' .....</span>';
+		echo '<span>Tracking id : '.$ticket['tid'].'</span>';
+//		echo '<span>Ticket Number : '.$ticket['id'].'</span>&nbsp; - &nbsp;<span style="font-size: 11px;" class="text-muted">'.substr($ticket['content'],0,35).' .....</span>';
 		echo '<span class="time-badge">'.date("Y/m/d H:i:s", $ticket['c_date']).'</span><span class="pull-right mrl"></span></a>';
 	}
 }
@@ -118,7 +131,7 @@ elseif($this->show_new)
 }
 elseif(isset($this->tid) AND $this->tid!=null)
 {
-	
+
 	if($this->Ticket_info['counter'] == 0)
 	{
 ?>
@@ -161,7 +174,7 @@ p.speech
 	box-shadow: 2px 2px 4px #888;
 }
 
-.bubble_right 
+.bubble_right
 {
 float:right;
 position: relative;
@@ -175,7 +188,7 @@ border-radius: 10px;
 border: #7F7F7F solid 2px;
 }
 
-.bubble_right:after 
+.bubble_right:after
 {
 content: '';
 position: absolute;
@@ -189,7 +202,7 @@ right: -15px;
 top: 17%;
 }
 
-.bubble_right:before 
+.bubble_right:before
 {
 content: '';
 position: absolute;
@@ -204,7 +217,7 @@ top: 17%;
 }
 
 
-.bubble_left 
+.bubble_left
 {
 position: relative;
 width: 95%;
@@ -217,7 +230,7 @@ border-radius: 10px;
 border: #7F7F7F solid 2px;
 }
 
-.bubble_left:after 
+.bubble_left:after
 {
 content: '';
 position: absolute;
@@ -231,7 +244,7 @@ left: -15px;
 top: 17%;
 }
 
-.bubble_left:before 
+.bubble_left:before
 {
 content: '';
 position: absolute;
@@ -252,7 +265,7 @@ clear: both;
 
 <div class="col-sm-9 col-md-10">
 	<div class="panel panel-blue" style="background:#fff;">
-		<div class="panel-heading"><?php 
+		<div class="panel-heading"><?php
 			$stat = "Active";
 			switch($this->Ticket_info['status'])
 			{
@@ -261,16 +274,16 @@ clear: both;
 				case 2: $stat = "Hold"; break;
 				case 3: $stat = "Under Process"; break;
 			}
-			echo "Ticket ID: ".$this->tid." => ".$this->Ticket_info['subject'] ."&nbsp;(".$stat.")"; 
+			echo "Ticket ID: ".$this->tid." => ".$this->Ticket_info['subject'] ."&nbsp;(".$stat.")";
 			if($this->Ticket_info['tid']!='') echo "&nbsp;<span style='float:right;'>Tracking ID : ".$this->Ticket_info['tid']."</span>";
 		?></div>
 		<div class="panel-body pan">
 			<div class="row">
 				<div class="col-md-12">
-			
-			<?php 
-			
-			
+
+			<?php
+
+
 			if($this->Ticket_info['user_sent']==1) echo "<p class=\"bubble_left\"><b>You said : </b> <span style='float:right;'>".date("Y/m/d H:i:s", $this->Ticket_info['c_date'])."</span><br>";
 			else echo "<p class=\"bubble_right\"><b>Support said : </b> <span style='float:right;'>".date("Y/m/d H:i:s", $this->Ticket_info['c_date'])."</span><br>";
 			echo "Subject : ".$this->Ticket_info['subject']."<br>";
@@ -285,7 +298,7 @@ clear: both;
 					echo nl2br(strip_tags($answer['content']))."<br></p><div class=\"clear\"></div>";
 				}
 			}
-			
+
 			$status = "close";
 			switch($this->Ticket_info['status'])
 			{
@@ -327,7 +340,7 @@ clear: both;
 							<textarea rows="15" name="content" class="form-control"><?php if(isset($_POST['content'])) echo $_POST['content']; ?></textarea>
 						</div>
 						<div class="form-group mbn">
-							Note : Message are required. 
+							Note : Message are required.
 						</div>
 						<div class="form-actions text-right pal">
 							<button type="submit" class="btn btn-primary">Submit the reply</button>
@@ -342,7 +355,33 @@ clear: both;
 </div>
 <?php
 	}
-	
+
 }
 ?>
+    <style>
+            .search-box{
+                display: flex;
+            }
+            .non-visible{
+                visibility: hidden;
+            }
+            .search-tid{
+                position: relative;
+                border: 1px solid #ccc;
+                width: 35%;
+            }
+            .search-tid input[type=text]{
+                border: none;
+                width: 100%;
+            }
+            .search-tid button {
+                position: absolute;
+                right: 0;
+                border: none;
+                background: none;
+                color: #4c4c4c;
+                background: #ccc;
+                padding-bottom: 3px;
+            }
+    </style>
 </div>

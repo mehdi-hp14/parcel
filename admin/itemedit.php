@@ -691,11 +691,11 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 	if(isset($_POST['r_price_p']) AND is_array($_POST['r_price_p']) AND count($_POST['r_price_p'])>0){
 		$extra = 0;
 		$percent = 0;
-		
+
 		$currency = 'GBP';
 		if($row['uname']!='')
 		{
-			
+
 			$qqq = "SELECT * FROM `users` WHERE `uname`='".$row['uname']."'";
 			$rrr = mysql_query($qqq) or die(mysql_error());
 			$user_info = mysql_fetch_array($rrr);
@@ -704,7 +704,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 			$currency = $user_info['default_currency'];
 			echo $user_info['default_currency']."<br>";
 		}
-		
+
 		if(isset($_POST['tweight']) AND $_POST['tweight']!=''){
 			$tw = getTheMaxNumber($_POST['tweight']);
 		}
@@ -1464,13 +1464,13 @@ $(document).ready(function () {
 							  </div>';
 						echo "</div>";
 					}
-					if(isset($disabled) && $disabled == "disabled")
-					{
-					?>
-					<div>
-					Difference Cost : <input type="text" name="dif_receive" value="<?php echo number_format($row['dif_receive'],2); ?>"> <?php echo $currency; ?>
-					</div>
-					<?php } ?>
+//					if(isset($disabled) && $disabled == "disabled")
+//					{
+//					?>
+<!--					<div>-->
+<!--					Difference Cost : <input type="text" name="dif_receive" value="--><?php //echo number_format($row['dif_receive'],2); ?><!--"> --><?php //echo $currency; ?>
+<!--					</div>-->
+<!--					--><?php //} ?>
                     <div id="change-formula">change formula</div>
 
             </td>

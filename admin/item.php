@@ -1,4 +1,4 @@
-﻿<?php 
+﻿<?php
 
 include("../post_forms/cnf.php");
 include("conf.php");
@@ -100,17 +100,17 @@ else{
 			function checkTime(i) {
 				return (i < 10) ? "0" + i : i;
 			}
-$('#checkall').click(function(event) {   
+$('#checkall').click(function(event) {
     if(this.checked) {
         // Iterate each checkbox
         $(':checkbox').each(function() {
-            this.checked = true;                        
+            this.checked = true;
         });
     }
 	else{
         // Iterate each checkbox
         $(':checkbox').each(function() {
-            this.checked = false;                        
+            this.checked = false;
         });
 	}
 });
@@ -140,7 +140,7 @@ $('#checkall').click(function(event) {
 		if(p!='-')
 			location.assign('premsend.php?mid='+p+'&id=<?php echo $id; ?>&type=1');
 	}
-	
+
 function printContent(el){
 	var restorepage = document.body.innerHTML;
 	var printcontent = document.getElementById(el).innerHTML;
@@ -151,15 +151,15 @@ function printContent(el){
 $(function() {
         var scntDiv = $('#attach_d');
         var i = $('#attach_d p').size() + 1;
-        
+
         $('#addScnt').live('click', function() {
-			
+
                 $('<p><label for="attachment"><input type="file" id="attachment" name="uploaded_file[]" accept=".gif,.jpg,.jpeg,.png,.pdf,.zip,.rtf,.doc,.docx,.xls,.xlsx"></label>&nbsp;&nbsp;<a href="#" id="addScnt"><img src="../post_forms/images/icons/fam/add.png"></a>&nbsp;<a href="#" id="remScnt"><img src="../post_forms/images/icons/fam/delete.png"></a>&nbsp;&nbsp;&nbsp;please note that supported extentions are (.gif,.jpg,.jpeg,.png,.pdf,.zip) And maximum size is 2MB.</p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
-        
-        $('#remScnt').live('click', function() { 
+
+        $('#remScnt').live('click', function() {
                 if( i > 2 ) {
                         $(this).parents('p').remove();
                         i--;
@@ -216,7 +216,7 @@ $(function() {
                                 <li><a href="premessages.php">Pre-Defined Messages Page</a> </li>
                                 <li><a href="files.php">Files Management</a> </li>
                                 <li><a href="logout.php">logout</a> </li>
-                              
+
                             </ul>
                         </li>
                         <!--<li><a class="menuitem">Menu 2</a>
@@ -254,7 +254,7 @@ $(function() {
                                 <li><a>Submenu 8</a> </li>
                                 <li><a>Submenu 9</a> </li>
                                 <li><a>Submenu 10</a> </li>
-                    
+
                             </ul>
                         </li>-->
                     </ul>
@@ -324,8 +324,8 @@ if(isset($_POST['submit'])){
 			if(isset($_POST['email']) AND trim($_POST['email'])!='' AND $_POST['email']!=null AND filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)){
 			$q = "INSERT INTO `qstatus` (`rid`, `message`, `timestamp`) VALUES (".$id.", '".$_POST['message']."', ".time().")";
 			mysql_query($q);
-			
-			
+
+
 			$mail = new PHPMailer;
 			//$mail->IsSMTP();
 			$mail->Host = "mail.bookingparcel.com";
@@ -344,20 +344,20 @@ if(isset($_POST['submit'])){
 			$mail->setFrom('quote1@bookingparcel.com', 'Booking Parcel');
 			$mail->addReplyTo('quote1@bookingparcel.com', 'Booking Parcel');
 			//$mail->addAddress($row['email'], "". $row['fname'] ." ". $row['lname'] ."");
-			
+
 			$mail->addAddress($_POST['email'], "". $row['fname'] ." ". $row['lname'] ."");
 			if($row['cc1']!='' AND isset($_POST['cc1']) AND $_POST['cc1']==$row['cc1']) $mail->AddCC($row['cc1'], "". $row['fname'] ." ". $row['lname'] ."");
 			if($row['cc2']!='' AND isset($_POST['cc2']) AND $_POST['cc2']==$row['cc2']) $mail->AddCC($row['cc2'], "". $row['fname'] ." ". $row['lname'] ."");
 			if($row['cc3']!='' AND isset($_POST['cc3']) AND $_POST['cc3']==$row['cc3']) $mail->AddCC($row['cc3'], "". $row['fname'] ." ". $row['lname'] ."");
 			if($row['cc4']!='' AND isset($_POST['cc4']) AND $_POST['cc4']==$row['cc4']) $mail->AddCC($row['cc4'], "". $row['fname'] ." ". $row['lname'] ."");
-			
+
 			//$mail->AddCC('cargo@epxcargo.co.uk', "BookingParcel(presend)");
 			$mail->AddCC('backup1@bookingparcel.com', "BookingParcel(presend)");
-			
+
 			$mail->CharSet ="utf-8";
 			$mail->isHTML(true);
 			$mail->Subject = "Latest Update (". $row['tid'] .")";
-	
+
 $mail->Body = "<table cellpadding='5' cellspacing='1' style='margin-left:auto;margin-right:auto;width:100%;border:0px;font-family:tahoma;font-size:12px;direction:ltr;border:thin solid #777;'>
  <tr>
   <td style='background-color:#ffcc33;text-align:left;font-weight:bold;color:#ff3333;' width='80%'>
@@ -416,7 +416,7 @@ aircargo@europostexpress.co.uk<br>
 		</td>
 	</tr>
 </tbody></table>";
-	
+
 	if (!$mail->send()) {
 		$error_m .= "". $row['fname'] ." ". $row['lname'] ." : ".$_POST['email']." Sending was not successful.<br>";
 		$error_m .= "Mailer Error: " . $mail->ErrorInfo ."<br>";
@@ -433,12 +433,12 @@ aircargo@europostexpress.co.uk<br>
 				if(isset($_POST['message_mail']) AND trim($_POST['message_mail'])!='' AND $_POST['message_mail']!=null){
 
 			$Attachments = array();
-			
-			
+
+
 			if(isset($_FILES['uploaded_file']['name']) AND is_array($_FILES['uploaded_file']['name']) AND count($_FILES['uploaded_file']['name'])>0){
-				
+
 				$target_dir = __DIR__ . DIRECTORY_SEPARATOR  ."attachments" . DIRECTORY_SEPARATOR;
-				
+
 				foreach($_FILES['uploaded_file']['name'] as $k => $upload){
 					if(isset($_FILES['uploaded_file']['name'][$k]) AND $_FILES['uploaded_file']['name'][$k] !="" AND $_FILES['uploaded_file']['name'][$k]!=null){
 						$has_attach = true;
@@ -455,20 +455,20 @@ aircargo@europostexpress.co.uk<br>
 						} elseif($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" && $imageFileType != "rtf" && $imageFileType != "zip" && $imageFileType != "pdf" && $imageFileType != "doc" && $imageFileType != "docx" && $imageFileType != "xls" && $imageFileType != "xlsx") {
 							$error_m .= basename( $_FILES['uploaded_file']['name'][$k])."Invalid file format<br>";
 							$uploadOk = 0;
-						} 
+						}
 						if ($uploadOk == 0) {
 							$error_m .= basename( $_FILES['uploaded_file']['name'][$k])." Sorry, your file was not uploaded.<br>";
 						} else {
 							if (move_uploaded_file($_FILES['uploaded_file']['tmp_name'][$k], $target_file)) {
 								$error_m .= "The file ". basename( $_FILES['uploaded_file']['name'][$k]). " has been uploaded.<br>";
-								
+
 								$Attachments[] = $target_file;
 							}
 						}
 					}
 				}
 			}
-					
+
 	$mail = new PHPMailer;
 	//$mail->IsSMTP();
 	$mail->Host = "mail.bookingparcel.com";
@@ -493,11 +493,11 @@ aircargo@europostexpress.co.uk<br>
 	if($row['cc4']!='' AND isset($_POST['cc4']) AND $_POST['cc4']==$row['cc4']) $mail->AddCC($row['cc4'], $_POST['name']);
 	//$mail->AddCC('cargo@epxcargo.co.uk', "BookingParcel(item)");
 	$mail->AddCC('backup1@bookingparcel.com', "BookingParcel(presend)");
-	
+
 	$mail->CharSet ="utf-8";
 	$mail->isHTML(true);
 	$mail->Subject = 'Quote( '.$row['tid'].' )';
-	
+
 	$q_att = '';
 	if(!empty($Attachments))
 	{
@@ -505,9 +505,9 @@ aircargo@europostexpress.co.uk<br>
 			if($target_file!=""){
 				$mail->addAttachment($target_file);
 				$q_att .= $target_file ." , ";
-			} 
+			}
 	}
-					
+
 $mail->Body = "<table cellpadding='5' cellspacing='1' style='margin-left:auto;margin-right:auto;width:100%;border:0px;font-family:tahoma;font-size:12px;direction:ltr;border:thin solid #777;'>
  <tr>
   <td style='background-color:#ffcc33;text-align:left;font-weight:bold;color:#ff3333;' width='80%'>
@@ -558,7 +558,7 @@ aircargo@europostexpress.co.uk<br>
 		</td>
 	</tr>
 </tbody></table>";
-	
+
 	if (!$mail->send()) {
 		$mails_er[$email] = $info;
 		$error_m .= $_POST['name']. " : ".$_POST['email']." Sending was not successful.<br>";
@@ -596,7 +596,7 @@ aircargo@europostexpress.co.uk<br>
 		<tr style="background-color:#fff;text-align:center;font-weight:bold">
 			<?php echo $output; ?>
 		</tr>
-		
+
 	</tbody>
 </table>
                 </div>
@@ -631,7 +631,7 @@ aircargo@europostexpress.co.uk<br>
 					Or use pre-defined messages:<br>
 					<select name="choosemsg" id="choosemsg"  onchange="choosemsg();">
 						<option value="-">Choose a message</option>
-						<?php 
+						<?php
 						$q = "SELECT `id`,`title` FROM `prenotes` WHERE `type`=2 ORDER BY `id` ASC";
 						$r = mysql_query($q);
 						if(mysql_num_rows($r)>0){
@@ -642,7 +642,7 @@ aircargo@europostexpress.co.uk<br>
 						?>
 					</select>
 					</p>
-					<?php 
+					<?php
 					if(isset($error)){
 						if($error){
 							echo "<p>An error occurred.</p>";
@@ -689,13 +689,13 @@ aircargo@europostexpress.co.uk<br>
 							</p>
 						</div>
 					<?php
-					
+
 				}
 				?>
                     <p class="start">You can send your message with an attachment here. <br>Note: supported attachment files (png,gif,jpg,pdf,zip).</p>
                     <p>
-						<form method="POST" name="email_form_with_php" action="" enctype="multipart/form-data" class="form"> 
-							 
+						<form method="POST" name="email_form_with_php" action="" enctype="multipart/form-data" class="form">
+
 							<input type="hidden" name="t" value="2">
 							<label for='name'>Name: </label>
 							<input type="text" name="name" value="<?php echo $row['fname'] . " " . $row['lname'];?>">
@@ -713,7 +713,7 @@ aircargo@europostexpress.co.uk<br>
 							<label for='message_mail'>Message:</label><br>
 							<textarea name="message_mail" id="message_mail" class="ckeditor" style="margin: 0px; height: 187px; width: 80%;"></textarea>
 							<br>
-							
+
 							<div id="attach_d">
 								<p>
 									<label for="attachment">
@@ -732,7 +732,7 @@ aircargo@europostexpress.co.uk<br>
 					Or use pre-defined Emails:<br>
 					<select name="choosemsgemail" id="choosemsgemail"  onchange="choosemsgemail();">
 						<option value="-">Choose a email</option>
-						<?php 
+						<?php
 						$q = "SELECT `id`,`title` FROM `prenotes` WHERE `type`=1 ORDER BY `id` ASC";
 						$r = mysql_query($q);
 						if(mysql_num_rows($r)>0){
@@ -770,11 +770,11 @@ aircargo@europostexpress.co.uk<br>
         </div>
         <div class="grid_10">
             <div class="box round">
-			
+
                 <h2>Recommended Agents</h2>
                 <div class="block">
                     <p class="start">Here are a list of the companies in the destination country, if you don't see any, so it means you did not add agents for this country!</p>
-                    <p>Note : 
+                    <p>Note :
 					<br>1) the in-active agents not sorted below.
 					<br>2) the special agents has star after their company name.
 					<br>3) the agents that cover the destination city are marked by blue color.
@@ -851,15 +851,15 @@ mysql_select_db(DB_NAME, $con) or die(mysql_error());
 		<?php echo $output; ?>
 	</tbody>
 </table>
-<?php 
+<?php
 
 	if($row['shipping_type'] == 'Charter' AND $flag==false){
 		$q = "SELECT * FROM `agents` WHERE `country`!='".$row['from']."' AND `active`=1 AND `ship_charter`=1 ORDER BY `id` ASC";
 		$r = mysql_query($q);
-		
+
 		echo "<pre><br>Other Contries<br>";
 		echo $row['from'] . " (Active Agents Count : ".mysql_num_rows($r).")<br>";
-		
+
 		$output = "";
 		while($row3 = mysql_fetch_array($r)){
 			$cities = explode(" | ",$row3['cover_city']);
@@ -922,6 +922,6 @@ mysql_close();
 </body>
 </html>
 
-<?php 
+<?php
 include("footer.php");
 ?>
