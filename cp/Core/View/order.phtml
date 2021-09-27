@@ -475,7 +475,7 @@ elseif(isset($this->oid) AND $this->oid!=null)
                                                 <!------------------Company National Id------------------->
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="inputRCNationalId" class="control-label">Company National Id<span style="color:#ff0000;">(*)</span></label>
+                                                        <label for="inputRCNationalId" class="control-label">Company / Personal National ID<span style="color:#ff0000;">(*)</span></label>
                                                         <div class="input-icon right">
                                                             <i class="fa fa-briefcase"></i>
                                                             <input id="inputRCNationalId" name="inputRCNationalId" type="text" placeholder="Company National Id" value="<?php echo ((isset($_POST['inputRCNationalId']) AND $_POST['inputRCNationalId']!='' AND $_POST['inputRCNationalId']!=null) ? $_POST['inputRCNationalId'] : ""); ?>" class="form-control">
@@ -486,7 +486,7 @@ elseif(isset($this->oid) AND $this->oid!=null)
                                                 <!------------------Company Economic Id------------------->
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="inputRCEconomicId" class="control-label">Company Economic Id<span style="color:#ff0000;">(*)</span></label>
+                                                        <label for="inputRCEconomicId" class="control-label">Company Economic (TAX- VAT) ID</label>
                                                         <div class="input-icon right">
                                                             <i class="fa fa-briefcase"></i>
                                                             <input id="inputRCEconomicId" name="inputRCEconomicId" type="text" placeholder="Company Economic Id" value="<?php echo ((isset($_POST['inputRCEconomicId']) AND $_POST['inputRCEconomicId']!='' AND $_POST['inputRCEconomicId']!=null) ? $_POST['inputRCEconomicId'] : ""); ?>" class="form-control">
@@ -674,10 +674,24 @@ else{
     function printContent(el){
         var restorepage = document.body.innerHTML;
         var printcontent = document.getElementById(el).outerHTML;
-        document.body.innerHTML = printcontent+` <style>
+		// var logo = document.getElementById('logo');
+		// logo.querySelector('img').style.margin='0';
+		// logo.querySelector('img').style.padding='10px';
+
+        document.body.innerHTML =  printcontent+` <style>
+		
             #print_area .list-group-item{
-                border: 2px solid #000 !important;
+                //border: 2px solid #000 ;
                 margin-bottom: 10px ;
+            }
+			#print_area .list-group-item:nth-of-type(<?= $_GET['per'] ?? 12 ?>n):before{
+				content:url('https://bookingparcel.com/logo.gif');
+            }
+			#print_area .list-group-item:nth-of-type(1):before{
+				content:url('https://bookingparcel.com/logo.gif');
+            }
+			#print_area .list-group-item:nth-of-type(<?= $_GET['per'] ?? 12 ?>n){
+				page-break-before: always;
             }
     </style>`;
         window.print();
