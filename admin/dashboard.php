@@ -230,7 +230,10 @@ if($p>1){
 	$prev_p = "<a class=\"btn-icon btn-black btn-arrow-left\" href='?p=".($p-1)."".(($type == 0-1) ? "" : "&type=".$type."")."'><span></span>Previous</a>";
 }
 
-$q = "SELECT * FROM `quote` WHERE  `timestamp`>=".$timestamp." ".(($type == 0-1) ? " " : "AND `status`=".$type." ")."ORDER BY `timestamp` DESC, `id` ASC ".$lim;
+$q = "SELECT * FROM `quote` WHERE TRUE ".(($type == 0-1) ? " " : "AND `status`=".$type." ").
+    (!empty($_GET['from'])? " AND `from` like '{$_GET['from']}' ":'').
+    (!empty($_GET['to'])? " AND `to` like '{$_GET['to']}' ":'').
+    " ORDER BY `timestamp` DESC, `id` ASC ".$lim;
 
 $r = mysql_query($q) or die(mysql_error());
 if(mysql_num_rows($r)>0){
@@ -302,8 +305,8 @@ else{
 			<td >Company</td>
 			<td >Company Logo</td>
 			<td >E-mail</td>
-			<td >From</td>
-			<td >To</td>
+            <td ><input type="text" placeholder="From" id="from-input" class="inline-input" name="from" style="background: #f000;border: none;text-align: center;"></td>
+			<td ><input type="text" placeholder="To" id="to-input" class="inline-input" name="to" style="background: #f000;border: none;text-align: center;"></td>
 			<td >Date</td>
 			<td >Action</td>
 		</tr>
@@ -403,6 +406,24 @@ if(isset($_POST['t']) AND $_POST['t']==3){
             Copyright <a href="#">BlueWhale Admin</a>. All Rights Reserved.
         </p>
     </div>
+    <script>
+        $('.inline-input').keypress(function (e){
+            if(e.keyCode==13){
+                var url = new URL(window.location.href);
+                url.searchParams.delete('from');
+                url.searchParams.delete('to');
+
+                if($('#from-input').val()){
+                    url.searchParams.set('from', $('#from-input').val());
+                }
+
+                if($('#to-input').val()){
+                    url.searchParams.set('to', $('#to-input').val());
+                }
+                window.location.href = url.href
+            }
+        })
+    </script>
 </body>
 </html>
 <?php
