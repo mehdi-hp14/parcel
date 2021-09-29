@@ -2,7 +2,7 @@
 require_once 'php8support.php';
 
 //session_destroy();
-session_start();
+//session_start();
 $iso_country = array(
     'AFG'=>'Afghanistan',
     'ALA'=>'Aland Islands',
