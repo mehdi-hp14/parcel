@@ -1492,7 +1492,7 @@ $(document).ready(function () {
 								{
 									$disabled = "disabled";
 									$currency = $ttmp[3];
-									$conf_prices = "offer confirmed by client for  ".$ttmp[2]." ".$ttmp[3]." by ".$ttmp[1];
+									$conf_prices = "offer confirmed by client for  ".(intval($ttmp[2])+intval($row['dif_offer']))." ".$ttmp[3]." by ".$ttmp[1];
 									break;
 								}
 							}
