@@ -1606,10 +1606,18 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                         $con = mysql_connect(DB_HOST, DB_USER, DB_PASS) or die(mysql_error());
                         mysql_select_db(DB_NAME, $con) or die(mysql_error());
                         //SELECT * FROM `agents` WHERE `country` LIKE 'B%';
+
+                        $withoutCountry = false;
+                        if((!empty($_GET['cname']) || !empty($_GET['mail'])) && empty($_GET['Start'])){
+                            $withoutCountry = true;
+                            $post_c = [''];
+                        }
+
+
                         foreach ($post_c as $k => $v) {
-                            if (substr($v, 0, 1) != $key) continue;
+                            if (substr($v, 0, 1) != $key && !$withoutCountry) continue;
                             $q = "SELECT count(*) as ca FROM `agents` WHERE 1=1";
-                            (!isset($_GET['post_c_key']) || $_GET['post_c_key'] != 0) ? $q .= " AND `country`='" . $v . "'" : null;
+                            ((!isset($_GET['post_c_key']) || $_GET['post_c_key'] == 0) && !$withoutCountry) ? $q .= " AND `country`='" . $v . "'" : null;
                             isset($_GET['mail']) ? $q .= " AND emails like '%" . $_GET['mail'] . "%'" : null;
                             $q .= " ORDER BY `id` ASC";
                             $r = mysql_query($q);
@@ -1618,7 +1626,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                 echo "<pre>";
                                 echo $v . " (Agents Count : " . $row['ca'] . ")<br>";
                                 $q = "SELECT * FROM `agents` WHERE 1=1 ";
-                                (!isset($_GET['post_c_key']) || $_GET['post_c_key'] != 0) ? $q .= " AND `country`='" . $v . "'" : null;
+                                ((!isset($_GET['post_c_key']) || $_GET['post_c_key'] == 0) && !$withoutCountry)  ? $q .= " AND `country`='" . $v . "'" : null;
                                 isset($_GET['mail']) ? $q .= " AND emails like '%" . $_GET['mail'] . "%'" : null;
                                 isset($_GET['cname']) ? $q .= " AND cname like '%" . $_GET['cname'] . "%'" : null;
                                 $q .= " ORDER BY `id` ASC";
@@ -1669,10 +1677,11 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                 <?php
                                 echo "</pre>";
                             } else {
-
-                                echo "<pre>";
-                                echo $v . " (Agents Count : " . $row['ca'] . ")<br>";
-                                echo "</pre>";
+                                if(!$withoutCountry){
+                                    echo "<pre>";
+                                    echo $v . " (Agents Count : " . $row['ca'] . ")<br>";
+                                    echo "</pre>";
+                                }
                             }
                         }
                         ?>
