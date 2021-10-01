@@ -312,29 +312,31 @@ else{
         display: none;
     }
 </style>
-<table border="1" id="quote-table" style="margin-left:auto;margin-right:auto;width:90%;border-collapse:collapse;border-color:#777;font-size:12px">
-	<tbody>
-		<tr style="background-color:#ccc;text-align:center;color:#3a3a3a">
-			<td style="padding:5px">#</td>
-			<td >ID</td>
-			<td >Tracking ID</td>
-			<td >Name</td>
-			<td >Company</td>
-			<td class='no-print'>Company Logo</td>
-			<td >E-mail</td>
-            <td class='just-print'>from</td>
-            <td class='just-print'>to</td>
-			<td class='no-print'><input type="text" placeholder="From" id="from-input" class="inline-input" name="from" style="background: #f000;border: none;text-align: center;"></td>
-			<td class='no-print'><input type="text" placeholder="To" id="to-input" class="inline-input" name="to" style="background: #f000;border: none;text-align: center;"></td>
-			<td >Date</td>
-			<td class='no-print'>Action</td>
-		</tr>
-		<tr style="background-color:#fff;text-align:center;font-weight:bold">
-			<?php echo $output; ?>
-		</tr>
+<div id="quote-table">
+    <table border="1" style="margin-left:auto;margin-right:auto;width:90%;border-collapse:collapse;border-color:#777;font-size:12px">
+        <tbody>
+            <tr style="background-color:#ccc;text-align:center;color:#3a3a3a">
+                <td style="padding:5px">#</td>
+                <td >ID</td>
+                <td >Tracking ID</td>
+                <td >Name</td>
+                <td >Company</td>
+                <td class='no-print'>Company Logo</td>
+                <td >E-mail</td>
+                <td class='just-print'>from</td>
+                <td class='just-print'>to</td>
+                <td class='no-print'><input type="text" placeholder="From" id="from-input" class="inline-input" name="from" style="background: #f000;border: none;text-align: center;"></td>
+                <td class='no-print'><input type="text" placeholder="To" id="to-input" class="inline-input" name="to" style="background: #f000;border: none;text-align: center;"></td>
+                <td >Date</td>
+                <td class='no-print'>Action</td>
+            </tr>
+            <tr style="background-color:#fff;text-align:center;font-weight:bold">
+                <?php echo $output; ?>
+            </tr>
 
-	</tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 <?php echo $prev_p .'&nbsp;'. $curr_p .'&nbsp;'. $next_p;
 echo "<br> Total Pages : ".$max_p;
 ?>
@@ -465,6 +467,9 @@ if(isset($_POST['t']) AND $_POST['t']==3){
         function printContent(el) {
             var restorepage = document.body.innerHTML;
             var printcontent = document.getElementById(el).outerHTML+` <style>
+                #quote-table:before{
+                    content:url('https://bookingparcel.com/logo.gif');
+                }
                 .no-print{
                     display:none;
                 }
