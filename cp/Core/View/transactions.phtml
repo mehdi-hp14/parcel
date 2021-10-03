@@ -35,14 +35,17 @@ function printContent(el){
 
 @media print {
 	.table-logo {
-		border:5px solid red !important;
+		border:1px solid #ccc !important;
   	}
     .table-logo th{
       display: block;
-	  border:5px solid green !important;
-	  width:300%;
+	  border: none !important;
     }
-
+	.table-logo th img{
+	  display: block;
+	  width:300px;
+	  height:50px;
+    }
 }
 
 </style>`;
@@ -53,13 +56,9 @@ function printContent(el){
 </script>
 <style>
 @media screen {
-  tr {
+  .table-logo {
     display: none;
-	border:5px solid red !important;
   }
-  tr th{
-	  border:5px solid green !important;
-    }
 }
 </style>
 	<div class="col-sm-12 col-md-12">
@@ -70,11 +69,11 @@ function printContent(el){
                     <form class="form-inline" method="get" action="transactions.php">
                         <div class="form-group">
                             <label for="from_date">From Date:</label>
-                            <input type="datetime-local" class="form-control" id="from_date" name="from_date" value="<?= $_GET['from_date'] ?? null?>">
+                            <input type="date" class="form-control" id="from_date" name="from_date" value="<?= $_GET['from_date'] ?? null?>">
                         </div>
                         <div class="form-group">
                             <label for="to_date">to Date:</label>
-                            <input type="datetime-local" class="form-control" id="to_date" name="to_date" value="<?= $_GET['to_date'] ?? null?>">
+                            <input type="date" class="form-control" id="to_date" name="to_date" value="<?= $_GET['to_date'] ?? null?>">
                         </div>
                         <button type="submit" class="btn btn-default">Filter</button>
                         <br>
@@ -86,7 +85,7 @@ function printContent(el){
                     <br>
 				<div id="print">
 				<div class="divFooter"></div>
-					<table class="table table-hover " >
+					<table class="table table-hover table-bordered" >
 						<thead>
 							<tr class='table-logo' style="border: none !important;">
 								<th colspan="17" style="border: none !important;">
