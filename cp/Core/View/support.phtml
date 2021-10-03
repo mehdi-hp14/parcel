@@ -58,7 +58,7 @@ if(isset($this->inbox_info) AND $this->inbox_info!=null AND is_array($this->inbo
     <?php
 	foreach($this->inbox_info as $ticket)
 	{
-		echo '<a href="support.php?tid='.$ticket['id'].'" class="list-group-item"><div class="icheckbox_minimal-grey" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">';
+		echo '<a href="support.php?tid='.$ticket['id'].'" class="list-group-item '.((int)$ticket['not_readed_tickets'] > 0 ? 'not-read':'').'"><div class="icheckbox_minimal-grey" style="position: relative;"><input type="checkbox" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">';
 		echo '<ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);"></ins></div>';
 		if($ticket['usr_readed']==0) echo '<b>';
 		echo '&nbsp;&nbsp;&nbsp;<span style="min-width: 120px; display: inline-block;" class="name">'.$ticket['subject'].'</span> ';
@@ -359,6 +359,13 @@ clear: both;
 }
 ?>
     <style>
+			.not-read{
+				background-color: #dc6767 !important;
+				color:#fff !important;
+			}
+			.not-read span{
+				color:#fff !important;
+			}
             .search-box{
                 display: flex;
             }

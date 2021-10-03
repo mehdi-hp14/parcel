@@ -9,7 +9,11 @@ class SupportModel extends ModelBase
 	   // echo $uid ."<br>";
 	   // echo $page ."<br>";
 	    //echo $items_per_page ."<br><br><br>";
-		$q = "SELECT `subject`,`id`,`tid`, `content`, `c_date`, `status`, `usr_readed` FROM `tickets` WHERE `uid`=:uid AND `primary_p`=1 ";
+		$q = "SELECT `subject`,`id`,`tid`, `content`, `c_date`, `status`, `usr_readed` ,
+		(SELECT COUNT(*) as c from `tickets` as `t` where t.ref=tickets.id and usr_readed=0) as not_readed_tickets
+		 FROM `tickets`
+		 
+		  WHERE `uid`=:uid AND `primary_p`=1 ";
 		if(isset($_GET['search-tid'])){
 			$q .= "AND tid like '%{$_GET['search-tid']}%'";
 		}
