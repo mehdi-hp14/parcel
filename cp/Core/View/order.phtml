@@ -337,7 +337,7 @@ elseif(isset($this->oid) AND $this->oid!=null)
 							$conf_text = "";
 							if($ttmp[0]=='on')
 							{
-								$conf_text = "You confirmmed the \"".$ttmp[2]." ".$ttmp[3]." by ".$ttmp[1]."\" .<br><br>Consignee Name : ".$this->shipping_info['consignee']."<br><br>Shipper Information : <br>".nl2br($this->shipping_info['shipper']);
+								$conf_text = "You confirmmed the \"".(intval($ttmp[2])+intval($this->Order_info['dif_offer']))." ".$ttmp[3]." by ".$ttmp[1]."\" .<br><br>Consignee Name : ".$this->shipping_info['consignee']."<br><br>Shipper Information : <br>".nl2br($this->shipping_info['shipper']);
 								$confirmed = true;
 								break;
 							}

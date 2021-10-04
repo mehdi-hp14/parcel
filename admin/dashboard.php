@@ -217,17 +217,30 @@ if(isset($_GET['del']) AND is_numeric($_GET['del']) AND $_GET['del']>0){
 }
 $timestamp = mktime(0,0,0,1,1,date("Y"));
 $output = "";
-$q = "SELECT * FROM `quote` WHERE `timestamp`>=".$timestamp." ".(($type == 0-1) ? " " : "AND `status`=".$type." ")."ORDER BY `timestamp` DESC, `id` ASC";
+//$q = "SELECT * FROM `quote` WHERE `timestamp`>=".$timestamp." ".(($type == 0-1) ? " " : "AND `status`=".$type." ").
+$q = "SELECT * FROM `quote` WHERE 1=1 ".(($type == 0-1) ? " " : "AND `status`=".$type." ").
+
+(!empty($_GET['from'])? " AND `from` like '{$_GET['from']}' ":'').
+(!empty($_GET['to'])? " AND `to` like '{$_GET['to']}' ":'').
+"ORDER BY `timestamp` DESC, `id` ASC";
 
 $r = mysql_query($q) or die(mysql_error());
 $total_res = mysql_num_rows($r);
 $max_p = ceil($total_res/$item_per_page);
 
+$queryString = [
+    'p'=>$p+1,
+];
+$type == -1 ? '' : $queryString['type']=$type;
+!empty($_GET['from'])? $queryString['from'] = $_GET['from']:'';
+!empty($_GET['to'])? $queryString['to'] = $_GET['to']:'';
+
 if($p<$max_p){
-	$next_p = "<a class=\"btn-icon btn-black btn-arrow-right\" href='?p=".($p+1)."".(($type == 0-1) ? "" : "&type=".$type."")."'><span></span>Next</a>";
+    $next_p = "<a class=\"btn-icon btn-black btn-arrow-right\" href='?".(http_build_query($queryString))."'><span></span>Next</a>";
 }
 if($p>1){
-	$prev_p = "<a class=\"btn-icon btn-black btn-arrow-left\" href='?p=".($p-1)."".(($type == 0-1) ? "" : "&type=".$type."")."'><span></span>Previous</a>";
+    $queryString['p'] = $p-1;
+	$prev_p = "<a class=\"btn-icon btn-black btn-arrow-left\" href='?".(http_build_query($queryString))."'><span></span>Previous</a>";
 }
 
 $q = "SELECT * FROM `quote` WHERE TRUE ".(($type == 0-1) ? " " : "AND `status`=".$type." ").
@@ -260,13 +273,13 @@ if(mysql_num_rows($r)>0){
 		if($row['uname']!='' OR $row['uname']!=null)
 		{
 			$row2 = mysql_fetch_array(mysql_query("SELECT avatar FROM `users` WHERE `uname`='".$row['uname']."'"));
-			$output .="<td>".($row2['avatar']!="" ? "<span style='max-width:112px;max-height:48;'><img width=\"112px\" height=\"48px\" src='../cp/Assets/images/avatar/".$row2['avatar']."'></span>" : "None")."</td>";
+			$output .="<td class='no-print'>".($row2['avatar']!="" ? "<span style='max-width:112px;max-height:48;'><img width=\"112px\" height=\"48px\" src='../cp/Assets/images/avatar/".$row2['avatar']."'></span>" : "None")."</td>";
 		}
 		else{
 			$output .="<td>None</td>";
 		}
 		$output .="<td >".$row['email']."</td><td >".$row['from']."</td><td >".$row['to']."</td><td >".date("Y/m/d H:i:s",$row['timestamp'])."</td>";
-		$output .="<td><a href='item.php?id=".$row['id']."'>Details</a>&nbsp;|&nbsp;<a href='itemedit.php?id=".$row['id']."'>Edit</a>&nbsp;|&nbsp;<a href='offers.php?id=".$row['id']."'>Agents</a>&nbsp;|&nbsp;<a href='#' OnClick=\"ConfirmFunc('".$row['id']."','".$row['tid']."');\">Delete</a></td>";
+		$output .="<td class='no-print'><a href='item.php?id=".$row['id']."'>Details</a>&nbsp;|&nbsp;<a href='itemedit.php?id=".$row['id']."'>Edit</a>&nbsp;|&nbsp;<a href='offers.php?id=".$row['id']."'>Agents</a>&nbsp;|&nbsp;<a href='#' OnClick=\"ConfirmFunc('".$row['id']."','".$row['tid']."');\">Delete</a></td>";
 		$output .="</tr>";
 		//$_c++;
 		$_c--;
@@ -295,31 +308,41 @@ else{
 <span style="width:10px;height:10px;background-color:#E40001;display: inline-block;"></span>&nbsp;Cancelled&nbsp;&nbsp;&nbsp;|&nbsp;
 <span style="width:10px;height:10px;background-color:#39A7B6;display: inline-block;"></span>&nbsp;Completed&nbsp;&nbsp;&nbsp;
 </p>
-<table border="1" style="margin-left:auto;margin-right:auto;width:90%;border-collapse:collapse;border-color:#777;font-size:12px">
-	<tbody>
-		<tr style="background-color:#ccc;text-align:center;color:#3a3a3a">
-			<td style="padding:5px">#</td>
-			<td >ID</td>
-			<td >Tracking ID</td>
-			<td >Name</td>
-			<td >Company</td>
-			<td >Company Logo</td>
-			<td >E-mail</td>
-            <td ><input type="text" placeholder="From" id="from-input" class="inline-input" name="from" style="background: #f000;border: none;text-align: center;"></td>
-			<td ><input type="text" placeholder="To" id="to-input" class="inline-input" name="to" style="background: #f000;border: none;text-align: center;"></td>
-			<td >Date</td>
-			<td >Action</td>
-		</tr>
-		<tr style="background-color:#fff;text-align:center;font-weight:bold">
-			<?php echo $output; ?>
-		</tr>
-		
-	</tbody>
-</table>
+<style>
+    .just-print{
+        display: none;
+    }
+</style>
+<div id="quote-table">
+    <table border="1"  style="margin-left:auto;margin-right:auto;width:90%;border-collapse:collapse;border-color:#777;font-size:12px">
+        <tbody>
+            <tr style="background-color:#ccc;text-align:center;color:#3a3a3a">
+                <td style="padding:5px">#</td>
+                <td >ID</td>
+                <td >Tracking ID</td>
+                <td >Name</td>
+                <td >Company</td>
+                <td class='no-print'>Company Logo</td>
+                <td >E-mail</td>
+                <td class='just-print'>from</td>
+                <td class='just-print'>to</td>
+                <td class='no-print'><input type="text" placeholder="From" id="from-input" class="inline-input" name="from" style="background: #f000;border: none;text-align: center;"></td>
+                <td class='no-print'><input type="text" placeholder="To" id="to-input" class="inline-input" name="to" style="background: #f000;border: none;text-align: center;"></td>
+                <td >Date</td>
+                <td class='no-print'>Action</td>
+            </tr>
+            <tr style="background-color:#fff;text-align:center;font-weight:bold">
+                <?php echo $output; ?>
+            </tr>
+            
+        </tbody>
+    </table>
+</div>
 <?php echo $prev_p .'&nbsp;'. $curr_p .'&nbsp;'. $next_p; 
 echo "<br> Total Pages : ".$max_p;
 ?>
                 </div>
+                <button type="button" name="print" style="margin-top:30px" class="btn btn-green" onclick="printContent('quote-table')">Print</button>
             </div>
         </div>
         <div class="grid_10">
@@ -423,6 +446,24 @@ if(isset($_POST['t']) AND $_POST['t']==3){
                 window.location.href = url.href
             }
         })
+
+        function printContent(el) {
+            var restorepage = document.body.innerHTML;
+            var printcontent = document.getElementById(el).outerHTML+` <style>
+                #quote-table:before{
+                    content:url('https://bookingparcel.com/logo.gif');
+                }
+                .no-print{
+                    display:none;
+                }
+                table td, table th {
+                border: 1px solid black;
+                }
+            </style>`;
+            document.body.innerHTML = printcontent;
+            window.print();
+            document.body.innerHTML = restorepage
+        }
     </script>
 </body>
 </html>

@@ -35,12 +35,11 @@ function printContent(el){
 
 @media print {
 	.table-logo {
-		border:1px solid #ccc !important;
-		
+		border:5px solid red !important;
   	}
     .table-logo th{
       display: block;
-	  border: none !important;
+	  border:5px solid green !important;
 	  width:300%;
     }
 
@@ -54,9 +53,13 @@ function printContent(el){
 </script>
 <style>
 @media screen {
-  .table-logo {
+  tr {
     display: none;
+	border:5px solid red !important;
   }
+  tr th{
+	  border:5px solid green !important;
+    }
 }
 </style>
 	<div class="col-sm-12 col-md-12">
@@ -83,7 +86,7 @@ function printContent(el){
                     <br>
 				<div id="print">
 				<div class="divFooter"></div>
-					<table class="table table-hover table-bordered" >
+					<table class="table table-hover " >
 						<thead>
 							<tr class='table-logo' style="border: none !important;">
 								<th colspan="17" style="border: none !important;">
