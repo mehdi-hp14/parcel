@@ -514,3 +514,34 @@ $iso_country = array(
     'ZMB' => 'Zambia',
     'ZWE' => 'Zimbabwe'
 );
+
+/*
+ * check for new tickets
+ * */
+if(defined('DB_HOST')){
+
+$con = mysql_connect(DB_HOST,DB_USER,DB_PASS) or die(mysql_error());
+mysql_select_db(DB_NAME, $con) or die(mysql_error());
+$q = "SELECT count(*) as c FROM `tickets` WHERE adm_readed=0";
+$not_readed_tickets = mysql_fetch_array(mysql_query($q));
+if($not_readed_tickets && ($not_readed_tickets[0])){
+    ?>
+    <script>
+        window.onload=function (){
+            document.querySelector('ul.nav.main').innerHTML +=`
+            <li class="ic-ticket"><a href="/admin/tickets.php" style="font-size: 8px;
+                                                        height: 37px;
+                                                        margin-top: 3px;
+"><span style="font-size:10px;"><b style="
+                font-size: 13px;
+                position: relative;
+                top: 6px;
+                color: red;
+                left: 5px;
+">you have <?= $not_readed_tickets[0] ?> new ticket message</b></span></a></li>
+            `;
+        }
+    </script>
+    <?php
+}
+}

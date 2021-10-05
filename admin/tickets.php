@@ -237,7 +237,11 @@ function GetUserDetail($uid)
 	return array('fname'=>'', 'lname'=>'', 'company'=>'');
 }
 
-$q = "SELECT * FROM `tickets` WHERE `primary_p`=1 ".(($type == 0-1) ? " " : "AND `status`=".$type." ")."ORDER BY `adm_readed` ASC, `c_date` DESC, `id` ASC ".$lim;
+$q = "SELECT * ,
+       		(SELECT COUNT(*) as c from `tickets` as `t` where t.ref=tickets.id and adm_readed=0) as not_readed_tickets
+       FROM `tickets` WHERE 
+                              `primary_p`=1 ".(($type == 0-1) ? " " : "AND `status`=".$type." ").
+    "ORDER BY `adm_readed` ASC, `c_date` DESC, `id` ASC ".$lim;
 
 $r = mysql_query($q) or die(mysql_error());
 if(mysql_num_rows($r)>0){
@@ -252,7 +256,7 @@ if(mysql_num_rows($r)>0){
 			case 3: $stat = "Under Process"; break;
 		}
 		$user = GetUserDetail($row['uid']);
-		$output .="<tr ".($row['adm_readed']==0 ? "style='background-color:#ff0000;color:#ffffff;'" : "").">";
+		$output .="<tr ".($row['not_readed_tickets']>0 ? "style='background-color:#ff0000;color:#ffffff;'" : "").">";
 		$output .="<td >".$_c."</td><td >".$row['id']."</td><td >".$row['subject']."".($row['adm_readed']==0 ? "(Unread)" : "")."</td><td >".substr($row['content'],0,25)."</td><td >".$row['tid']."</td>"
 		."<td >".$user['fname'] ." ".$user['lname']." (Company : ".($user['company']!="" ? $user['company'] : "--").")</td>"
 		."<td >".date("Y/m/d H:i:s",$row['c_date'])."</td>";
