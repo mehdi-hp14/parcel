@@ -1274,7 +1274,7 @@ $error_m ="";
 			<td style="padding:5px">Package Type
 				<select name="ptype">
 					<option value="Personal" <?php if($row['pack_type']=='Personal') echo 'selected="selected"'; ?>>Personal</option>
-					<option value="Commercial" <?php if($row['pack_type']=='Commercial') echo 'selected="selected"'; ?>>Commercial</option>
+					<option value="Commercial" <?php if($row['pack_type']=='Commercial' || $row['pack_type']=='Comercial') echo 'selected="selected"'; ?>>Commercial</option>
 				</select>
 			</td>
 			<td style="padding:5px">Insurace</td>
