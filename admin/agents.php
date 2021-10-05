@@ -1626,7 +1626,15 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                 echo "<pre>";
                                 echo $v . " (Agents Count : " . $row['ca'] . ")<br>";
                                 $q = "SELECT * FROM `agents` WHERE 1=1 ";
-                                ((!isset($_GET['post_c_key']) || $_GET['post_c_key'] == 0) && !$withoutCountry)  ? $q .= " AND `country`='" . $v . "'" : null;
+
+                                if(!$withoutCountry){
+                                    $q .= " AND `country`='" . $v . "'";
+                                }else{
+                                    var_dump($post_c[$_GET['post_c_key']]);
+                                    $q .= ((isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) )  ?  " AND `country` like %'" . $post_c[$_GET['post_c_key']] . "%'" : '';
+                                }
+
+//                                $q .= " AND `country`='" . $v . "'";
                                 isset($_GET['mail']) ? $q .= " AND emails like '%" . $_GET['mail'] . "%'" : null;
                                 isset($_GET['cname']) ? $q .= " AND cname like '%" . $_GET['cname'] . "%'" : null;
                                 $q .= " ORDER BY `id` ASC";
@@ -1636,7 +1644,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                 while ($row = mysql_fetch_array($r)) {//9999ff
                                     $output .= "<tr " . ($row['special'] == 1 ? "style=\"background-color:#99ccff;text-align:ltr;color:#3a3a3a\"" : ($row['active'] == 0 ? "style=\"background-color:#e0e0d2;text-align:ltr;color:#3a3a3a\"" : "")) . ">";
                                     $output .= "<td style=\"padding:5px\">" . $row['id'] . "</td>";
-                                    $output .= "<td style=\"padding:5px\">" . $row['city'] . "</td>";
+                                    $output .= "<td style=\"padding:5px\">" . $row['city'] .($withoutCountry ? " ({$row['country']})":''). "</td>";
                                     $output .= "<td>" . $row['cname'] . " " . ($row['special'] == 1 ? "<img src=\"img/star_list.png\" title='This agent is special.' alt='Special'>" : "") . " " . ($row['fixed'] == 1 ? "<img src=\"fixed.gif\" title='This is a fixed agent.' alt='Fixed'>" : "") . "</td>";
                                     $output .= "<td>" . $row['fname'] . "</td>";
                                     $ship = array();
