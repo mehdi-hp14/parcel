@@ -1608,7 +1608,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                         //SELECT * FROM `agents` WHERE `country` LIKE 'B%';
 
                         $withoutCountry = false;
-                        if((!empty($_GET['cname']) || !empty($_GET['mail'])) && empty($_GET['Start'])){
+                        if((!empty($_GET['cname']) || !empty($_GET['mail'])) && empty($_GET['Start']) && empty($_GET['post_c_key'])){
                             $withoutCountry = true;
                             $post_c = [''];
                         }
@@ -1630,13 +1630,12 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                 if(!$withoutCountry){
                                     $q .= " AND `country`='" . $v . "'";
                                 }else{
-                                    var_dump($post_c[$_GET['post_c_key']]);
                                     $q .= ((isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) )  ?  " AND `country` like %'" . $post_c[$_GET['post_c_key']] . "%'" : '';
                                 }
 
 //                                $q .= " AND `country`='" . $v . "'";
-                                isset($_GET['mail']) ? $q .= " AND emails like '%" . $_GET['mail'] . "%'" : null;
-                                isset($_GET['cname']) ? $q .= " AND cname like '%" . $_GET['cname'] . "%'" : null;
+                                !empty($_GET['mail']) ? $q .= " AND emails like '%" . $_GET['mail'] . "%'" : null;
+                                !empty($_GET['cname']) ? $q .= " AND cname like '%" . $_GET['cname'] . "%'" : null;
                                 $q .= " ORDER BY `id` ASC";
 
                                 $r = mysql_query($q);
