@@ -449,6 +449,33 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
             </div>
         </div>
     </div>
+    <div class="grid_10">
+        <div class="box round first">
+            <h2>Filter Agents</h2>
+            <form method="get" action="<?= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>">
+                <div class="input-group" style="margin-top: 10px">
+                    <label for="post_c_key">Country</label>
+                    <select name="post_c_key" id="post_c_key" autocomplete="on" style="margin-right: 10px">
+                        <?php foreach (([0 => 'dont apply country'] + $countriesOriginal) as $key => $countryName) {
+                            echo "<option value='$key' " . (isset($_GET['post_c_key']) && $_GET['post_c_key'] === $key ? "selected='selected'" : '') . ">$countryName</option>";
+                        } ?>
+                    </select>
+
+                    <label for="search_email">email</label>
+                    <input type="text" id="search_email" name="mail" value="<?= $_GET['mail'] ?? '' ?>" style="margin-right: 10px">
+
+                    <label for="search_email">company</label>
+                    <input type="text" id="search_company" name="cname" value="<?= $_GET['cname'] ?? '' ?>" style="margin-right: 20px">
+
+                    <label for="fixed">fixed agents</label>
+                    <input type="checkbox" id="fixed" name="fixed" value="show" <?= !empty($_GET['fixed']) ?'checked':''?> style="margin-right: 20px">
+
+                    <button class="btn btn-primary">search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <?php
     $con = mysql_connect(DB_HOST, DB_USER, DB_PASS) or die(mysql_error());
     mysql_select_db(DB_NAME, $con) or die(mysql_error());
@@ -791,7 +818,17 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
             }
         } else {
 
-            $q = "SELECT * FROM `agents` WHERE `fixed`=1 ORDER BY `country` ASC,`id` ASC";
+            $q = "SELECT * FROM `agents` WHERE `fixed`=1 ";
+
+            $q .= ((isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) )  ?  " AND `country` like '%" . $post_c[$_GET['post_c_key']] . "%'" : '';
+            !empty($_GET['mail']) ? $q .= " AND emails like '%" . $_GET['mail'] . "%'" : null;
+            !empty($_GET['cname']) ? $q .= " AND cname like '%" . $_GET['cname'] . "%'" : null;
+
+            $q .=" ORDER BY `country` ASC,`id` ASC";
+//            echo $q;
+//            echo 222;
+//            var_dump($q);
+//            die;
             $r = mysql_query($q);
             if (mysql_num_rows($r) > 0) {
 
@@ -847,6 +884,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                         <td>Action</td>
                                     </tr>
                                     <?php echo $output; ?>
+                                    <tr></tr>
                                     <tr>
                                         <td colspan="12">
                                             <button class="btn" name="report" type="submit" value="rep">Get Printable Report</button>
@@ -1561,29 +1599,29 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                 </div>
             </div>
 
-            <div class="grid_10">
-                <div class="box round first">
-                    <h2>Filter Agents</h2>
-                    <form method="get" action="<?= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?>">
-                        <div class="input-group" style="margin-top: 10px">
-                            <label for="post_c_key">Country</label>
-                            <select name="post_c_key" id="post_c_key" autocomplete="on" style="margin-right: 10px">
-                                <?php foreach (([0 => 'dont apply country'] + $countriesOriginal) as $key => $countryName) {
-                                    echo "<option value='$key' " . (isset($_GET['post_c_key']) && $_GET['post_c_key'] === $key ? "selected='selected'" : '') . ">$countryName</option>";
-                                } ?>
-                            </select>
-
-                            <label for="search_email">email</label>
-                            <input type="text" id="search_email" name="mail" value="<?= $_GET['mail'] ?? '' ?>" style="margin-right: 10px">
-
-                            <label for="search_email">company</label>
-                            <input type="text" id="search_company" name="cname" value="<?= $_GET['cname'] ?? '' ?>">
-
-                            <button class="btn btn-primary">search</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<!--            <div class="grid_10">-->
+<!--                <div class="box round first">-->
+<!--                    <h2>Filter Agents</h2>-->
+<!--                    <form method="get" action="--><?//= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] ?><!--">-->
+<!--                        <div class="input-group" style="margin-top: 10px">-->
+<!--                            <label for="post_c_key">Country</label>-->
+<!--                            <select name="post_c_key" id="post_c_key" autocomplete="on" style="margin-right: 10px">-->
+<!--                                --><?php //foreach (([0 => 'dont apply country'] + $countriesOriginal) as $key => $countryName) {
+//                                    echo "<option value='$key' " . (isset($_GET['post_c_key']) && $_GET['post_c_key'] === $key ? "selected='selected'" : '') . ">$countryName</option>";
+//                                } ?>
+<!--                            </select>-->
+<!---->
+<!--                            <label for="search_email">email</label>-->
+<!--                            <input type="text" id="search_email" name="mail" value="--><?//= $_GET['mail'] ?? '' ?><!--" style="margin-right: 10px">-->
+<!---->
+<!--                            <label for="search_email">company</label>-->
+<!--                            <input type="text" id="search_company" name="cname" value="--><?//= $_GET['cname'] ?? '' ?><!--">-->
+<!---->
+<!--                            <button class="btn btn-primary">search</button>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="grid_10">
                 <div class="box round first">
@@ -1623,8 +1661,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                             $r = mysql_query($q);
                             $row = mysql_fetch_array($r);
                             if ($row['ca'] > 0) {
-                                echo "<pre>";
-                                echo $v . " (Agents Count : " . $row['ca'] . ")<br>";
+
                                 $q = "SELECT * FROM `agents` WHERE 1=1 ";
 
                                 if(!$withoutCountry){
@@ -1639,6 +1676,10 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                 $q .= " ORDER BY `id` ASC";
 
                                 $r = mysql_query($q);
+                                $numRows = mysqli_num_rows($r);
+                                echo "<pre>";
+                                echo $v . " (Agents Count : " . $numRows . ")<br>";
+
                                 $output = "";
                                 while ($row = mysql_fetch_array($r)) {//9999ff
                                     $output .= "<tr " . ($row['special'] == 1 ? "style=\"background-color:#99ccff;text-align:ltr;color:#3a3a3a\"" : ($row['active'] == 0 ? "style=\"background-color:#e0e0d2;text-align:ltr;color:#3a3a3a\"" : "")) . ">";
