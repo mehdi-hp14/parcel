@@ -303,16 +303,16 @@ else{
             <div class="box round">
                 <h2>Ticket LookUp</h2>
                 <div class="block">
-                    <p class="start">Here you can enter the ticket ID and access to the details immediately</p>
+                    <p class="start">Here you can enter the Tracking ID and access to the details immediately</p>
                     <p><form method="post">
 					<input type="hidden" name="t" value="3">
-					Ticket ID&nbsp;:&nbsp;<input name="tid" size="20" type="text">&nbsp;&nbsp;&nbsp;<button class="btn btn-pink" type="submit">LookUp</button>
+					Tracking ID&nbsp;:&nbsp;<input name="tid" size="20" type="text">&nbsp;&nbsp;&nbsp;<button class="btn btn-pink" type="submit">LookUp</button>
 					</form></p>
 					<?php
 
 if(isset($_POST['t']) AND $_POST['t']==3){
 	if(isset($_POST['tid']) AND $_POST['tid']!=''){
-		$q = "SELECT id,count(*) as cc FROM `tickets` WHERE `tid`='".$_POST['tid']."' AND `primary_p`=1";
+		$q = "SELECT id,count(*) as cc FROM `tickets` WHERE `tid` like '%".$_POST['tid']."%' AND `primary_p`=1";
 		$rr = mysql_fetch_array(mysql_query($q));
 		if($rr['cc']>0){
 			header("Location: ticket.php?id=".$rr['id']."");

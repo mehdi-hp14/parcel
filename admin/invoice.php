@@ -103,9 +103,11 @@ function printContent(el){
 	window.print();
 	document.body.innerHTML = restorepage;
     try {
-        var confirm_and_sent = document.getElementById(`confirm_and_sent`).click();
-        confirm_and_sent.click()
+        var confirm_and_sent = document.getElementById(`confirm_and_sent`);
+        <?= $_GET['type']==0 ?'confirm_and_sent.click()':''?>
+
     }catch (e){
+        console.log(e);
         alert(`there has been a problem, call the technical team!`)
     }
 }
@@ -1150,7 +1152,7 @@ $dif_cost = $row['dif_offer'];
 	</div>
 <?php } ?>
 	<br>
-	<div style="text-align:center;visibility: hidden"><button class="btn" name="submit" id="confirm_and_sent" type="submit">Confirm And Send</button></div>
+	<div style="text-align:center;<?= $_GET['type']==0 ?'visibility: hidden':''?>"><button class="btn" name="submit" id="confirm_and_sent" type="submit">Confirm And Send</button></div>
 </form>
                 </div>
             </div>
