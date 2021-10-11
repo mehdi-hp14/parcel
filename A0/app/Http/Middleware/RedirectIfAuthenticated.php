@@ -18,10 +18,25 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
+        if (Auth::guard('agentGuard')->check()) {
+            $lastUrl = Auth::guard('agentGuard')->user()->lastUrl;
+            if($lastUrl){
+                $nextLink = config('general.CP_URL').'?'.http_build_query([
+                        'Param1'=>$lastUrl->idHash,
+                        'Param2'=>$lastUrl->fromHash,
+                        'Param3'=>$lastUrl->toHash,
+                    ]);
+
+                return redirect($nextLink);
+            }
             return redirect(RouteServiceProvider::HOME);
         }
 
+        if (Auth::guard('adminGuard')->check()) {
+            return redirect(config('general.ADMIN_DASHBOARD_PAGE'));
+        }
+
         return $next($request);
+
     }
 }

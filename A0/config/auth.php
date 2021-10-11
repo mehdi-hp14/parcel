@@ -41,6 +41,17 @@ return [
             'provider' => 'users',
         ],
 
+        'agentGuard' => [
+            'driver'   => 'session',
+            'provider' => 'agentsProvider',
+            'hash'     => false,
+        ],
+        'adminGuard' => [
+            'driver'   => 'session',
+            'provider' => 'adminsProvider',
+            'hash'     => false,
+        ],
+
         'api' => [
             'driver'   => 'token',
             'provider' => 'users',
@@ -71,6 +82,14 @@ return [
 //            'model' => App\User::class,
             'model'  => Kaban\Models\User::class,
         ],
+        'agentsProvider' => [
+            'driver' => 'eloquent',
+            'model'  => Kaban\Models\Agent::class,
+        ],
+        'adminsProvider' => [
+            'driver' => 'eloquent',
+            'model'  => Kaban\Models\Admin::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -96,6 +115,18 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table'    => 'password_resets',
+            'expire'   => 60,
+            'throttle' => 60,
+        ],
+        'agentsProvider' => [
+            'provider' => 'agentsProvider',
+            'table'    => 'password_resets',
+            'expire'   => 60,
+            'throttle' => 60,
+        ],
+        'adminsProvider' => [
+            'provider' => 'adminsProvider',
             'table'    => 'password_resets',
             'expire'   => 60,
             'throttle' => 60,

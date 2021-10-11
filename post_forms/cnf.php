@@ -87,11 +87,11 @@ if(isset($_POST) AND count($_POST)>0){
 	foreach($_POST as $key=>$value){
 		if(is_array($value)){
 			foreach($value as $k=>$v){
-				$_POST[$key][$k] = m_s_q($v);
+				$_POST[$key][$k] = is_array($v)? m_s_q($v) :$v;
 			}
 		}
 		else{
-			$_POST[$key] = m_s_q($value);
+			$_POST[$key] = is_array($value)? m_s_q($value) :$value;
 		}
 	}
 }

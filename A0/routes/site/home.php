@@ -12,6 +12,10 @@ Route::group( [
         'as'   => 'site.home',
         'uses' => 'HomeController@index'
     ] );
+    Route::get( '/xx', function () {
+        echo 'mehdi';
+//        echo phpinfo();
+    } )->name( 'home2' );
 //    Route::get( '/', function () {
 //        $user = request()->user(); //getting the current logged in customer
 //    dd( $customer );

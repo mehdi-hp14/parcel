@@ -1,9 +1,14 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
-
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+if(!defined('LARAVEL_START')){
+    require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'A0' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'laravel_inclusion.php';
+}
+
+
 const BASE_DIR = __DIR__;
 function mysql_connect()
 {

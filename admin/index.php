@@ -3,6 +3,7 @@
 include("conf.php");
 include("../post_forms/cnf.php");
 
+//dd(auth()->guest());
 if (isset($_SESSION['loged_in']) and isset($_SESSION['loged_in_t']) and $_SESSION['loged_in'] == true and $_SESSION['loged_in_t'] >= time()) {
 
     header("Location: dashboard.php");

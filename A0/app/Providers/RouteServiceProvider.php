@@ -46,7 +46,9 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapAgentRoutes();
+
+        $this->mapAdminsRoutes();
     }
 
     /**
@@ -61,6 +63,36 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
+    }
+
+    /**
+     * Define the "agents" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAgentRoutes()
+    {
+        Route::middleware('web')
+//            ->namespace($this->namespace)
+            ->prefix('agents')
+            ->group(base_path('routes/agents.php'));
+    }
+
+    /**
+     * Define the "admins" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAdminsRoutes()
+    {
+        Route::middleware('web')
+//            ->namespace($this->namespace)
+            ->prefix('admins')
+            ->group(base_path('routes/admins.php'));
     }
 
     /**

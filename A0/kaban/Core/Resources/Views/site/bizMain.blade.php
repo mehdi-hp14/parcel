@@ -1,6 +1,6 @@
 <?php
-require_once 'php8support.php';
-
+//require_once 'php8support.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR .'php8support.php';
 //session_destroy();
 //session_start();
 $iso_country = array(

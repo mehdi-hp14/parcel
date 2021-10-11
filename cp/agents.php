@@ -1,4 +1,8 @@
 <?php
+
+use Kaban\Models\Agent;
+use Kaban\Models\Url;
+
 require(__DIR__ ."". DIRECTORY_SEPARATOR ."Core". DIRECTORY_SEPARATOR ."boot.php");
 require_once(MODEL_PATH."agents.php");
 require_once(APP_PATH."Mailer.php");
@@ -271,16 +275,15 @@ class PView extends PageView
         parent::__construct( );
 		$this->active_page = "agents";
         $this->viewFile = "agents.phtml";
-        
+        $this->agentsLogin = true;
+        $this->agent = auth()->guard('agentGuard')->user();
+        $this->logoutLink = config('general.CP_AGENT_LOGOUT_PAGE');
     }
 
     public function load( )
     {
         parent::load( );
-		
-							//$config = json_decode(file_get_contents(dirname(dirname(__FILE__))."/admin/conf.json"));
-							//echo "esi :<br>". dirname(dirname(__FILE__))."<br>";
-							//print_r($config);
+
 		$m = new AgentsModel();
 		if(isset($_GET['Param1']) AND trim($_GET['Param1'])!='' AND $_GET['Param1']!=null AND strlen($_GET['Param1'])==10)
 		{
@@ -291,6 +294,16 @@ class PView extends PageView
 					$result = $m->URLExists($_GET['Param1'],$_GET['Param2'],$_GET['Param3']);
 					if($result['exists']==true)
 					{
+                        Agent::where('id',intval($result['aref']))->update(['last_url'=>intval($result['id'])]);
+                        if(auth()->guard('agentGuard')->check() === false){
+                            return header('Location: '.config('general.CP_AGENT_LOGIN_PAGE').'?'.http_build_query($_GET));
+                            exit();
+                        }
+                        if($this->agent->id != $result['aref']){
+//                            dd($this->agent->id,$result['aref'];
+                            return header('Location: '.config('general.AGENT_PROFILE_PAGE'));
+                            exit();
+                        }
 						$this->error = false;
 						$this->error_m = "";
 						$this->ref = $result['id'];
