@@ -9,4 +9,5 @@ return [
     'AGENT_PROFILE_PAGE' => env('APP_URL').env( 'AGENT_PROFILE_PAGE', 'agents/me' ),
     'CP_AGENT_LOGIN_PAGE' => env('APP_URL').env( 'CP_AGENT_LOGIN_PAGE', 'agents/login' ),
     'CP_AGENT_LOGOUT_PAGE' => env('APP_URL').env( 'CP_AGENT_LOGOUT_PAGE', 'agents/logout' ),
+    'AGENTS_DEFAULT_PASSWORD' => env('AGENTS_DEFAULT_PASSWORD','example'),
 ];

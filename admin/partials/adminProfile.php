@@ -7,7 +7,7 @@
                 <img src="img/img-profile.jpg" alt="Profile Pic" /></div>
             <div class="floatleft marginleft10">
                 <ul class="inline-ul floatleft">
-                    <li>Hello <a href="<?= config('general.ADMIN_PROFILE_PAGE'); ?>"><?= auth()->guard('adminGuard')->user()->name ?></a></li>
+                    <li>Hello <a href="<?= config('general.ADMIN_PROFILE_PAGE'); ?>"><?= auth()->guard('adminGuard')->user()->name ?? 'Admin' ?></a></li>
                     <li><a href="<?= config('general.ADMIN_LOGOUT'); ?>">Logout</a></li>
                 </ul>
                 <br />
