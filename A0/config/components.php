@@ -3,7 +3,6 @@
 return [
     'list' => [
         'General' => [
-            'Auth',
             'Agent',
             'Admin',
         ],
