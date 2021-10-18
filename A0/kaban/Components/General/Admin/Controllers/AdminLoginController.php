@@ -38,6 +38,7 @@ class AdminLoginController
         if ($this->attemptLogin($request)) {
             $_SESSION['loged_in'] = true;
             $_SESSION['loged_in_t'] = time() + 18200;
+            $_SESSION['can_register_new_admins'] = time() + 18200;
 
             return $this->sendLoginResponse($request);
         }
@@ -50,16 +51,18 @@ class AdminLoginController
         return $this->sendFailedLoginResponse($request);
     }
 
-    public function adminLogoutAttempt ()
+    public function adminLogoutAttempt()
     {
         unset($_SESSION['loged_in']);
         unset($_SESSION['loged_in_t']);
 
         auth()->guard('adminGuard')->logout();
 
+        if (!empty($_GET['next'])) {
+            return redirect($_GET['next']);
+        }
         return redirect(route('adminLoginPage'));
     }
-
     /**
      * Get the login username to be used by the controller.
      *

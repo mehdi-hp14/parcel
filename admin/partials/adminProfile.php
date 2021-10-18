@@ -1,16 +1,18 @@
 <div class="grid_12 header-repeat">
     <div id="branding">
         <div class="floatleft">
-            <img src="img/logo.png" alt="Logo" /></div>
+            <img src="img/logo.png" alt="Logo"/></div>
         <div class="floatright">
             <div class="floatleft">
-                <img src="img/img-profile.jpg" alt="Profile Pic" /></div>
+                <img src="img/img-profile.jpg" alt="Profile Pic"/></div>
             <div class="floatleft marginleft10">
                 <ul class="inline-ul floatleft">
-                    <li>Hello <a href="<?= config('general.ADMIN_PROFILE_PAGE'); ?>"><?= auth()->guard('adminGuard')->user()->name ?? 'Admin' ?></a></li>
+                    <li>Hello <a href="<?= config('general.ADMIN_PROFILE_PAGE'); ?>"><?= auth()->guard('adminGuard')->user()->name ?? '' ?></a></li>
                     <li><a href="<?= config('general.ADMIN_LOGOUT'); ?>">Logout</a></li>
                 </ul>
-                <br />
+                <br/>
+                <a href="<?= config('general.ADMIN_LOGOUT'); ?>?next=<?= config('routes.REGISTER_ADMIN_PAGE'); ?>">register a new admin</a>
+                <br/>
                 <span class="small grey">Current Time : <span id="time"></span></span>
             </div>
         </div>
