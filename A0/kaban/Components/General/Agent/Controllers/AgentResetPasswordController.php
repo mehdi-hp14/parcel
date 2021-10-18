@@ -5,6 +5,7 @@ namespace Kaban\Components\General\Agent\Controllers;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
@@ -23,7 +24,8 @@ class AgentResetPasswordController extends Controller
     */
     public function __construct()
     {
-}
+    }
+
     use ResetsPasswords;
 
     /**
@@ -98,5 +100,24 @@ class AgentResetPasswordController extends Controller
     public function broker()
     {
         return Password::broker('agentsProvider');
+    }
+
+    protected function sendResetResponse(Request $request, $response)
+    {
+        if ($request->wantsJson()) {
+            return new JsonResponse(['message' => trans($response)], 200);
+        }
+
+        $lastUrl = \auth()->guard('agentGuard')->user()->lastUrl;
+        if ($lastUrl) {
+            $nextLink = config('general.CP_URL') . '?' . http_build_query([
+                    'Param1' => $lastUrl->idHash,
+                    'Param2' => $lastUrl->fromHash,
+                    'Param3' => $lastUrl->toHash,
+                ]);
+            return redirect($nextLink);
+        }
+        return redirect($this->redirectPath())
+            ->with('status', trans($response));
     }
 }

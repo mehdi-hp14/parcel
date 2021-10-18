@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Kaban\Models\Agent;
+use Illuminate\Support\Facades\Hash;
 
 class AgentsLoginController
 {
@@ -35,18 +36,16 @@ class AgentsLoginController
         if ($this->attemptLogin($request)) {
             $lastUrl = \auth()->guard('agentGuard')->user()->lastUrl;
 //dd($lastUrl);
-            if($lastUrl){
-                $nextLink = config('general.CP_URL').'?'.http_build_query([
-                        'Param1'=>$lastUrl->idHash,
-                        'Param2'=>$lastUrl->fromHash,
-                        'Param3'=>$lastUrl->toHash,
+            if ($lastUrl) {
+                $nextLink = config('general.CP_URL') . '?' . http_build_query([
+                        'Param1' => $lastUrl->idHash,
+                        'Param2' => $lastUrl->fromHash,
+                        'Param3' => $lastUrl->toHash,
                     ]);
 //                dd($nextLink);
                 return redirect($nextLink);
             }
-//            if($request->has(['Param1','Param2','Param3'])){
-//                return redirect(config('general.CP_URL').$urlParams);
-//            }
+            return redirect(config('general.AGENT_PROFILE_PAGE'));
 
             return $this->sendLoginResponse($request);
         }
