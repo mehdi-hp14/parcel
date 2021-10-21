@@ -60,7 +60,7 @@ function cleaner($value)
     return str_replace($filchars, '', $value);
 }
 function m_s_q($value){
-	
+
     foreach ($value as $key => $val) {
         $val = preg_replace(sql_regcase("/(ascii|CONCAT|DROP|TABLE_SCHEMA|unhex|group_concat|load_file|information_schma|substring|Union|from|select|insert|delete|where|drop table|show tables|\*|--|\\\\)/"), "", $val);
 
@@ -96,10 +96,14 @@ if(isset($_POST) AND count($_POST)>0){
 	}
 }
 
-
-define("DB_HOST","localhost");
-define("DB_NAME","parcel");
-//define("DB_USER","bookingp_qdusr");
-define("DB_USER","root");
-//define("DB_PASS",",f[~jvXI~WU)");
-define("DB_PASS","");
+if(config('app.env')==='production'){
+    define("DB_HOST","localhost");
+    define("DB_NAME","bookingp_qdb");
+    define("DB_USER","bookingp_qdusr");
+    define("DB_PASS",",f[~jvXI~WU)");
+}else{
+    define("DB_HOST","db");
+    define("DB_NAME","parcel");
+    define("DB_USER","root");
+    define("DB_PASS","secret");
+}

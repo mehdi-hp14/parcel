@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Mail;
 use Kaban\Components\General\Auth\Controllers\AgentResetPasswordController;
 use Kaban\Components\General\Agent\Controllers\BaseController;
 use Kaban\Components\General\Auth\Controllers\AgentsLoginController;
@@ -37,6 +38,24 @@ Route::get( '/users-list', 'HomeController@usersList' )->name( 'usersList' );
 
 Route::get( '/migrate', function (){
     \Artisan::call("migrate");
+} )->name( 'migrate' );
+
+Route::get( '/mail', function (){
+    $details = [
+
+        'title' => 'Mail from ItSolutionStuff.com',
+
+        'body' => 'This is for testing email using smtp'
+
+    ];
+
+
+
+    \Mail::to('mmhp16@gmail.com')->send(new \App\Mail\TestMail($details));
+//    Mail::raw('hello!')->
+
+//    to('mmhp16@gmail.com')->;
+    //\Artisan::call("migrate");
 } )->name( 'migrate' );
 
 //Route::get( '{sadasd}', function (){

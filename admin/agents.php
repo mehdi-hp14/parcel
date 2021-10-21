@@ -230,6 +230,20 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
     <link rel="stylesheet" type="text/css" href="css/ie6.css" media="screen"/><![endif]-->
     <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen"/><![endif]-->
+    <style>
+        table td{
+            padding: 3px;
+        }
+        .mt-5{
+            margin-top: 30px;
+        }
+        .mb-2{
+            margin-bottom: 10px;
+        }
+        .ml-3{
+            margin-left: 15px;
+        }
+    </style>
     <!-- BEGIN: load jquery -->
     <script src="js/jquery-1.6.4.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/jquery-ui/jquery.ui.core.min.js"></script>
@@ -1678,8 +1692,8 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
 
                                 $r = mysql_query($q);
                                 $numRows = mysqli_num_rows($r);
-                                echo "<pre>";
-                                echo $v . " (Agents Count : " . $numRows . ")<br>";
+                                echo "<div>";
+                                echo  " <h5 class='mt-5 mb-2 ml-3'>$v (Agents Count : " . $numRows . ")</h5>";
 
                                 $output = "";
                                 while ($row = mysql_fetch_array($r)) {//9999ff
@@ -1727,9 +1741,9 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                 echo "</pre>";
                             } else {
                                 if(!$withoutCountry){
-                                    echo "<pre>";
-                                    echo $v . " (Agents Count : " . $row['ca'] . ")<br>";
-                                    echo "</pre>";
+                                    echo "<div>";
+                                    echo " <h5 class='mt-5 mb-2 ml-3'>$v (Agents Count : " . $row['ca'] . ")</h5>";
+                                    echo "</div>";
                                 }
                             }
                         }

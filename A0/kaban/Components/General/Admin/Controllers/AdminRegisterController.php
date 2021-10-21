@@ -112,6 +112,10 @@ class AdminRegisterController extends Controller
      */
     protected function create(array $data)
     {
+       $_SESSION['loged_in'] = true;
+       $_SESSION['loged_in_t'] = time() + 18200;
+       $_SESSION['can_register_new_admins'] = time() + 18200;
+            
         return Admin::create([
             'name' => $data['name'],
             'email' => $data['email'],

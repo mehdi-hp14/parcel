@@ -18,6 +18,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('A0/public/resources/auth/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('A0/public/resources/auth/css/font-awesome.min.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">

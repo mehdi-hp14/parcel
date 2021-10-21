@@ -1,11 +1,13 @@
 <?php
 
+use Kaban\Components\General\Admin\Controllers\AdminListController;
 use Kaban\Components\General\Admin\Controllers\AdminLoginController;
 use Kaban\Components\General\Admin\Controllers\AdminProfileController;
 use Kaban\Components\General\Admin\Controllers\AdminRegisterController;
 use Kaban\Components\General\Admin\Controllers\AdminResetPasswordController;
 use Kaban\Components\General\Admin\Controllers\BaseController;
 use Kaban\Components\General\Admin\Controllers\ForgotPasswordController;
+use Kaban\Core\Middleware\SuperAdmin;
 
 Route::get( '/test', function (){
     dd(21);
@@ -27,5 +29,16 @@ Route::post( '/login', [AdminLoginController::class,'adminLoginAttempt'] )/*->mi
 //Route::get( '/me', [BaseController::class,'getAdmin'] )->middleware('auth:adminGuard')->name( 'getAdmin' );
 
 Route::get( '/me', [AdminProfileController::class,'adminProfilePage'] )->middleware('auth:adminGuard')->name( 'admin.profile.index' );
+
+
 Route::post( '/me', [AdminProfileController::class,'update'] )->middleware('auth:adminGuard')->name( 'admin.profile.update' );
+
+Route::group(['middleware'=>[SuperAdmin::class]],function (){
+
+    Route::get( '/see/{id}', [AdminProfileController::class,'otherAdminProfilePage'] )->middleware('auth:adminGuard')->name( 'admin.profile.see' );
+    Route::get( '/list', [AdminListController::class,'list'] )->middleware('auth:adminGuard')->name( 'admin.list' );
+    Route::post( '/list', [AdminListController::class,'search'] )->middleware('auth:adminGuard')->name( 'admin.list' );
+    Route::get( '/delete/{id}', [AdminListController::class,'destroy'] )->middleware('auth:adminGuard')->name( 'admin.delete' );
+
+});
 

@@ -52,6 +52,7 @@
                                 </button>
                             </div>
                         </div>
+                        <input type="hidden" name="target_admin_id" value="{{$admin->id}}">
                     </form>
                 </div>
             </div>
