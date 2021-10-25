@@ -5,6 +5,7 @@ namespace Kaban\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kaban\General\Enums\EAdminRank;
+use Kaban\General\Enums\EAdminStatus;
 use Kaban\General\Notifications\AdminResetPasswordNotification;
 
 class Admin extends Authenticatable
@@ -47,5 +48,9 @@ class Admin extends Authenticatable
     public function getRankEnAttribute()
     {
         return EAdminRank::farsi($this->rank);
+    }
+    public function getStatusEnAttribute()
+    {
+        return EAdminStatus::farsi($this->status);
     }
 }

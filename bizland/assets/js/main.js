@@ -215,6 +215,23 @@
   });
 
   /**
+   * Testimonials slider
+   */
+  new Swiper('.our-clients', {
+    speed: 600,
+    loop: true,
+    autoplay: {
+      delay: 1000,
+      disableOnInteraction: false
+    },
+    slidesPerView: '6',
+    // pagination: {
+    //   el: '.swiper-pagination',
+    //   type: 'bullets',
+    //   clickable: true
+    // }
+  });
+  /**
    * Porfolio isotope and filter
    */
   window.addEventListener('load', () => {

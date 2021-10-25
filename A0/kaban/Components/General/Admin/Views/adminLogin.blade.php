@@ -8,6 +8,11 @@
                 <div class="card-header">{{ __('please login to continue') }}</div>
 
                 <div class="card-body">
+                    @if (isset($_SESSION['suspend_error']))
+                        <div class="alert alert-danger" role="alert">
+                            {{ $_SESSION['suspend_error'] }}
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('adminLoginAttempt') }}">
                         @csrf
 

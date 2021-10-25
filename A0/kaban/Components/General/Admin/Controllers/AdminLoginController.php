@@ -17,8 +17,6 @@ class AdminLoginController
 
     public function adminLoginPage()
     {
-//dd(Auth::guard('adminGuard')->check());
-
         return view('GeneralAdmin::adminLogin');
     }
 
@@ -63,6 +61,7 @@ class AdminLoginController
         }
         return redirect(route('adminLoginPage'));
     }
+
     /**
      * Get the login username to be used by the controller.
      *

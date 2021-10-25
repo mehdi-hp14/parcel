@@ -25,7 +25,6 @@ class AdminListController extends Controller
         if (!$admins) {
             $admins = Admin::paginate(10);
         }
-
         return view('GeneralAdmin::list', compact('admins'));
     }
 
@@ -52,7 +51,7 @@ class AdminListController extends Controller
 
         $user = auth()->user();
 
-        if ($user->rank > $targetAdmin->rank) {
+        if ($user->id != $targetAdmin->id) {
             $targetAdmin->delete();
         }
 

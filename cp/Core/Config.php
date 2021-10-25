@@ -4,12 +4,18 @@ $Config = array();
 
 
 /***********Database Configuration**************/
-$Config['db']['host'] = 'localhost';
+$Config['db']['host'] = 'db';
 $Config['db']['port'] = '3306';
-$Config['db']['name'] = 'bookingp_qdb';
-$Config['db']['user'] = 'bookingp_qdusr';
-$Config['db']['pass'] = ',f[~jvXI~WU)';
+$Config['db']['name'] = 'parcel';
+$Config['db']['user'] = 'root';
+$Config['db']['pass'] = 'secret';
 
+
+//$options = [
+//    'cost' => 10,
+//    //'salt' => $salt
+//];
+//echo password_hash('admin', PASSWORD_BCRYPT, $options);
 
 
 
@@ -23,7 +29,7 @@ $Config['meta']['charset'] = array(
 );
 $Config['meta']['author'] = array(
 	'name'		=>	"author",
-	'content'	=>	"Esmaiel Fakhimi"
+	'content'	=>	"Esmaiel Fakhimi and amended by mmhp16@gmail.com"
 );
 $Config['meta']['keywords'] = array(
 	'name'		=>	"keywords",

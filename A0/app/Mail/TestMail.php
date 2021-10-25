@@ -64,7 +64,19 @@ class TestMail extends Mailable
 
         return $this->subject('Mail from ItSolutionStuff.com')
 
-            ->view('emails.myTestMail');
+            ->view('vendor.notifications.email',[
+                'actionText'=>'this is a actionText',
+                'actionUrl'=>'this is a actionUrl',
+                'greeting'=>'this is $greeting',
+                'introLines'=>[
+                    'this is introline1',
+                    'this is introline2',
+                    'this is introline3',
+                ],
+                'level'=>'success',
+                'outroLines'=>[],
+                'displayableActionUrl'=>'displayableActionUrl',
+                ]);
 
     }
 

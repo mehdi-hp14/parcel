@@ -1,5 +1,6 @@
 <?php
 
+use Kaban\Components\Site\Home\Controllers\HomeController;
 use Kaban\Models\Role;
 
 Route::group( [
@@ -12,10 +13,13 @@ Route::group( [
         'as'   => 'site.home',
         'uses' => 'HomeController@index'
     ] );
+
     Route::get( '/xx', function () {
         echo 'mehdi';
 //        echo phpinfo();
     } )->name( 'home2' );
+
+    Route::post( '/contact', [HomeController::class,'contact'] )->name( 'contact' );
 //    Route::get( '/', function () {
 //        $user = request()->user(); //getting the current logged in customer
 //    dd( $customer );

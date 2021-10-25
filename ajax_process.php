@@ -2,7 +2,10 @@
 
 include("post_forms/cnf.php");
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $errors = array();      // array to hold validation errors
 $data   = array();      // array to pass back data
 
@@ -264,14 +267,23 @@ $country = array(
 $ship_kind = array('Comercial'=>1,'Personal'=>2);
 $timeSelect = array('ASAP'=>0,'This week'=>1,'This month'=>2,'Exact date'=>3,'Not sure when'=>4);
 $ship_method = array('Air'=>1,'Sea'=>2,'Land'=>3,'Rail Way'=>4,'Charter'=>6,'Not sure'=>5);
-if($_SESSION['ship_method'] == 1){
+$containerType = [];
+$_active_acc = null;
+
+$_SESSION['containerType'] = isset($_SESSION['containerType']) ? $_SESSION['containerType'] :null;
+$_SESSION['note'] = isset($_SESSION['note']) ? $_SESSION['note'] :null;
+$_SESSION['exact_date'] = isset($_SESSION['exact_date']) ? $_SESSION['exact_date'] :null;
+$_SESSION['account'] = isset($_SESSION['account']) ? $_SESSION['account'] :null;
+$_SESSION['uname'] = isset($_SESSION['uname']) ? $_SESSION['uname'] :null;
+
+if(@$_SESSION['ship_method'] == 1){
 	$shipMethod = array('Airport to Door'=>4,'Door to Door'=>1,'Door to Airport'=>2,'Airport to Airport'=>3);
 }
-if($_SESSION['ship_method'] == 2){
+if(@$_SESSION['ship_method'] == 2){
 	$shipMethod = array('Door to Door'=>1,'Door to Port'=>2,'Port to Port'=>3,'Port to Door'=>4);
 	$containerType = array('FCL'=>1,'LCL'=>2,'Not sure'=>3);
 }
-if($_SESSION['ship_method'] == 3){
+if(@$_SESSION['ship_method'] == 3){
 	$containerType = array('FTL'=>1,'LTL'=>2,'Not sure'=>3);
 }
 $term = array('EX-Work'=>1,'FOB'=>2,'CPT'=>4,'DDP'=>5,'DDU'=>6,'Other'=>3);
@@ -1354,7 +1366,7 @@ elseif(isset($_GET['cmd']) AND $_GET['cmd']=='files')
 				$format = explode(".",basename($_FILES['file']['name'][$k]));
 				$format = strtolower($format[(count($format)-1)]);
 				$filename = basename($_FILES['file']['name'][$k]);
-				if($file["size"] > 52428801) {
+				if($_FILES['file']['size'][$k] > 52428801) {
 					$errors['upload'] .= basename( $_FILES['file']['name'][$k])." Invalid file size<br>";
 					$uploadOk = 0;
 				} elseif($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" && $imageFileType != "rtf" && $imageFileType != "zip" && $imageFileType != "pdf" && $imageFileType != "doc" && $imageFileType != "docx" && $imageFileType != "xls" && $imageFileType != "xlsx") {
@@ -1464,7 +1476,7 @@ $html .= '
 $html .= '
 							<div class="row">
 								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-									<div class="row required'.($errors['upload']!='' ? " error" : "").'">
+									<div class="row required'.(@$errors['upload'] !='' ? " error" : "").'">
 										<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 my-5">
 											MSDS files :
 										</div>
@@ -1979,7 +1991,7 @@ $html .= '
 							<input type="hidden" name="step" value="1">
 							<div class="row">
 								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
-									<div class="required '.($errors['ship_type']!='' ? " error" : "").'">Please Select&nbsp;:&nbsp;</div>
+									<div class="required '.(@$errors['ship_type']!='' ? " error" : "").'">Please Select&nbsp;:&nbsp;</div>
 									<div>
 										<input type="radio" name="ship_type" value="1"'.((!isset($errors['ship_type']) AND $_POST['ship_type']==1) ? " checked='checked'" : "").' id="ShipType1" OnClick="CountryFunction(\'from\',\'uk\');" required="true" >&nbsp;<label for="ShipType1">Shipping from the UK</label><br>
 										<input type="radio" name="ship_type" value="2"'.((!isset($errors['ship_type']) AND $_POST['ship_type']==2) ? " checked='checked'" : "").' id="ShipType2" OnClick="CountryFunction(\'to\',\'uk\');" required="true">&nbsp;<label for="ShipType2">Shipping to the UK</label><br>
@@ -3937,7 +3949,7 @@ $html .= '
 									<div>The following contact details are for pricing only, and wont be used for shipping documents.</div>
 								</div>
 								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
-									<div class="required'.($errors['account']!='' ? " error" : "").'">Note: having account in <a href="http://cp.bookingparcel.com">User Panel</a> gives you some options such as ticketing and easily tracking and some more.<br>It is not necessary to have account but it is highly recommended.</div>
+									<div class="required'.(isset($errors['account']) && $errors['account']!='' ? " error" : "").'">Note: having account in <a href="http://cp.bookingparcel.com">User Panel</a> gives you some options such as ticketing and easily tracking and some more.<br>It is not necessary to have account but it is highly recommended.</div>
 									<div>
 										<input type="radio" name="account" value="1"'.((!isset($errors['account']) AND $_POST['account']==1) ? " checked='checked'" : "").' id="account1">&nbsp;<label for="account1">I have account in <a href="http://cp.bookingparcel.com">User Panel</a> .</label><br>
 										<input type="radio" name="account" value="2"'.((!isset($errors['account']) AND $_POST['account']==2) ? " checked='checked'" : "").' id="account2">&nbsp;<label for="account2">I don\'t have account in <a href="http://cp.bookingparcel.com">User Panel</a> .</label>
@@ -3968,19 +3980,20 @@ $html .= '
 							</div>
 							<div class="row">
 								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
-									<div class="'.($errors['invoiceEmail']!='' ? " error" : "").'">E-mail for receive invoice :</div>
+									<div class="'.(isset($errors['invoiceEmail']) && $errors['invoiceEmail']!='' ? " error" : "").'">E-mail for receive invoice :</div>
 									<div><input type="email" class="form-control" name="invoiceEmail"'.((isset($_POST['invoiceEmail']) AND $_POST['invoiceEmail']!='') ? " value='".$_POST['invoiceEmail']."'" : "").'></div>
 								</div>
 								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
-									<div class="'.($errors['quoteEmail']!='' ? " error" : "").'">E-mail for receive quote :</div>
+									<div class="'.(isset($errors['quoteEmail']) &&$errors['quoteEmail']!='' ? " error" : "").'">E-mail for receive quote :</div>
 									<div><input type="email" class="form-control" name="quoteEmail"'.((isset($_POST['quoteEmail']) AND $_POST['quoteEmail']!='') ? " value='".$_POST['quoteEmail']."'" : "").'></div>
 								</div>
 								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
-									<div class="'.($errors['prealertEmail']!='' ? " error" : "").'">E-mail for receive prealert :</div>
+									<div class="'.(isset($errors['prealertEmail']) &&$errors['prealertEmail']!='' ? " error" : "").'">E-mail for receive prealert :</div>
 									<div><input type="email" class="form-control" name="prealertEmail"'.((isset($_POST['prealertEmail']) AND $_POST['prealertEmail']!='') ? " value='".$_POST['prealertEmail']."'" : "").'></div>
 								</div>
 								<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 my-5">
-									<div class="'.(($errors['cc1']!='' OR $errors['cc2']!='' OR $errors['cc3']!='' OR $errors['cc4']!='') ? " error" : "").'">Other CC Email address :</div>
+									<div class="'.(isset($errors['cc1'],$errors['cc2'],$errors['cc3'],$errors['cc4']) &&
+    ($errors['cc1']!='' OR $errors['cc2']!='' OR $errors['cc3']!='' OR $errors['cc4']!='')) ? " error" : "".'">Other CC Email address :</div>
 									<div>
 									(1):<input type="email" class="form-control" name="cc1"'.((isset($_POST['cc1']) AND $_POST['cc1']!='') ? " value='".$_POST['cc1']."'" : "").'><br>
 									(2):<input type="email" class="form-control" name="cc2"'.((isset($_POST['cc2']) AND $_POST['cc2']!='') ? " value='".$_POST['cc2']."'" : "").'><br>
@@ -4793,6 +4806,8 @@ $html .= '
 				$data['message'] = $html;
 			}
 			else{
+                $_SESSION['request_completed'] = true;
+
 				$tmp = "";
 				$_c = 0;
 				foreach($_SESSION['dims'] as $k=>$v)
@@ -4800,13 +4815,14 @@ $html .= '
 					$tmp .= ($_c +1).') '.$v.' => '.$_SESSION['weights'][$k].' kg | ';
 					$_c++;
 				}
-				
+				$name_ = $_SESSION['name'];
+				$note_ = $_SESSION['note']??'';
 				$q = "INSERT INTO `quote` (`fname`, `company`, `phone`, `email`, `pr_contact_m`, `pr_contact_t`, `note`, `item_c`, `dims`, `total_weight`, `insurance`, ";
 				$q .="`item_desc`, `from`, `to`, `shipping_type`, `ship_container`, `shipping_sub_type`, `from_st`, `to_st`, `from_location`, `to_location`, `pack_type`, `date`, `exact_date`,";
 				$q .="`lithiumb`, `chemical`, `danger`, `timestamp`) VALUES ";
-				$q .= "('".$_SESSION['name']."', '".$_SESSION['company']."', '".$_SESSION['phone']."', '".$_SESSION['email']."', '".array_search($_SESSION['contactMethod'],$contactMethod)."', '".array_search($_SESSION['contactTime'],$contactTime)."',";
-				$q .= "'".$_SESSION['note']."', '".$_SESSION['itemCount']."', '".$tmp."', '".$_SESSION['t_weight']."', '".array_search($_SESSION['insurance'],$insurance)."',";
-				$q .= "'".$_SESSION['desc']."', '".$_SESSION['from_country']."', '".$_SESSION['to_country']."', '".array_search($_SESSION['ship_method'],$ship_method)."', '".array_search($_SESSION['containerType'],$containerType)."', ";
+				$q .= "('".$name_."', '".$_SESSION['company']."', '".$_SESSION['phone']."', '".$_SESSION['email']."', '".array_search($_SESSION['contactMethod'],$contactMethod)."', '".array_search($_SESSION['contactTime'],$contactTime)."',";
+				$q .= "'".$note_."', '".$_SESSION['itemCount']."', '".$tmp."', '".$_SESSION['t_weight']."', '".array_search($_SESSION['insurance'],$insurance)."',";
+				$q .= "'".$_SESSION['desc']."', '".$_SESSION['from_country']."', '".$_SESSION['to_country']."', '".array_search($_SESSION['ship_method'],$ship_method)."', '".array_search($_SESSION['containerType']??[],$containerType ?? [])."', ";
 				$q .= "'".array_search($_SESSION['shipMethod'],$shipMethod)."', '".$_SESSION['collection_city']."', '".$_SESSION['destination_city']."', '".$_SESSION['collection_pt']."', '".$_SESSION['delivery_pt']."', '".array_search($_SESSION['ship_kind'],$ship_kind)."', ";
 				$q .= "'".(in_array($_SESSION['time'],$timeSelect) ? array_search($_SESSION['time'],$timeSelect) : 'Exact date')."', '".(!in_array($_SESSION['time'],$timeSelect) ? $_SESSION['time'] : '')."', ";
 				$q .= "'".array_search($_SESSION['lithium'],$lithium)."', '".array_search($_SESSION['chemicals'],$chemicals)."', '".array_search($_SESSION['dg'],$dg)."', '".$time."');";

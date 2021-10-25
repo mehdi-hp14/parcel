@@ -38,7 +38,7 @@ class ComponentsServiceProvider extends ServiceProvider {
         }
 
 //        $this->publishes($publish);
-
+        app('view')->addNamespace('mail', resource_path('views') . '/mail');
     }
 
     /**

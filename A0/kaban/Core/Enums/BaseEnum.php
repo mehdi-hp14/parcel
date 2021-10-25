@@ -84,6 +84,19 @@ class BaseEnum extends Enum {
 
         return implode( '', $ret );
     }
+    public static function optionizeValue( $trans = false, $prefix = '', $default = null ) {
+        $ret = [];
+        foreach ( self::toArray() as $key => $value ) {
+            if ( $trans ) {
+                $text = trans( $prefix . $value );
+            } else {
+                $text = $value;
+            }
+            $ret[] = '<option value="' . $value . '" ' . ( ( $value == $default ) ? 'selected' : '' ) . '>' . $text . '</option>';
+        }
+
+        return implode( '', $ret );
+    }
 
     public static function flipOptionize( $trans = false, $prefix = '', $default = null ) {
         $ret = [];

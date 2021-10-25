@@ -68,6 +68,9 @@
                                 <a class="dropdown-item" href="{{ config('general.ADMIN_DASHBOARD_PAGE') }}" >
                                     {{ __('Dashboard') }}
                                 </a>
+                                <a class="dropdown-item" href="{{ config('routes.ADMIN_LIST') }}" >
+                                    {{ __('Admin List') }}
+                                </a>
                                 <a class="dropdown-item" href="{{ route('admin.logout') }}" >
                                     {{ __('Logout') }}
                                 </a>

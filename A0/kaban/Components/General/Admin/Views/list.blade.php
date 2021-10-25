@@ -27,6 +27,7 @@
 {{--                                            <th scope="col" class="border-0 text-uppercase font-medium">Occupation</th>--}}
                                             <th scope="col" class="border-0 text-uppercase font-medium">Email</th>
                                             <th scope="col" class="border-0 text-uppercase font-medium">role</th>
+                                            <th scope="col" class="border-0 text-uppercase font-medium">status</th>
                                             <th scope="col" class="border-0 text-uppercase font-medium">actions</th>
 {{--                                            <th scope="col" class="border-0 text-uppercase font-medium">Added</th>--}}
 {{--                                            <th scope="col" class="border-0 text-uppercase font-medium">Category</th>--}}
@@ -46,6 +47,9 @@
                                             </td>
                                             <td>
                                                 <h5>{{$admin->rank_en}}</h5>
+                                            </td>
+                                            <td>
+                                                <h5>{{$admin->status_en}}</h5>
                                             </td>
                                             <td>
                                                 <a onclick="return confirm('you are about to removing {{$admin->email}}, are you sure?')"

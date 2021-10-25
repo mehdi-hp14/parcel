@@ -10,7 +10,7 @@ class EAdminRank extends BaseEnum {
     const superAdmin = 10;
 
     static $farsiArray = [
-        0 => 'admin',
-        10 => 'super admin',
+        0 => 'Admin',
+        10 => 'Super Admin',
     ];
 }

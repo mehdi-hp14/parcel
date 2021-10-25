@@ -7,6 +7,22 @@ if (session_status() === PHP_SESSION_NONE) {
 if (!defined('LARAVEL_START')) {
     require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'A0' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'laravel_inclusion.php';
 }
+// mano dus dashte bash.man vaghean motasefam!
+
+$admin = auth()->guard('adminGuard')->user();
+
+/*handle suspenssion*/
+if ($admin && $admin->status == \Kaban\General\Enums\EAdminStatus::disabled) {
+    $_SESSION['suspend_error'] = 'your account has been suspended!';
+    auth()->guard('adminGuard')->logout();
+
+    header("Location: " . config('general.ADMIN_LOGOUT'));
+    die();
+}else{
+    unset($_SESSION['suspend_error']);
+}
+/*End of handle suspenssion*/
+
 
 if (auth()->guard('adminGuard')->check() && (!isset($_SESSION['loged_in_t']) || $_SESSION['loged_in_t'] < time())) {
     //if laravel logged in we should add the session
