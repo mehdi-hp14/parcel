@@ -10,6 +10,17 @@
       'Debugbar' => 'Barryvdh\\Debugbar\\Facade',
     ),
   ),
+  'biscolab/laravel-recaptcha' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Biscolab\\ReCaptcha\\ReCaptchaServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'ReCaptcha' => 'Biscolab\\ReCaptcha\\Facades\\ReCaptcha',
+    ),
+  ),
   'facade/ignition' => 
   array (
     'providers' => 
@@ -39,6 +50,19 @@
       'Image' => 'Intervention\\Image\\Facades\\Image',
     ),
   ),
+  'jimmyjs/laravel-report-generator' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Jimmyjs\\ReportGenerator\\ServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'PdfReport' => 'Jimmyjs\\ReportGenerator\\Facades\\PdfReportFacade',
+      'ExcelReport' => 'Jimmyjs\\ReportGenerator\\Facades\\ExcelReportFacade',
+      'CSVReport' => 'Jimmyjs\\ReportGenerator\\Facades\\CSVReportFacade::class',
+    ),
+  ),
   'kalnoy/nestedset' => 
   array (
     'providers' => 
@@ -65,6 +89,17 @@
     'providers' => 
     array (
       0 => 'Laravel\\Ui\\UiServiceProvider',
+    ),
+  ),
+  'maatwebsite/excel' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Excel' => 'Maatwebsite\\Excel\\Facades\\Excel',
     ),
   ),
   'nesbot/carbon' => 

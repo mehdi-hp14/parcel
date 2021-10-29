@@ -12,7 +12,7 @@ if(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSION
 	$_SESSION['loged_in_t'] = time()+time_out;
 }
 
-
+$sys_msg='';
 if(!(isset($_GET['id']) AND is_numeric($_GET['id']) AND $_GET['id']>0)){
 	header("Location: tickets.php");
 	exit;

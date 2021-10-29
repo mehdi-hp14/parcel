@@ -66,13 +66,19 @@
       thisForm.querySelector('.loading').classList.remove('d-block');
       if (data.trim() == 'OK') {
         thisForm.querySelector('.sent-message').classList.add('d-block');
-        thisForm.reset(); 
+        thisForm.reset();
       } else {
         throw new Error(data ? data : 'Form submission failed and no error message returned from: ' + action); 
       }
     })
     .catch((error) => {
-      displayError(thisForm, error);
+      let msg = JSON.parse(error.message);
+      if( msg?.status ==='ok' ) {
+        alert('your message has been sent successfully')
+        return msg.msg
+      }else{
+        displayError(thisForm, error);
+      }
     });
   }
 

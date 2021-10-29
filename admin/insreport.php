@@ -167,18 +167,34 @@ function ConfirmFunc(a,b) {
 					Quote ID : <input type="number" name="qid"><br>
 					<button class="btn btn-green" type="submit">Apply</button>
 					</form>
+                    <form action="/admin/report/1" method="get">
+					Quote ID : <input type="number" name="qid"><br>
+					<button class="btn btn-green" type="submit">Apply2</button>
+					</form>
+					<hr>
 					<hr>
 					<h3>Multi Report By Quote ID</h3>
 					<form action="report.php?type=2" method="post">
 					Quote ID => From : <input type="number" name="qid1"> To : <input type="number" name="qid2"><br>
 					<button class="btn btn-green" type="submit">Apply</button>
 					</form>
+                    <h3>Multi Report By Quote ID</h3>
+                    <form action="/admin/report/2" method="get">
+                        Quote ID => From : <input type="number" name="qid1"> To : <input type="number" name="qid2"><br>
+                        <button class="btn btn-green" type="submit">Apply2</button>
+                    </form>
+					<hr>
 					<hr>
 					<h3>Multi Report By Order Date</h3>
 					<form action="report.php?type=3" method="post">
 					Date => From : <input type="text" name="date1" value="<?php echo date("Y/m/d",(time()-(30*86400))); ?>"> To : <input type="text" name="date2" value="<?php echo date("Y/m/d",(time())); ?>"><br>
 					<button class="btn btn-green" type="submit">Apply</button>
 					</form>
+                    <h3>Multi Report By Order Date</h3>
+                    <form action="/admin/report/3" method="get">
+                        Date => From : <input type="text" name="date1" value="<?php echo date("Y/m/d",(time()-(30*86400))); ?>"> To : <input type="text" name="date2" value="<?php echo date("Y/m/d",(time())); ?>"><br>
+                        <button class="btn btn-green" type="submit">Apply2</button>
+                    </form>
                 </div>
             </div>
         </div>

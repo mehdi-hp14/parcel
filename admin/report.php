@@ -11,7 +11,10 @@ if(!(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSI
 if(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSION['loged_in']==true AND $_SESSION['loged_in_t']>=time()){
 	$_SESSION['loged_in_t'] = time()+time_out;
 }
-
+$temp=$id=null;
+$id = 0;
+$tid = 0;
+$row=[];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -75,14 +78,17 @@ if(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSION
 <body>
 
 <?php
-$temp = "Item ID : ".$id."<br>Tracking ID : ".$row['tid']."<br><hr>";
-$temp .= '<table style="border-collapse: collapse; width: 566pt" border="0" cellpadding="0" cellspacing="0" width="754"><tbody><tr style="height:27.6pt" height="36"><td colspan="3" style="height: 27.6pt;; width: 470pt" height="36" align="left" width="626">Sender (Collection) Information <font color="#ff0000">( Also for HAWB)</font><br></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">'.$row2['scompany'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['saddress'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td><td  style="border-top: none">&nbsp;</td><td >'. $row2['szipcode'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['scountry'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['scontactp'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['stelephone'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td><td  style="border-top: none">&nbsp;</td><td align="left">'.$row2['semail'].'</td></tr><tr style="height: 27.6pt" height="36"><td  colspan="3" style="height: 27.6pt;" height="36" align="left">Receiver (Delivery) Information <font color="#ff0000">( Also for HAWB)</font></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">'.$row2['rcompany'].'</td></tr>';
-$temp .= '<tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['raddress'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td><td  style="border-top: none">&nbsp;</td><td >'. $row2['rpostcode'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['rcountry'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['rcontactp'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['rtelephone'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td><td  style="border-top: none">&nbsp;</td><td align="left">'. $row2['remail'].'</td></tr></tbody></table><br>';
-$temp .= '<br>';
-if($user_info!=null and is_array($user_info) AND false){
-	$temp .= $user_info['company'] ."\n".$user_info['address']."\nTel : ".$user_info['phone'];
+if(isset($row['tid'])){
+    $temp = "Item ID : ".$id."<br>Tracking ID : ".$row['tid']."<br><hr>";
+    $temp .= '<table style="border-collapse: collapse; width: 566pt" border="0" cellpadding="0" cellspacing="0" width="754"><tbody><tr style="height:27.6pt" height="36"><td colspan="3" style="height: 27.6pt;; width: 470pt" height="36" align="left" width="626">Sender (Collection) Information <font color="#ff0000">( Also for HAWB)</font><br></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">'.$row2['scompany'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['saddress'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td><td  style="border-top: none">&nbsp;</td><td >'. $row2['szipcode'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['scountry'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['scontactp'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['stelephone'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td><td  style="border-top: none">&nbsp;</td><td align="left">'.$row2['semail'].'</td></tr><tr style="height: 27.6pt" height="36"><td  colspan="3" style="height: 27.6pt;" height="36" align="left">Receiver (Delivery) Information <font color="#ff0000">( Also for HAWB)</font></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">'.$row2['rcompany'].'</td></tr>';
+    $temp .= '<tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['raddress'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td><td  style="border-top: none">&nbsp;</td><td >'. $row2['rpostcode'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['rcountry'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['rcontactp'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['rtelephone'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td><td  style="border-top: none">&nbsp;</td><td align="left">'. $row2['remail'].'</td></tr></tbody></table><br>';
+    $temp .= '<br>';
+    if($user_info!=null and is_array($user_info) AND false){
+        $temp .= $user_info['company'] ."\n".$user_info['address']."\nTel : ".$user_info['phone'];
+    }
+    $temp .= '<br>';
 }
-$temp .= '<br>';
+
 
 
 $output = "";
@@ -166,7 +172,9 @@ if(isset($_GET['type']))
 						$output .= "Agent Email : ".$emails[0]."<br>";
 						$output .= "Agent Name : ".$agent['fname']."<br>";
 						$output .= "Agent Company : ".$agent['cname']."<br><b>___________________________</b><br>";
-					}
+                        $output .= 'Dear '.$agent['fname'].',<br><br>';
+
+                    }
 					else
 					{
 						$output .= "<span style='color:#ff0000;'>Note</span> : No Agent is connected to this quote.<br>";
@@ -175,8 +183,22 @@ if(isset($_GET['type']))
 						$output .= "Agent Name : --<br>";
 						$output .= "Agent Company : --<br><b>___________________________</b><br>";
 					}
+                    $row2['scompany'] = $row2['scompany'] ??'';
+                    $row2['saddress'] = $row2['saddress'] ??'';
+                    $row2['szipcode'] = $row2['szipcode'] ??'';
+                    $row2['scountry'] = $row2['scountry'] ??'';
+                    $row2['scontactp'] = $row2['scontactp'] ??'';
+                    $row2['stelephone'] = $row2['stelephone'] ??'';
+                    $row2['semail'] = $row2['semail'] ??'';
+                    $row2['rcompany'] = $row2['rcompany'] ??'';
+                    $row2['raddress'] = $row2['raddress'] ??'';
+                    $row2['rpostcode'] = $row2['rpostcode'] ??'';
+                    $row2['rcountry'] = $row2['rcountry'] ??'';
+                    $row2['rcontactp'] = $row2['rcontactp'] ??'';
+                    $row2['rtelephone'] = $row2['rtelephone'] ??'';
+                    $row2['remail'] = $row2['remail'] ??'';
 
-					$output .= 'Dear '.$agent['fname'].',<br><br>';
+
 					$output .= 'This order (Ref. '. $row['tid'] .') Confirmed by <span style="font-weight:bold;color:#ff0000;">'.$airline.'</span>. Please arrange collection as following instruction and update us <b>ASAP</b>:<br>';
 					$output .= '<span style="color:#ff0000;font-weight:bold;">Very Important Note:<br>Please make sure and write in Manifest  following information for this cargo as well:<br>Full address of sender and receiver<br>Full description of goods<br>Weight and value<br>HS code /Codes</span><br><br>';
 					$output .= '<table style="border-collapse: collapse; width: 566pt" border="0" cellpadding="0" cellspacing="0" width="754"><tbody><tr style="height:27.6pt" height="36"><td colspan="3" style="height: 27.6pt;; width: 470pt" height="36" align="left" width="626">Sender (Collection) Information <font color="#ff0000">( Also for HAWB)</font><br></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">'.$row2['scompany'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['saddress'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td><td  style="border-top: none">&nbsp;</td><td >'. $row2['szipcode'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['scountry'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['scontactp'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['stelephone'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td><td  style="border-top: none">&nbsp;</td><td align="left">'.$row2['semail'].'</td></tr><tr style="height: 27.6pt" height="36"><td  colspan="3" style="height: 27.6pt;" height="36" align="left">Receiver (Delivery) Information <font color="#ff0000">( Also for HAWB)</font></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">'.$row2['rcompany'].'</td></tr>';
@@ -194,13 +216,13 @@ if(isset($_GET['type']))
 			break;
 		case 2:
 			if(isset($_POST['qid1']) AND is_numeric($_POST['qid1']) AND $_POST['qid1']>0 AND isset($_POST['qid2']) AND is_numeric($_POST['qid2']) AND $_POST['qid2']>0){
-				
-				$q = "SELECT count(*) as cc FROM `quote` WHERE `id`>= ". $_POST['qid1'] ." AND  `id`<= ". $_POST['qid2'] ." AND `status` IN (1,2,4)";
+//				dd($_POST['qid1'],$_POST['qid2'] );
+				$q = "SELECT count(*) as cc FROM `quote` WHERE `id`>= ". (int)$_POST['qid1'] ." AND  `id`<= ". (int)$_POST['qid2'] ." AND `status` IN (1,2,4)";
 				$rr = mysql_fetch_array(mysql_query($q));
 				echo $rr['cc']." Reports are listed bellow<br><br><br><br><br>___________________________</b><br>";
 				if($rr['cc']>0){
 					
-					$q = "SELECT id FROM `quote` WHERE `id`>= ". $_POST['qid1'] ." AND  `id`<= ". $_POST['qid2'] ." AND `status` IN (1,2,4)";
+					$q = "SELECT id FROM `quote` WHERE `id`>= ". (int)$_POST['qid1'] ." AND  `id`<= ". (int)$_POST['qid2'] ." AND `status` IN (1,2,4)";
 					$ress = mysql_query($q);
 					while($rrr = mysql_fetch_array($ress))
 					{
@@ -259,7 +281,21 @@ if(isset($_GET['type']))
 						{
 							$agent = mysql_fetch_array($res);
 						}
-					
+                        $row2['scompany'] = $row2['scompany'] ??'';
+                        $row2['saddress'] = $row2['saddress'] ??'';
+                        $row2['szipcode'] = $row2['szipcode'] ??'';
+                        $row2['scountry'] = $row2['scountry'] ??'';
+                        $row2['scontactp'] = $row2['scontactp'] ??'';
+                        $row2['stelephone'] = $row2['stelephone'] ??'';
+                        $row2['semail'] = $row2['semail'] ??'';
+                        $row2['rcompany'] = $row2['rcompany'] ??'';
+                        $row2['raddress'] = $row2['raddress'] ??'';
+                        $row2['rpostcode'] = $row2['rpostcode'] ??'';
+                        $row2['rcountry'] = $row2['rcountry'] ??'';
+                        $row2['rcontactp'] = $row2['rcontactp'] ??'';
+                        $row2['rtelephone'] = $row2['rtelephone'] ??'';
+                        $row2['remail'] = $row2['remail'] ??'';
+
 						$output .= "Item ID : ".$id."<br>Tracking ID : ".$row['tid']."<br><b>___________________________</b><br>";
 						$output .= '<table style="border-collapse: collapse; width: 566pt" border="0" cellpadding="0" cellspacing="0" width="754"><tbody><tr style="height:27.6pt" height="36"><td colspan="3" style="height: 27.6pt;; width: 470pt" height="36" align="left" width="626">Sender (Collection) Information <font color="#ff0000">( Also for HAWB)</font><br></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">'.$row2['scompany'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['saddress'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td><td  style="border-top: none">&nbsp;</td><td >'. $row2['szipcode'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['scountry'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['scontactp'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['stelephone'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td><td  style="border-top: none">&nbsp;</td><td align="left">'.$row2['semail'].'</td></tr><tr style="height: 27.6pt" height="36"><td  colspan="3" style="height: 27.6pt;" height="36" align="left">Receiver (Delivery) Information <font color="#ff0000">( Also for HAWB)</font></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">'.$row2['rcompany'].'</td></tr>';
 						$output .= '<tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['raddress'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td><td  style="border-top: none">&nbsp;</td><td >'. $row2['rpostcode'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['rcountry'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['rcontactp'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td><td  style="border-top: none">&nbsp;</td><td  align="left">'. $row2['rtelephone'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td><td  style="border-top: none">&nbsp;</td><td align="left">'. $row2['remail'].'</td></tr></tbody></table><br>';
@@ -348,7 +384,9 @@ if(isset($_GET['type']))
 							$output .= "Agent Email : ".$emails[0]."<br>";
 							$output .= "Agent Name : ".$agent['fname']."<br>";
 							$output .= "Agent Company : ".$agent['cname']."<br><b>___________________________</b><br>";
-						}
+                            $output .= 'Dear '.$agent['fname'].',<br><br>';
+
+                        }
 						else
 						{
 							$output .= "<span style='color:#ff0000;'>Note</span> : No Agent is connected to this quote.<br>";
@@ -357,8 +395,20 @@ if(isset($_GET['type']))
 							$output .= "Agent Name : --<br>";
 							$output .= "Agent Company : --<br><b>___________________________</b><br>";
 						}
-
-						$output .= 'Dear '.$agent['fname'].',<br><br>';
+$row2['scompany'] = $row2['scompany'] ??'';
+$row2['saddress'] = $row2['saddress'] ??'';
+$row2['szipcode'] = $row2['szipcode'] ??'';
+$row2['scountry'] = $row2['scountry'] ??'';
+$row2['scontactp'] = $row2['scontactp'] ??'';
+$row2['stelephone'] = $row2['stelephone'] ??'';
+$row2['semail'] = $row2['semail'] ??'';
+$row2['rcompany'] = $row2['rcompany'] ??'';
+$row2['raddress'] = $row2['raddress'] ??'';
+$row2['rpostcode'] = $row2['rpostcode'] ??'';
+$row2['rcountry'] = $row2['rcountry'] ??'';
+$row2['rcontactp'] = $row2['rcontactp'] ??'';
+$row2['rtelephone'] = $row2['rtelephone'] ??'';
+$row2['remail'] = $row2['remail'] ??'';
 						$output .= 'This order (Ref. '. $row['tid'] .') Confirmed by <span style="font-weight:bold;color:#ff0000;">'.$airline.'</span>. Please arrange collection as following instruction and update us <b>ASAP</b>:<br>';
 						$output .= '<span style="color:#ff0000;font-weight:bold;">Very Important Note:<br>Please make sure and write in Manifest  following information for this cargo as well:<br>Full address of sender and receiver<br>Full description of goods<br>Weight and value<br>HS code /Codes</span><br><br>';
 						$output .= '<table style="border-collapse: collapse; width: 566pt" border="0" cellpadding="0" cellspacing="0" width="754"><tbody><tr style="height:27.6pt" height="36"><td colspan="3" style="height: 27.6pt;; width: 470pt" height="36" align="left" width="626">Sender (Collection) Information <font color="#ff0000">( Also for HAWB)</font><br></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">'.$row2['scompany'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['saddress'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td><td  style="border-top: none">&nbsp;</td><td >'. $row2['szipcode'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['scountry'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['scontactp'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td><td  style="border-top: none">&nbsp;</td><td  align="left">'.$row2['stelephone'].'</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td><td  style="border-top: none">&nbsp;</td><td align="left">'.$row2['semail'].'</td></tr><tr style="height: 27.6pt" height="36"><td  colspan="3" style="height: 27.6pt;" height="36" align="left">Receiver (Delivery) Information <font color="#ff0000">( Also for HAWB)</font></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">'.$row2['rcompany'].'</td></tr>';

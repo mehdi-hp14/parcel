@@ -51,7 +51,7 @@ Route::get( '/mail', function (){
 
 
 
-    \Mail::to('mmhp16@gmail.com')->send(new \App\Mail\TestMail($details));
+    \Mail::to('mmhp16@gmail.com')->send(new \App\Mail\Contact($details));
 //    Mail::raw('hello!')->
 
 //    to('mmhp16@gmail.com')->;

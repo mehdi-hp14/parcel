@@ -230,6 +230,8 @@ $post_c = array(
 	'Radio-194'=>'Zimbabwe'
 );
 
+$error_m = '';
+
 $q = "SELECT * FROM `settings` WHERE `keyword`='quote-formula'";
 $r = mysql_query($q) or die(mysql_error());
 $quoteFormula = mysqli_fetch_object($r);
@@ -581,6 +583,8 @@ function GetOfferPriceFromReceive($rprice, $currency="EUR",$extra_c=0,$percent=0
 $q = "SELECT `paid`, `uname`, `offered_p`, `total_weight` FROM `quote` WHERE `id`=".$id."";
 $r = mysql_query($q) or die(mysql_error());
 $row = mysql_fetch_array($r);
+$q_p = array();
+$error = false;
 if(isset($_POST['t']) AND $_POST['t']==1){
 
     $currentQuote = "SELECT quote.*, users.id as user_id FROM `quote` LEFT JOIN users on users.uname=quote.uname WHERE quote.id=".$_GET['id'];
@@ -647,7 +651,6 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 
 
     }
-	$q_p = array();
 	$tmp = "";
 	$_c = 0;
 	if(isset($_POST['dimss']) AND is_array($_POST['dimss']) AND count($_POST['dimss'])>0){
@@ -990,7 +993,8 @@ elseif(isset($_POST['t']) AND $_POST['t']=='upload')
 		mkdir($locations, 0755, true);
 	}
 	if(isset($_FILES['uploaded_file']['name']) AND is_array($_FILES['uploaded_file']['name']) AND count($_FILES['uploaded_file']['name'])>0){
-		foreach($_FILES['uploaded_file']['name'] as $k => $upload){
+        $error_m='';
+        foreach($_FILES['uploaded_file']['name'] as $k => $upload){
 			if(isset($_FILES['uploaded_file']['name'][$k]) AND $_FILES['uploaded_file']['name'][$k] !="" AND $_FILES['uploaded_file']['name'][$k]!=null){
 
 				$target_dir = $locations;
@@ -1037,7 +1041,7 @@ if(isset($error_m) && $error_m!=""){
     <div class="box round first">
         <h2>Notifications</h2>
 		<div class="block">
-		<?php if($error == false){ ?>
+		<?php if($error  == false){ ?>
 			<div class="message success">
 				<h5>Success!</h5>
 				<p>
@@ -1046,7 +1050,7 @@ if(isset($error_m) && $error_m!=""){
 				<p>
 					the changing is sorted as bellow:
 				</p>
-				<p><?php foreach($q_p as $k=>$v) {
+				<p><?php  foreach($q_p as $k=>$v) {
 					$tmp = explode("'",$v);
 					echo $tmp[1]."<br>";
 

@@ -217,14 +217,18 @@
   /**
    * Testimonials slider
    */
+  let clientPerView = 5;
+  clientPerView = window.innerWidth < 1000? 4 :clientPerView ;
+  clientPerView = window.innerWidth < 800 ? 3 :clientPerView ;
+  clientPerView = window.innerWidth < 600 ? 2 :clientPerView ;
   new Swiper('.our-clients', {
     speed: 600,
     loop: true,
     autoplay: {
-      delay: 1000,
+      delay: 100000,
       disableOnInteraction: false
     },
-    slidesPerView: '6',
+    slidesPerView: clientPerView,
     // pagination: {
     //   el: '.swiper-pagination',
     //   type: 'bullets',

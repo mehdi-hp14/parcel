@@ -1,6 +1,7 @@
 <?php
 
 use Kaban\Components\Site\Home\Controllers\HomeController;
+use Kaban\Components\Site\Home\Controllers\ReportController;
 use Kaban\Models\Role;
 
 Route::group( [
@@ -20,6 +21,8 @@ Route::group( [
     } )->name( 'home2' );
 
     Route::post( '/contact', [HomeController::class,'contact'] )->name( 'contact' );
+
+    Route::get( '/admin/report/{type}', [ReportController::class,'report'])->name( 'admin.report' );
 //    Route::get( '/', function () {
 //        $user = request()->user(); //getting the current logged in customer
 //    dd( $customer );

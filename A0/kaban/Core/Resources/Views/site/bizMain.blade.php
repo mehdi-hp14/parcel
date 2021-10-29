@@ -319,6 +319,7 @@ $iso_country = array(
 
 
     </script>
+    {!! ReCaptcha::htmlScriptTagJsApi() !!}
 </head>
 <body>
 @yield('content')

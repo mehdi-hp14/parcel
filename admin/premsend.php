@@ -4,7 +4,7 @@
 include("../post_forms/cnf.php");
 include("conf.php");
 require 'mailer/PHPMailerAutoload.php';
-
+$_c = 0;
 if(!(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSION['loged_in']==true AND $_SESSION['loged_in_t']>=time())){
 
 	header("Location: index.php");
@@ -250,7 +250,7 @@ if(isset($_POST['t']) AND $_POST['t']!='' AND is_numeric($_POST['t']) AND $_POST
 				foreach($_FILES['uploaded_file']['name'] as $k => $upload){
 					if(isset($_FILES['uploaded_file']['name'][$k]) AND $_FILES['uploaded_file']['name'][$k] !="" AND $_FILES['uploaded_file']['name'][$k]!=null){
 						$has_attach = true;
-						$target_file = $target_dir .$itemid ."_". basename($_FILES['uploaded_file']['name'][$k]);
+						$target_file = $target_dir ."_". basename($_FILES['uploaded_file']['name'][$k]);
 						$uploadOk = 1;
 						$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 						$format = explode(".",basename($_FILES['uploaded_file']['name'][$k]));

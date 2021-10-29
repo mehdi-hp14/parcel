@@ -147,5 +147,6 @@ return [
     */
 
     'attributes' => [],
+    'recaptcha' => 'Please Check I\'m not Robot Check Box',
 
 ];
