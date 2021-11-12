@@ -6,18 +6,18 @@ include("conf.php");
 $con = mysql_connect(DB_HOST,DB_USER,DB_PASS) or die(mysql_error());
 mysql_select_db(DB_NAME, $con) or die(mysql_error());
 
-if(!(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSION['loged_in']==true AND $_SESSION['loged_in_t']>=time())){
+if(!(isset($_SESSION['loged_in']) and isset($_SESSION['loged_in_t']) and $_SESSION['loged_in']==true and $_SESSION['loged_in_t']>=time())){
 
 	header("Location: index.php");
 	exit("You are not logged in....<br><a href='index.php'>Dashboard</a>");
 }
 
-if(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSION['loged_in']==true AND $_SESSION['loged_in_t']>=time()){
+if(isset($_SESSION['loged_in']) and isset($_SESSION['loged_in_t']) and $_SESSION['loged_in']==true and $_SESSION['loged_in_t']>=time()){
 	$_SESSION['loged_in_t'] = time()+time_out;
 }
 
 
-if(!(isset($_GET['id']) AND is_numeric($_GET['id']) AND $_GET['id']>0)){
+if(!(isset($_GET['id']) and is_numeric($_GET['id']) and $_GET['id']>0)){
 	header("Location: dashboard.php");
 	exit;
 }
@@ -25,11 +25,34 @@ else{
 	$id = intval($_GET['id']);
 }
 
-if(isset($_GET['fullname']) AND $_GET['fullname']!='' AND $_GET['fullname']!=null)
+if(isset($_GET['fullname']) and $_GET['fullname']!='' and $_GET['fullname']!=null)
 {
 	unlink($_GET['fullname']);
 	header("Location: itemedit.php?id=".$id."");
 }
+if(!empty($_GET['cancel-offer-confirm']))
+{
+    $quote = \Kaban\Models\Quote::find($id);
+    $quote->offered_p = str_replace('on=>','off=>',$quote->offered_p);
+    $quote->save();
+
+    $_SESSION['cancel-confirm'] = 'you have successfully cancelled the offer confirmation';
+
+    header("Location: itemedit.php?id=".$id."");
+    die();
+}
+
+if(!empty($_GET['cancel-receive-confirm']))
+{
+    $quote = \Kaban\Models\Quote::find($id);
+    $quote->received_p = str_replace('on=>','off=>',$quote->received_p);
+    $quote->save();
+    $_SESSION['cancel-confirm'] = 'you have successfully cancelled the receive confirmation';
+
+    header("Location: itemedit.php?id=".$id."");
+    die();
+}
+
 $post_c = array(
 	'Radio-00'=>'Test Country',
 	'Radio-0'=>'Afghanistan',
@@ -505,7 +528,20 @@ $(function() {
 <body>
     <div class="container_12">
         <?= require_once "./partials/adminProfile.php"?>
-
+        <?php if(isset($_SESSION['cancel-confirm'])):
+            ?>
+        <div class="grid_12">
+            <div class="box round first">
+                <div class="block">
+                    <div class="message success">
+                        <?= $_SESSION['cancel-confirm'] ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+            unset($_SESSION['cancel-confirm']);
+         endif; ?>
         <div class="clear">
         </div>
         <div class="grid_12">
@@ -555,7 +591,7 @@ function getTheMaxNumber($total_weight)
 		{
 			//var_dump($tm);
 			//echo "<br>";
-			if(is_numeric(trim($tm)) AND $tm >0)
+			if(is_numeric(trim($tm)) and $tm >0)
 			{//echo "a<br>";
 				if($tm > $max)
 					$max = $tm;
@@ -566,14 +602,86 @@ function getTheMaxNumber($total_weight)
 
 	return 1;
 }
-function GetOfferPriceFromReceive($rprice, $currency="EUR",$extra_c=0,$percent=0,$tocurrency="GBP",$totalWeight=0)
+function GetOfferPriceFromReceive($rprice, $currency="EUR",$extra_c=0,$percent=0,$tocurrency="GBP",$total_weight=0)
 {
+    if($rprice==''){
+        $rprice= 0;
+    }
     $q = "SELECT * FROM `settings` WHERE `keyword`='quote-formula'";
     $r = mysql_query($q) or die(mysql_error());
     $quoteFormula = mysqli_fetch_object($r);
 
-    eval($quoteFormula->value);
+    $rprice = str_replace(",","",$rprice);
 
+    $weight_coefficient = 0;
+    $currency_coefficient = 0;
+
+    if($currency=='EUR' OR $currency=='USD' OR $currency=='GBP')
+    {
+
+        if($total_weight<=50)
+        {
+            $weight_coefficient = 30;
+        }
+        elseif($total_weight<=300)
+        {
+            $weight_coefficient = 100;
+        }
+        else
+        {
+            $weight_coefficient = 100;
+
+            info($total_weight);
+            $weight_coefficient += (ceil(($total_weight - 300) / 300) * 40);
+
+        }
+
+        if($tocurrency=='GBP')
+        {
+            if($currency=='USD')
+            {
+                $currency_coefficient += 20;
+            }
+            elseif($currency=='EUR')
+            {
+                $currency_coefficient += 5;
+            }
+        }
+        elseif($tocurrency=='EUR')
+        {
+            if($currency=='USD')
+            {
+                $currency_coefficient += 19;
+            }
+            elseif($currency=='EUR')
+            {
+                $currency_coefficient += 5;
+            }
+        }
+
+        /****************************Google Currency Convertor calculations: don't change below***************************/
+
+        $rate = 1;
+        if($currency != $tocurrency){
+            $googleCurrencyConvertor = new GoogleCurrencyConvertor("1",$currency,$tocurrency);
+            $rate = $googleCurrencyConvertor->getRate();
+        }
+        $rprice = ceil($rprice * $rate);
+
+        $rate = 1;
+        if($tocurrency != 'GBP'){
+            $googleCurrencyConvertor = new GoogleCurrencyConvertor("1",'GBP',$tocurrency);
+            $rate = $googleCurrencyConvertor->getRate();
+        }
+        $weight_coefficient = ceil($weight_coefficient * $rate);
+
+
+        $temp = 1 + ($percent / 100);
+        $rprice *= $temp;
+    }
+
+
+    $result = number_format(ceil($rprice + $weight_coefficient + $currency_coefficient + $extra_c),2);
     return $result;
 }
 
@@ -585,7 +693,7 @@ $r = mysql_query($q) or die(mysql_error());
 $row = mysql_fetch_array($r);
 $q_p = array();
 $error = false;
-if(isset($_POST['t']) AND $_POST['t']==1){
+if(isset($_POST['t']) and $_POST['t']==1){
 
     $currentQuote = "SELECT quote.*, users.id as user_id FROM `quote` LEFT JOIN users on users.uname=quote.uname WHERE quote.id=".$_GET['id'];
     $currentQuote = mysql_query($currentQuote) or die(mysql_error());
@@ -600,6 +708,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
             $disabled = "";
             if($ttmp[0]=='on')
             {
+                $ttmp=[];
                 $disabled = "disabled";
                 $currency = $ttmp[3];
                 $targetMoney = intval($ttmp[2])+intval($difOffer);
@@ -618,7 +727,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 
 
         if(isset($_POST['o_price_r'])){ // select price is not disabled so we know which price is main
-            $targetMoney = ($_POST['o_price_p'][intval($_POST['o_price_r'])])+intval($difOffer);
+            $targetMoney = floatval(str_replace(',','',$_POST['o_price_p'][intval($_POST['o_price_r'])]))+intval($difOffer);
             $currency = $_POST['o_price_c'][intval($_POST['o_price_r'])];
         }
 
@@ -653,7 +762,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
     }
 	$tmp = "";
 	$_c = 0;
-	if(isset($_POST['dimss']) AND is_array($_POST['dimss']) AND count($_POST['dimss'])>0){
+	if(isset($_POST['dimss']) and is_array($_POST['dimss']) and count($_POST['dimss'])>0){
 		foreach($_POST['dimss'] as $k=>$dim){
 			$tmp .= ($_c +1).') '.$dim.' => '.$_POST['weights'][$k].' kg | ';
 			$_c++;
@@ -661,7 +770,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 	}
 	$tmp2 = "";
 	$_c2 = 0;
-	if(isset($_POST['hawb1']) AND is_array($_POST['hawb1']) AND count($_POST['hawb1'])>0){
+	if(isset($_POST['hawb1']) and is_array($_POST['hawb1']) and count($_POST['hawb1'])>0){
 		foreach($_POST['hawb1'] as $k=>$dim){
 			$tmp2 .= ($_c2 +1).') '.$dim.' => '.$_POST['hawb2'][$k].'|';
 			$_c2++;
@@ -670,10 +779,10 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 	$tmp3 = "";
 	$tmp4 = "";
 	$_c = 0;
-	if(isset($_POST['tweight']) AND $_POST['tweight']!=''){
+	if(isset($_POST['tweight']) and $_POST['tweight']!=''){
 		$q_p[] = "`total_weight`='".$_POST['tweight']."'";
 	}
-	if(isset($_POST['r_price_p']) AND is_array($_POST['r_price_p']) AND count($_POST['r_price_p'])>0){
+	if(isset($_POST['r_price_p']) and is_array($_POST['r_price_p']) and count($_POST['r_price_p'])>0){
 		$extra = 0;
 		$percent = 0;
 
@@ -690,7 +799,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 			echo $user_info['default_currency']."<br>";
 		}
 
-		if(isset($_POST['tweight']) AND $_POST['tweight']!=''){
+		if(isset($_POST['tweight']) and $_POST['tweight']!=''){
 			$tw = getTheMaxNumber($_POST['tweight']);
 		}
 		else
@@ -698,21 +807,22 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 			$tw = getTheMaxNumber($row['total_weight']);
 		}
 		foreach($_POST['r_price_p'] as $k=>$p){
-			$tmp3 .= ($_c +1).') '.((isset($_POST['r_price_r']) AND $_POST['r_price_r']==$k) ? 'on' : 'off').'=>'.$_POST['r_price_n'][$k].'=>'.$_POST['r_price_p'][$k].'=>'.$_POST['r_price_c'][$k].' | ';
-			if(isset($_POST['auto_off']) AND $_POST['auto_off']!='' AND $_POST['auto_off']!=null AND $_POST['auto_off']=='yes')
-				$tmp4 .= ($_c +1).') '.((isset($_POST['r_price_r']) AND $_POST['r_price_r']==$k) ? 'on' : 'off').'=>'.$_POST['r_price_n'][$k].'=>'. GetOfferPriceFromReceive($_POST['r_price_p'][$k], $_POST['r_price_c'][$k], $extra, $percent,$currency,$tw).'=>'.(($_POST['r_price_c'][$k]=='EUR' OR $_POST['r_price_c'][$k]=='USD' OR $_POST['r_price_c'][$k]=='GBP') ? $currency : $_POST['r_price_c'][$k]).' | ';
+			$tmp3 .= ($_c +1).') '.((isset($_POST['r_price_r']) and $_POST['r_price_r']==$k) ? 'on' : 'off').'=>'.$_POST['r_price_n'][$k].'=>'.$_POST['r_price_p'][$k].'=>'.$_POST['r_price_c'][$k].' | ';
+			if(isset($_POST['auto_off']) and $_POST['auto_off']!='' and $_POST['auto_off']!=null and $_POST['auto_off']=='yes')
+				$tmp4 .= ($_c +1).') '.((isset($_POST['o_price_r']) and $_POST['o_price_r']==$k) ? 'on' : 'off').'=>'.$_POST['r_price_n'][$k].'=>'. GetOfferPriceFromReceive($_POST['r_price_p'][$k], $_POST['r_price_c'][$k], $extra, $percent,$currency,$tw).'=>'.(($_POST['r_price_c'][$k]=='EUR' or $_POST['r_price_c'][$k]=='USD' or $_POST['r_price_c'][$k]=='GBP') ? $currency : $_POST['r_price_c'][$k]).' | ';
 			$_c++;
 		}
 	}
 	$_c = 0;
-	if(isset($_POST['o_price_p']) AND is_array($_POST['o_price_p']) AND count($_POST['o_price_p'])>0 AND !(isset($_POST['auto_off']) AND $_POST['auto_off']!='' AND $_POST['auto_off']!=null AND $_POST['auto_off']=='yes')){
+    if(isset($_POST['o_price_p']) and is_array($_POST['o_price_p']) and count($_POST['o_price_p'])>0 and !(isset($_POST['auto_off']) and $_POST['auto_off']!='' and $_POST['auto_off']!=null and $_POST['auto_off']=='yes')){
 		$tmp4 = "";
 		foreach($_POST['o_price_p'] as $k=>$p){
-			$tmp4 .= ($_c +1).') '.((isset($_POST['o_price_r']) AND $_POST['o_price_r']==$k) ? 'on' : 'off').'=>'.$_POST['o_price_n'][$k].'=>'.$_POST['o_price_p'][$k].'=>'.$_POST['o_price_c'][$k].' | ';
+			$tmp4 .= ($_c +1).') '.((isset($_POST['o_price_r']) and $_POST['o_price_r']==$k) ? 'on' : 'off').'=>'.$_POST['o_price_n'][$k].'=>'.$_POST['o_price_p'][$k].'=>'.$_POST['o_price_c'][$k].' | ';
 			$_c++;
 		}
 	}
-	if($tmp != ''){
+
+    if($tmp != ''){
 		$q_p[] = "`dims`='".$tmp."'";
 	}
 	if($tmp2 != ''){
@@ -724,108 +834,108 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 	if($tmp4 != ''){
 		$q_p[] = "`offered_p`='".$tmp4."'";
 	}
-	if(isset($_POST['name']) AND $_POST['name']!=''){
+	if(isset($_POST['name']) and $_POST['name']!=''){
 		$q_p[] = "`fname`='".$_POST['name']."'";
 	}
-	if(isset($_POST['cname']) AND $_POST['cname']!=''){
+	if(isset($_POST['cname']) and $_POST['cname']!=''){
 		$q_p[] = "`company`='".$_POST['cname']."'";
 	}
-	if(isset($_POST['status']) AND $_POST['status']!=''){
+	if(isset($_POST['status']) and $_POST['status']!=''){
 		$q_p[] = "`status`='".$_POST['status']."'";
 	}
-	if(isset($_POST['status_user']) AND $_POST['status_user']!=''){
+	if(isset($_POST['status_user']) and $_POST['status_user']!=''){
 		$q_p[] = "`status_user`='".$_POST['status_user']."'";
 	}
-	if(isset($_POST['phone']) AND $_POST['phone']!=''){
+	if(isset($_POST['phone']) and $_POST['phone']!=''){
 		$q_p[] = "`phone`='".$_POST['phone']."'";
 	}
-	if(isset($_POST['email']) AND $_POST['email']!=''){
+	if(isset($_POST['email']) and $_POST['email']!=''){
 		$q_p[] = "`email`='".$_POST['email']."'";
 	}
-	if(isset($_POST['invemail']) AND $_POST['invemail']!=''){
+	if(isset($_POST['invemail']) and $_POST['invemail']!=''){
 		$q_p[] = "`invemail`='".$_POST['invemail']."'";
 	}
-	if(isset($_POST['quotemail']) AND $_POST['quotemail']!=''){
+	if(isset($_POST['quotemail']) and $_POST['quotemail']!=''){
 		$q_p[] = "`quotemail`='".$_POST['quotemail']."'";
 	}
-	if(isset($_POST['palrtemail']) AND $_POST['palrtemail']!=''){
+	if(isset($_POST['palrtemail']) and $_POST['palrtemail']!=''){
 		$q_p[] = "`palrtemail`='".$_POST['palrtemail']."'";
 	}
-	if(isset($_POST['cc1']) AND $_POST['cc1']!=''){
+	if(isset($_POST['cc1']) and $_POST['cc1']!=''){
 		$q_p[] = "`cc1`='".$_POST['cc1']."'";
 	}
-	if(isset($_POST['cc2']) AND $_POST['cc2']!=''){
+	if(isset($_POST['cc2']) and $_POST['cc2']!=''){
 		$q_p[] = "`cc2`='".$_POST['cc2']."'";
 	}
-	if(isset($_POST['cc3']) AND $_POST['cc3']!=''){
+	if(isset($_POST['cc3']) and $_POST['cc3']!=''){
 		$q_p[] = "`cc3`='".$_POST['cc3']."'";
 	}
-	if(isset($_POST['cc4']) AND $_POST['cc4']!=''){
+	if(isset($_POST['cc4']) and $_POST['cc4']!=''){
 		$q_p[] = "`cc4`='".$_POST['cc4']."'";
 	}
-	if(isset($_POST['prcm']) AND $_POST['prcm']!=''){
+	if(isset($_POST['prcm']) and $_POST['prcm']!=''){
 		$q_p[] = "`pr_contact_m`='".$_POST['prcm']."'";
 	}
-	if(isset($_POST['prct']) AND $_POST['prct']!=''){
+	if(isset($_POST['prct']) and $_POST['prct']!=''){
 		$q_p[] = "`pr_contact_t`='".$_POST['prct']."'";
 	}
-	if(isset($_POST['from']) AND $_POST['from']!='' AND in_array($_POST['from'],$post_c)){
+	if(isset($_POST['from']) and $_POST['from']!='' and in_array($_POST['from'],$post_c)){
 		$q_p[] = "`from`='".$_POST['from']."'";
 	}
-	if(isset($_POST['to']) AND $_POST['to']!='' AND in_array($_POST['to'],$post_c)){
+	if(isset($_POST['to']) and $_POST['to']!='' and in_array($_POST['to'],$post_c)){
 		$q_p[] = "`to`='".$_POST['to']."'";
 	}
-	if(isset($_POST['fromst']) AND $_POST['fromst']!=''){
+	if(isset($_POST['fromst']) and $_POST['fromst']!=''){
 		$q_p[] = "`from_st`='".$_POST['fromst']."'";
 	}
-	if(isset($_POST['tost']) AND $_POST['tost']!=''){
+	if(isset($_POST['tost']) and $_POST['tost']!=''){
 		$q_p[] = "`to_st`='".$_POST['tost']."'";
 	}
-	if(isset($_POST['fromloc']) AND $_POST['fromloc']!=''){
+	if(isset($_POST['fromloc']) and $_POST['fromloc']!=''){
 		$q_p[] = "`from_location`='".$_POST['fromloc']."'";
 	}
-	if(isset($_POST['toloc']) AND $_POST['toloc']!=''){
+	if(isset($_POST['toloc']) and $_POST['toloc']!=''){
 		$q_p[] = "`to_location`='".$_POST['toloc']."'";
 	}
-	if(isset($_POST['itemc']) AND $_POST['itemc']!=''){
+	if(isset($_POST['itemc']) and $_POST['itemc']!=''){
 		$q_p[] = "`item_c`='".$_POST['itemc']."'";
 	}
-	if(isset($_POST['item_desc']) AND $_POST['item_desc']!=''){
+	if(isset($_POST['item_desc']) and $_POST['item_desc']!=''){
 		$q_p[] = "`item_desc`='".$_POST['item_desc']."'";
 	}
-	if(isset($_POST['note']) AND $_POST['note']!=''){
+	if(isset($_POST['note']) and $_POST['note']!=''){
 		$q_p[] = "`note`='".$_POST['note']."'";
 	}
-	if(isset($_POST['ptype']) AND $_POST['ptype']!=''){
+	if(isset($_POST['ptype']) and $_POST['ptype']!=''){
 		$q_p[] = "`pack_type`='".$_POST['ptype']."'";
 	}
-	if(isset($_POST['insurance']) AND $_POST['insurance']!=''){
+	if(isset($_POST['insurance']) and $_POST['insurance']!=''){
 		$q_p[] = "`insurance`='".$_POST['insurance']."'";
 	}
-	if(isset($_POST['danger']) AND $_POST['danger']!=''){
+	if(isset($_POST['danger']) and $_POST['danger']!=''){
 		$q_p[] = "`danger`='".$_POST['danger']."'";
 	}
-	if(isset($_POST['chemical']) AND $_POST['chemical']!=''){
+	if(isset($_POST['chemical']) and $_POST['chemical']!=''){
 		$q_p[] = "`chemical`='".$_POST['chemical']."'";
 	}
-	if(isset($_POST['lithiumb']) AND $_POST['lithiumb']!=''){
+	if(isset($_POST['lithiumb']) and $_POST['lithiumb']!=''){
 		$q_p[] = "`lithiumb`='".$_POST['lithiumb']."'";
 	}
 
-	if(isset($_POST['offer_price']) AND $_POST['offer_price']!=''){
+	if(isset($_POST['offer_price']) and $_POST['offer_price']!=''){
 		$q_p[] = "`offer_price`='".$_POST['offer_price']."'";
 	}
-	if(isset($_POST['currency']) AND $_POST['currency']!=''){
+	if(isset($_POST['currency']) and $_POST['currency']!=''){
 		$q_p[] = "`currency`='".$_POST['currency']."'";
 	}
-	if(isset($_POST['confirm']) AND $_POST['confirm']!=''){
+	if(isset($_POST['confirm']) and $_POST['confirm']!=''){
 		$q_p[] = "`user_confirm`='".$_POST['confirm']."'";
 	}
-	if(isset($_POST['paid']) AND $_POST['paid']!='' AND $row['paid']=='no'){
-		if($_POST['paid']=='yes' AND $row['uname']!="" AND $row['uname']!=null)
+	if(isset($_POST['paid']) and $_POST['paid']!='' and $row['paid']=='no'){
+		if($_POST['paid']=='yes' and $row['uname']!="" and $row['uname']!=null)
 		{
 			//var_dump($tmp4);echo "<br>";
-			if($tmp4=="" OR $tmp4==null)
+			if($tmp4=="" or $tmp4==null)
 				$tmp4 = $row['offered_p'];
 			//var_dump($tmp4);echo "<br>";
 			$price = $currency = "";
@@ -834,7 +944,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 			foreach($t as $k=>$v)
 			{
 				$tt = explode(") ", $v);
-				//var_dump($tt);echo "<br>";
+				//var_dump($tt);echo "<br>";$tmp4
 				$ttt = explode("=>",$tt[1]);
 				//var_dump($ttt);echo "<br>";
 				if($ttt[0]=='on')
@@ -844,7 +954,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 					break;
 				}
 			}
-			if($price!="" AND $currency!="")
+			if($price!="" and $currency!="")
 			{
 
 				$rot = mysql_query("SELECT * FROM `transactions` WHERE `oref`='".$id."'");
@@ -865,7 +975,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 					$ccurrent_dep = $sum_row['sum'] - $sub_row['subtract'];
 					$corder_paid = $ctotal_pay - $ccurrent_dep;
 
-					if(isset($ccurrent_dep) AND (($ccurrent_dep >0 AND $ccurrent_dep >=$price)  OR $row2['mdp']==1))
+					if(isset($ccurrent_dep) and (($ccurrent_dep >0 and $ccurrent_dep >=$price)  or $row2['mdp']==1))
 					{
 						//echo "1<br>";
 						$price = str_replace(",","",$price);
@@ -933,46 +1043,46 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 			$q_p[] = "`paid`='".$_POST['paid']."'";
 		}
 	}
-	if(isset($_POST['mawb1']) AND $_POST['mawb1']!=''){
+	if(isset($_POST['mawb1']) and $_POST['mawb1']!=''){
 		$q_p[] = "`mawb1`='".$_POST['mawb1']."'";
 	}
-	if(isset($_POST['mawb2']) AND $_POST['mawb2']!=''){
+	if(isset($_POST['mawb2']) and $_POST['mawb2']!=''){
 		$q_p[] = "`mawb2`='".$_POST['mawb2']."'";
 	}
-	if(isset($_POST['admin_note']) AND $_POST['admin_note']!=''){
+	if(isset($_POST['admin_note']) and $_POST['admin_note']!=''){
 		$q_p[] = "`admin_note`='".$_POST['admin_note']."'";
 	}
-	if(isset($_POST['discount']) AND $_POST['discount']!=''){
+	if(isset($_POST['discount']) and $_POST['discount']!=''){
 		$q_p[] = "`discount`='".$_POST['discount']."'";
 	}
-	if(isset($_POST['discount_type']) AND $_POST['discount_type']!=''){
+	if(isset($_POST['discount_type']) and $_POST['discount_type']!=''){
 		$q_p[] = "`discount_type`='".$_POST['discount_type']."'";
 	}
-	if(isset($_POST['vat']) AND $_POST['vat']!=''){
+	if(isset($_POST['vat']) and $_POST['vat']!=''){
 		$q_p[] = "`vat`='".$_POST['vat']."'";
 	}
-	if(isset($_POST['export']) AND $_POST['export']!=''){
+	if(isset($_POST['export']) and $_POST['export']!=''){
 		$q_p[] = "`export`='".$_POST['export']."'";
 	}
-	if(isset($_POST['agent_company']) AND $_POST['agent_company']!=''){
+	if(isset($_POST['agent_company']) and $_POST['agent_company']!=''){
 		$q_p[] = "`agent_company`='".$_POST['agent_company']."'";
 	}
-	if(isset($_POST['agent_name']) AND $_POST['agent_name']!=''){
+	if(isset($_POST['agent_name']) and $_POST['agent_name']!=''){
 		$q_p[] = "`agent_name`='".$_POST['agent_name']."'";
 	}
 	//mawb1
 	//dif_receive
-	if(isset($_POST['dif_receive']) AND $_POST['dif_receive']!=''){
+	if(isset($_POST['dif_receive']) and $_POST['dif_receive']!=''){
 		$q_p[] = "`dif_receive`='".$_POST['dif_receive']."'";
 	}
-	if(isset($_POST['dif_offer']) AND $_POST['dif_offer']!=''){
+	if(isset($_POST['dif_offer']) and $_POST['dif_offer']!=''){
 		$q_p[] = "`dif_offer`='".$_POST['dif_offer']."'";
 	}
-	if(isset($_POST['dif_offer_desc']) AND $_POST['dif_offer_desc']!=''){
+	if(isset($_POST['dif_offer_desc']) and $_POST['dif_offer_desc']!=''){
 		$q_p[] = "`dif_offer_desc`='".$_POST['dif_offer_desc']."'";
 	}
 
-	if(isset($_POST['dif_receive_desc']) AND $_POST['dif_receive_desc']!=''){
+	if(isset($_POST['dif_receive_desc']) and $_POST['dif_receive_desc']!=''){
 		$q_p[] = "`dif_receive_desc`='".$_POST['dif_receive_desc']."'";
 	}
 	$error = true;
@@ -984,7 +1094,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 		$error_m = "All changes saved successfully.";
 	}
 }
-elseif(isset($_POST['t']) AND $_POST['t']=='upload')
+elseif(isset($_POST['t']) and $_POST['t']=='upload')
 {
 	$locations = dirname(__DIR__) . DIRECTORY_SEPARATOR  ."Documents" . DIRECTORY_SEPARATOR .$id. DIRECTORY_SEPARATOR  ."";
 	//echo $locations."<br>";
@@ -992,10 +1102,10 @@ elseif(isset($_POST['t']) AND $_POST['t']=='upload')
 	{
 		mkdir($locations, 0755, true);
 	}
-	if(isset($_FILES['uploaded_file']['name']) AND is_array($_FILES['uploaded_file']['name']) AND count($_FILES['uploaded_file']['name'])>0){
+	if(isset($_FILES['uploaded_file']['name']) and is_array($_FILES['uploaded_file']['name']) and count($_FILES['uploaded_file']['name'])>0){
         $error_m='';
         foreach($_FILES['uploaded_file']['name'] as $k => $upload){
-			if(isset($_FILES['uploaded_file']['name'][$k]) AND $_FILES['uploaded_file']['name'][$k] !="" AND $_FILES['uploaded_file']['name'][$k]!=null){
+			if(isset($_FILES['uploaded_file']['name'][$k]) and $_FILES['uploaded_file']['name'][$k] !="" and $_FILES['uploaded_file']['name'][$k]!=null){
 
 				$target_dir = $locations;
 
@@ -1109,7 +1219,15 @@ else{
 <?php
 if($_c==1){
 	echo "Item ID : ".$id."<br>";
-	echo "Tracking ID : ".$row['tid']."<br>";
+	echo "Tracking ID : ".$row['tid']."<br>";?>
+    <div style="margin-top: 10px;"><a href="<?= $_SERVER['REQUEST_URI'].'&cancel-receive-confirm=1' ?>"
+        onclick="return confirm('are you sure you want to cancel the receive confirmation?')"
+        >cancel receive confirmation</a></div>
+    <div><a href="<?= $_SERVER['REQUEST_URI'].'&cancel-offer-confirm=1' ?>"
+            onclick="return confirm('are you sure you want to cancel the offer confirmation?')"
+        >cancel offer confirmation</a></div>
+
+    <?php
 	/*echo "First Name : ".$row['fname']."<br>";
 	echo "Last Name : ".$row['lname']."<br>";
 	echo "Company : ".$row['company']."<br>";
@@ -1521,12 +1639,12 @@ $(document).ready(function () {
 						<label for="oprices">
 							<input type="radio" name="o_price_r" id="r_price_r" value="<?php echo $_c;?>">&nbsp;
 							<input type="text" name="o_price_n[]" id="r_price_n" value="" placeholder="Method Name">&nbsp;
-							<input type="text" name="o_price_p[]" id="r_price_p" value="<?php if($row['offer_price']!=0 AND $row['offer_price']!=''){ echo $row['offer_price']; }?>" placeholder="Price" size="6">&nbsp;
+							<input type="text" name="o_price_p[]" id="r_price_p" value="<?php if($row['offer_price']!=0 and $row['offer_price']!=''){ echo $row['offer_price']; }?>" placeholder="Price" size="6">&nbsp;
 							<select name="o_price_c[]">
-								<option value="GBP" <?php if($row['offer_price']!=0 AND $row['offer_price']!='' AND $row['currency']=='GBP'){ echo 'selected="selected"'; }?>>GBP</option>
-								<option value="USD" <?php if($row['offer_price']!=0 AND $row['offer_price']!='' AND $row['currency']=='USD'){ echo 'selected="selected"'; }?>>USD</option>
-								<option value="EUR" <?php if($row['offer_price']!=0 AND $row['offer_price']!='' AND $row['currency']=='EUR'){ echo 'selected="selected"'; }?>>EUR</option>
-								<option value="IRR" <?php if($row['offer_price']!=0 AND $row['offer_price']!='' AND $row['currency']=='IRR'){ echo 'selected="selected"'; }?>>IRR</option>
+								<option value="GBP" <?php if($row['offer_price']!=0 and $row['offer_price']!='' and $row['currency']=='GBP'){ echo 'selected="selected"'; }?>>GBP</option>
+								<option value="USD" <?php if($row['offer_price']!=0 and $row['offer_price']!='' and $row['currency']=='USD'){ echo 'selected="selected"'; }?>>USD</option>
+								<option value="EUR" <?php if($row['offer_price']!=0 and $row['offer_price']!='' and $row['currency']=='EUR'){ echo 'selected="selected"'; }?>>EUR</option>
+								<option value="IRR" <?php if($row['offer_price']!=0 and $row['offer_price']!='' and $row['currency']=='IRR'){ echo 'selected="selected"'; }?>>IRR</option>
 							</select>
 						</label>
 						<a href="#" id="addScnt4"><img src="../post_forms/images/icons/fam/add.png"></a>
@@ -1557,15 +1675,15 @@ $(document).ready(function () {
 	});
 });
 </script>
-<?php
-						echo "<div class='settings'>";
-						echo '<div class="question">Unlock?</div>
-							  <div class="switch">
+                        <div class='settings'>
+						    <div class="question">Unlock?</div>
+                            <div class="switch">
 								<input id="cmn-toggle-2" class="cmn-toggle cmn-toggle-yes-no" type="checkbox">
 								<label for="cmn-toggle-2" data-on="No" data-off="Yes"></label>
-							  </div>';
-						echo "</div>";
-					}
+							  </div>
+						</div>
+                    <?php }
+
 					if(isset($disabled) && $disabled == "disabled")
 					{
 					?>
@@ -1578,7 +1696,8 @@ $(document).ready(function () {
                             <textarea name="dif_offer_desc" id="dif_offer_desc" cols="40" rows="10"><?php echo $row['dif_offer_desc']; ?></textarea>
                         </div>
                     </div>
-					<?php } ?>
+
+                    <?php } ?>
 				</td>
 			<td colspan="1"><?php echo $conf_prices; ?></td>
 		</tr>
@@ -1748,7 +1867,7 @@ $(document).ready(function () {
 if (is_dir($dir)){
   if ($dh = opendir($dir)){
     while (($file = readdir($dh)) !== false){
-		if($file == '.' OR $file=='..' OR $file=='msds') continue;
+		if($file == '.' or $file=='..' or $file=='msds') continue;
 		echo "<tr style=\"background-color:#fff;text-align:center;font-weight:bold\">";
 		echo "<td style=\"padding:5px;\"><a href='../Documents" . DIRECTORY_SEPARATOR .$id. DIRECTORY_SEPARATOR  . $file."'>".$file."</a></td>";
 		echo "<td style=\"padding:5px;\">".$dir.$file."</td>";
@@ -1791,7 +1910,7 @@ else{
 if (is_dir($dir)){
   if ($dh = opendir($dir)){
     while (($file = readdir($dh)) !== false){
-		if($file == '.' OR $file=='..' OR $file=='msds') continue;
+		if($file == '.' or $file=='..' or $file=='msds') continue;
 		echo "<tr style=\"background-color:#fff;text-align:center;font-weight:bold\">";
 		echo "<td style=\"padding:5px;\"><a href='../Documents" . DIRECTORY_SEPARATOR .$id. DIRECTORY_SEPARATOR  . "msds". DIRECTORY_SEPARATOR  . $file."'>".$file."</a></td>";
 		echo "<td style=\"padding:5px;\">".$dir.$file."</td>";
