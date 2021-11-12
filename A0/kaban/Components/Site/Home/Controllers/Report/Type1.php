@@ -15,7 +15,11 @@ class Type1
 //        $quote = Quote::with(['shipInfos', 'user', 'urls.agent'])->where('id', 503)->first();
 
         if (isset($_GET['qid']) and is_numeric($_GET['qid']) and $_GET['qid'] > 0) {
-            $quote = Quote::with(['shipInfos', 'user', 'urls.agent'])->where('id', $quoteId)->first();
+
+           return $quotes = Quote::with(['shipInfo', 'user', 'urls.agent'])->where('id', $quoteId)->get();
+
+            $quote = $quotes->first();
+
 //                $q = "SELECT count(*) as cc FROM `quote` WHERE `id`=".$_GET['qid']."";
 //                $rr = mysql_fetch_array(mysql_query($q));
             if (!empty($quote)) {
@@ -55,11 +59,11 @@ class Type1
                 */
                 $user_info = $quote->user->toArray();
                 /*                if ($row['uname'] != "" and $row['uname'] != null) {
-                                    $res = mysql_query("SELECT `company`,`address`,`phone` FROM `users` WHERE `uname`='" . $row['uname'] . "'");
-                                    if (mysql_num_rows($res) > 0) {
-                                        $user_info = mysql_fetch_array($res);
-                                    }
-                                }*/
+                    $res = mysql_query("SELECT `company`,`address`,`phone` FROM `users` WHERE `uname`='" . $row['uname'] . "'");
+                    if (mysql_num_rows($res) > 0) {
+                        $user_info = mysql_fetch_array($res);
+                    }
+                }*/
 
                 $agent = $quote->urls[0]->agent->toArray();
 
@@ -105,7 +109,11 @@ class Type1
 
                 $output .= 'This order (Ref. ' . $row['tid'] . ') Confirmed by <span style="font-weight:bold;color:#ff0000;">' . $airline . '</span>. Please arrange collection as following instruction and update us <b>ASAP</b>:<br>';
                 $output .= '<span style="color:#ff0000;font-weight:bold;">Very Important Note:<br>Please make sure and write in Manifest  following information for this cargo as well:<br>Full address of sender and receiver<br>Full description of goods<br>Weight and value<br>HS code /Codes</span><br><br>';
-                $output .= '<table style="border-collapse: collapse; width: 566pt" border="0" cellpadding="0" cellspacing="0" width="754"><tbody><tr style="height:27.6pt" height="36"><td colspan="3" style="height: 27.6pt;; width: 470pt" height="36" align="left" width="626">Sender (Collection) Information <font color="#ff0000">( Also for HAWB)</font><br></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">' . $row2['scompany'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['saddress'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td><td  style="border-top: none">&nbsp;</td><td >' . $row2['szipcode'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['scountry'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['scontactp'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['stelephone'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td><td  style="border-top: none">&nbsp;</td><td align="left">' . $row2['semail'] . '</td></tr><tr style="height: 27.6pt" height="36"><td  colspan="3" style="height: 27.6pt;" height="36" align="left">Receiver (Delivery) Information <font color="#ff0000">( Also for HAWB)</font></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">' . $row2['rcompany'] . '</td></tr>';
+                $output .= '<table style="border-collapse: collapse; width: 566pt" border="0" cellpadding="0" cellspacing="0" width="754">
+<tbody><tr style="height:27.6pt" height="36">
+<td colspan="3" style="height: 27.6pt;; width: 470pt" height="36" align="left" width="626">Sender (Collection) Information <font color="#ff0000">( Also for HAWB)</font><br></td>
+</tr>
+<tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">' . $row2['scompany'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['saddress'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td><td  style="border-top: none">&nbsp;</td><td >' . $row2['szipcode'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['scountry'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['scontactp'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['stelephone'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td><td  style="border-top: none">&nbsp;</td><td align="left">' . $row2['semail'] . '</td></tr><tr style="height: 27.6pt" height="36"><td  colspan="3" style="height: 27.6pt;" height="36" align="left">Receiver (Delivery) Information <font color="#ff0000">( Also for HAWB)</font></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td><td >&nbsp;</td><td  align="left">' . $row2['rcompany'] . '</td></tr>';
                 $output .= '<tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['raddress'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td><td  style="border-top: none">&nbsp;</td><td >' . $row2['rpostcode'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['rcountry'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['rcontactp'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td><td  style="border-top: none">&nbsp;</td><td  align="left">' . $row2['rtelephone'] . '</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td><td  style="border-top: none">&nbsp;</td><td align="left">' . $row2['remail'] . '</td></tr><tr style="height: 27.6pt" height="36"><td colspan="2" style="height: 27.6pt;" height="36">Shipment Information</td><td>&nbsp;</td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Contents</td><td >&nbsp;</td><td align="left"  style="margin: 0px; height: 150px;"></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Document Info./No.</td>';
                 $output .= '<td  style="border-top: none">&nbsp;</td><td ></td></tr><tr style="height: 20.1pt" height="26"><td  style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Gross Weight (kg)</td><td  style="border-top: none">&nbsp;</td><td >' . $row['total_weight'] . '</td></tr><tr style="height: 20.1pt" height="26"><td class="xl75" style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Dimensions (cm)</td><td class="xl76" style="border-top: none">&nbsp;</td><td align="left">' . str_replace(" | ", "\n", $row['dims']) . '</td></tr></tbody></table><br>';
                 $output .= 'Please note, use above information for Collection and instruction  for HAWB.<br>and following information for MAWB;<br><br>Shipper:<br>Europost Express (UK) Ltd.<br>4 Corringham Road,<br>Wembley - Middlesex<br>HA9 9QA- London , UK<br>Tel : +44(0) 7886105417<br><br>And Consignee in MAWB will be:<br>';
@@ -115,8 +123,8 @@ class Type1
                 $output .= '<br><br>Please confirm that you have received this confirmation order.<br><br>Best Regards<br>Fazel Zohrabpour<br><br><div style=\'font-size:80%;color:#0033cc;\'><img src="https://bookingparcel.com/logo.gif" style="width:215px;height:50px;"><br>Europost Express (UK) Ltd.<br>4 Corringham Road,<br>Wembley - Middlesex<br>HA9 9QA- London , UK<br>Tel : +44(0) 7886105417<br></div>';
 
                 $output .= '<br><br><br><hr><br><br>';
-                echo $output;
-                return $output;
+//                echo $output;
+                return $quotes;
             }
         }
     }

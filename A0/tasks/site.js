@@ -15,6 +15,7 @@ mix
     .setPublicPath('./public/resources/site/')
     .setResourceRoot('/resources/site/')
     .js('resources/site_assets/js/app.js', 'public/resources/site/js')
+    .js('resources/site_assets/js/reports.js', 'public/resources/site/js')
     .sass('resources/site_assets/scss/app.scss', 'public/resources/site/css')
     .webpackConfig({
         output: {

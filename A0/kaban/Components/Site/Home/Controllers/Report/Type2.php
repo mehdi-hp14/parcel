@@ -16,11 +16,14 @@ class Type2
         if (isset($_GET['qid1']) and is_numeric($_GET['qid1']) and $_GET['qid1'] > 0 and isset($_GET['qid2']) and is_numeric($_GET['qid2']) and $_GET['qid2'] > 0) {
 //				dd($_GET['qid1'],$_GET['qid2'] );
 //            $q = "SELECT count(*) as cc FROM `quote` WHERE `id`>= " . (int)$_GET['qid1'] . " AND  `id`<= " . (int)$_GET['qid2'] . " AND `status` IN (1,2,4)";
-            $quotes = Quote::with(['shipInfos', 'user', 'urls.agent'])
+//            $quote = Quote::find(54);
+//            dd($quote,$quote->urls);
+            $quotes = Quote::with(['shipInfo', 'user', 'urls.agent'])
                 ->whereBetween('id', [(int)$_GET['qid1'], (int)$_GET['qid2']])
+//                ->whereHas('urls')
                 ->whereIn('status', [1, 2, 4])
                 ->get();
-
+            return $quotes;
             $countOfQuotes = count($quotes);
 
 //            $rr = mysql_fetch_array(mysql_query($q));
@@ -31,7 +34,7 @@ class Type2
 //                $ress = mysql_query($q);
 //                while ($rrr = mysql_fetch_array($ress)) {
 
-                foreach ( $quotes as $quote ) {
+                foreach ($quotes as $quote) {
 
                     $row = $quote->toArray();
 
@@ -70,7 +73,8 @@ class Type2
                 }
             }
         }
-        echo $output;
+//        echo $output;
+        return $quotes;
 
     }
 }

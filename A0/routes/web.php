@@ -15,7 +15,8 @@ foreach ( $segments as $segment ) {
     }
 }
 
-Auth::routes();
+//Auth::routes();
+Route::post( '/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 Route::get( '/x', function () {
 //    return \Illuminate\Support\Facades\Redirect::route('agentLoginPage');

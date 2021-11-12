@@ -75,6 +75,17 @@ class AgentsLoginController
         return 'email';
     }
 
+    protected function credentials(Request $request)
+    {
+        if(is_numeric($request->get('email'))){
+            return ['id'=>$request->get('email'),'password'=>$request->get('password')];
+        }
+//        elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
+            return ['email' => $request->get('email'), 'password'=>$request->get('password')];
+//        }
+//        return ['username' => $request->get('email'), 'password'=>$request->get('password')];
+    }
+
     protected function guard()
     {
         return Auth::guard('agentGuard');

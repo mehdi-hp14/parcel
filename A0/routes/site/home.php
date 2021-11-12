@@ -16,12 +16,14 @@ Route::group( [
     ] );
 
     Route::get( '/xx', function () {
+        auth()->guard('adminGuard')->loginUsingId(2);
         echo 'mehdi';
 //        echo phpinfo();
     } )->name( 'home2' );
 
     Route::post( '/contact', [HomeController::class,'contact'] )->name( 'contact' );
 
+    Route::get( '/admin/report/search-users', [ReportController::class,'searchUser'])->name( 'site.report.search-users' );
     Route::get( '/admin/report/{type}', [ReportController::class,'report'])->name( 'admin.report' );
 //    Route::get( '/', function () {
 //        $user = request()->user(); //getting the current logged in customer
