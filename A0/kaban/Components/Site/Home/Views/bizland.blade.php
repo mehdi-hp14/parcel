@@ -30,8 +30,8 @@
                 <ul>
                     <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
                     {{--                    <li><a class="nav-link scrollto" href="#forms" onclick="shippingQuote">Shipping Quote</a></li>--}}
-                    <li><a class="nav-link scrollto" href='javascript:;' id="my-btn">Shipping Quote</a></li>
-
+{{--                    <li><a class="nav-link scrollto" href='javascript:;' id="my-btn">Shipping Quote</a></li>--}}
+                    <li><a class="nav-link scrollto" target="_blank" href='http://shipping.bookingparcel.com'>Shipping Quote</a></li>
                     <li><a class="nav-link scrollto" href="#services">Services</a></li>
                     <li><a class="nav-link scrollto" href="#terms">Terms and Conditions</a></li>
                     <li><a class="nav-link scrollto" href="#prohibited">Our Policy</a></li>

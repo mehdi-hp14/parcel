@@ -102,7 +102,6 @@ class Quote extends Model
             'Colombia',
             'Comoros',
             'Congo',
-            'Congo',
             'Costa Rica',
             'Croatia',
             'Cuba',

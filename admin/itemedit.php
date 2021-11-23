@@ -611,77 +611,8 @@ function GetOfferPriceFromReceive($rprice, $currency="EUR",$extra_c=0,$percent=0
     $r = mysql_query($q) or die(mysql_error());
     $quoteFormula = mysqli_fetch_object($r);
 
-    $rprice = str_replace(",","",$rprice);
+    eval($quoteFormula->value);
 
-    $weight_coefficient = 0;
-    $currency_coefficient = 0;
-
-    if($currency=='EUR' OR $currency=='USD' OR $currency=='GBP')
-    {
-
-        if($total_weight<=50)
-        {
-            $weight_coefficient = 30;
-        }
-        elseif($total_weight<=300)
-        {
-            $weight_coefficient = 100;
-        }
-        else
-        {
-            $weight_coefficient = 100;
-
-            info($total_weight);
-            $weight_coefficient += (ceil(($total_weight - 300) / 300) * 40);
-
-        }
-
-        if($tocurrency=='GBP')
-        {
-            if($currency=='USD')
-            {
-                $currency_coefficient += 20;
-            }
-            elseif($currency=='EUR')
-            {
-                $currency_coefficient += 5;
-            }
-        }
-        elseif($tocurrency=='EUR')
-        {
-            if($currency=='USD')
-            {
-                $currency_coefficient += 19;
-            }
-            elseif($currency=='EUR')
-            {
-                $currency_coefficient += 5;
-            }
-        }
-
-        /****************************Google Currency Convertor calculations: don't change below***************************/
-
-        $rate = 1;
-        if($currency != $tocurrency){
-            $googleCurrencyConvertor = new GoogleCurrencyConvertor("1",$currency,$tocurrency);
-            $rate = $googleCurrencyConvertor->getRate();
-        }
-        $rprice = ceil($rprice * $rate);
-
-        $rate = 1;
-        if($tocurrency != 'GBP'){
-            $googleCurrencyConvertor = new GoogleCurrencyConvertor("1",'GBP',$tocurrency);
-            $rate = $googleCurrencyConvertor->getRate();
-        }
-        $weight_coefficient = ceil($weight_coefficient * $rate);
-
-
-        $temp = 1 + ($percent / 100);
-        $rprice *= $temp;
-    }
-
-
-    $result = number_format(ceil($rprice + $weight_coefficient + $currency_coefficient + $extra_c),2);
     return $result;
 }
 
@@ -708,7 +639,6 @@ if(isset($_POST['t']) and $_POST['t']==1){
             $disabled = "";
             if($ttmp[0]=='on')
             {
-                $ttmp=[];
                 $disabled = "disabled";
                 $currency = $ttmp[3];
                 $targetMoney = intval($ttmp[2])+intval($difOffer);
@@ -809,20 +739,19 @@ if(isset($_POST['t']) and $_POST['t']==1){
 		foreach($_POST['r_price_p'] as $k=>$p){
 			$tmp3 .= ($_c +1).') '.((isset($_POST['r_price_r']) and $_POST['r_price_r']==$k) ? 'on' : 'off').'=>'.$_POST['r_price_n'][$k].'=>'.$_POST['r_price_p'][$k].'=>'.$_POST['r_price_c'][$k].' | ';
 			if(isset($_POST['auto_off']) and $_POST['auto_off']!='' and $_POST['auto_off']!=null and $_POST['auto_off']=='yes')
-				$tmp4 .= ($_c +1).') '.((isset($_POST['o_price_r']) and $_POST['o_price_r']==$k) ? 'on' : 'off').'=>'.$_POST['r_price_n'][$k].'=>'. GetOfferPriceFromReceive($_POST['r_price_p'][$k], $_POST['r_price_c'][$k], $extra, $percent,$currency,$tw).'=>'.(($_POST['r_price_c'][$k]=='EUR' or $_POST['r_price_c'][$k]=='USD' or $_POST['r_price_c'][$k]=='GBP') ? $currency : $_POST['r_price_c'][$k]).' | ';
+				$tmp4 .= ($_c +1).') '.((isset($_POST['r_price_r']) and $_POST['r_price_r']==$k) ? 'off' : 'off').'=>'.$_POST['r_price_n'][$k].'=>'. GetOfferPriceFromReceive($_POST['r_price_p'][$k], $_POST['r_price_c'][$k], $extra, $percent,$currency,$tw).'=>'.(($_POST['r_price_c'][$k]=='EUR' or $_POST['r_price_c'][$k]=='USD' or $_POST['r_price_c'][$k]=='GBP') ? $currency : $_POST['r_price_c'][$k]).' | ';
 			$_c++;
 		}
 	}
 	$_c = 0;
-    if(isset($_POST['o_price_p']) and is_array($_POST['o_price_p']) and count($_POST['o_price_p'])>0 and !(isset($_POST['auto_off']) and $_POST['auto_off']!='' and $_POST['auto_off']!=null and $_POST['auto_off']=='yes')){
+	if(isset($_POST['o_price_p']) and is_array($_POST['o_price_p']) and count($_POST['o_price_p'])>0 and !(isset($_POST['auto_off']) and $_POST['auto_off']!='' and $_POST['auto_off']!=null and $_POST['auto_off']=='yes')){
 		$tmp4 = "";
 		foreach($_POST['o_price_p'] as $k=>$p){
-			$tmp4 .= ($_c +1).') '.((isset($_POST['o_price_r']) and $_POST['o_price_r']==$k) ? 'on' : 'off').'=>'.$_POST['o_price_n'][$k].'=>'.$_POST['o_price_p'][$k].'=>'.$_POST['o_price_c'][$k].' | ';
+			$tmp4 .= ($_c +1).') '.((!empty($_POST['o_price_r']) and $_POST['o_price_r']==$k) ? 'on' : 'off').'=>'.$_POST['o_price_n'][$k].'=>'.$_POST['o_price_p'][$k].'=>'.$_POST['o_price_c'][$k].' | ';
 			$_c++;
 		}
 	}
-
-    if($tmp != ''){
+	if($tmp != ''){
 		$q_p[] = "`dims`='".$tmp."'";
 	}
 	if($tmp2 != ''){
@@ -944,7 +873,7 @@ if(isset($_POST['t']) and $_POST['t']==1){
 			foreach($t as $k=>$v)
 			{
 				$tt = explode(") ", $v);
-				//var_dump($tt);echo "<br>";$tmp4
+				//var_dump($tt);echo "<br>";
 				$ttt = explode("=>",$tt[1]);
 				//var_dump($ttt);echo "<br>";
 				if($ttt[0]=='on')
@@ -1525,7 +1454,7 @@ $error_m ="";
 					</p>
 					<?php
 					}
-					?>
+					echo "</div>";?>
                     <div style="padding: 5px;margin-bottom: 10px;">
                         Difference Cost : <input type="text" name="dif_receive" value="<?php echo number_format($row['dif_receive'],2); ?>"> <?php echo $currency; ?>
                     </div>
@@ -1536,7 +1465,7 @@ $error_m ="";
                         </div>
                     </div>
                     <?php
-					echo "</div>";
+
 					if(isset($disabled) && $disabled == "disabled")
 					{
 ?>

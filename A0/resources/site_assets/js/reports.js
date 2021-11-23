@@ -17,6 +17,11 @@ new Vue({
                 uname: window.selectedUser.uname
             }] : [],
             selectedUser: window.selectedUser ? window.selectedUser.uname : null,
+            countries:window.countries,
+            collectionLocations:window.collectionLocations,
+            selectedFromCountries:window.selectedFromCountries || [],
+            selectedToCountries:window.selectedToCountries || [],
+            selectedCollectionLocations:window.selectedCollectionLocations || [],
         }
     },
 

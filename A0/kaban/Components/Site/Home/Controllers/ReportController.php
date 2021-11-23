@@ -1,15 +1,10 @@
 <?php
 
-
 namespace Kaban\Components\Site\Home\Controllers;
 
-
-use App\Mail\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Kaban\Components\Site\Home\Controllers\Report\Type1;
-use Kaban\Components\Site\Home\Controllers\Report\Type2;
-use Kaban\Components\Site\Home\Controllers\Report\Type3;
 use Kaban\Core\Controllers\SiteBaseController;
 use Kaban\General\Enums\EQuoteStatus;
 use Kaban\Models\Quote;
@@ -18,6 +13,8 @@ use PdfReport;
 
 class ReportController extends SiteBaseController
 {
+    const cache_key = 'quotes-without-collectionLocations';
+
     public function __construct()
     {
 //        $type1 = (new Type1());
@@ -26,11 +23,12 @@ class ReportController extends SiteBaseController
 
     public function report($type, Request $request)
     {
+        //dd($request->all());
 
-        $quotes = Quote::select([DB::raw('*')
+        $baseQuery = Quote::select([DB::raw('*')
             , DB::raw('CAST(total_weight AS DECIMAL(10,2)) as total_weight_dec')
         ])->with(['shipInfo', 'user', 'urls.agent'])
-            ->when($request->has('search_user'), function ($q) {
+            ->when(!empty($request->search_user), function ($q) {
                 $q->where('uname', request('search_user'));
             })
             ->when($type == 1, function ($q) {
@@ -55,37 +53,39 @@ class ReportController extends SiteBaseController
             ->when(!empty(request('from_weight')), function ($q) {
                 $q->whereRaw('CAST(total_weight AS DECIMAL(10,2)) <= ' . floatval(request('to_weight')));
             })
-            ->when(!empty($request->from_country), function ($q) {
-                $q->where('from', request('from_country'));
+            ->when(!empty($request->from_countries), function ($q) {
+                $q->whereIn('from', request('from_countries'));
             })
-            ->when(!empty($request->to_country), function ($q) {
-                $q->where('to', request('to_country'));
+            ->when(!empty($request->to_countries), function ($q) {
+                $q->whereIn('to', request('to_countries'));
             })
-            ->get();
-//         dd($quotes);
-        $selectedUser=null;
+            ->when(!empty($request->collectionLocations), function ($q) {
+                $q->whereIn('from_location', request('collectionLocations'));
+            });
+
+
+        $quotes = $baseQuery->get();
+        $fromLocationGrouped = $quotes->groupBy('from_location')->filter(function ($val,$key){
+            return count($val)>0;
+        });
+
+
+        if (empty($request->collectionLocations)) {
+            Cache::forget(self::cache_key);
+        }
+        $cachedCollectionLocationsQuotes = Cache::rememberForever(self::cache_key, function () use ($quotes) {
+            return $quotes;
+        });
+        $selectedUser = null;
+
         if (!empty($request->search_user) && $quotes->first()) {
             $selectedUser = $quotes->first()->user->only('fullName', 'uname');
         }
-        $initialRequest = empty(\request('status'));
-        return view('SiteHome::report', compact('quotes', 'type', 'initialRequest', 'selectedUser'));
+        $initialRequest = empty(request('status'));
+//dd($quotes->pluck('from_location')->unique()->toArray());
 
-        switch ($type) {
-            case 1;
-                $quotes = (new Type1())->index();
-                break;
-
-            case 2;
-//            dd($_GET);
-                $quotes = (new Type2())->index();
-                break;
-
-            case 3;
-                $quotes = (new Type3())->index();
-                break;
-        }
-
-        return view('SiteHome::report', compact('quotes'));
+        return view('SiteHome::report', compact('quotes', 'type', 'initialRequest', 'selectedUser',
+            'cachedCollectionLocationsQuotes','fromLocationGrouped'));
     }
 
     public function report0(Request $request)
