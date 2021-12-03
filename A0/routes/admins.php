@@ -7,6 +7,7 @@ use Kaban\Components\General\Admin\Controllers\AdminRegisterController;
 use Kaban\Components\General\Admin\Controllers\AdminResetPasswordController;
 use Kaban\Components\General\Admin\Controllers\BaseController;
 use Kaban\Components\General\Admin\Controllers\ForgotPasswordController;
+use Kaban\Components\General\MailConfig\Controllers\MailConfigController;
 use Kaban\Core\Middleware\SuperAdmin;
 
 Route::get( '/test', function (){
@@ -34,11 +35,12 @@ Route::get( '/me', [AdminProfileController::class,'adminProfilePage'] )->middlew
 Route::post( '/me', [AdminProfileController::class,'update'] )->middleware('auth:adminGuard')->name( 'admin.profile.update' );
 
 Route::group(['middleware'=>[SuperAdmin::class]],function (){
-
+    Route::resource('mail-config',MailConfigController::class)->except(['delete']);
     Route::get( '/see/{id}', [AdminProfileController::class,'otherAdminProfilePage'] )->middleware('auth:adminGuard')->name( 'admin.profile.see' );
     Route::get( '/list', [AdminListController::class,'list'] )->middleware('auth:adminGuard')->name( 'admin.list' );
     Route::post( '/list', [AdminListController::class,'search'] )->middleware('auth:adminGuard')->name( 'admin.list' );
     Route::get( '/delete/{id}', [AdminListController::class,'destroy'] )->middleware('auth:adminGuard')->name( 'admin.delete' );
+    Route::get( '/delete/{id}', [MailConfigController::class,'destroy'] )->middleware('auth:adminGuard')->name( 'mail-config.delete' );
 
 });
 

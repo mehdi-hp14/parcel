@@ -5,6 +5,7 @@ return [
         'General' => [
             'Agent',
             'Admin',
+            'MailConfig',
         ],
         'Admin' => [
             /*currently just work to render views*/

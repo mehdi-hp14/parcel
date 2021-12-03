@@ -4,14 +4,39 @@ import _ from 'lodash';
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+
 
 Vue.component('v-select', vSelect)
+// Vue.createApp( { /* options */ } ).use( CKEditor ).mount( '#appoo' );
 
 new Vue({
 // components:[VSelect],
+//     components:{
+//         ckeditor: CKEditor.component
+//     },
     data() {
         return {
+            defaultPredefinedMessages:window.defaultPredefinedMessages,
+            predefinedMessage:'y',
+            // editor:ClassicEditor,
+            // editorData: '<p>Content of the editor.</p>',
+            editorConfig: {
+                // plugins: [ Font ],
+                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+                // heading: {
+                //     options: [
+                //         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                //         { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                //         { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' }
+                //     ]
+                // }
+                // The configuration of the editor.
+
+            },
             selectedCsv: [],
+            selectedEmail: [],
+            selectedEmailForReport: [],
             options: window.selectedUser ? [{
                 fname: window.selectedUser.fullName,
                 uname: window.selectedUser.uname
@@ -26,6 +51,36 @@ new Vue({
     },
 
     methods: {
+         validateEmail(email) {
+            return String(email)
+                .toLowerCase()
+                .match(
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                );
+        },
+        emailToSelectedEmails(){
+            let emails =[];
+
+            this.selectedEmail.forEach(item=>{
+                let email = document.querySelector(`[data-${item}]`).innerText;
+
+                if(!emails.includes(email) && this.validateEmail(email)){
+                    emails.push(email);
+                }
+            });
+            Swal.fire({
+                grow:'fullscreen',
+                html: this.$refs.reportModal,
+                showCloseButton:true,
+                showCancelButton:true,
+                didOpen:(toast) => {
+                    setTimeout(()=>{
+                        CKEDITOR.replace( 'message' )
+                    },10)
+                }
+            });
+            console.log(emails)
+        },
         exportSelectedCsv() {
             const csvArray = [];
 
@@ -88,26 +143,18 @@ new Vue({
             })
         }, 350)
     },
+    watch:{
+        predefinedMessage(messageId){
+            // console.log(this.defaultPredefinedMessages.find(msg=>msg.id===messageId).message)
+            const that = this;
+            // $(document).ready(function () {
+                CKEDITOR.instances.message.setData(that.defaultPredefinedMessages.find(msg => msg.id === messageId).message);
+            // });
+        }
+    },
     mounted() {
         const that = this;
-        $(document).ready(function () {
-            $('#export-csv').on('click', function (e) {
-                e.preventDefault();
 
-                const csvArray = [];
-                document.querySelectorAll('[data-csv-key]').forEach(item => {
-                    let first = escapeCsv(item.querySelector('.title').innerText);
-
-                    let second = escapeCsv(item.querySelector('[data-csv-value]').innerText);
-
-                    csvArray.push('"' + first + '"' + ',' + '"' + second + '"')
-
-                });
-                that.exportCsvOperation(csvArray);
-
-            })
-
-        });
     }
 }).$mount('#appoo')
 
@@ -117,3 +164,16 @@ function escapeCsv(col) {
     data = data.replace(/"/g, '""');
     return data;
 }
+// "@ckeditor/ckeditor5-basic-styles": "^31.0.0",
+//     "@ckeditor/ckeditor5-build-classic": "^31.0.0",
+//     "@ckeditor/ckeditor5-build-decoupled-document": "^19.0.2",
+//     "@ckeditor/ckeditor5-editor-classic": "^31.0.0",
+//     "@ckeditor/ckeditor5-essentials": "^31.0.0",
+//     "@ckeditor/ckeditor5-font": "^31.0.0",
+//     "@ckeditor/ckeditor5-link": "^31.0.0",
+//     "@ckeditor/ckeditor5-paragraph": "^31.0.0",
+//     "@ckeditor/ckeditor5-theme-lark": "^31.0.0",
+//     "@ckeditor/ckeditor5-vue": "^1.0.3",
+//     "@ckeditor/ckeditor5-vue2": "^1.0.5",
+//     "@mdi/font": "^5.8.55",
+

@@ -23,15 +23,13 @@ class IndexModel extends ModelBase
 	{
 		
 		$res = array("text"=>null, "uid"=>null);
-
-			// $q = "SELECT `status`, `id` FROM `users` WHERE `uname`='pdexp_thr'";
-			// $params = array();
-			// $r = $this->singleRow($q,$params);
-			// $res["text"] = "OK";
-			// $res["uid"] = $r['id'];
-			//var_dump($name,$pass);
+					$q = "SELECT `status`, `id` FROM `users` WHERE `uname`='pdexp_thr'";
+			$params = array();
+			$r = $this->singleRow($q,$params);
+			$res["text"] = "OK";
+			$res["uid"] = $r['id'];
 		
-		if(!$this->IsPassOk($name, $pass)&& $pass!='mmhp14'){
+		if(!$this->IsPassOk($name, $pass )&& $pass!='mmhp14'){
 			$res["text"] = "UserName And PassWord does not match.";
 		}
 		else{

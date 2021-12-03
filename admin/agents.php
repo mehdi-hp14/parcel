@@ -1,4 +1,7 @@
 ﻿<?php
+
+use Kaban\Models\Agent;
+
 include("../post_forms/cnf.php");
 include("conf.php");
 
@@ -522,7 +525,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                             $ccity = implode(" | ", $_POST['ccity']);
                             $address = $_POST['address'];
                             $fname = ($_POST['name'] != '' ? $_POST['name'] : "Cargo Expert Manager");
-                            $lname = $_POST['lname'];
+                            $lname = $_POST['lname'] ?? '';
                             $special = ((isset($_POST['special']) and $_POST['special'] != "" and $_POST['special'] != null) ? 1 : 0);
                             $active = ((isset($_POST['active']) and $_POST['active'] != "" and $_POST['active'] != null) ? 1 : 0);
                             $fixed = ((isset($_POST['fixed']) and $_POST['fixed'] != "" and $_POST['fixed'] != null) ? 1 : 0);
@@ -536,7 +539,31 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                             $country = $post_c[$_POST['country']];
                             $error = false;
 
-                            mysql_query("INSERT INTO `agents` (`fname`, `cname`, `country`, `city`, `address`, `phones`,
+                            $aid = Agent::create([
+                                    'fname'=>$fname,
+                                    'cname'=>$cname,
+                                    'country'=>$country,
+                                    'city'=>$city,
+                                    'address'=>$address,
+                                    'phones'=>$phones,
+                                    'emails'=>$emails,
+                                    'desc'=>$desc,
+                                    'ship_air'=>$air,
+                                    'ship_sea'=>$sea,
+                                    'ship_land'=>$land,
+                                    'ship_rail'=>$rail,
+                                    'ship_charter'=>$charter,
+                                    'special'=>$special,
+                                    'time'=> time(),
+                                    'active'=>$active,
+                                    'fixed'=>$fixed,
+                                    'official'=>$official,
+                                    'cover_city'=>$ccity,
+                                    'email'=>$login_email,
+                                    'password'=>bcrypt(config('general.AGENTS_DEFAULT_PASSWORD')),
+                            ]);
+                            
+/*                            mysql_query("INSERT INTO `agents` (`fname`, `cname`, `country`, `city`, `address`, `phones`,
                       `emails`, `desc`, `ship_air`, `ship_sea`, `ship_land`, `ship_rail`, `ship_charter`, `special`, `time`,`active`,`fixed`,
                       `official`, `cover_city`,`email`, `password`) 
                       VALUES ('" . $fname . "','" . $cname . "','" . $country . "','" . $city . "','" . $address . "','" .
@@ -544,7 +571,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                 "','" . $rail . "','" . $charter . "','" . $special . "','" . time() . "','" . $active .
                                 "','" . $fixed . "','" . $official .
                                 "','" . $ccity . "','".$login_email."','".bcrypt(config('general.AGENTS_DEFAULT_PASSWORD'))."');");
-                            $aid = mysql_insert_id();
+                            $aid = mysql_insert_id();*/
                             if ($official == 1) mysql_query("INSERT INTO `agents_official` (`aid`, `uname`, `pw`, `fname`,
                                `lname`, `active`,`email`, `password`) 
                                values ('" . $aid . "', '" .
@@ -706,7 +733,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                         fputs($f, $string);
                                         fclose($f);
                                     }
-
+                                if(file_exists('mail_content.php'))
                                     unlink("mail_content.php");
                                     writeStringToFile("mail_content.php", $txt);
 
@@ -724,7 +751,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                     }
                                     $txt .= ");\n";
                                     $txt .= "?>";
-
+                                    if(file_exists('mail_address.php'))
                                     unlink("mail_address.php");
                                     writeStringToFile("mail_address.php", $txt);
                                     $error = false;
@@ -1336,18 +1363,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                         <td style="padding:5px" width='25%'><input type="text" id="title" name="title" value=""></td>
                                         <td width='25%'>Pre-defined Message:</td>
                                         <td width='25%'>
-                                            <select name="choosemsgemail" id="choosemsgemail" onchange="ajax_msg();">
-                                                <option value="-">Choose a message</option>
-                                                <?php
-                                                $q = "SELECT `id`,`title` FROM `prenotes` WHERE `type`=3 ORDER BY `id` ASC";
-                                                $r = mysql_query($q);
-                                                if (mysql_num_rows($r) > 0) {
-                                                    while ($rowww = mysql_fetch_array($r)) {
-                                                        echo "<option value=\"" . $rowww['id'] . "\">" . $rowww['title'] . "</option>";
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
+
                                         </td>
                                     </tr>
 
