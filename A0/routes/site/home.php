@@ -24,6 +24,8 @@ Route::group( [
     Route::post( '/contact', [HomeController::class,'contact'] )->name( 'contact' );
 
     Route::get( '/admin/report/search-users', [ReportController::class,'searchUser'])->name( 'site.report.search-users' );
+    Route::get( '/admin/report/search-users', [ReportController::class,'searchUser'])->name( 'site.report.search-users' );
+    Route::post( '/admin/report/email-to-report-users', [ReportController::class,'emailToReportUsers'])->name( 'site.report.email-to-report-users' );
     Route::get( '/admin/report/{type}', [ReportController::class,'report'])->name( 'admin.report' );
 //    Route::get( '/', function () {
 //        $user = request()->user(); //getting the current logged in customer

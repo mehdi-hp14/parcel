@@ -17,13 +17,14 @@ new Vue({
 //     },
     data() {
         return {
-            defaultPredefinedMessages:window.defaultPredefinedMessages,
-            predefinedMessage:'y',
+            defaultPredefinedMessages: window.defaultPredefinedMessages,
+            predefinedMessage: '',
+            selectedPredefined: null,
             // editor:ClassicEditor,
             // editorData: '<p>Content of the editor.</p>',
             editorConfig: {
                 // plugins: [ Font ],
-                toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'],
                 // heading: {
                 //     options: [
                 //         { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
@@ -42,43 +43,146 @@ new Vue({
                 uname: window.selectedUser.uname
             }] : [],
             selectedUser: window.selectedUser ? window.selectedUser.uname : null,
-            countries:window.countries,
-            collectionLocations:window.collectionLocations,
-            selectedFromCountries:window.selectedFromCountries || [],
-            selectedToCountries:window.selectedToCountries || [],
-            selectedCollectionLocations:window.selectedCollectionLocations || [],
+            countries: window.countries,
+            collectionLocations: window.collectionLocations,
+            selectedFromCountries: window.selectedFromCountries || [],
+            selectedToCountries: window.selectedToCountries || [],
+            selectedCollectionLocations: window.selectedCollectionLocations || [],
+            mailSubject:'',
         }
     },
 
     methods: {
-         validateEmail(email) {
+        validateEmail(email) {
             return String(email)
                 .toLowerCase()
                 .match(
                     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                 );
         },
-        emailToSelectedEmails(){
-            let emails =[];
+        privateAppendPlaceHolder() {
 
-            this.selectedEmail.forEach(item=>{
-                let email = document.querySelector(`[data-${item}]`).innerText;
+        },
+        emailToSelectedEmails() {
+            let emails = [];
+            let finalInfo = [];
 
-                if(!emails.includes(email) && this.validateEmail(email)){
+            this.selectedEmail.forEach(item => {
+                let email = document.querySelector(`[data-${item}-email]`).innerText;
+
+                if (!emails.includes(email) && this.validateEmail(email)) {
+
+                    let address = document.querySelector(`[data-${item}-address]`).innerText;
+                    let zipcode = document.querySelector(`[data-${item}-zipcode]`).innerText;
+                    let contact_person = document.querySelector(`[data-${item}-contact_person]`).innerText;
+                    let company_name = document.querySelector(`[data-${item}-company_name]`).innerText;
+                    let telephone = document.querySelector(`[data-${item}-telephone]`).innerText;
+                    let country = document.querySelector(`[data-${item}-country]`).innerText;
+
                     emails.push(email);
+
+                    finalInfo.push({
+                        email,
+                        address,
+                        zipcode,
+                        contact_person,
+                        company_name,
+                        telephone,
+                        country,
+                    });
                 }
             });
             Swal.fire({
-                grow:'fullscreen',
+                grow: 'fullscreen',
                 html: this.$refs.reportModal,
-                showCloseButton:true,
-                showCancelButton:true,
-                didOpen:(toast) => {
-                    setTimeout(()=>{
-                        CKEDITOR.replace( 'message' )
-                    },10)
+                showCloseButton: true,
+                showCancelButton: true,
+                didOpen: (toast) => {
+                    setTimeout(() => {
+                        // if (!this.emailSwalOpened) {
+
+                        let editor = CKEDITOR.replace('message');
+                        let config = editor.config;
+
+                        editor.ui.addRichCombo('widgets', {
+                            label: "Place Holders", // label displayed in toolbar
+                            title: 'Insert Place Holder', // tooltip text when hovering over the dropdown
+                            multiSelect: false,
+                            toolbar: 'insert',
+                            className: 'cke_place_holder',
+                            // use the same style as the font/style dropdowns
+                            panel: {
+                                css: `.ckeditor-custom-6{font-size: 10px;display : inline;}
+`,
+                            },
+
+                            init: function () {
+                                // dropdown options:
+                                // this.add( VALUE, HTML, TEXT );
+                                // VALUE - The value we get when the row is clicked
+                                // HTML - html/plain text that should be displayed in the dropdown
+                                // TEXT - displayed in popup when hovered over the row.
+                                this.add("<b>{CompanyName}</b>", "<h6 class='ckeditor-custom-6'>company name</h6>", "{CompanyName}");
+                                this.add("<b>{Address}</b>", "<h6 class='ckeditor-custom-6'>Address</h6>", "{Address}");
+                                this.add("<b>{ZipCode}</b>", "<h6 class='ckeditor-custom-6'>Zip Code</h6>", "{ZipCode}");
+                                this.add("<b>{ContactPerson}</b>", "<h6 class='ckeditor-custom-6'>Contact Person</h6>", "{Contact Person}");
+                                this.add("<b>{Telephone}</b>", "<h6 class='ckeditor-custom-6'>Telephone</h6>", "{Telephone}");
+                            },
+                            onClick: function (value) {
+                                editor.insertHtml(value);
+                            },
+                        });
+                        return
+
+                        editor.addRichCombo("mySimpleCommand", { // create named command
+                            exec: function (edt, xx, yy) {
+                                // CKEDITOR.instances.message.insertHtml('<a href=\x22my_link\x22>XXXXXXXXXXXXX' + CKEDITOR.instances.message.getSelection().getNative() + '</a>');
+                                editor.insertHtml('XXXXXXXXXXXXX');
+                                return
+                                debugger
+                                var fragment = editor.getSelection().getRanges()[0].extractContents()
+                                var container = CKEDITOR.dom.element.createFromHtml("asdasdasd", editor.document)
+                                fragment.appendTo(container)
+                                editor.insertElement(container)
+                                // alert(edt.getData());
+                            }
+                        });
+
+                        editor.ui.addButton('SuperButton', { // add new button and bind our command
+                            label: "Click me",
+                            command: 'mySimpleCommand',
+                            // toolbar: 'insert',
+                            // icon: 'insert Company Name'
+                        });
+                        // this.emailSwalOpened = true;
+                        //
+                        // }else{
+                        //     CKEDITOR.instances['message'].updateElement();
+                        // }
+                    }, 10)
                 }
-            });
+            }).then(result => {
+               const mailtext =  CKEDITOR.instances.message.getData();
+                // debugger
+
+                if (CKEDITOR.instances.message) CKEDITOR.instances.message.destroy();
+
+                if (result.isConfirmed) {
+                    axios.post('/admin/report/email-to-report-users', {
+                        _token,
+                        payload: finalInfo,
+                        mailSubject: this.mailSubject,
+                        mailtext,
+                    }).then(result=>{
+                        Swal.fire({
+                            icon:'success',
+                            text:'Mails has been sent successfully',
+                        })
+                    }).catch(error=>{
+
+                    })
+                }
+            })
             console.log(emails)
         },
         exportSelectedCsv() {
@@ -132,7 +236,7 @@ new Vue({
             }
         },
         search: _.debounce((loading, search, vm) => {
-            vm.selectedUser=null;
+            vm.selectedUser = null;
 
             axios.get(window.reportUserApi + `?q=${escape(search)}`).then(res => {
                 vm.options = res.data
@@ -143,13 +247,11 @@ new Vue({
             })
         }, 350)
     },
-    watch:{
-        predefinedMessage(messageId){
-            // console.log(this.defaultPredefinedMessages.find(msg=>msg.id===messageId).message)
-            const that = this;
-            // $(document).ready(function () {
-                CKEDITOR.instances.message.setData(that.defaultPredefinedMessages.find(msg => msg.id === messageId).message);
-            // });
+    watch: {
+        predefinedMessage(messageId) {
+            this.selectedPredefined = this.defaultPredefinedMessages.find(msg => msg.id === messageId);
+
+            CKEDITOR.instances.message.setData(this.selectedPredefined.message);
         }
     },
     mounted() {
@@ -164,6 +266,7 @@ function escapeCsv(col) {
     data = data.replace(/"/g, '""');
     return data;
 }
+
 // "@ckeditor/ckeditor5-basic-styles": "^31.0.0",
 //     "@ckeditor/ckeditor5-build-classic": "^31.0.0",
 //     "@ckeditor/ckeditor5-build-decoupled-document": "^19.0.2",

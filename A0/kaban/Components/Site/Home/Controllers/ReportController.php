@@ -5,8 +5,10 @@ namespace Kaban\Components\Site\Home\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Kaban\Components\Site\Home\Jobs\EmailToReportUsersJob;
 use Kaban\Core\Controllers\SiteBaseController;
 use Kaban\General\Enums\EQuoteStatus;
+use Kaban\Models\Prenote;
 use Kaban\Models\Quote;
 use Kaban\Models\User;
 use PdfReport;
@@ -65,8 +67,8 @@ class ReportController extends SiteBaseController
 
 
         $quotes = $baseQuery->get();
-        $fromLocationGrouped = $quotes->groupBy('from_location')->filter(function ($val,$key){
-            return count($val)>0;
+        $fromLocationGrouped = $quotes->groupBy('from_location')->filter(function ($val, $key) {
+            return count($val) > 0;
         });
 
 
@@ -82,10 +84,11 @@ class ReportController extends SiteBaseController
             $selectedUser = $quotes->first()->user->only('fullName', 'uname');
         }
         $initialRequest = empty(request('status'));
-//dd($quotes->pluck('from_location')->unique()->toArray());
+
+        $defaultPredefinedMessages = $this->getPreNotes();
 
         return view('SiteHome::report', compact('quotes', 'type', 'initialRequest', 'selectedUser',
-            'cachedCollectionLocationsQuotes','fromLocationGrouped'));
+            'cachedCollectionLocationsQuotes', 'fromLocationGrouped', 'defaultPredefinedMessages'));
     }
 
     public function report0(Request $request)
@@ -350,5 +353,46 @@ class ReportController extends SiteBaseController
                     'uname' => $item->uname,
                 ];
         });
+    }
+
+    private function getPreNotes()
+    {
+        if (config('app.env') === 'production') {
+            define("DB_HOST", "localhost");
+            define("DB_NAME", "bookingp_qdb");
+            define("DB_USER", "bookingp_qdusr");
+            define("DB_PASS", ",f[~jvXI~WU)");
+        } else {
+            define("DB_HOST", "db");
+            define("DB_NAME", "parcel");
+            define("DB_USER", "root");
+            define("DB_PASS", "secret");
+        }
+        $con = mysqli_connect(DB_HOST, DB_USER, DB_PASS) or die(mysql_error());
+        mysqli_select_db($con, DB_NAME) or die(mysql_error());
+        $q = "SELECT `id`,`title`,`message` FROM `prenotes` WHERE `type`=3 ORDER BY `id` ASC";
+        $r = mysqli_query($con, $q);
+        return mysqli_fetch_all($r, MYSQLI_ASSOC);
+    }
+
+    public function emailToReportUsers(Request $request)
+    {
+        $text = $request->mailtext;
+
+        foreach ($request->payload as $payload) {
+            $text = str_replace([
+                '{CompanyName}', '{Address}', '{ZipCode}', '{ContactPerson}', '{Telephone}', '{Country}',
+            ], [
+                $payload['company_name'],
+                $payload['address'],
+                $payload['zipcode'],
+                $payload['contact_person'],
+                $payload['telephone'],
+                $payload['country'],
+            ], $text);
+
+            EmailToReportUsersJob::dispatch($payload, $text, $request->mailSubject);
+        }
+        return response('ok');
     }
 }

@@ -4,19 +4,45 @@
         .badge-pill {
             font-size: 16px;
         }
+        .export-div {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .export-div > *{
+            margin: 7px;
+        }
+        li .badge.badge-primary.badge-pill{
+            min-width:50px
+        }
+        .badge:empty{
+            display: inline;
+        }
     </style>
 @endsection
 @section('content')
     <div class="container" id="appoo">
-        <button id="export-csv" class="btn btn-warning"
-                v-if="selectedCsv.length"
-                @click="exportSelectedCsv"
-                style="position: fixed;bottom: 10px;right: 10px"
-        >export selected as csv
-        </button>
+        <div
+            class="export-div"
+        >
+            <button id="export-csv" class="btn btn-warning"
+                    v-if="selectedCsv.length"
+                    @click="exportSelectedCsv"
+            >export selected as csv
+            </button>
+
+            <button id="export-csv" class="btn btn-danger"
+                    v-if="selectedEmail.length"
+                    @click="emailToSelectedEmails"
+            >email to selected emails
+            </button>
+        </div>
 
         <div class="row justify-content-center">
             <div class="col-md-12 col-sm-12">
+
                 <form method="get" action="{{ route('admin.report',$type) }}">
                     {{--                    @csrf--}}
                     @if(request('qid1'))
@@ -76,7 +102,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="completed-status"
                                                name="status[]" value="completed"
-                                               @if(request('status') && in_array('completed',request('status'))) checked
+                                               @if(request('statemailToSelectedEmailsus') && in_array('completed',request('status'))) checked
                                                @endif
                                                @if($initialRequest) checked @endif
                                         >
@@ -326,6 +352,7 @@
                                         data-csv-key>
                                         <span class="title">Company Name</span>
                                         <span data-csv-value
+                                              data-sender-{{$quote->id}}-company_name
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->scompany??'---'}}</span>
                                     </li>
@@ -333,6 +360,7 @@
                                         data-csv-key>
                                         <span class="title">Address</span>
                                         <span data-csv-value
+                                              data-sender-{{$quote->id}}-address
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->saddress??'---'}}</span>
                                     </li>
@@ -340,6 +368,7 @@
                                         data-csv-key>
                                         <span class="title">Zip Code</span>
                                         <span data-csv-value
+                                              data-sender-{{$quote->id}}-zipcode
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->szipcode??'---'}}</span>
                                     </li>
@@ -347,6 +376,7 @@
                                         data-csv-key>
                                         <span class="title">Country</span>
                                         <span data-csv-value
+                                              data-sender-{{$quote->id}}-country
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->scountry??'---'}}</span>
                                     </li>
@@ -354,6 +384,7 @@
                                         data-csv-key>
                                         <span class="title">Contact Person</span>
                                         <span data-csv-value
+                                              data-sender-{{$quote->id}}-contact_person
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->scontactp??'---'}}</span>
                                     </li>
@@ -361,13 +392,17 @@
                                         data-csv-key>
                                         <span class="title">Telephone</span>
                                         <span data-csv-value
+                                              data-sender-{{$quote->id}}-telephone
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->stelephone??'---'}}</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">E-mail</span>
+                                        <span class="title">
+                                            <input type="checkbox" value="sender-{{$quote->id}}" v-model="selectedEmail"> Email
+                                        </span>
                                         <span data-csv-value
+                                              data-sender-{{$quote->id}}-email
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{!empty($quote->shipInfo->semail)?$quote->shipInfo->semail:'---'}}</span>
                                     </li>
@@ -379,6 +414,7 @@
                                         data-csv-key>
                                         <span class="title">Company Name</span>
                                         <span data-csv-value
+                                              data-receiver-{{$quote->id}}-company_name
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->rcompany??'---'}}</span>
                                     </li>
@@ -386,6 +422,7 @@
                                         data-csv-key>
                                         <span class="title">Address</span>
                                         <span data-csv-value
+                                              data-receiver-{{$quote->id}}-address
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->raddress??'---'}}</span>
                                     </li>
@@ -393,6 +430,7 @@
                                         data-csv-key>
                                         <span class="title">Zip Code</span>
                                         <span data-csv-value
+                                              data-receiver-{{$quote->id}}-zipcode
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->rzipcode??'---'}}</span>
                                     </li>
@@ -400,6 +438,7 @@
                                         data-csv-key>
                                         <span class="title">Country</span>
                                         <span data-csv-value
+                                              data-receiver-{{$quote->id}}-country
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->rcountry??'---'}}</span>
                                     </li>
@@ -407,6 +446,7 @@
                                         data-csv-key>
                                         <span class="title">Contact Person</span>
                                         <span data-csv-value
+                                              data-receiver-{{$quote->id}}-contact_person
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->rcontactp??'---'}}</span>
                                     </li>
@@ -414,13 +454,17 @@
                                         data-csv-key>
                                         <span class="title">Telephone</span>
                                         <span data-csv-value
+                                              data-receiver-{{$quote->id}}-telephone
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->rtelephone??'---'}}</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">E-mail</span>
+                                        <span class="title">
+                                           <input type="checkbox" value="receiver-{{$quote->id}}" v-model="selectedEmail"> Email
+                                        </span>
                                         <span data-csv-value
+                                              data-receiver-{{$quote->id}}-email
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{!empty($quote->shipInfo->remail)?$quote->shipInfo->remail:'---'}}</span>
                                     </li>
@@ -449,11 +493,48 @@
 
             </div>
         </div>
-    </div>
+        <div v-show="1">
+            <div ref="reportModal">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="email">Subject:</label>
+                            <input type="email" class="form-control" id="email" v-model="mailSubject">
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="pwd">Predefined message:</label>
+                            <select class="form-control" name="predefined-message" id="predefined-message" v-model="predefinedMessage">
+                                <option :value="message.id" v-for="message in defaultPredefinedMessages">@{{message.title}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <textarea name="message" id="message"></textarea>
+                    </div>
+                    {{--                                <ckeditor v-model="editorData" :config="editorConfig"></ckeditor>--}}
+                </div>
+            </div>
+        </div>
+    </div>v
 @endsection
 
 @section('later-scripts')
+{{--    <script src="../node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>--}}
+{{--    <script src="../node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js"></script>--}}
+{{--<script src="{{asset('A0/node_modules/ckeditor4/ckeditor.js')}}"></script>--}}
+{{--<script src="{{asset('A0/node_modules/ckeditor4-vue/dist/ckeditor.js')}}"></script>--}}
+{{--<script src="../node_modules/ckeditor4-vue/dist/ckeditor.js"></script>--}}
+<script type="text/javascript" src="{{asset('A0/public/ckeditor/ckeditor.js')}}"></script>
+
     <script>
+        const CKEditor = window.CKEditor;
+        const _token = '{{csrf_token()}}';
+
+        var defaultPredefinedMessages = {!! json_encode($defaultPredefinedMessages) !!};
+
         var selectedUser = @json($selectedUser);
         var selectedFromCountries = @json(request('from_countries'));
         var selectedToCountries = @json(request('to_countries'));
