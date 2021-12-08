@@ -30,6 +30,26 @@ if(isset($_GET['fullname']) AND $_GET['fullname']!='' AND $_GET['fullname']!=nul
 	unlink($_GET['fullname']);
 	header("Location: itemedit.php?id=".$id."");
 }
+if(!empty($_GET['cancel-offer-confirm']))
+{
+    $quote = \Kaban\Models\Quote::find($id);
+    $quote->offered_p = str_replace('on=>','off=>',$quote->offered_p);
+    $quote->save();
+
+	header("Location: itemedit.php?id=".$id."");
+    die();
+}
+
+if(!empty($_GET['cancel-receive-confirm']))
+{
+    $quote = \Kaban\Models\Quote::find($id);
+    $quote->received_p = str_replace('on=>','off=>',$quote->received_p);
+    $quote->save();
+
+    header("Location: itemedit.php?id=".$id."");
+    die();
+}
+
 $post_c = array(
 	'Radio-00'=>'Test Country',
 	'Radio-0'=>'Afghanistan',
@@ -229,6 +249,8 @@ $post_c = array(
 	'Radio-193'=>'Zambia',
 	'Radio-194'=>'Zimbabwe'
 );
+
+$error_m = '';
 
 $q = "SELECT * FROM `settings` WHERE `keyword`='quote-formula'";
 $r = mysql_query($q) or die(mysql_error());
@@ -502,26 +524,8 @@ $(function() {
 </head>
 <body>
     <div class="container_12">
-        <div class="grid_12 header-repeat">
-            <div id="branding">
-                <div class="floatleft">
-                    <img src="img/logo.png" alt="Logo" /></div>
-                <div class="floatright">
-                    <div class="floatleft">
-                        <img src="img/img-profile.jpg" alt="Profile Pic" /></div>
-                    <div class="floatleft marginleft10">
-                        <ul class="inline-ul floatleft">
-                            <li>Hello Admin</li>
-                            <li><a href="logout.php">Logout</a></li>
-                        </ul>
-                        <br />
-                        <span class="small grey">Current Time : <span id="time"></span></span>
-                    </div>
-                </div>
-                <div class="clear">
-                </div>
-            </div>
-        </div>
+        <?= require_once "./partials/adminProfile.php"?>
+
         <div class="clear">
         </div>
         <div class="grid_12">
@@ -582,8 +586,11 @@ function getTheMaxNumber($total_weight)
 
 	return 1;
 }
-function GetOfferPriceFromReceive($rprice, $currency="EUR",$extra_c=0,$percent=0,$tocurrency="GBP",$totalWeight=0)
+function GetOfferPriceFromReceive($rprice, $currency="EUR",$extra_c=0,$percent=0,$tocurrency="GBP",$total_weight=0)
 {
+    if($rprice==''){
+        $rprice= 0;
+    }
     $q = "SELECT * FROM `settings` WHERE `keyword`='quote-formula'";
     $r = mysql_query($q) or die(mysql_error());
     $quoteFormula = mysqli_fetch_object($r);
@@ -599,6 +606,8 @@ function GetOfferPriceFromReceive($rprice, $currency="EUR",$extra_c=0,$percent=0
 $q = "SELECT `paid`, `uname`, `offered_p`, `total_weight` FROM `quote` WHERE `id`=".$id."";
 $r = mysql_query($q) or die(mysql_error());
 $row = mysql_fetch_array($r);
+$q_p = array();
+$error = false;
 if(isset($_POST['t']) AND $_POST['t']==1){
 
     $currentQuote = "SELECT quote.*, users.id as user_id FROM `quote` LEFT JOIN users on users.uname=quote.uname WHERE quote.id=".$_GET['id'];
@@ -632,7 +641,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 
 
         if(isset($_POST['o_price_r'])){ // select price is not disabled so we know which price is main
-            $targetMoney = ($_POST['o_price_p'][intval($_POST['o_price_r'])])+intval($difOffer);
+            $targetMoney = floatval(str_replace(',','',$_POST['o_price_p'][intval($_POST['o_price_r'])]))+intval($difOffer);
             $currency = $_POST['o_price_c'][intval($_POST['o_price_r'])];
         }
 
@@ -665,7 +674,6 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 
 
     }
-	$q_p = array();
 	$tmp = "";
 	$_c = 0;
 	if(isset($_POST['dimss']) AND is_array($_POST['dimss']) AND count($_POST['dimss'])>0){
@@ -1008,7 +1016,8 @@ elseif(isset($_POST['t']) AND $_POST['t']=='upload')
 		mkdir($locations, 0755, true);
 	}
 	if(isset($_FILES['uploaded_file']['name']) AND is_array($_FILES['uploaded_file']['name']) AND count($_FILES['uploaded_file']['name'])>0){
-		foreach($_FILES['uploaded_file']['name'] as $k => $upload){
+        $error_m='';
+        foreach($_FILES['uploaded_file']['name'] as $k => $upload){
 			if(isset($_FILES['uploaded_file']['name'][$k]) AND $_FILES['uploaded_file']['name'][$k] !="" AND $_FILES['uploaded_file']['name'][$k]!=null){
 
 				$target_dir = $locations;
@@ -1055,7 +1064,7 @@ if(isset($error_m) && $error_m!=""){
     <div class="box round first">
         <h2>Notifications</h2>
 		<div class="block">
-		<?php if($error == false){ ?>
+		<?php if($error  == false){ ?>
 			<div class="message success">
 				<h5>Success!</h5>
 				<p>
@@ -1064,7 +1073,7 @@ if(isset($error_m) && $error_m!=""){
 				<p>
 					the changing is sorted as bellow:
 				</p>
-				<p><?php foreach($q_p as $k=>$v) {
+				<p><?php  foreach($q_p as $k=>$v) {
 					$tmp = explode("'",$v);
 					echo $tmp[1]."<br>";
 
@@ -1123,7 +1132,11 @@ else{
 <?php
 if($_c==1){
 	echo "Item ID : ".$id."<br>";
-	echo "Tracking ID : ".$row['tid']."<br>";
+	echo "Tracking ID : ".$row['tid']."<br>";?>
+    <div style="margin-top: 10px;"><a href="<?= $_SERVER['REQUEST_URI'].'&cancel-receive-confirm=1' ?>">cancel receive confirmation</a></div>
+    <div><a href="<?= $_SERVER['REQUEST_URI'].'&cancel-offer-confirm=1' ?>">cancel offer confirmation</a></div>
+
+    <?php
 	/*echo "First Name : ".$row['fname']."<br>";
 	echo "Last Name : ".$row['lname']."<br>";
 	echo "Company : ".$row['company']."<br>";
@@ -1571,15 +1584,15 @@ $(document).ready(function () {
 	});
 });
 </script>
-<?php
-						echo "<div class='settings'>";
-						echo '<div class="question">Unlock?</div>
-							  <div class="switch">
+                        <div class='settings'>
+						    <div class="question">Unlock?</div>
+                            <div class="switch">
 								<input id="cmn-toggle-2" class="cmn-toggle cmn-toggle-yes-no" type="checkbox">
 								<label for="cmn-toggle-2" data-on="No" data-off="Yes"></label>
-							  </div>';
-						echo "</div>";
-					}
+							  </div>
+						</div>
+                    <?php }
+
 					if(isset($disabled) && $disabled == "disabled")
 					{
 					?>
@@ -1592,7 +1605,8 @@ $(document).ready(function () {
                             <textarea name="dif_offer_desc" id="dif_offer_desc" cols="40" rows="10"><?php echo $row['dif_offer_desc']; ?></textarea>
                         </div>
                     </div>
-					<?php } ?>
+
+                    <?php } ?>
 				</td>
 			<td colspan="1"><?php echo $conf_prices; ?></td>
 		</tr>

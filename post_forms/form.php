@@ -1,6 +1,6 @@
 <?php
 include("cnf.php");
-session_start();
+//session_start();
 //print_r($_SESSION);echo "<br>";
 
 $country_iso = array(

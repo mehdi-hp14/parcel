@@ -4,14 +4,11 @@ $Config = array();
 
 
 /***********Database Configuration**************/
-$Config['db']['host'] = 'localhost';
+$Config['db']['host'] = 'db';
 $Config['db']['port'] = '3306';
-$Config['db']['name'] = 'bookingp_qdb';
-$Config['db']['user'] = 'bookingp_qdusr';
-$Config['db']['pass'] = ',f[~jvXI~WU)';
-
-
-
+$Config['db']['name'] = 'parcel';
+$Config['db']['user'] = 'root';
+$Config['db']['pass'] = 'secret';
 
 
 /**************Meta Settings******************/
@@ -19,22 +16,20 @@ $Config['site']['lang'] = "en";
 $Config['site']['title'] = "User Panel | Booking Parcel";
 
 $Config['meta']['charset'] = array(
-	'charset'		=>	"UTF-8"
+    'charset' => "UTF-8"
 );
 $Config['meta']['author'] = array(
-	'name'		=>	"author",
-	'content'	=>	"Esmaiel Fakhimi"
+    'name' => "author",
+    'content' => "Esmaiel Fakhimi"
 );
 $Config['meta']['keywords'] = array(
-	'name'		=>	"keywords",
-	'content'	=>	"HTML, CSS, XML, XHTML, JavaScript"
+    'name' => "keywords",
+    'content' => "HTML, CSS, XML, XHTML, JavaScript"
 );
 $Config['meta']['description'] = array(
-	'name'		=>	"description",
-	'content'	=>	"Booking Parcel is a company which you can transport your goods by it."
+    'name' => "description",
+    'content' => "Booking Parcel is a company which you can transport your goods by it."
 );
-
-
 
 
 /**********Other*****************/

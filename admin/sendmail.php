@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include("../post_forms/cnf.php");
 include("conf.php");
@@ -20,6 +20,9 @@ file_put_contents("array.json",json_encode($arr1));
 $arr2 = json_decode(file_get_contents('array.json'), true);
 $arr1 === $arr2 # => true
 */
+$error=null;
+$error_m='';
+
 if(!file_exists('mail_content.php') AND (!file_exists('mail_address.php') or !file_exists('mail_address.json'))){
 	//header("Location: dashboard.php");
 	exit("invalid request....<br><a href='dashboard.php'>Dashboard</a>");
@@ -31,7 +34,7 @@ else{
 	{
 		$mails_er = array();
 	}
-	
+
 	include('mail_content.php');
 	if(file_exists('mail_address.php')){
 		include('mail_address.php');
@@ -117,8 +120,8 @@ if(count($mails)<=0){
 				}, 500);
 			}
 			startTime();
-			
-			
+
+
         });
 (function () {
     var timeLeft = 5,
@@ -129,7 +132,7 @@ if(count($mails)<=0){
         document.getElementById('countd').innerHTML = timeLeft;
         if(timeLeft === 0){
             clearInterval(cinterval);
-			
+
         }
     };
 
@@ -183,7 +186,7 @@ if(count($mails)<=0){
                                 <li><a href="agents.php">Agents Management Page</a> </li>
                                 <li><a href="premessages.php">Pre-Defined Messages Page</a> </li>
                                 <li><a href="logout.php">logout</a> </li>
-                              
+
                             </ul>
                         </li>
                         <!--<li><a class="menuitem">Menu 2</a>
@@ -235,11 +238,11 @@ foreach($mails as $email=>$info){
 	if(!($email !="" AND $email!=null)){
 		unset($mails[$email]);
 		continue;
-	} 
-	
+	}
+
 	$mail = new PHPMailer;
 	//$mail->IsSMTP();
-	
+
 	//Enable SMTP debugging
 	// 0 = off (for production use)
 	// 1 = client messages
@@ -276,7 +279,7 @@ foreach($mails as $email=>$info){
 	$mail->AddCC('backup1@bookingparcel.com', "BookingParcel(agents)");
 	//$mail->addAddress($email, $info['name']);
 	$mail->addAddress($email, $info['name']);
-	
+
 	$mail->CharSet ="utf-8";
 	$mail->isHTML(true);
 	$mail->Subject = $subject;
@@ -288,7 +291,7 @@ foreach($mails as $email=>$info){
 				$mail->addAttachment($path);
 		}
 	}
-	
+
 	$body1 = str_replace("{company_name}", $info['company'], $body, $_c);
 	$body1 = str_replace("agent_name", $info['name'], $body1, $_c);
 	if(isset($info['country']) AND $info['country']!="" AND $info['country']!=null)
@@ -296,7 +299,7 @@ foreach($mails as $email=>$info){
 		$body1 = str_replace("{CountryName}", $info['country'], $body1, $_c);
 	}
 	//$mail->Body = $body1;
-	
+
 $mail->Body = "<table cellpadding='5' cellspacing='1' style='margin-left:auto;margin-right:auto;width:100%;border:0px;font-family:tahoma;font-size:12px;direction:ltr;border:thin solid #777;'>
  <tr>
   <td style='background-color:#ffcc33;text-align:left;font-weight:bold;color:#ff3333;' width='80%'>
@@ -348,14 +351,14 @@ aircargo@europostexpress.co.uk<br>
 			$con = mysql_connect(DB_HOST,DB_USER,DB_PASS) or die(mysql_error());
 			mysql_select_db(DB_NAME, $con) or die(mysql_error());
 			mysql_query("UPDATE `urls` SET `aref`='".$mails[$email]['id']."' WHERE `ref`='".$mails[$email]['ref']."' AND (`aref`='' OR ISNULL(`aref`))");
-			
+
 		}
 	    //echo "Message sent!";
 		unset($mails[$email]);
-		
+
 		$error_m .= $info['company'] . " : ".$info['name']. " : ".$email." Sent Successfully<br>";
 	}
-	
+
 	/*
 	$content = $pre1 . $body1 . $pre2;
 	$subject = sprintf("=?utf-8?B?" . base64_encode($subject) . "?=");
@@ -380,8 +383,9 @@ aircargo@europostexpress.co.uk<br>
 	*/
 	break;
 }
-
-unlink("mail_address.php");
+if(file_exists('mail_address.php')) {
+    unlink("mail_address.php");
+}
 file_put_contents("mail_address.json",json_encode($mails));
 file_put_contents("mail_address_er.json",json_encode($mails_er));
 if(count($mails) <= 0){
@@ -393,11 +397,13 @@ if(count($mails) <= 0){
 			$error_m .= $k." : ". $v['company']. " : ". $v['name'] ."<br>";
 		}
 	}
-		
-	unlink("mail_address.json");
-	unlink("mail_content.php");
-	unlink("mail_address_er.json");
-} 
+    if(file_exists('mail_address.json'))
+        unlink("mail_address.json");
+    if(file_exists('mail_content.php'))
+        unlink("mail_content.php");
+    if(file_exists('mail_address_er.json'))
+        unlink("mail_address_er.json");
+}
 else{
 	header( "refresh:6;url=sendmail.php" );
 $error_m .= "next mail in <span id=\"countd\"></span><br>";
@@ -413,8 +419,8 @@ if($error_m!=""){
 			<div class="message success">
 				<h5>Success!</h5>
 				<p>
-					<?php 
-					
+					<?php
+
 					echo $error_m; ?>
 				</p>
 			</div>

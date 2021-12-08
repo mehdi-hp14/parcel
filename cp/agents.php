@@ -289,9 +289,10 @@ class PView extends PageView
             if (isset($_GET['Param2']) and trim($_GET['Param2']) != '' and $_GET['Param2'] != null and strlen($_GET['Param2']) == 10) {
                 if (isset($_GET['Param3']) and trim($_GET['Param3']) != '' and $_GET['Param3'] != null and strlen($_GET['Param3']) == 10) {
                     $result = $m->URLExists($_GET['Param1'], $_GET['Param2'], $_GET['Param3']);
+
                     if ($result['exists'] == true) {
                         if ($this->agent->id != $result['aref']) {
-                            return header('Location: ' . config('general.AGENT_PROFILE_PAGE'));
+                            return header('Location: ' . config('general.CP_AGENT_LOGIN_PAGE'));
                             exit();
                         }
                         Agent::where('id', intval($result['aref']))->update(['last_url' => intval($result['modelId'])]);

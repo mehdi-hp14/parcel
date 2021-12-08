@@ -5,7 +5,7 @@ use Kaban\Components\General\Agent\Controllers\AgentResetPasswordController;
 use Kaban\Components\General\Agent\Controllers\AgentsLoginController;
 use Kaban\Components\General\Agent\Controllers\ForgotPasswordController;
 
-Route::get( '/login', [AgentsLoginController::class,'agentLoginPage'] )->middleware('guest')->name( 'agentLoginPage' );
+Route::get( '/login', [AgentsLoginController::class,'agentLoginPage'] )->name( 'agentLoginPage' );
 Route::get( '/password/email', [AgentResetPasswordController::class,'showLinkRequestForm'] )->middleware('guest:agentGuard')->name( 'password.agent.email' );
 Route::post('/password/email', [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.agent.email');
 

@@ -1,4 +1,7 @@
 ﻿<?php
+
+use Kaban\Models\Agent;
+
 include("../post_forms/cnf.php");
 include("conf.php");
 
@@ -230,6 +233,20 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
     <link rel="stylesheet" type="text/css" href="css/ie6.css" media="screen"/><![endif]-->
     <!--[if IE 7]>
     <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen"/><![endif]-->
+    <style>
+        table td{
+            padding: 3px;
+        }
+        .mt-5{
+            margin-top: 30px;
+        }
+        .mb-2{
+            margin-bottom: 10px;
+        }
+        .ml-3{
+            margin-left: 15px;
+        }
+    </style>
     <!-- BEGIN: load jquery -->
     <script src="js/jquery-1.6.4.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/jquery-ui/jquery.ui.core.min.js"></script>
@@ -360,26 +377,8 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
 </head>
 <body>
 <div class="container_12">
-    <div class="grid_12 header-repeat">
-        <div id="branding">
-            <div class="floatleft">
-                <img src="img/logo.png" alt="Logo"/></div>
-            <div class="floatright">
-                <div class="floatleft">
-                    <img src="img/img-profile.jpg" alt="Profile Pic"/></div>
-                <div class="floatleft marginleft10">
-                    <ul class="inline-ul floatleft">
-                        <li>Hello Admin</li>
-                        <li><a href="logout.php">Logout</a></li>
-                    </ul>
-                    <br/>
-                    <span class="small grey">Current Time : <span id="time"></span></span>
-                </div>
-            </div>
-            <div class="clear">
-            </div>
-        </div>
-    </div>
+    <?= require_once "./partials/adminProfile.php"?>
+
     <div class="clear">
     </div>
     <div class="grid_12">
@@ -526,35 +525,58 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                             $ccity = implode(" | ", $_POST['ccity']);
                             $address = $_POST['address'];
                             $fname = ($_POST['name'] != '' ? $_POST['name'] : "Cargo Expert Manager");
-                            $lname = $_POST['lname'];
+                            $lname = $_POST['lname'] ?? '';
                             $special = ((isset($_POST['special']) and $_POST['special'] != "" and $_POST['special'] != null) ? 1 : 0);
                             $active = ((isset($_POST['active']) and $_POST['active'] != "" and $_POST['active'] != null) ? 1 : 0);
                             $fixed = ((isset($_POST['fixed']) and $_POST['fixed'] != "" and $_POST['fixed'] != null) ? 1 : 0);
                             $official = ((isset($_POST['official']) and $_POST['official'] != "" and $_POST['official'] != null) ? 1 : 0);
                             $cname = ((isset($_POST['cname']) and $_POST['cname'] != "" and $_POST['cname'] != null) ? $_POST['cname'] : "---");
                             $city = ((isset($_POST['city']) and $_POST['city'] != "" and $_POST['city'] != null) ? $_POST['city'] : "---");
-                            $agent_username = !empty($_POST['agent_username'])  ? $_POST['agent_username'] : null;
-                            $agent_password = !empty($_POST['agent_password'])  ? $_POST['agent_password'] : null;
+                            $login_email = !empty($_POST['login_email'])  ? $_POST['login_email'] : null;
                             $phones = $_POST['phones'];
                             $emails = $_POST['emails'];
                             $desc = $_POST['desc'];
                             $country = $post_c[$_POST['country']];
                             $error = false;
 
-                            mysql_query("INSERT INTO `agents` (`fname`, `cname`, `country`, `city`, `address`, `phones`,
+                            $aid = Agent::create([
+                                    'fname'=>$fname,
+                                    'cname'=>$cname,
+                                    'country'=>$country,
+                                    'city'=>$city,
+                                    'address'=>$address,
+                                    'phones'=>$phones,
+                                    'emails'=>$emails,
+                                    'desc'=>$desc,
+                                    'ship_air'=>$air,
+                                    'ship_sea'=>$sea,
+                                    'ship_land'=>$land,
+                                    'ship_rail'=>$rail,
+                                    'ship_charter'=>$charter,
+                                    'special'=>$special,
+                                    'time'=> time(),
+                                    'active'=>$active,
+                                    'fixed'=>$fixed,
+                                    'official'=>$official,
+                                    'cover_city'=>$ccity,
+                                    'email'=>$login_email,
+                                    'password'=>bcrypt(config('general.AGENTS_DEFAULT_PASSWORD')),
+                            ]);
+                            
+/*                            mysql_query("INSERT INTO `agents` (`fname`, `cname`, `country`, `city`, `address`, `phones`,
                       `emails`, `desc`, `ship_air`, `ship_sea`, `ship_land`, `ship_rail`, `ship_charter`, `special`, `time`,`active`,`fixed`,
-                      `official`, `cover_city`,`username`, `password`) 
+                      `official`, `cover_city`,`email`, `password`) 
                       VALUES ('" . $fname . "','" . $cname . "','" . $country . "','" . $city . "','" . $address . "','" .
                                 $phones . "','" . $emails . "','" . $desc . "','" . $air . "','" . $sea . "','" . $land .
                                 "','" . $rail . "','" . $charter . "','" . $special . "','" . time() . "','" . $active .
                                 "','" . $fixed . "','" . $official .
-                                "','" . $ccity . "','".$agent_username."','".bcrypt($agent_password)."');");
-                            $aid = mysql_insert_id();
+                                "','" . $ccity . "','".$login_email."','".bcrypt(config('general.AGENTS_DEFAULT_PASSWORD'))."');");
+                            $aid = mysql_insert_id();*/
                             if ($official == 1) mysql_query("INSERT INTO `agents_official` (`aid`, `uname`, `pw`, `fname`,
-                               `lname`, `active`,`username`, `password`) 
+                               `lname`, `active`,`email`, `password`) 
                                values ('" . $aid . "', '" .
                                 str_replace(" ", "_", strtolower($fname . "_" . $cname)) . "', 'sasdaq', '" .
-                                $fname . "', '', '1','".$agent_username."','".bcrypt($agent_password)."');");
+                                $fname . "', '', '1','".$login_email."','".bcrypt(config('general.AGENTS_DEFAULT_PASSWORD'))."');");
                             $error_m = "Agent Successfully added.";
                         } else {
                             $error_m = "Shipping type is required.";
@@ -594,8 +616,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                     $official = ((isset($_POST['official']) and $_POST['official'] != "" and $_POST['official'] != null) ? 1 : 0);
                                     $cname = ((isset($_POST['cname']) and $_POST['cname'] != "" and $_POST['cname'] != null) ? $_POST['cname'] : "---");
                                     $city = ((isset($_POST['city']) and $_POST['city'] != "" and $_POST['city'] != null) ? $_POST['city'] : "---");
-                                    $agent_username = !empty($_POST['agent_username'])  ? $_POST['agent_username'] : null;
-                                    $agent_password = !empty($_POST['agent_password'])  ? $_POST['agent_password'] : null;
+                                    $login_email = !empty($_POST['login_email'])  ? $_POST['login_email'] : null;
                                     $phones = $_POST['phones'];
                                     $emails = $_POST['emails'];
                                     $desc = $_POST['desc'];
@@ -607,11 +628,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                     mysql_query("UPDATE `agents` SET `address` = '" . $address . "', `country`= '" . $country . "', `phones`= '" . $phones . "' WHERE `id`=" . $_GET['edit'] . "");
                                     mysql_query("UPDATE `agents` SET `emails` = '" . $emails . "', `desc`= '" . $desc . "', `time`= '" . time() . "' WHERE `id`=" . $_GET['edit'] . "");
                                     mysql_query("UPDATE `agents` SET `cover_city` = '" . $ccity . "', `active`= '" . $active . "', `fixed`= '" . $fixed . "', `official`= '" . $official . "' WHERE `id`=" . $_GET['edit'] . "");
-                                    mysql_query("UPDATE `agents` SET `username` = '" . $agent_username . "' WHERE `id`=" . $_GET['edit'] . "");
-
-                                    if(!empty($agent_password)){
-                                        mysql_query("UPDATE `agents` SET `password`= '" . bcrypt($agent_password) . "' WHERE `id`=" . $_GET['edit'] . "");
-                                    }
+                                    mysql_query("UPDATE `agents` SET `email` = '" . $login_email . "' WHERE `id`=" . $_GET['edit'] . "");
 
                                     if ($official == 1) mysql_query("INSERT INTO `agents_official` (`aid`, `uname`, `pw`, `fname`,`lname`, `active`) values ('" . $_GET['edit'] . "', '" . str_replace(" ", "_", strtolower($fname . "_" . $cname)) . "', 'sasdaq', '" . $fname . "', '', '1'); ");
                                     $error_m = "Agent Successfully Edited.";
@@ -716,7 +733,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                         fputs($f, $string);
                                         fclose($f);
                                     }
-
+                                if(file_exists('mail_content.php'))
                                     unlink("mail_content.php");
                                     writeStringToFile("mail_content.php", $txt);
 
@@ -734,7 +751,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                     }
                                     $txt .= ");\n";
                                     $txt .= "?>";
-
+                                    if(file_exists('mail_address.php'))
                                     unlink("mail_address.php");
                                     writeStringToFile("mail_address.php", $txt);
                                     $error = false;
@@ -1506,10 +1523,8 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
 
                                         </tr>
                                         <tr style="background-color:#fff;text-align:center;font-weight:bold">
-                                            <td style="padding:5px;width:15%;">User Name :</td>
-                                            <td style="padding:5px;width:35%;"><input name="agent_username" style="width: 80%;" type="text"></td>
-                                            <td style="padding:5px;width:15%;">Password :</td>
-                                            <td style="padding:5px;width:35%;"><input style="width: 80%;" name="agent_password" type="text"></td>
+                                            <td style="padding:5px;width:15%;">Login Email :</td>
+                                            <td style="padding:5px;width:35%;"><input name="login_email" style="width: 80%;" type="text" value="<?= $r['email'] ?>"></td>
                                         </tr>
                                         <tr style="background-color:#fff;text-align:center;font-weight:bold">
                                             <td colspan="4">
@@ -1704,8 +1719,8 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
 
                                 $r = mysql_query($q);
                                 $numRows = mysqli_num_rows($r);
-                                echo "<pre>";
-                                echo $v . " (Agents Count : " . $numRows . ")<br>";
+                                echo "<div>";
+                                echo  " <h5 class='mt-5 mb-2 ml-3'>$v (Agents Count : " . $numRows . ")</h5>";
 
                                 $output = "";
                                 while ($row = mysql_fetch_array($r)) {//9999ff
@@ -1753,9 +1768,9 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                 echo "</pre>";
                             } else {
                                 if(!$withoutCountry){
-                                    echo "<pre>";
-                                    echo $v . " (Agents Count : " . $row['ca'] . ")<br>";
-                                    echo "</pre>";
+                                    echo "<div>";
+                                    echo " <h5 class='mt-5 mb-2 ml-3'>$v (Agents Count : " . $row['ca'] . ")</h5>";
+                                    echo "</div>";
                                 }
                             }
                         }

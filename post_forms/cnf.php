@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-require_once $_SERVER['DOCUMENT_ROOT'].DIRECTORY_SEPARATOR.'php8support.php';
+require_once __DIR__ . '/..' . DIRECTORY_SEPARATOR . 'php8support.php';
 
 function xss_clean($data)
 {
@@ -59,47 +59,53 @@ function cleaner($value)
         'c99.php', 'shutdown', 'from', 'select', 'update', 'character', 'UPDATE', 'where', 'show tables', 'alter');
     return str_replace($filchars, '', $value);
 }
-function m_s_q($value){
-	
+
+function m_s_q($value)
+{
+
     foreach ($value as $key => $val) {
         $val = preg_replace(sql_regcase("/(ascii|CONCAT|DROP|TABLE_SCHEMA|unhex|group_concat|load_file|information_schma|substring|Union|from|select|insert|delete|where|drop table|show tables|\*|--|\\\\)/"), "", $val);
 
-		if (ini_get('magic_quotes_gpc') == 'off') // check if magic_quotes_gpc is on and if not add slashes
-		{
-			//Add inverted bars to a string
-			$val = addslashes($val);
-		}
-		// move html tages from inputs
-		// $string = htmlentities($string, ENT_QUOTES);
-		//removing most known vulnerable words
-		$codes = array("load_file", "script", "java", "applet", "iframe", "meta", "object", "html", "<", ">", ";", "'", "");
-		$val = str_replace($codes, "", $val);
-		
-		$val = cleaner($val);
-		$val = xss_clean($val);
+        if (ini_get('magic_quotes_gpc') == 'off') // check if magic_quotes_gpc is on and if not add slashes
+        {
+            //Add inverted bars to a string
+            $val = addslashes($val);
+        }
+        // move html tages from inputs
+        // $string = htmlentities($string, ENT_QUOTES);
+        //removing most known vulnerable words
+        $codes = array("load_file", "script", "java", "applet", "iframe", "meta", "object", "html", "<", ">", ";", "'", "");
+        $val = str_replace($codes, "", $val);
+
+        $val = cleaner($val);
+        $val = xss_clean($val);
 
         // store it back into the array
         $value[$key] = $val;
     }
-	return $value;
-}
-if(isset($_POST) AND count($_POST)>0){
-	foreach($_POST as $key=>$value){
-		if(is_array($value)){
-			foreach($value as $k=>$v){
-				$_POST[$key][$k] = is_array($v)? m_s_q($v) :$v;
-			}
-		}
-		else{
-			$_POST[$key] = is_array($value)? m_s_q($value) :$value;
-		}
-	}
+    return $value;
 }
 
+if (isset($_POST) and count($_POST) > 0) {
+    foreach ($_POST as $key => $value) {
+        if (is_array($value)) {
+            foreach ($value as $k => $v) {
+                $_POST[$key][$k] = is_array($v) ? m_s_q($v) : $v;
+            }
+        } else {
+            $_POST[$key] = is_array($value) ? m_s_q($value) : $value;
+        }
+    }
+}
 
-define("DB_HOST","localhost");
-define("DB_NAME","parcel");
-//define("DB_USER","bookingp_qdusr");
-define("DB_USER","root");
-//define("DB_PASS",",f[~jvXI~WU)");
-define("DB_PASS","");
+if (config('app.env') === 'production') {
+    define("DB_HOST", "localhost");
+    define("DB_NAME", "bookingp_qdb");
+    define("DB_USER", "bookingp_qdusr");
+    define("DB_PASS", ",f[~jvXI~WU)");
+} else {
+    define("DB_HOST", "db");
+    define("DB_NAME", "parcel");
+    define("DB_USER", "root");
+    define("DB_PASS", "secret");
+}

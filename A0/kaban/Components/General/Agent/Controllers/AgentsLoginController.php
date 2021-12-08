@@ -58,7 +58,7 @@ class AgentsLoginController
         return $this->sendFailedLoginResponse($request);
     }
 
-    public function agentLogoutAttempt ()
+    public function agentLogoutAttempt()
     {
         auth()->guard('agentGuard')->logout();
 
