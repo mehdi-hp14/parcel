@@ -48,7 +48,7 @@ new Vue({
             selectedFromCountries: window.selectedFromCountries || [],
             selectedToCountries: window.selectedToCountries || [],
             selectedCollectionLocations: window.selectedCollectionLocations || [],
-            mailSubject:'',
+            mailSubject: '',
         }
     },
 
@@ -162,7 +162,7 @@ new Vue({
                     }, 10)
                 }
             }).then(result => {
-               const mailtext =  CKEDITOR.instances.message.getData();
+                const mailtext = CKEDITOR.instances.message.getData();
                 // debugger
 
                 if (CKEDITOR.instances.message) CKEDITOR.instances.message.destroy();
@@ -173,12 +173,12 @@ new Vue({
                         payload: finalInfo,
                         mailSubject: this.mailSubject,
                         mailtext,
-                    }).then(result=>{
+                    }).then(result => {
                         Swal.fire({
-                            icon:'success',
-                            text:'Mails has been sent successfully',
+                            icon: 'success',
+                            text: 'Mails has been sent successfully',
                         })
-                    }).catch(error=>{
+                    }).catch(error => {
 
                     })
                 }
@@ -214,6 +214,51 @@ new Vue({
 
             });
             this.exportCsvOperation(csvArray);
+
+        },
+        saveInDatabase(e,quoteId) {
+            e.preventDefault();
+
+            const payload = {};
+
+            payload.senderAddress = document.querySelector(`[data-sender-${quoteId}-address]`).innerText;
+            payload.senderZipcode = document.querySelector(`[data-sender-${quoteId}-zipcode]`).innerText;
+            payload.senderContactPerson = document.querySelector(`[data-sender-${quoteId}-contact_person]`).innerText;
+            payload.senderCompanyName = document.querySelector(`[data-sender-${quoteId}-company_name]`).innerText;
+            payload.senderTelephone = document.querySelector(`[data-sender-${quoteId}-telephone]`).innerText;
+            payload.senderCountry = document.querySelector(`[data-sender-${quoteId}-country]`).innerText;
+            payload.senderEmail = document.querySelector(`[data-sender-${quoteId}-email]`).innerText;
+
+            payload.receiverAddress = document.querySelector(`[data-receiver-${quoteId}-address]`).innerText;
+            payload.receiverContactPerson = document.querySelector(`[data-receiver-${quoteId}-contact_person]`).innerText;
+            payload.receiverCompanyName = document.querySelector(`[data-receiver-${quoteId}-company_name]`).innerText;
+            payload.receiverTelephone = document.querySelector(`[data-receiver-${quoteId}-telephone]`).innerText;
+            payload.receiverCountry = document.querySelector(`[data-receiver-${quoteId}-country]`).innerText;
+            payload.receiverEmail = document.querySelector(`[data-receiver-${quoteId}-email]`).innerText;
+
+            Swal.fire({
+                icon: 'info',
+                showCancelButton: true,
+                html: 'you are about to change the shipping information for quote number ' +
+                    quoteId + ".<br>" +' do you confirm this operation?'
+
+            }).then(result => {
+                if (result.isConfirmed) {
+                    axios.post('/admin/report/save-shipping-info', {
+                        _token,
+                        quoteId,
+                        payload,
+                    }).then(({data}) => {
+                        Swal.fire({
+                            icon: data.status === 'ok' ? 'success' : 'error',
+                            text: data.text
+                        })
+                    }).catch(error => {
+
+                    })
+                }
+
+            })
 
         },
         exportCsvOperation(csvArray) {

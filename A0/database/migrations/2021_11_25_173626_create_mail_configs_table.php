@@ -15,6 +15,7 @@ class CreateMailConfigsTable extends Migration
     {
         Schema::create('mail_configs', function (Blueprint $table) {
             $table->id();
+            $table->tinyInteger('active')->default(0)->nullable();
             $table->string('driver',510)->nullable();
             $table->string('host',510)->nullable();
             $table->string('port',510)->nullable();

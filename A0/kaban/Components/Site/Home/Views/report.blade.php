@@ -20,6 +20,11 @@
         .badge:empty{
             display: inline;
         }
+        .report-card-title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 @endsection
 @section('content')
@@ -102,7 +107,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="completed-status"
                                                name="status[]" value="completed"
-                                               @if(request('statemailToSelectedEmailsus') && in_array('completed',request('status'))) checked
+                                               @if(request('status') && in_array('completed',request('status'))) checked
                                                @endif
                                                @if($initialRequest) checked @endif
                                         >
@@ -257,35 +262,59 @@
                         </div>
                     </div>
                     @if(!empty(request('mutual-collocations')))
-                    <div class="card my-5">
-                        <div class="card-header">
-                            <h5>Mutual Collocations</h5>
-                        </div>
-                        <div class="card-body">
+                        <div class="card my-5">
+                            <div class="card-header">
+                                <h5>Mutual Collocations</h5>
+                            </div>
+                            <div class="card-body">
 
-                            <div class="container">
-                                {{--                                <p>The .table-bordered class adds borders on all sides of the table and the cells:</p>--}}
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>From Collocation</th>
-                                        <th>Names</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($fromLocationGrouped as $key=>$val)
-                                        <tr>
-                                            <th>{{$key}}</th>
-                                            <th>{{'user namesss'}}</th>
-                                        </tr>
-                                    @endforeach
+                                <div class="container">
+                                    {{--                                <p>The .table-bordered class adds borders on all sides of the table and the cells:</p>--}}
+                                    @if(count($fromLocationGrouped)>0)
 
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>From Collocation</th>
+                                                <th>Names</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($fromLocationGrouped as $key=>$arrayValue)
+                                                {{--                                        @if(count($arrayValue)>3)--}}
 
-                                    </tbody>
-                                </table>
+                                                @php $quoteUserGroup = $arrayValue->groupBy('uname') @endphp
+                                                {{--                                        {{dump($arr)}}--}}
+                                                {{--                                        @endif--}}
+                                                <tr>
+                                                    <th>{{$key}}</th>
+                                                    {{--                                            @php $counter = [] @endphp--}}
+
+                                                    {{--                                            @foreach ($arrayValue as $quoteItem)--}}
+                                                    {{--                                                @php $counter[$quoteItem->fname] = isset($counter[$quoteItem->fname]) ? ($counter[$quoteItem->fname] + 1 ): 1; @endphp--}}
+                                                    {{--                                            @endforeach--}}
+                                                    <td>
+                                                        @foreach ($quoteUserGroup as $uname=>$quotes)
+                                                            @if($uname !='')
+                                                                <span class="comma-seperate">{{($uname ?: 'no username') . '('.count($quotes).') '}}</span>
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+
+                                                </tr>
+                                            @endforeach
+                                            {{--                                    {{dd(1)}}--}}
+
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <h4>there is no mutual collection</h4>
+                                    @endif
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+
                     @endif
                     @foreach($quotes as $quote)
                         {{--                            {{dd($quote->urls->first())}}--}}
@@ -294,7 +323,10 @@
                             <div
                                 class="card-header" data-csv-key>
                                 <span
-                                    class="title">{{ __('quote number '.$quote->id).' - '.\Kaban\General\Enums\EQuoteStatus::farsi($quote->status) }}</span>
+                                    class="title report-card-title">
+                                    <span>{{ __('quote number '.$quote->id).' - '.\Kaban\General\Enums\EQuoteStatus::farsi($quote->status) }}</span>
+                                <button class="btn btn-success" @click="saveInDatabase($event,{{$quote->id}})">save in database</button>
+                                </span>
                                 <span data-csv-value></span>
                             </div>
 
@@ -426,14 +458,14 @@
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->raddress??'---'}}</span>
                                     </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center"
-                                        data-csv-key>
-                                        <span class="title">Zip Code</span>
-                                        <span data-csv-value
-                                              data-receiver-{{$quote->id}}-zipcode
-                                              class="badge badge-primary badge-pill"
-                                              contenteditable="true">{{$quote->shipInfo->rzipcode??'---'}}</span>
-                                    </li>
+{{--                                    <li class="list-group-item d-flex justify-content-between align-items-center"--}}
+{{--                                        data-csv-key>--}}
+{{--                                        <span class="title">Zip Code</span>--}}
+{{--                                        <span data-csv-value--}}
+{{--                                              data-receiver-{{$quote->id}}-zipcode--}}
+{{--                                              class="badge badge-primary badge-pill"--}}
+{{--                                              contenteditable="true">{{$quote->shipInfo->rzipcode??'---'}}</span>--}}
+{{--                                    </li>--}}
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
                                         <span class="title">Country</span>
@@ -479,21 +511,21 @@
                         </span>
                     @endforeach
                 </form>
-                <div>
-                    Please confirm that you have received this confirmation order.<br>
-                    <br>Best Regards<br>
-                    Fazel Zohrabpour<br>
-                    <br>
-                    <div style="font-size:80%;color:#0033cc;">
-                        <img src="https://bookingparcel.com/logo.gif" style="width:215px;height:50px;">
-                        <br>Europost Express (UK) Ltd.<br>4 Corringham Road,<br>
-                        Wembley - Middlesex<br>HA9 9QA- London , UK<br>Tel : +44(0) 7886105417<br>
-                    </div>
-                </div>
+{{--                <div>--}}
+{{--                    Please confirm that you have received this confirmation order.<br>--}}
+{{--                    <br>Best Regards<br>--}}
+{{--                    Fazel Zohrabpour<br>--}}
+{{--                    <br>--}}
+{{--                    <div style="font-size:80%;color:#0033cc;">--}}
+{{--                        <img src="https://bookingparcel.com/logo.gif" style="width:215px;height:50px;">--}}
+{{--                        <br>Europost Express (UK) Ltd.<br>4 Corringham Road,<br>--}}
+{{--                        Wembley - Middlesex<br>HA9 9QA- London , UK<br>Tel : +44(0) 7886105417<br>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
             </div>
         </div>
-        <div v-show="1">
+        <div v-show="0">
             <div ref="reportModal">
                 <div class="row">
                     <div class="col-md-6 col-sm-12">

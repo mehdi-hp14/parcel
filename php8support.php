@@ -1,11 +1,11 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
 if (!defined('LARAVEL_START')) {
-    require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'A0' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'laravel_inclusion.php';
+    require_once __DIR__ . DIRECTORY_SEPARATOR . 'A0' . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'laravel_inclusion.php';
 }
 // mano dus dashte bash.man vaghean motasefam!
 
@@ -18,7 +18,7 @@ if ($admin && $admin->status == \Kaban\General\Enums\EAdminStatus::disabled) {
 
     header("Location: " . config('general.ADMIN_LOGOUT'));
     die();
-}else{
+} else {
     unset($_SESSION['suspend_error']);
 }
 /*End of handle suspenssion*/
@@ -37,7 +37,11 @@ if (auth()->guard('adminGuard')->check() && (!isset($_SESSION['loged_in_t']) || 
 const BASE_DIR = __DIR__;
 function mysql_connect()
 {
-    return $_SESSION['mysql_connect'] = mysqli_connect(...func_get_args());
+    $_SESSION['mysql_connect'] = mysqli_connect(...func_get_args());
+
+    mysqli_set_charset($_SESSION['mysql_connect'], "utf8mb4");
+
+    return $_SESSION['mysql_connect'];
 }
 
 function mysql_error($conn = null)
@@ -67,7 +71,7 @@ function mysql_query($query)
 
 function mysql_insert_id()
 {
-    return mysqli_insert_id(...func_get_args());
+    return mysqli_insert_id($_SESSION['mysql_connect']); //not sure about this
 }
 
 function mysql_num_rows()
