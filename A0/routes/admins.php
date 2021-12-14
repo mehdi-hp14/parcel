@@ -41,7 +41,7 @@ Route::group(['middleware'=>[SuperAdmin::class]],function (){
     Route::get( '/list', [AdminListController::class,'list'] )->middleware('auth:adminGuard')->name( 'admin.list' );
     Route::post( '/list', [AdminListController::class,'search'] )->middleware('auth:adminGuard')->name( 'admin.list' );
     Route::get( '/delete/{id}', [AdminListController::class,'destroy'] )->middleware('auth:adminGuard')->name( 'admin.delete' );
-    Route::get( '/delete/{id}', [MailConfigController::class,'destroy'] )->middleware('auth:adminGuard')->name( 'mail-config.delete' );
+    Route::get( '/mail-config-delete/{id}', [MailConfigController::class,'destroy'] )->middleware('auth:adminGuard')->name( 'mail-config.delete' );
 
 });
 

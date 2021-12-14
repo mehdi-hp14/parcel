@@ -33,7 +33,7 @@
                                                     <th scope="col" class="border-0 text-uppercase font-medium">PASSWORD</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">ENCRYPTION</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">FROM ADDRESS</th>
-                                                    <th scope="col" class="border-0 text-uppercase font-medium">TO ADDRESS</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">NAME</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">actions</th>
                                                 </tr>
                                                 </thead>

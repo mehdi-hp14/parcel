@@ -15,6 +15,7 @@ $user = auth()->guard('adminGuard')->user();
                     if ($user && $user->rank >= \Kaban\General\Enums\EAdminRank::superAdmin):
                         ?>
                         <li><a href="<?= config('routes.ADMIN_LIST'); ?>">Admins List</a></li>
+                        <li><a href="<?= config('routes.MAIL_CONFIG'); ?>">Mail Config</a></li>
                     <?php endif; ?>
                     <li><a href="<?= config('general.ADMIN_LOGOUT'); ?>">Logout</a></li>
                 </ul>

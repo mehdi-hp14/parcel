@@ -39,6 +39,7 @@ class AppServiceProvider extends ServiceProvider
                 'address' => $mailConfig->from_address,
                 'name' => $mailConfig->to_address,
             ],
+            'sendmail' => '/usr/sbin/sendmail -bs',
         ];
     }
 }

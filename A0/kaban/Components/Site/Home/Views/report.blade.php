@@ -281,22 +281,16 @@
                                             </thead>
                                             <tbody>
                                             @foreach($fromLocationGrouped as $key=>$arrayValue)
-                                                {{--                                        @if(count($arrayValue)>3)--}}
-
                                                 @php $quoteUserGroup = $arrayValue->groupBy('uname') @endphp
-                                                {{--                                        {{dump($arr)}}--}}
-                                                {{--                                        @endif--}}
                                                 <tr>
                                                     <th>{{$key}}</th>
-                                                    {{--                                            @php $counter = [] @endphp--}}
-
-                                                    {{--                                            @foreach ($arrayValue as $quoteItem)--}}
-                                                    {{--                                                @php $counter[$quoteItem->fname] = isset($counter[$quoteItem->fname]) ? ($counter[$quoteItem->fname] + 1 ): 1; @endphp--}}
                                                     {{--                                            @endforeach--}}
                                                     <td>
-                                                        @foreach ($quoteUserGroup as $uname=>$quotes)
+                                                        @foreach ($quoteUserGroup as $uname=>$quoteGroup)
                                                             @if($uname !='')
-                                                                <span class="comma-seperate">{{($uname ?: 'no username') . '('.count($quotes).') '}}</span>
+                                                                <span class="comma-seperate">{{($uname ?: 'no username') . '('.count($quoteGroup).') '}}</span>
+                                                            @else
+                                                                {{(empty($uname) ? 'no username':'')}}
                                                             @endif
                                                         @endforeach
                                                     </td>
