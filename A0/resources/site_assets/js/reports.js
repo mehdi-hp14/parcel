@@ -1,4 +1,5 @@
 let $ = require('jquery');
+require('bootstrap');
 import Vue from 'vue';
 import _ from 'lodash';
 import vSelect from 'vue-select'
@@ -48,11 +49,24 @@ new Vue({
             selectedFromCountries: window.selectedFromCountries || [],
             selectedToCountries: window.selectedToCountries || [],
             selectedCollectionLocations: window.selectedCollectionLocations || [],
-            mailSubject:'',
+            mailSubject: '',
         }
     },
 
     methods: {
+        selectAllForEmail() {
+            setTimeout(() => {
+                const all = Array.from(document.querySelectorAll('[data-target-email]'));
+                all.forEach(item => this.selectedEmail.push(((item.value))));
+            }, 50)
+        },
+        selectAllForCsv() {
+            setTimeout(() => {
+                const all = Array.from(document.querySelectorAll('[id^="csv-mark-"]'));
+                all.forEach(item => this.selectedCsv.push(parseInt((item.value))));
+            }, 50)
+
+        },
         validateEmail(email) {
             return String(email)
                 .toLowerCase()
@@ -72,12 +86,12 @@ new Vue({
 
                 if (!emails.includes(email) && this.validateEmail(email)) {
 
-                    let address = document.querySelector(`[data-${item}-address]`).innerText;
-                    let zipcode = document.querySelector(`[data-${item}-zipcode]`).innerText;
-                    let contact_person = document.querySelector(`[data-${item}-contact_person]`).innerText;
-                    let company_name = document.querySelector(`[data-${item}-company_name]`).innerText;
-                    let telephone = document.querySelector(`[data-${item}-telephone]`).innerText;
-                    let country = document.querySelector(`[data-${item}-country]`).innerText;
+                    let address = document.querySelector(`[data-${item}-address]`)?.innerText;
+                    let zipcode = document.querySelector(`[data-${item}-zipcode]`)?.innerText;
+                    let contact_person = document.querySelector(`[data-${item}-contact_person]`)?.innerText;
+                    let company_name = document.querySelector(`[data-${item}-company_name]`)?.innerText;
+                    let telephone = document.querySelector(`[data-${item}-telephone]`)?.innerText;
+                    let country = document.querySelector(`[data-${item}-country]`)?.innerText;
 
                     emails.push(email);
 
@@ -162,7 +176,7 @@ new Vue({
                     }, 10)
                 }
             }).then(result => {
-               const mailtext =  CKEDITOR.instances.message.getData();
+                const mailtext = CKEDITOR.instances.message.getData();
                 // debugger
 
                 if (CKEDITOR.instances.message) CKEDITOR.instances.message.destroy();
@@ -173,19 +187,19 @@ new Vue({
                         payload: finalInfo,
                         mailSubject: this.mailSubject,
                         mailtext,
-                    }).then(result=>{
+                    }).then(result => {
                         Swal.fire({
-                            icon:'success',
-                            text:'Mails has been sent successfully',
+                            icon: 'success',
+                            text: 'Mails has been sent successfully',
                         })
-                    }).catch(error=>{
+                    }).catch(error => {
 
                     })
                 }
             })
             console.log(emails)
         },
-        exportSelectedCsv() {
+        exportSelectedCsv0() {
             const csvArray = [];
 
             this.selectedCsv.forEach(id => {
@@ -214,6 +228,75 @@ new Vue({
 
             });
             this.exportCsvOperation(csvArray);
+
+        },
+        exportSelectedCsv() {
+            const csvArray = [];
+            let columns = [];
+
+            this.selectedCsv.forEach(id => {
+
+                const item = $('#csv-mark-' + id);
+                columns = [];
+                let rows = [];
+
+                item.parent().parent().find('[data-csv-key]').each((key, item) => {
+                    if (item.querySelector("[data-csv-prefix]")) {
+                        columns.push('"' + item.querySelector('.title').dataset.csvPrefix + ' ' + escapeCsv(item.querySelector('.title').innerText) + '"');
+
+                        rows.push('"' + escapeCsv(item.querySelector('[data-csv-value]').innerText) + '"');
+                    }
+
+                });
+                csvArray.push(rows.join(','))
+            });
+            csvArray.unshift(columns)
+            this.exportCsvOperation(csvArray);
+
+        },
+        saveInDatabase(e, quoteId) {
+            e.preventDefault();
+
+            const payload = {};
+
+            payload.senderAddress = document.querySelector(`[data-sender-${quoteId}-address]`).innerText;
+            payload.senderZipcode = document.querySelector(`[data-sender-${quoteId}-zipcode]`).innerText;
+            payload.senderContactPerson = document.querySelector(`[data-sender-${quoteId}-contact_person]`).innerText;
+            payload.senderCompanyName = document.querySelector(`[data-sender-${quoteId}-company_name]`).innerText;
+            payload.senderTelephone = document.querySelector(`[data-sender-${quoteId}-telephone]`).innerText;
+            payload.senderCountry = document.querySelector(`[data-sender-${quoteId}-country]`).innerText;
+            payload.senderEmail = document.querySelector(`[data-sender-${quoteId}-email]`).innerText;
+
+            payload.receiverAddress = document.querySelector(`[data-receiver-${quoteId}-address]`).innerText;
+            payload.receiverContactPerson = document.querySelector(`[data-receiver-${quoteId}-contact_person]`).innerText;
+            payload.receiverCompanyName = document.querySelector(`[data-receiver-${quoteId}-company_name]`).innerText;
+            payload.receiverTelephone = document.querySelector(`[data-receiver-${quoteId}-telephone]`).innerText;
+            payload.receiverCountry = document.querySelector(`[data-receiver-${quoteId}-country]`).innerText;
+            payload.receiverEmail = document.querySelector(`[data-receiver-${quoteId}-email]`).innerText;
+
+            Swal.fire({
+                icon: 'info',
+                showCancelButton: true,
+                html: 'you are about to change the shipping information for quote number ' +
+                    quoteId + ".<br>" + ' do you confirm this operation?'
+
+            }).then(result => {
+                if (result.isConfirmed) {
+                    axios.post('/admin/report/save-shipping-info', {
+                        _token,
+                        quoteId,
+                        payload,
+                    }).then(({data}) => {
+                        Swal.fire({
+                            icon: data.status === 'ok' ? 'success' : 'error',
+                            text: data.text
+                        })
+                    }).catch(error => {
+
+                    })
+                }
+
+            })
 
         },
         exportCsvOperation(csvArray) {

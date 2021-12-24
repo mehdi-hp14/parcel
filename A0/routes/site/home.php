@@ -26,6 +26,7 @@ Route::group( [
     Route::get( '/admin/report/search-users', [ReportController::class,'searchUser'])->name( 'site.report.search-users' );
     Route::get( '/admin/report/search-users', [ReportController::class,'searchUser'])->name( 'site.report.search-users' );
     Route::post( '/admin/report/email-to-report-users', [ReportController::class,'emailToReportUsers'])->name( 'site.report.email-to-report-users' );
+    Route::post( '/admin/report/save-shipping-info', [ReportController::class,'saveShippingInfo'])->name( 'site.report.save-shipping-info' );
     Route::get( '/admin/report/{type}', [ReportController::class,'report'])->name( 'admin.report' );
 //    Route::get( '/', function () {
 //        $user = request()->user(); //getting the current logged in customer

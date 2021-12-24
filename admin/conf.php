@@ -2,13 +2,13 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 
-require_once $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR . 'php8support.php';
+require_once __DIR__ . '/..' . DIRECTORY_SEPARATOR . 'php8support.php';
 
 ob_start();
 
-define("time_out","18200");
-define("ad_user","admin_zohrabpour");
-define("ad_pass","Vv?nPv7dymQr3q3q");
+define("time_out", "18200");
+define("ad_user", "admin_zohrabpour");
+define("ad_pass", "Vv?nPv7dymQr3q3q");
 
 $country_iso = array(
     'Afghanistan' => 'AFG',
@@ -518,17 +518,17 @@ $iso_country = array(
 /*
  * check for new tickets
  * */
-if(defined('DB_HOST')){
+if (defined('DB_HOST')) {
 
-$con = mysql_connect(DB_HOST,DB_USER,DB_PASS) or die(mysql_error());
-mysql_select_db(DB_NAME, $con) or die(mysql_error());
-$q = "SELECT count(*) as c FROM `tickets` WHERE adm_readed=0";
-$not_readed_tickets = mysql_fetch_array(mysql_query($q));
-if($not_readed_tickets && ($not_readed_tickets[0])){
-    ?>
-    <script>
-        window.onload=function (){
-            document.querySelector('ul.nav.main').innerHTML +=`
+    $con = mysql_connect(DB_HOST, DB_USER, DB_PASS) or die(mysql_error());
+    mysql_select_db(DB_NAME, $con) or die(mysql_error());
+    $q = "SELECT count(*) as c FROM `tickets` WHERE adm_readed=0";
+    $not_readed_tickets = mysql_fetch_array(mysql_query($q));
+    if ($not_readed_tickets && ($not_readed_tickets[0])) {
+        ?>
+        <script>
+          window.onload = function () {
+            document.querySelector('ul.nav.main').innerHTML += `
             <li class="ic-ticket"><a href="/admin/tickets.php" style="font-size: 8px;
                                                         height: 37px;
                                                         margin-top: 3px;
@@ -540,8 +540,8 @@ if($not_readed_tickets && ($not_readed_tickets[0])){
                 left: 5px;
 ">you have <?= $not_readed_tickets[0] ?> new ticket message</b></span></a></li>
             `;
-        }
-    </script>
-    <?php
-}
+          }
+        </script>
+        <?php
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Mail;
 use Kaban\Components\General\Auth\Controllers\AgentResetPasswordController;
 use Kaban\Components\General\Agent\Controllers\BaseController;
@@ -16,7 +18,7 @@ foreach ( $segments as $segment ) {
 }
 
 //Auth::routes();
-Route::post( '/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+Route::post( '/logout', [LoginController::class,'logout'])->name('logout');
 
 Route::get( '/x', function () {
 //    return \Illuminate\Support\Facades\Redirect::route('agentLoginPage');
@@ -51,13 +53,23 @@ Route::get( '/migrate', function (){
 Route::get( '/mail', function (){
     $details = [
 
-        'title' => 'Mail from ItSolutionStuff.com',
+        'name' => 'Mname',
+        'email' => 'email',
+        'subject' => 'meqsage',
+        'message' => 'meqsage',
 
         'body' => 'This is for testing email using smtp'
 
     ];
 
-
+    $html = '<b>My email</b>';
+    \Mail::send([], [], function (Message $message) use ($html) {
+        $message->to('mmhp16@gmail.com')
+            ->subject('my subject')
+            ->from('my@email.com')
+            ->setBody($html, 'text/html');
+    });
+return 221;
 
     \Mail::to('mmhp16@gmail.com')->send(new \App\Mail\Contact($details));
 //    Mail::raw('hello!')->

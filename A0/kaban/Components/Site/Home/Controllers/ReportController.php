@@ -10,6 +10,7 @@ use Kaban\Core\Controllers\SiteBaseController;
 use Kaban\General\Enums\EQuoteStatus;
 use Kaban\Models\Prenote;
 use Kaban\Models\Quote;
+use Kaban\Models\ShipInfo;
 use Kaban\Models\User;
 use PdfReport;
 
@@ -38,6 +39,14 @@ class ReportController extends SiteBaseController
             })
             ->when($type == 2, function ($q) {
                 $q->whereBetween('id', [(int)$_GET['qid1'], (int)$_GET['qid2']]);
+            })
+            ->when($type == 3, function ($q) {
+                $parms1 = explode("/", $_GET['date1']);
+                $date1 = mktime(0, 0, 0, $parms1[1], $parms1[2], $parms1[0]);
+                $parms2 = explode("/", $_GET['date2']);
+                $date2 = mktime(23, 59, 59, $parms2[1], $parms2[2], $parms2[0]);
+
+                $q->whereBetween('timestamp', [$date1, $date2]);
             })
 //             ->when(request()->has('status'),function ($q){
             ->where(function ($q) {
@@ -357,6 +366,8 @@ class ReportController extends SiteBaseController
 
     private function getPreNotes()
     {
+        return Prenote::select('id', 'title', 'message')->where('type', 3)->get();
+
         if (config('app.env') === 'production') {
             define("DB_HOST", "localhost");
             define("DB_NAME", "bookingp_qdb");
@@ -369,7 +380,9 @@ class ReportController extends SiteBaseController
             define("DB_PASS", "secret");
         }
         $con = mysqli_connect(DB_HOST, DB_USER, DB_PASS) or die(mysql_error());
+
         mysqli_select_db($con, DB_NAME) or die(mysql_error());
+
         $q = "SELECT `id`,`title`,`message` FROM `prenotes` WHERE `type`=3 ORDER BY `id` ASC";
         $r = mysqli_query($con, $q);
         return mysqli_fetch_all($r, MYSQLI_ASSOC);
@@ -394,5 +407,45 @@ class ReportController extends SiteBaseController
             EmailToReportUsersJob::dispatch($payload, $text, $request->mailSubject);
         }
         return response('ok');
+    }
+
+    public function saveShippingInfo(Request $request)
+    {
+        $payload = $request->payload;
+
+        $shipInfo = ShipInfo::where('ref', $request->quoteId)->first();
+
+        if (!$shipInfo) {
+            return response()->json([
+                'status' => 'error',
+                'text' => 'there is no shipping information in database to update , for quote number ' . $request->quoteId . ' '
+            ]);
+        }
+
+        foreach ($payload as $key => $requestItem) {
+            if ($requestItem == '' || $requestItem === '---') {
+                continue;
+            }
+            $key === 'senderAddress' ? $shipInfo->saddress = $requestItem : '';
+            $key === 'senderZipcode' ? $shipInfo->szipcode = $requestItem : '';
+            $key === 'senderContactPerson' ? $shipInfo->scontactp = $requestItem : '';
+            $key === 'senderCompanyName' ? $shipInfo->scompany = $requestItem : '';
+            $key === 'senderTelephone' ? $shipInfo->stelephone = $requestItem : '';
+            $key === 'senderCountry' ? $shipInfo->scountry = $requestItem : '';
+            $key === 'senderEmail' ? $shipInfo->semail = $requestItem : '';
+
+            $key === 'receiverAddress' ? $shipInfo->raddress = $requestItem : '';
+            $key === 'receiverContactPerson' ? $shipInfo->rcontactp = $requestItem : '';
+            $key === 'receiverCompanyName' ? $shipInfo->rcompany = $requestItem : '';
+            $key === 'receiverTelephone' ? $shipInfo->rtelephone = $requestItem : '';
+            $key === 'receiverCountry' ? $shipInfo->rcountry = $requestItem : '';
+            $key === 'receiverEmail' ? $shipInfo->remail = $requestItem : '';
+        }
+        $shipInfo->save();
+
+        return response()->json([
+            'status' => 'ok',
+            'text' => 'shipping info for quote with id of ' . $request->quoteId . ' has updated',
+        ]);
     }
 }

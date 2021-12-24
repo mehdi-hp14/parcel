@@ -1,29 +1,80 @@
 @extends('layouts.report')
 @section('early-style')
     <style>
+        [v-cloak] {
+            display: none;
+        }
+
         .badge-pill {
             font-size: 16px;
         }
+
         .export-div {
             position: fixed;
             bottom: 10px;
             right: 10px;
             display: flex;
+            z-index: 1;
+            background: #ccc6;
+            padding: 15px;
             flex-direction: column;
         }
-        .export-div > *{
+
+        .export-div > * {
             margin: 7px;
         }
-        li .badge.badge-primary.badge-pill{
-            min-width:50px
+
+        li .badge.badge-primary.badge-pill {
+            min-width: 50px
         }
-        .badge:empty{
+
+        .badge:empty {
             display: inline;
+        }
+
+        .report-card-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 @endsection
+
+@section('menu')
+    <li class="nav-item dropdown">
+        <template v-if="selectedCsv.length">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                csv
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">
+                <a class="dropdown-item" href="#" @click="selectAllForCsv">select all for csv</a>
+                <a class="dropdown-item" href="#" @click="exportSelectedCsv">export selected as csv</a>
+            </div>
+        </template>
+
+        {{--        <template >--}}
+        <a v-else class="nav-link" href="#" @click="selectAllForCsv">select all for csv </a>
+
+        {{--        </template>--}}
+    </li>
+
+    <li class="nav-item dropdown">
+        <template v-if="selectedEmail.length">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                email
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                <a class="dropdown-item" href="#" @click="selectAllForEmail">select all for sending email</a>
+                <a class="dropdown-item" href="#" @click="emailToSelectedEmails">email to selected emails</a>
+            </div>
+        </template>
+
+        <a v-else class="nav-link" href="#" @click="selectAllForEmail">select all for sending email</a>
+    </li>
+@endsection
+
 @section('content')
-    <div class="container" id="appoo">
+    <div class="container">
         <div
             class="export-div"
         >
@@ -102,7 +153,7 @@
                                     <div class="custom-control custom-switch">
                                         <input type="checkbox" class="custom-control-input" id="completed-status"
                                                name="status[]" value="completed"
-                                               @if(request('statemailToSelectedEmailsus') && in_array('completed',request('status'))) checked
+                                               @if(request('status') && in_array('completed',request('status'))) checked
                                                @endif
                                                @if($initialRequest) checked @endif
                                         >
@@ -187,8 +238,8 @@
                                     <div class="form-group">
 
                                         <label for="search-users">Search Collection Locations</label>
-{{--                                        :reduce="option => option.uname"--}}
-{{--                                        label="fname"--}}
+                                        {{--                                        :reduce="option => option.uname"--}}
+                                        {{--                                        label="fname"--}}
 
                                         <v-select id="search-users"
                                                   v-model="selectedCollectionLocations"
@@ -257,35 +308,53 @@
                         </div>
                     </div>
                     @if(!empty(request('mutual-collocations')))
-                    <div class="card my-5">
-                        <div class="card-header">
-                            <h5>Mutual Collocations</h5>
-                        </div>
-                        <div class="card-body">
+                        <div class="card my-5">
+                            <div class="card-header">
+                                <h5>Mutual Collocations</h5>
+                            </div>
+                            <div class="card-body">
 
-                            <div class="container">
-                                {{--                                <p>The .table-bordered class adds borders on all sides of the table and the cells:</p>--}}
-                                <table class="table table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>From Collocation</th>
-                                        <th>Names</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($fromLocationGrouped as $key=>$val)
-                                        <tr>
-                                            <th>{{$key}}</th>
-                                            <th>{{'user namesss'}}</th>
-                                        </tr>
-                                    @endforeach
+                                <div class="container">
+                                    {{--                                <p>The .table-bordered class adds borders on all sides of the table and the cells:</p>--}}
+                                    @if(count($fromLocationGrouped)>0)
 
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>From Collocation</th>
+                                                <th>Names</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($fromLocationGrouped as $key=>$arrayValue)
+                                                @php $quoteUserGroup = $arrayValue->groupBy('uname') @endphp
+                                                <tr>
+                                                    <th>{{$key}}</th>
+                                                    {{--                                            @endforeach--}}
+                                                    <td>
+                                                        @foreach ($quoteUserGroup as $uname=>$quoteGroup)
+                                                            @if($uname !='')
+                                                                <span class="comma-seperate">{{($uname ?: 'no username') . '('.count($quoteGroup).') '}}</span>
+                                                            @else
+                                                                {{(empty($uname) ? 'no username':'')}}
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
 
-                                    </tbody>
-                                </table>
+                                                </tr>
+                                            @endforeach
+                                            {{--                                    {{dd(1)}}--}}
+
+                                            </tbody>
+                                        </table>
+                                    @else
+                                        <h4>there is no mutual collection</h4>
+                                    @endif
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+
                     @endif
                     @foreach($quotes as $quote)
                         {{--                            {{dd($quote->urls->first())}}--}}
@@ -294,7 +363,10 @@
                             <div
                                 class="card-header" data-csv-key>
                                 <span
-                                    class="title">{{ __('quote number '.$quote->id).' - '.\Kaban\General\Enums\EQuoteStatus::farsi($quote->status) }}</span>
+                                    class="title report-card-title">
+                                    <span>{{ __('quote number '.$quote->id).' - '.\Kaban\General\Enums\EQuoteStatus::farsi($quote->status) }}</span>
+                                <button class="btn btn-success" @click="saveInDatabase($event,{{$quote->id}})">save in database</button>
+                                </span>
                                 <span data-csv-value></span>
                             </div>
 
@@ -350,7 +422,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Company Name</span>
+                                        <span class="title" data-csv-prefix="Sender">Company Name</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-company_name
                                               class="badge badge-primary badge-pill"
@@ -358,7 +430,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Address</span>
+                                        <span class="title" data-csv-prefix="Sender">Address</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-address
                                               class="badge badge-primary badge-pill"
@@ -366,7 +438,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Zip Code</span>
+                                        <span class="title" data-csv-prefix="Sender">Zip Code</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-zipcode
                                               class="badge badge-primary badge-pill"
@@ -374,7 +446,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Country</span>
+                                        <span class="title" data-csv-prefix="Sender">Country</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-country
                                               class="badge badge-primary badge-pill"
@@ -382,7 +454,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Contact Person</span>
+                                        <span class="title" data-csv-prefix="Sender">Contact Person</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-contact_person
                                               class="badge badge-primary badge-pill"
@@ -390,7 +462,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Telephone</span>
+                                        <span class="title" data-csv-prefix="Sender">Telephone</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-telephone
                                               class="badge badge-primary badge-pill"
@@ -398,8 +470,8 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">
-                                            <input type="checkbox" value="sender-{{$quote->id}}" v-model="selectedEmail"> Email
+                                        <span class="title" data-csv-prefix="Sender">
+                                            <input type="checkbox" data-target-email value="sender-{{$quote->id}}" v-model="selectedEmail"> Email
                                         </span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-email
@@ -412,7 +484,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Company Name</span>
+                                        <span class="title" data-csv-prefix="Receiver">Company Name</span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-company_name
                                               class="badge badge-primary badge-pill"
@@ -420,23 +492,23 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Address</span>
+                                        <span class="title" data-csv-prefix="Receiver">Address</span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-address
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->raddress??'---'}}</span>
                                     </li>
+                                    {{--                                    <li class="list-group-item d-flex justify-content-between align-items-center"--}}
+                                    {{--                                        data-csv-key>--}}
+                                    {{--                                        <span class="title">Zip Code</span>--}}
+                                    {{--                                        <span data-csv-value--}}
+                                    {{--                                              data-receiver-{{$quote->id}}-zipcode--}}
+                                    {{--                                              class="badge badge-primary badge-pill"--}}
+                                    {{--                                              contenteditable="true">{{$quote->shipInfo->rzipcode??'---'}}</span>--}}
+                                    {{--                                    </li>--}}
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Zip Code</span>
-                                        <span data-csv-value
-                                              data-receiver-{{$quote->id}}-zipcode
-                                              class="badge badge-primary badge-pill"
-                                              contenteditable="true">{{$quote->shipInfo->rzipcode??'---'}}</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center"
-                                        data-csv-key>
-                                        <span class="title">Country</span>
+                                        <span class="title" data-csv-prefix="Receiver">Country</span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-country
                                               class="badge badge-primary badge-pill"
@@ -444,7 +516,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Contact Person</span>
+                                        <span class="title" data-csv-prefix="Receiver">Contact Person</span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-contact_person
                                               class="badge badge-primary badge-pill"
@@ -452,7 +524,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Telephone</span>
+                                        <span class="title" data-csv-prefix="Receiver">Telephone</span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-telephone
                                               class="badge badge-primary badge-pill"
@@ -460,8 +532,8 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">
-                                           <input type="checkbox" value="receiver-{{$quote->id}}" v-model="selectedEmail"> Email
+                                        <span class="title" data-csv-prefix="Receiver">
+                                           <input type="checkbox" data-target-email value="receiver-{{$quote->id}}" v-model="selectedEmail"> Email
                                         </span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-email
@@ -479,21 +551,21 @@
                         </span>
                     @endforeach
                 </form>
-                <div>
-                    Please confirm that you have received this confirmation order.<br>
-                    <br>Best Regards<br>
-                    Fazel Zohrabpour<br>
-                    <br>
-                    <div style="font-size:80%;color:#0033cc;">
-                        <img src="https://bookingparcel.com/logo.gif" style="width:215px;height:50px;">
-                        <br>Europost Express (UK) Ltd.<br>4 Corringham Road,<br>
-                        Wembley - Middlesex<br>HA9 9QA- London , UK<br>Tel : +44(0) 7886105417<br>
-                    </div>
-                </div>
+                {{--                <div>--}}
+                {{--                    Please confirm that you have received this confirmation order.<br>--}}
+                {{--                    <br>Best Regards<br>--}}
+                {{--                    Fazel Zohrabpour<br>--}}
+                {{--                    <br>--}}
+                {{--                    <div style="font-size:80%;color:#0033cc;">--}}
+                {{--                        <img src="https://bookingparcel.com/logo.gif" style="width:215px;height:50px;">--}}
+                {{--                        <br>Europost Express (UK) Ltd.<br>4 Corringham Road,<br>--}}
+                {{--                        Wembley - Middlesex<br>HA9 9QA- London , UK<br>Tel : +44(0) 7886105417<br>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
 
             </div>
         </div>
-        <div v-show="1">
+        <div v-show="0">
             <div ref="reportModal">
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
@@ -522,12 +594,12 @@
 @endsection
 
 @section('later-scripts')
-{{--    <script src="../node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>--}}
-{{--    <script src="../node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js"></script>--}}
-{{--<script src="{{asset('A0/node_modules/ckeditor4/ckeditor.js')}}"></script>--}}
-{{--<script src="{{asset('A0/node_modules/ckeditor4-vue/dist/ckeditor.js')}}"></script>--}}
-{{--<script src="../node_modules/ckeditor4-vue/dist/ckeditor.js"></script>--}}
-<script type="text/javascript" src="{{asset('A0/public/ckeditor/ckeditor.js')}}"></script>
+    {{--    <script src="../node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>--}}
+    {{--    <script src="../node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js"></script>--}}
+    {{--<script src="{{asset('A0/node_modules/ckeditor4/ckeditor.js')}}"></script>--}}
+    {{--<script src="{{asset('A0/node_modules/ckeditor4-vue/dist/ckeditor.js')}}"></script>--}}
+    {{--<script src="../node_modules/ckeditor4-vue/dist/ckeditor.js"></script>--}}
+    <script type="text/javascript" src="{{asset('A0/public/ckeditor/ckeditor.js')}}"></script>
 
     <script>
         const CKEditor = window.CKEditor;
