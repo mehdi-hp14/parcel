@@ -342,7 +342,25 @@ aircargo@europostexpress.co.uk<br>
 		</td>
 	</tr>
 </tbody></table>";
-	if (!$mail->send()) {
+
+    \Mail::send([], [], function ($message) use ($email,$mail) {
+        $message->to($email)
+            ->subject($mail->Subject)
+            ->cc(['backup1@bookingparcel.com'])
+            ->subject($mail->Subject)
+//            ->from('my@email.com')
+
+            ->setBody($mail->Body, 'text/html');
+        if(isset($attachments) AND is_array($attachments) AND count($attachments)>0 )
+        {
+            foreach($attachments as $id => $path)
+            {
+                if($path!="")
+                    $message->attach($path);
+            }
+        }
+    });
+	if (0) {
 		$mails_er[$email] = $info;
 		$error_m .= $info['company'] . " : ".$info['name']. " : ".$email." Sending was not successful.<br>";
 		$error_m .= "Mailer Error: " . $mail->ErrorInfo ."<br>";

@@ -676,7 +676,7 @@ if (isset($_GET['post_c_key']) && $_GET['post_c_key'] != 0) {
                                     foreach ($_FILES['uploaded_file']['name'] as $k => $upload) {
                                         if (isset($_FILES['uploaded_file']['name'][$k]) and $_FILES['uploaded_file']['name'][$k] != "" and $_FILES['uploaded_file']['name'][$k] != null) {
                                             $has_attach = true;
-                                            $target_file = $target_dir . $itemid . "_" . basename($_FILES['uploaded_file']['name'][$k]);
+                                            $target_file = $target_dir . ($itemid??'') . "_" . basename($_FILES['uploaded_file']['name'][$k]);
                                             $uploadOk = 1;
                                             $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
                                             $format = explode(".", basename($_FILES['uploaded_file']['name'][$k]));

@@ -85,7 +85,7 @@ class ReportController extends SiteBaseController
             Cache::forget(self::cache_key);
         }
         $cachedCollectionLocationsQuotes = Cache::rememberForever(self::cache_key, function () use ($quotes) {
-            return $quotes;
+            return $quotes; //its for Search Collection Locations input items
         });
         $selectedUser = null;
 

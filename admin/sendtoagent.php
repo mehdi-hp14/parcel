@@ -17,6 +17,262 @@ if(!(isset($_POST['itemid']) AND is_numeric($_POST['itemid']) AND $_POST['itemid
 	header("Location: dashboard.php");
 	exit("You are logged in....<br><a href='dashboard.php'>Dashboard</a>");
 }
+$error=null;
+$error_m='';
+$country_iso = array(
+    'Afghanistan'=>'AFG',
+    'Aland Islands'=>'ALA',
+    'Albania'=>'ALB',
+    'Algeria'=>'DZA',
+    'American Samoa'=>'ASM',
+    'Andorra'=>'AND',
+    'Angola'=>'AGO',
+    'Anguilla'=>'AIA',
+    'Antarctica'=>'ATA',
+    'Antigua and Barbuda'=>'ATG',
+    'Argentina'=>'ARG',
+    'Armenia'=>'ARM',
+    'Aruba'=>'ABW',
+    'Australia'=>'AUS',
+    'Austria'=>'AUT',
+    'Azerbaijan'=>'AZE',
+    'Bahamas'=>'BHS',
+    'Bahrain'=>'BHR',
+    'Bangladesh'=>'BGD',
+    'Barbados'=>'BRB',
+    'Belarus'=>'BLR',
+    'Belgium'=>'BEL',
+    'Belize'=>'BLZ',
+    'Benin'=>'BEN',
+    'Bermuda'=>'BMU',
+    'Bhutan'=>'BTN',
+    'Bolivia'=>'BOL',
+    'Bonaire, Saint Eustatius and Saba '=>'BES',
+    'Bosnia and Herzegovina'=>'BIH',
+    'Botswana'=>'BWA',
+    'Bouvet Island'=>'BVT',
+    'Brazil'=>'BRA',
+    'British Indian Ocean Territory'=>'IOT',
+    'British Virgin Islands'=>'VGB',
+    'Brunei'=>'BRN',
+    'Bulgaria'=>'BGR',
+    'Burkina Faso'=>'BFA',
+    'Burundi'=>'BDI',
+    'Cambodia'=>'KHM',
+    'Cameroon'=>'CMR',
+    'Canada'=>'CAN',
+    'Cape Verde'=>'CPV',
+    'Cayman Islands'=>'CYM',
+    'Central African Republic'=>'CAF',
+    'Chad'=>'TCD',
+    'Chile'=>'CHL',
+    'China'=>'CHN',
+    'Christmas Island'=>'CXR',
+    'Cocos Islands'=>'CCK',
+    'Colombia'=>'COL',
+    'Comoros'=>'COM',
+    'Cook Islands'=>'COK',
+    'Costa Rica'=>'CRI',
+    'Croatia'=>'HRV',
+    'Cuba'=>'CUB',
+    'Curacao'=>'CUW',
+    'Cyprus'=>'CYP',
+    'Czech Republic'=>'CZE',
+    'Democratic Republic of the Congo'=>'COD',
+    'Denmark'=>'DNK',
+    'Djibouti'=>'DJI',
+    'Dominica'=>'DMA',
+    'Dominican Republic'=>'DOM',
+    'East Timor'=>'TLS',
+    'Ecuador'=>'ECU',
+    'Egypt'=>'EGY',
+    'El Salvador'=>'SLV',
+    'Equatorial Guinea'=>'GNQ',
+    'Eritrea'=>'ERI',
+    'Estonia'=>'EST',
+    'Ethiopia'=>'ETH',
+    'Falkland Islands'=>'FLK',
+    'Faroe Islands'=>'FRO',
+    'Fiji'=>'FJI',
+    'Finland'=>'FIN',
+    'France'=>'FRA',
+    'French Guiana'=>'GUF',
+    'French Polynesia'=>'PYF',
+    'French Southern Territories'=>'ATF',
+    'Gabon'=>'GAB',
+    'Gambia'=>'GMB',
+    'Georgia'=>'GEO',
+    'Germany'=>'DEU',
+    'Ghana'=>'GHA',
+    'Gibraltar'=>'GIB',
+    'Greece'=>'GRC',
+    'Greenland'=>'GRL',
+    'Grenada'=>'GRD',
+    'Guadeloupe'=>'GLP',
+    'Guam'=>'GUM',
+    'Guatemala'=>'GTM',
+    'Guernsey'=>'GGY',
+    'Guinea'=>'GIN',
+    'Guinea-Bissau'=>'GNB',
+    'Guyana'=>'GUY',
+    'Haiti'=>'HTI',
+    'Heard Island and McDonald Islands'=>'HMD',
+    'Honduras'=>'HND',
+    'Hong Kong'=>'HKG',
+    'Hungary'=>'HUN',
+    'Iceland'=>'ISL',
+    'India'=>'IND',
+    'Indonesia'=>'IDN',
+    'Iran'=>'IRN',
+    'Iraq'=>'IRQ',
+    'Ireland'=>'IRL',
+    'Isle of Man'=>'IMN',
+    'Israel'=>'ISR',
+    'Italy'=>'ITA',
+    'Ivory Coast'=>'CIV',
+    'Jamaica'=>'JAM',
+    'Japan'=>'JPN',
+    'Jersey'=>'JEY',
+    'Jordan'=>'JOR',
+    'Kazakhstan'=>'KAZ',
+    'Kenya'=>'KEN',
+    'Kiribati'=>'KIR',
+    'Kosovo'=>'XKX',
+    'Kuwait'=>'KWT',
+    'Kyrgyzstan'=>'KGZ',
+    'Laos'=>'LAO',
+    'Latvia'=>'LVA',
+    'Lebanon'=>'LBN',
+    'Lesotho'=>'LSO',
+    'Liberia'=>'LBR',
+    'Libya'=>'LBY',
+    'Liechtenstein'=>'LIE',
+    'Lithuania'=>'LTU',
+    'Luxembourg'=>'LUX',
+    'Macao'=>'MAC',
+    'Macedonia'=>'MKD',
+    'Madagascar'=>'MDG',
+    'Malawi'=>'MWI',
+    'Malaysia'=>'MYS',
+    'Maldives'=>'MDV',
+    'Mali'=>'MLI',
+    'Malta'=>'MLT',
+    'Marshall Islands'=>'MHL',
+    'Martinique'=>'MTQ',
+    'Mauritania'=>'MRT',
+    'Mauritius'=>'MUS',
+    'Mayotte'=>'MYT',
+    'Mexico'=>'MEX',
+    'Micronesia'=>'FSM',
+    'Moldova'=>'MDA',
+    'Monaco'=>'MCO',
+    'Mongolia'=>'MNG',
+    'Montenegro'=>'MNE',
+    'Montserrat'=>'MSR',
+    'Morocco'=>'MAR',
+    'Mozambique'=>'MOZ',
+    'Myanmar'=>'MMR',
+    'Namibia'=>'NAM',
+    'Nauru'=>'NRU',
+    'Nepal'=>'NPL',
+    'Netherlands'=>'NLD',
+    'New Caledonia'=>'NCL',
+    'New Zealand'=>'NZL',
+    'Nicaragua'=>'NIC',
+    'Niger'=>'NER',
+    'Nigeria'=>'NGA',
+    'Niue'=>'NIU',
+    'Norfolk Island'=>'NFK',
+    'North Korea'=>'PRK',
+    'Northern Mariana Islands'=>'MNP',
+    'Norway'=>'NOR',
+    'Oman'=>'OMN',
+    'Pakistan'=>'PAK',
+    'Palau'=>'PLW',
+    'Palestinian Territory'=>'PSE',
+    'Panama'=>'PAN',
+    'Papua New Guinea'=>'PNG',
+    'Paraguay'=>'PRY',
+    'Peru'=>'PER',
+    'Philippines'=>'PHL',
+    'Pitcairn'=>'PCN',
+    'Poland'=>'POL',
+    'Portugal'=>'PRT',
+    'Puerto Rico'=>'PRI',
+    'Qatar'=>'QAT',
+    'Republic of the Congo'=>'COG',
+    'Reunion'=>'REU',
+    'Romania'=>'ROU',
+    'Russia'=>'RUS',
+    'Rwanda'=>'RWA',
+    'Saint Barthelemy'=>'BLM',
+    'Saint Helena'=>'SHN',
+    'Saint Kitts and Nevis'=>'KNA',
+    'Saint Lucia'=>'LCA',
+    'Saint Martin'=>'MAF',
+    'Saint Pierre and Miquelon'=>'SPM',
+    'Saint Vincent and the Grenadines'=>'VCT',
+    'Samoa'=>'WSM',
+    'San Marino'=>'SMR',
+    'Sao Tome and Principe'=>'STP',
+    'Saudi Arabia'=>'SAU',
+    'Senegal'=>'SEN',
+    'Serbia'=>'SRB',
+    'Seychelles'=>'SYC',
+    'Sierra Leone'=>'SLE',
+    'Singapore'=>'SGP',
+    'Sint Maarten'=>'SXM',
+    'Slovakia'=>'SVK',
+    'Slovenia'=>'SVN',
+    'Solomon Islands'=>'SLB',
+    'Somalia'=>'SOM',
+    'South Africa'=>'ZAF',
+    'South Georgia and the South Sandwich Islands'=>'SGS',
+    'South Korea'=>'KOR',
+    'South Sudan'=>'SSD',
+    'Spain'=>'ESP',
+    'Sri Lanka'=>'LKA',
+    'Sudan'=>'SDN',
+    'Suriname'=>'SUR',
+    'Svalbard and Jan Mayen'=>'SJM',
+    'Swaziland'=>'SWZ',
+    'Sweden'=>'SWE',
+    'Switzerland'=>'CHE',
+    'Syria'=>'SYR',
+    'Taiwan'=>'TWN',
+    'Tajikistan'=>'TJK',
+    'Tanzania'=>'TZA',
+    'Thailand'=>'THA',
+    'Togo'=>'TGO',
+    'Tokelau'=>'TKL',
+    'Tonga'=>'TON',
+    'Trinidad and Tobago'=>'TTO',
+    'Tunisia'=>'TUN',
+    'Turkey'=>'TUR',
+    'Turkmenistan'=>'TKM',
+    'Turks and Caicos Islands'=>'TCA',
+    'Tuvalu'=>'TUV',
+    'U.S. Virgin Islands'=>'VIR',
+    'Uganda'=>'UGA',
+    'Ukraine'=>'UKR',
+    'United Arab Emirates'=>'ARE',
+    'United Kingdom'=>'GBR',
+    'United States'=>'USA',
+    'United States Minor Outlying Islands'=>'UMI',
+    'Uruguay'=>'URY',
+    'Uzbekistan'=>'UZB',
+    'Vanuatu'=>'VUT',
+    'Vatican'=>'VAT',
+    'Venezuela'=>'VEN',
+    'Vietnam'=>'VNM',
+    'Wallis and Futuna'=>'WLF',
+    'Western Sahara'=>'ESH',
+    'Yemen'=>'YEM',
+    'Zambia'=>'ZMB',
+    //'Test Country'=>'TSTC',
+    'Zimbabwe'=>'ZWE'
+
+);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -60,8 +316,8 @@ if(!(isset($_POST['itemid']) AND is_numeric($_POST['itemid']) AND $_POST['itemid
     <!--Fancy Button-->
     <script src="js/fancy-button/fancy-button.js" type="text/javascript"></script>
     <script src="js/setup.js" type="text/javascript"></script>
-	
-	
+
+
 	<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
 
     <script type="text/javascript">
@@ -72,17 +328,17 @@ if(!(isset($_POST['itemid']) AND is_numeric($_POST['itemid']) AND $_POST['itemid
             setupLeftMenu();
 			setSidebarHeight();
 
-			$('#checkall').click(function(event) {   
+			$('#checkall').click(function(event) {
 				if(this.checked) {
 					// Iterate each checkbox
 					$(':checkbox').each(function() {
-						this.checked = true;                        
+						this.checked = true;
 					});
 				}
 				else{
 					// Iterate each checkbox
 					$(':checkbox').each(function() {
-						this.checked = false;                        
+						this.checked = false;
 					});
 				}
 			});
@@ -105,15 +361,15 @@ if(!(isset($_POST['itemid']) AND is_numeric($_POST['itemid']) AND $_POST['itemid
 $(function() {
         var scntDiv = $('#attach_d');
         var i = $('#attach_d p').size() + 1;
-        
+
         $('#addScnt').live('click', function() {
-			
+
                 $('<p><label for="attachment"><input type="file" id="attachment" name="uploaded_file[]" accept=".gif,.jpg,.jpeg,.png,.pdf,.zip,.rtf,.doc,.docx,.xls,.xlsx"></label>&nbsp;&nbsp;<a href="#" id="addScnt"><img src="../post_forms/images/icons/fam/add.png"></a>&nbsp;<a href="#" id="remScnt"><img src="../post_forms/images/icons/fam/delete.png"></a>&nbsp;&nbsp;&nbsp;please note that supported extentions are (.gif,.jpg,.jpeg,.png,.pdf,.zip) And maximum size is 2MB.</p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
-        
-        $('#remScnt').live('click', function() { 
+
+        $('#remScnt').live('click', function() {
                 if( i > 2 ) {
                         $(this).parents('p').remove();
                         i--;
@@ -121,14 +377,14 @@ $(function() {
                 return false;
         });
 });
- 
+
 function ajax_msg(item_id){
-	
+
 	var choosemsgemail = document.getElementById('choosemsgemail');
 	var p = choosemsgemail.options[choosemsgemail.selectedIndex].value;
-	
+
 	if(p!='-'){
-	
+
 		var dataString = 'item_id='+item_id+'&mid='+p;
 		$.ajax({
 			type: "POST",
@@ -145,7 +401,7 @@ function ajax_msg(item_id){
 					}
 				}
 			}
-		});	
+		});
 	}
 }
     </script>
@@ -178,7 +434,7 @@ function ajax_msg(item_id){
                                 <li><a href="agents.php">Agents Management Page</a> </li>
                                 <li><a href="premessages.php">Pre-Defined Messages Page</a> </li>
                                 <li><a href="logout.php">logout</a> </li>
-                              
+
                             </ul>
                         </li>
                         <!--<li><a class="menuitem">Menu 2</a>
@@ -286,8 +542,8 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 		switch($ext){
 			case 'png' : return 'image/png'; break;
 			case 'gif' : return 'image/gif'; break;
-			case 'jpg' : 
-			case 'jpeg' : 
+			case 'jpg' :
+			case 'jpeg' :
 				return 'image/jpeg'; break;
 			case 'pdf' : return 'application/pdf'; break;
 			case 'zip' : return 'application/zip'; break;
@@ -297,17 +553,17 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 		if(isset($_POST['message']) AND $_POST['message']!='' AND $_POST['message']!=null){
 			$has_attach = false;
 			$send = false;
-			
+
 			$Attachments = array();
 			//$message_p1 = "";
 			//$message_p2 = "";
-			
-			
+
+
 			if(isset($_FILES['uploaded_file']['name']) AND is_array($_FILES['uploaded_file']['name']) AND count($_FILES['uploaded_file']['name'])>0){
-				
+
 				$target_dir = __DIR__ . DIRECTORY_SEPARATOR  ."attachments" . DIRECTORY_SEPARATOR;
 				$uploaded_c = 0;
-				
+
 				/*
 				$uid = md5(uniqid(time()));
 				$eol = PHP_EOL;
@@ -315,7 +571,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 				$headers .= "Reply-To: aircargo@europostexpress.co.uk".$eol;
 				$headers .= "MIME-Version: 1.0\r\n";
 				$headers .= "Content-Type: multipart/mixed; boundary=\"".$uid."\"";
-				
+
 				$message_p1 = "--".$uid.$eol;
 				$message_p1 .= "Content-Type: text/html; charset=UTF-8".$eol;
 				$message_p1 .= "Content-Transfer-Encoding: 8bit".$eol.$eol;
@@ -338,7 +594,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 						} elseif($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" && $imageFileType != "rtf" && $imageFileType != "zip" && $imageFileType != "pdf" && $imageFileType != "doc" && $imageFileType != "docx" && $imageFileType != "xls" && $imageFileType != "xlsx") {
 							$error_m .= basename( $_FILES['uploaded_file']['name'][$k])."Invalid file format<br>";
 							$uploadOk = 0;
-						} 
+						}
 						if ($uploadOk == 0) {
 							$error_m .= basename( $_FILES['uploaded_file']['name'][$k])." Sorry, your file was not uploaded.<br>";
 						} else {
@@ -346,11 +602,11 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 								$uploaded_c++;
 								//$send = true;
 								$error_m .= "The file ". basename( $_FILES['uploaded_file']['name'][$k]). " has been uploaded.<br>";
-								
+
 								$Attachments[] = $target_file;
-								
+
 								/*
-								
+
 								$file_size = filesize($target_file);
 								$handle = fopen($target_file, "r");
 								$content = fread($handle, $file_size);
@@ -358,9 +614,9 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 								$content = chunk_split(base64_encode($content));
 
 								$name = basename($target_file);
-								
-								
-								
+
+
+
 								$message_p2 .= "Content-Type: ".CT($imageFileType)."; name=\"".$filename."\"".$eol;
 								$message_p2 .= "Content-Transfer-Encoding: base64".$eol;
 								$message_p2 .= "Content-Disposition: attachment; filename=\"".$filename."\"".$eol;
@@ -376,8 +632,8 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 			//echo $message_p1 ."yes".$eol.$message_p2."<br>";
 			if(($uploaded_c==count($_FILES['uploaded_file']['name']) AND $has_attach) OR !$has_attach){
 				$send = true;
-			} 
-			
+			}
+
 			if($send){
 				/*
 				if(!$has_attach AND FALSE){
@@ -390,7 +646,7 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 				}
 				*/
 				mb_internal_encoding("UTF-8");
-				
+
 				$txt = "<?php \n";
 				$txt .= "\n";
 				$txt .= '$subject=\''.$_POST['title'].'\';';
@@ -421,10 +677,13 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 					fputs($f, $string);
 					fclose($f);
 				}
-				unlink("mail_content.php");
+
+				if(file_exists('mail_content.php')){
+                    unlink("mail_content.php");
+                }
 				writeStringToFile("mail_content.php",$txt);
-				
-				
+
+
 				$txt = "<?php \n";
 				$txt .= "\n";
 				$txt .= '$mails=array( ';
@@ -436,9 +695,12 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 				}
 				$txt .= ");\n";
 				$txt .= "?>";
-				
-				unlink("mail_address.php");
-				writeStringToFile("mail_address.php",$txt);
+
+                if(file_exists('mail_address.php')){
+                    unlink("mail_address.php");
+                }
+                writeStringToFile("mail_address.php",$txt);
+
 				//$send = false;
 				$error_m .= "The needed files have been saved. your sending process will be start in <span id='countd'>5</span> seconds.<br>Note: your request of sending mail won be put in queue, means that if you send request before ending the process the prevous process will end. and new one will proceed.<br>";
 
@@ -446,13 +708,13 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 				if($has_attach){
 					foreach($emails as $cname1 => $email){
 						list($cname,$cc) = explode("_|_",$cname1);
-						
+
 						$tmp_body = $_POST['message'];
 						$aname = $email[0];
-						
+
 						$tmp_body = str_replace("{company_name}", $cname, $tmp_body, $_c);
 						$tmp_body = str_replace("agent_name", $aname, $tmp_body, $_c);
-						
+
 
 
 						if (mail($email[1], $_POST['title'], $message_p1.$tmp_body.$message_p2, $headers))
@@ -468,14 +730,14 @@ if(isset($_POST['t']) AND $_POST['t']==1){
 				else{
 					foreach($emails as $cname1 => $email){
 						list($cname,$cc) = explode("_|_",$cname1);
-						
+
 						$tmp_body = $_POST['message'];
 						$aname = $email[0];
-						
+
 						$tmp_body = str_replace("{company_name}", $cname, $tmp_body, $_c);
 						$tmp_body = str_replace("agent_name", $aname, $tmp_body, $_c);
-						
-						
+
+
 
 						if (mail($email[1], $_POST['title'], $tmp_body, $headers))
 						{
@@ -510,7 +772,7 @@ if($error_m!=""){
 			<div class="message success">
 				<h5>Success!</h5>
 				<p>
-					<?php 
+					<?php
 					if($send) header( "refresh:5;url=sendmail.php" );
 					echo $error_m; ?>
 				</p>
@@ -522,7 +784,7 @@ if($error_m!=""){
 					<?php echo $error_m; ?>
 				</p>
 			</div>
-			
+
 		<?php } ?>
 		</div>
 	</div>
@@ -566,12 +828,12 @@ else{
 							</tr>
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td style="padding:5px;" width='25%'>Subject</td>
-								<td style="padding:5px" width='25%'><input type="text" id="title" name="title" value="New Quote request from <?php echo $row2['from']; ?>,to <?php echo $row2['to']; ?> ,ref EPX-<?php echo $country_iso[$row2['from']]."-".$country_iso[$row2['to']]."-".$row2['id']; ?>"></td>
+								<td style="padding:5px" width='25%'><input type="text" id="title" name="title" value="New Quote request from <?php echo $row2['from']; ?>,to <?php echo $row2['to']; ?> ,ref EPX-<?php echo ($country_iso[$row2['from']] ?? '')."-".($country_iso[$row2['to']]?? '')."-".$row2['id']; ?>"></td>
 								<td width='25%'>Pre-defined Message:</td>
 								<td width='25%'>
 									<select  name="choosemsgemail" id="choosemsgemail"  onchange="ajax_msg('<?php echo $itemid; ?>');">
 										<option value="-">Choose a message</option>
-										<?php 
+										<?php
 										$q = "SELECT `id`,`title` FROM `prenotes` WHERE `type`=3 ORDER BY `id` ASC";
 										$r = mysql_query($q);
 										if(mysql_num_rows($r)>0){
@@ -583,10 +845,10 @@ else{
 									</select>
 								</td>
 							</tr>
-							
-							
-							
-							
+
+
+
+
 							<tr style="background-color:#fff;text-align:center;font-weight:bold">
 								<td style="padding:5px;">Message</td>
 								<td colspan="3" style="padding:5px;"><textarea name="message" id="message" class="ckeditor" style="margin: 5px; height: 525px; width:96%;"></textarea></td>
@@ -611,14 +873,14 @@ else{
 									<button class="btn" name="submit" type="submit">Send</button>
 								</td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 				</form>
                 </div>
             </div>
         </div>
-<?php 
+<?php
 }
 
 ?>

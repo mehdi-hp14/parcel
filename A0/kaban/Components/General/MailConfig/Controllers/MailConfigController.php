@@ -5,11 +5,14 @@ namespace Kaban\Components\General\MailConfig\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Kaban\Models\Admin;
 use Kaban\Models\MailConfig;
 
 class MailConfigController extends Controller
 {
+    const cache_key = 'mailConfig';
+
     /**
      * Create a new controller instance.
      *
@@ -45,73 +48,89 @@ class MailConfigController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $mailConfig = MailConfig::create($request->all());
+        MailConfig::create($request->all());
 
-        return redirect(route('mail-config.edit',$mailConfig->id));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect(route('mail-config.index'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $item = MailConfig::findOrFail($id);
 
-        return view('GeneralMailConfig::edit',compact('item'));
+
+        return view('GeneralMailConfig::edit', compact('item'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $mailConfig = MailConfig::where('id',$id)->update([
-            'driver'=>$request->driver,
-            'host'=>$request->host,
-            'port'=>$request->port,
-            'username'=>$request->username,
-            'password'=>$request->password,
-            'encryption'=>$request->encryption,
-            'from_address'=>$request->from_address,
-            'to_address'=>$request->to_address
+        $mailConfig = MailConfig::where('id', $id)->first();
+
+        $mailConfig->update([
+            'driver' => $request->driver,
+            'host' => $request->host,
+            'port' => $request->port,
+            'username' => $request->username,
+            'password' => $request->password,
+            'encryption' => $request->encryption,
+            'from_address' => $request->from_address,
+            'to_address' => $request->to_address
         ]);
 
-        return redirect(route('mail-config.edit',$id));
+        if ($mailConfig->active) {
+            Cache::put(self::cache_key, $mailConfig);
+        }
+        return redirect(route('mail-config.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        MailConfig::where('id',$id)->delete();
+        MailConfig::where('id', $id)->delete();
 
-        return  back();
+        return back();
+    }
+
+    /**
+     * Pick As Active the given mailConfig
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function pickAsActive(MailConfig $mailConfig)
+    {
+        MailConfig::query()->update(['active' => 0]);
+
+        $mailConfig->active = 1;
+
+        $mailConfig->save();
+
+        if ($mailConfig->active) {
+            Cache::put(self::cache_key, $mailConfig);
+        }
+
+        return redirect(route('mail-config.index'));
     }
 }

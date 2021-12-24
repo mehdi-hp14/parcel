@@ -3,7 +3,7 @@
 {{--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />--}}
 {{--@endsection--}}
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
@@ -33,7 +33,7 @@
                                                     <th scope="col" class="border-0 text-uppercase font-medium">PASSWORD</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">ENCRYPTION</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">FROM ADDRESS</th>
-                                                    <th scope="col" class="border-0 text-uppercase font-medium">TO ADDRESS</th>
+                                                    <th scope="col" class="border-0 text-uppercase font-medium">NAME</th>
                                                     <th scope="col" class="border-0 text-uppercase font-medium">actions</th>
                                                 </tr>
                                                 </thead>
@@ -66,12 +66,16 @@
                                                             <h5>{{$item->to_address}}</h5>
                                                         </td>
                                                         <td>
-                                                            <a onclick="return confirm('are you sure?')"
+                                                            <a onclick="return confirm('are you sure you want to delete this config?')"
                                                                href="{{route('mail-config.delete',$item->id)}}"
                                                                class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i class="fa fa-trash"></i> </a>
                                                             <a
                                                                 href="{{route('mail-config.edit',$item->id)}}"
                                                                 type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i class="fa fa-edit"></i> </a>
+                                                            <a
+                                                                href="{{route('mail-config.pickAsActive',$item->id)}}"
+                                                                type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2">
+                                                                <i class="fa {{$item->active ? 'fa-check':'fa-minus'}}"></i> </a>
                                                         </td>
                                                     </tr>
 

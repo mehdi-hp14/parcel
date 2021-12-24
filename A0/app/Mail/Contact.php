@@ -35,6 +35,7 @@ class Contact extends Mailable
     public function build()
     {
         $req = (object)$this->req;
-        return $this->subject($req->subject)->markdown('emails.contact',['req'=>$req]);
+
+        return $this->subject($req->subject ??'test')->markdown('emails.contact',['req'=>$req]);
     }
 }

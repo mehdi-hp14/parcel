@@ -1,7 +1,7 @@
 @extends('layouts.admin-login-layout')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div>
@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="driver" class="col-md-4 col-form-label text-md-right">{{ __(' from_address') }}</label>
+                                    <label for="driver" class="col-md-4 col-form-label text-md-right">{{ __('from address') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="from_address" type="text" class="form-control @error('from_address') is-invalid @enderror" name="from_address" value="{{ old('from_address') }}" required autocomplete="from_address">
@@ -114,7 +114,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="driver" class="col-md-4 col-form-label text-md-right">{{ __(' to_address') }}</label>
+                                    <label for="driver" class="col-md-4 col-form-label text-md-right">{{ __('name') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="to_address" type="text" class="form-control @error('to_address') is-invalid @enderror" name="to_address" value="{{ old('to_address') }}" required autocomplete="to_address">
