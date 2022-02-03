@@ -25,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+
         $mailConfig = \Cache::get('mailConfig');
 
         if($mailConfig)
@@ -38,6 +40,10 @@ class AppServiceProvider extends ServiceProvider
             'from' => [
                 'address' => $mailConfig->from_address,
                 'name' => $mailConfig->to_address,
+            ],
+            'reply_to' => [
+                'address' => 'aircargo@europostexpress.co.uk',
+                'name' => 'Cargo EuroPostExpress',
             ],
             'sendmail' => '/usr/sbin/sendmail -bs',
         ];

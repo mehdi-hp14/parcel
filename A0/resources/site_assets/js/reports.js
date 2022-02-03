@@ -1,4 +1,5 @@
 let $ = require('jquery');
+require('bootstrap');
 import Vue from 'vue';
 import _ from 'lodash';
 import vSelect from 'vue-select'
@@ -37,6 +38,7 @@ new Vue({
             },
             selectedCsv: [],
             selectedEmail: [],
+            finalEmails: [],
             selectedEmailForReport: [],
             options: window.selectedUser ? [{
                 fname: window.selectedUser.fullName,
@@ -51,8 +53,47 @@ new Vue({
             mailSubject: '',
         }
     },
-
+    computed: {
+        selectedEmailsList() {
+            let o = ''
+            this.finalEmails.filter((v, i) => this.finalEmails.indexOf(v) == i).forEach(item => o += '<li>' + item + '</li>')
+            return o;
+        }
+    },
     methods: {
+        selectSendersForEmail() {
+            setTimeout(() => {
+                const all = Array.from(document.querySelectorAll('[data-target-email][value^="sender"]'));
+                all.forEach(item => this.selectedEmail.push(((item.value))));
+            }, 50)
+        },
+        selectReceiversForEmail() {
+            setTimeout(() => {
+                const all = Array.from(document.querySelectorAll('[data-target-email][value^="receiver"]'));
+                all.forEach(item => this.selectedEmail.push(((item.value))));
+            }, 50)
+        },
+        selectSendersForCsv() {
+
+        },
+        selectReceiversForCsv() {
+
+        },
+        selectAllForEmail() {
+            this.selectedEmail = [];
+            setTimeout(() => {
+                const all = Array.from(document.querySelectorAll('[data-target-email]'));
+                all.forEach(item => this.selectedEmail.push(((item.value))));
+            }, 50)
+        },
+        selectAllForCsv() {
+            this.selectedCsv = [];
+            setTimeout(() => {
+                const all = Array.from(document.querySelectorAll('[id^="csv-mark-"]'));
+                all.forEach(item => this.selectedCsv.push(parseInt((item.value))));
+            }, 50)
+
+        },
         validateEmail(email) {
             return String(email)
                 .toLowerCase()
@@ -66,21 +107,22 @@ new Vue({
         emailToSelectedEmails() {
             let emails = [];
             let finalInfo = [];
+            this.finalEmails = [];
 
             this.selectedEmail.forEach(item => {
                 let email = document.querySelector(`[data-${item}-email]`).innerText;
 
                 if (!emails.includes(email) && this.validateEmail(email)) {
 
-                    let address = document.querySelector(`[data-${item}-address]`).innerText;
-                    let zipcode = document.querySelector(`[data-${item}-zipcode]`).innerText;
-                    let contact_person = document.querySelector(`[data-${item}-contact_person]`).innerText;
-                    let company_name = document.querySelector(`[data-${item}-company_name]`).innerText;
-                    let telephone = document.querySelector(`[data-${item}-telephone]`).innerText;
-                    let country = document.querySelector(`[data-${item}-country]`).innerText;
+                    let address = document.querySelector(`[data-${item}-address]`)?.innerText;
+                    let zipcode = document.querySelector(`[data-${item}-zipcode]`)?.innerText;
+                    let contact_person = document.querySelector(`[data-${item}-contact_person]`)?.innerText;
+                    let company_name = document.querySelector(`[data-${item}-company_name]`)?.innerText;
+                    let telephone = document.querySelector(`[data-${item}-telephone]`)?.innerText;
+                    let country = document.querySelector(`[data-${item}-country]`)?.innerText;
 
                     emails.push(email);
-
+                    this.finalEmails.push(email);
                     finalInfo.push({
                         email,
                         address,
@@ -185,7 +227,7 @@ new Vue({
             })
             console.log(emails)
         },
-        exportSelectedCsv() {
+        exportSelectedCsv0() {
             const csvArray = [];
 
             this.selectedCsv.forEach(id => {
@@ -216,7 +258,41 @@ new Vue({
             this.exportCsvOperation(csvArray);
 
         },
-        saveInDatabase(e,quoteId) {
+        exportSelectedCsv(type = null) {
+            const csvArray = [];
+            let columns = [];
+
+            this.selectedCsv.forEach(id => {
+
+                const item = $('#csv-mark-' + id);
+                columns = [];
+                let rows = [];
+
+                item.parent().parent().find('[data-csv-key]').each((key, item) => {
+                    let prefix;
+
+                    if(type){
+                        prefix = item.querySelector(`[data-csv-prefix=${type}]`)
+                    }else{
+                        prefix = item.querySelector(`[data-csv-prefix]`)
+                    }
+
+                    if (prefix) {
+                        columns.push('"' + item.querySelector('.title').dataset.csvPrefix + ' ' + escapeCsv(item.querySelector('.title').innerText) + '"');
+
+                        rows.push('"' + escapeCsv(item.querySelector('[data-csv-value]').innerText) + '"');
+                    }
+
+                });
+                csvArray.push(rows.join(','))
+            });
+
+            csvArray.unshift(columns)
+            console.log(columns)
+            this.exportCsvOperation(csvArray);
+
+        },
+        saveInDatabase(e, quoteId) {
             e.preventDefault();
 
             const payload = {};
@@ -240,7 +316,7 @@ new Vue({
                 icon: 'info',
                 showCancelButton: true,
                 html: 'you are about to change the shipping information for quote number ' +
-                    quoteId + ".<br>" +' do you confirm this operation?'
+                    quoteId + ".<br>" + ' do you confirm this operation?'
 
             }).then(result => {
                 if (result.isConfirmed) {

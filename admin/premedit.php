@@ -13,6 +13,7 @@ if(!(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSI
 if(isset($_SESSION['loged_in']) AND isset($_SESSION['loged_in_t']) AND $_SESSION['loged_in']==true AND $_SESSION['loged_in_t']>=time()){
 	$_SESSION['loged_in_t'] = time()+time_out;
 }
+$error_m = '';
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>

@@ -2,6 +2,7 @@
 
 namespace Kaban\Components\Site\Home\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,8 @@ class ReportController extends SiteBaseController
 
     public function report($type, Request $request)
     {
-        //dd($request->all());
+        $rawDate1 = !empty($_GET['date1']) ? str_replace('-', '/', $_GET['date1']) : '2000/01/01';
+        $rawDate2 = !empty($_GET['date2']) ? str_replace('-', '/', $_GET['date2']) : Carbon::now()->format('Y/m/d');
 
         $baseQuery = Quote::select([DB::raw('*')
             , DB::raw('CAST(total_weight AS DECIMAL(10,2)) as total_weight_dec')
@@ -40,10 +42,12 @@ class ReportController extends SiteBaseController
             ->when($type == 2, function ($q) {
                 $q->whereBetween('id', [(int)$_GET['qid1'], (int)$_GET['qid2']]);
             })
-            ->when($type == 3, function ($q) {
-                $parms1 = explode("/", $_GET['date1']);
+            ->when($type == 3, function ($q) use ($rawDate1, $rawDate2) {
+
+//dd($rawDate1);
+                $parms1 = explode("/", $rawDate1);
                 $date1 = mktime(0, 0, 0, $parms1[1], $parms1[2], $parms1[0]);
-                $parms2 = explode("/", $_GET['date2']);
+                $parms2 = explode("/", $rawDate2);
                 $date2 = mktime(23, 59, 59, $parms2[1], $parms2[2], $parms2[0]);
 
                 $q->whereBetween('timestamp', [$date1, $date2]);
@@ -76,6 +80,9 @@ class ReportController extends SiteBaseController
 
 
         $quotes = $baseQuery->get();
+
+        $quoteCounts = $baseQuery->select(DB::raw('COUNT(*) as count,uname,status'))->groupBy(['uname', 'status'])->get()->map->only('count', 'uname', 'status')->groupBy('status');
+
         $fromLocationGrouped = $quotes->groupBy('from_location')->filter(function ($val, $key) {
             return count($val) > 0;
         });
@@ -95,9 +102,15 @@ class ReportController extends SiteBaseController
         $initialRequest = empty(request('status'));
 
         $defaultPredefinedMessages = $this->getPreNotes();
-
+//        dd($quotes->pluck('user')->filter(function ($user) {
+//            if ($user) {
+//                return true;
+//            }
+//        })->map(function ($user) {
+//            return $user->uname;
+//        }));
         return view('SiteHome::report', compact('quotes', 'type', 'initialRequest', 'selectedUser',
-            'cachedCollectionLocationsQuotes', 'fromLocationGrouped', 'defaultPredefinedMessages'));
+            'cachedCollectionLocationsQuotes', 'fromLocationGrouped', 'defaultPredefinedMessages', 'quoteCounts'));
     }
 
     public function report0(Request $request)
@@ -353,19 +366,23 @@ class ReportController extends SiteBaseController
     {
         return User::where(function ($q) use ($request) {
 //            $q->orWhere('lname','like',"%$request->q%");
-            $q->where(DB::raw('CONCAT(fname," ",lname)'), 'like', "%$request->q%");
+            $q->where('uname', 'like', "%$request->q%");
+
+            $q->orWhere(DB::raw('CONCAT(fname," ",lname)'), 'like', "%$request->q%");
         })->limit(10)->get()->map(function ($item) {
 //            ->only('fname','lname','id')
-            return
-                [
-                    'fname' => $item->fname . ' ' . $item->lname,
-                    'uname' => $item->uname,
-                ];
+            return $item->uname;
+//                [
+//                    'fname' => $item->fname . ' ' . $item->lname,
+//                    'uname' => $item->uname,
+//                ];
         });
     }
 
     private function getPreNotes()
     {
+        return Prenote::select('id', 'title', 'message')->where('type', 3)->get();
+
         if (config('app.env') === 'production') {
             define("DB_HOST", "localhost");
             define("DB_NAME", "bookingp_qdb");
@@ -378,7 +395,9 @@ class ReportController extends SiteBaseController
             define("DB_PASS", "secret");
         }
         $con = mysqli_connect(DB_HOST, DB_USER, DB_PASS) or die(mysql_error());
+
         mysqli_select_db($con, DB_NAME) or die(mysql_error());
+
         $q = "SELECT `id`,`title`,`message` FROM `prenotes` WHERE `type`=3 ORDER BY `id` ASC";
         $r = mysqli_query($con, $q);
         return mysqli_fetch_all($r, MYSQLI_ASSOC);

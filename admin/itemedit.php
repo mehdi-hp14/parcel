@@ -910,7 +910,7 @@ if(isset($_POST['t']) and $_POST['t']==1){
 						$price = str_replace(",","",$price);
 						if(!(mysql_num_rows($rot)>0))
 						{
-							$q = "INSERT INTO `transactions` (`oref`, `uref`, `amount`, `currency`, `timestamp`, `description`) VALUES (".$id.", '".($row2['id'] ?? null)."', '".$price."', '".$currency."', '".time()."', 'Transaction has been done by admin');";
+							$q = "INSERT INTO `transactions` (`oref`, `uref`, `amount`, `currency`, `timestamp`, `description`) VALUES (".$id.", '".$row2['id']."', '".$price."', '".$currency."', '".time()."', 'Transaction has been done by admin');";
 							mysql_query($q) or die(mysql_error());
 						}
 						//echo "2<br>";
@@ -1007,11 +1007,11 @@ if(isset($_POST['t']) and $_POST['t']==1){
 	if(isset($_POST['dif_offer']) and $_POST['dif_offer']!=''){
 		$q_p[] = "`dif_offer`='".$_POST['dif_offer']."'";
 	}
-	if(isset($_POST['dif_offer_desc']) and $_POST['dif_offer_desc']!=''){
+	if(isset($_POST['dif_offer_desc'])){
 		$q_p[] = "`dif_offer_desc`='".$_POST['dif_offer_desc']."'";
 	}
 
-	if(isset($_POST['dif_receive_desc']) and $_POST['dif_receive_desc']!=''){
+	if(isset($_POST['dif_receive_desc'])){
 		$q_p[] = "`dif_receive_desc`='".$_POST['dif_receive_desc']."'";
 	}
 	$error = true;

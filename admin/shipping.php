@@ -762,7 +762,7 @@ $country_iso = array(
                                 echo "Agent Company : <input name='agent_company' type='text' value=''><br><hr>";
                             }
                             ?>
-                            Collection Ref. : <input type="text" name="col_ref" value="<?php echo $row2['col_ref']; ?>">
+                            Collection Ref. : <input type="text" name="col_ref" value="<?php echo $row2['col_ref'] ?? ''; ?>">
                             <hr>
                             <input type="hidden" name="t" value="send">
 
@@ -784,37 +784,37 @@ $country_iso = array(
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td>
                                     <td>&nbsp;</td>
-                                    <td align="left"><input name="scompany" type="text" value="<?php echo $row2['scompany']; ?>"></td>
+                                    <td align="left"><input name="scompany" type="text" value="<?php echo $row2['scompany'] ?? ''; ?>"></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td align="left"><textarea name="saddress" style="margin: 0px; width: 339px; height: 150px;"><?php echo $row2['saddress']; ?></textarea></td>
+                                    <td align="left"><textarea name="saddress" style="margin: 0px; width: 339px; height: 150px;"><?php echo $row2['saddress'] ?? ''; ?></textarea></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td><input name="szipcode" type="text" value="<?php echo $row2['szipcode']; ?>"></td>
+                                    <td><input name="szipcode" type="text" value="<?php echo $row2['szipcode'] ?? ''; ?>"></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td align="left"><input name="scountry" type="text" value="<?php echo $row['from']; ?>"></td>
+                                    <td align="left"><input name="scountry" type="text" value="<?php echo $row['from'] ?? ''; ?>"></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td align="left"><input name="scontactp" type="text" value="<?php echo $row2['scontactp']; ?>"></td>
+                                    <td align="left"><input name="scontactp" type="text" value="<?php echo $row2['scontactp'] ?? ''; ?>"></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td align="left"><input name="stelephone" type="text" value="<?php echo $row2['stelephone']; ?>"></td>
+                                    <td align="left"><input name="stelephone" type="text" value="<?php echo $row2['stelephone'] ?? ''; ?>"></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td align="left"><input name="semail" type="text" value="<?php echo $row2['semail']; ?>"></td>
+                                    <td align="left"><input name="semail" type="text" value="<?php echo $row2['semail'] ?? ''; ?>"></td>
                                 </tr>
                                 <tr style="height: 27.6pt" height="36">
                                     <td colspan="3" style="height: 27.6pt;" height="36" align="left">Receiver (Delivery) Information <font color="#ff0000">( Also for HAWB)</font></td>
@@ -823,50 +823,50 @@ $country_iso = array(
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Name</td>
                                     <td>&nbsp;</td>
-                                    <td align="left"><input name="rcompany" type="text" value="<?php echo $row2['rcompany']; ?>"></td>
+                                    <td align="left"><input name="rcompany" type="text" value="<?php echo $row2['rcompany'] ?? ''; ?>"></td>
                                 </tr>
 
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company National Id</td>
                                     <td>&nbsp;</td>
-                                    <td align="left"><input name="r_national_id" type="text" value="<?php echo $row2['r_national_id']; ?>"></td>
+                                    <td align="left"><input name="r_national_id" type="text" value="<?php echo $row2['r_national_id'] ?? ''; ?>"></td>
                                 </tr>
 
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Company Economic Id</td>
                                     <td>&nbsp;</td>
-                                    <td align="left"><input name="r_economic_id" type="text" value="<?php echo $row2['r_economic_id']; ?>"></td>
+                                    <td align="left"><input name="r_economic_id" type="text" value="<?php echo $row2['r_economic_id'] ?? ''; ?>"></td>
                                 </tr>
 
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td align="left"><textarea name="raddress" style="margin: 0px; width: 339px; height: 150px;"><?php echo $row2['raddress']; ?></textarea></td>
+                                    <td align="left"><textarea name="raddress" style="margin: 0px; width: 339px; height: 150px;"><?php echo $row2['raddress'] ?? ''; ?></textarea></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td><input name="rpostcode" type="text" value="<?php echo $row2['rpostcode']; ?>"></td>
+                                    <td><input name="rpostcode" type="text" value="<?php echo $row2['rpostcode'] ?? ''; ?>"></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Country</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td align="left"><input name="rcountry" type="text" value="<?php echo $row['to']; ?>"></td>
+                                    <td align="left"><input name="rcountry" type="text" value="<?php echo $row['to'] ?? ''; ?>"></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Contact Person</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td align="left"><input name="rcontactp" type="text" value="<?php echo $row2['rcontactp']; ?>"></td>
+                                    <td align="left"><input name="rcontactp" type="text" value="<?php echo $row2['rcontactp'] ?? ''; ?>"></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Telephone</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td align="left"><input name="rtelephone" type="text" value="<?php echo $row2['rtelephone']; ?>"></td>
+                                    <td align="left"><input name="rtelephone" type="text" value="<?php echo $row2['rtelephone'] ?? ''; ?>"></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>E-mail</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td align="left"><input name="remail" type="text" value="<?php echo $row2['remail']; ?>"></td>
+                                    <td align="left"><input name="remail" type="text" value="<?php echo $row2['remail'] ?? ''; ?>"></td>
                                 </tr>
 
                                 <tr style="height: 27.6pt" height="36">
@@ -876,7 +876,7 @@ $country_iso = array(
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt" height="26" align="left"><span style="">&nbsp;</span>Contents</td>
                                     <td>&nbsp;</td>
-                                    <td align="left"><textarea name="contents" style="margin: 0px; width: 339px; height: 150px;"><?php echo $row['item_desc']; ?></textarea></td>
+                                    <td align="left"><textarea name="contents" style="margin: 0px; width: 339px; height: 150px;"><?php echo $row['item_desc'] ?? ''; ?></textarea></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Document Info./No.</td>
@@ -886,12 +886,12 @@ $country_iso = array(
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Gross Weight (kg)</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td><input name="total_weight" type="text" value="<?php echo $row['total_weight']; ?>"></td>
+                                    <td><input name="total_weight" type="text" value="<?php echo $row['total_weight'] ?? ''; ?>"></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td class="xl75" style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Dimensions (cm)</td>
                                     <td class="xl76" style="border-top: none">&nbsp;</td>
-                                    <td align="left"><textarea name="dims" style="margin: 0px; width: 339px; height: 150px;"><?php echo str_replace(" | ", "\n", $row['dims']); ?></textarea></td>
+                                    <td align="left"><textarea name="dims" style="margin: 0px; width: 339px; height: 150px;"><?php echo str_replace(" | ", "\n", ($row['dims'] ?? '')); ?></textarea></td>
                                 </tr>
                                 </tbody>
                             </table>

@@ -936,11 +936,13 @@ class PView extends SecurePage
     public function RenderPagination($cur_Page, $total_Page, $itemPerPage, $total_Res)
 	{
 		$output = '<div class="pull-right"><span class="text-muted"><b>'.(($itemPerPage * ($cur_Page - 1)) + 1).'</b>&nbsp; – &nbsp;<b>'.min(($itemPerPage * $cur_Page ), $total_Res).'</b>&nbsp; of &nbsp;<b>'.$total_Res.'</b></span>';
-	
+
+        $type= !empty($_GET['type']) ? '&type='.$_GET['type']:'';
+
         $output .= '<div class="btn-group mlm">';
 		if($cur_Page>1)
 		{
-			$output .= '<button type="button" class="btn btn-default" onclick="window.location.href=\'orders.php?page='.($cur_Page-1).'\';"><span class="fa fa-chevron-left"></span></button>';
+			$output .= '<button type="button" class="btn btn-default" onclick="window.location.href=\'orders.php?page='.($cur_Page-1).$type.'\';"><span class="fa fa-chevron-left"></span></button>';
 		}
 		else
 		{
@@ -948,7 +950,7 @@ class PView extends SecurePage
 		}
 		if($cur_Page<$total_Page)
 		{
-			$output .= '<button type="button" class="btn btn-default" onclick="window.location.href=\'orders.php?page='.($cur_Page+1).'\';"><span class="fa fa-chevron-right"></span></button>';
+			$output .= '<button type="button" class="btn btn-default" onclick="window.location.href=\'orders.php?page='.($cur_Page+1).$type.'\';"><span class="fa fa-chevron-right"></span></button>';
 		}
 		else
 		{

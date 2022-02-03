@@ -1,43 +1,113 @@
 @extends('layouts.report')
 @section('early-style')
     <style>
+        [v-cloak] {
+            display: none;
+        }
+
         .badge-pill {
             font-size: 16px;
         }
+
         .export-div {
             position: fixed;
             bottom: 10px;
             right: 10px;
             display: flex;
+            z-index: 1;
+            background: #ccc6;
+            padding: 15px;
             flex-direction: column;
         }
-        .export-div > *{
+
+        .export-div > * {
             margin: 7px;
         }
-        li .badge.badge-primary.badge-pill{
-            min-width:50px
+
+        li .badge.badge-primary.badge-pill {
+            min-width: 50px
         }
-        .badge:empty{
+
+        .badge:empty {
             display: inline;
         }
-        .report-card-title{
+
+        .report-card-title {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+
+        ol li {
+            margin: 0 10px;
+            padding: 0 10px;
+            float: left;
+            margin: 0 30px;
+            padding: 0 10px;
+        }
     </style>
 @endsection
+<?php
+use \Kaban\General\Enums\EQuoteStatus;
+?>
+@section('menu')
+    <li class="nav-item dropdown">
+{{--        <template v-if="selectedCsv.length">--}}
+{{--            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" data-toggle="dropdown"--}}
+{{--               aria-haspopup="true" aria-expanded="false">--}}
+{{--                csv--}}
+{{--            </a>--}}
+{{--            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink1">--}}
+{{--                <a class="dropdown-item" href="javascript:void(0)" @click="selectAllForCsv">select all for csv</a>--}}
+{{--                <a v-if="selectedCsv.length" class="dropdown-item" href="#" @click="exportSelectedCsv">export selected--}}
+{{--                    as csv</a>--}}
+{{--            </div>--}}
+{{--        </template>--}}
+
+{{--        <a v-else class="nav-link" href="#" @click="selectAllForCsv">select all for csv </a>--}}
+        <a class="nav-link" href="#" @click="selectAllForCsv">select all for csv </a>
+    </li>
+
+    <li class="nav-item dropdown">
+        <template>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                email
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
+                <a class="dropdown-item" href="javascript:void(0)" @click="selectSendersForEmail">select senderes for
+                    sending email</a>
+                <a class="dropdown-item" href="javascript:void(0)" @click="selectReceiversForEmail">select recievers for
+                    sending email</a>
+                <a v-if="selectedEmail.length" class="dropdown-item" href="#" @click="emailToSelectedEmails">email to
+                    selected emails</a>
+            </div>
+        </template>
+    </li>
+@endsection
+
 @section('content')
-    <div class="container" id="appoo">
+    <div class="container">
         <div
             class="export-div"
         >
             <button id="export-csv" class="btn btn-warning"
                     v-if="selectedCsv.length"
                     @click="exportSelectedCsv"
-            >export selected as csv
+            >export all as csv
             </button>
 
+            <button id="export-csv" class="btn btn-warning"
+                    v-if="selectedCsv.length"
+                    @click="exportSelectedCsv('Sender')"
+            >export senders as csv
+            </button>
+
+            <button id="export-csv" class="btn btn-warning"
+                    v-if="selectedCsv.length"
+                    @click="exportSelectedCsv('Receiver')"
+            >export receivers as csv
+            </button>
             <button id="export-csv" class="btn btn-danger"
                     v-if="selectedEmail.length"
                     @click="emailToSelectedEmails"
@@ -130,7 +200,6 @@
                                         {{--                                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>--}}
                                     </div>
                                 </div>
-
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="from-country">From Country</label>
@@ -176,13 +245,13 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="search-users">Search Quote User</label>
+                                        {{--                                        :reduce="option => option.uname"--}}
 
                                         <v-select id="search-users"
                                                   :filterable="false"
-                                                  label="fname"
+                                                  label="uname"
                                                   v-model="selectedUser"
-                                                  :reduce="option => option.uname"
-                                                  :options="options"
+                                                  :options="searchUsersList"
                                                   @search="onSearch">
                                         </v-select>
                                         <input type="hidden" :value="selectedUser"
@@ -192,8 +261,8 @@
                                     <div class="form-group">
 
                                         <label for="search-users">Search Collection Locations</label>
-{{--                                        :reduce="option => option.uname"--}}
-{{--                                        label="fname"--}}
+                                        {{--                                        :reduce="option => option.uname"--}}
+                                        {{--                                        label="fname"--}}
 
                                         <v-select id="search-users"
                                                   v-model="selectedCollectionLocations"
@@ -209,6 +278,32 @@
                                         </select>
                                     </div>
                                 </div>
+                                @if($type==3)
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="from_weight">From Date</label>
+                                                    <input type="date" class="form-control" name="date1" id="date1"
+                                                           value="{{str_replace('/','-',request('date1'))}}"
+
+                                                           aria-describedby="date1" placeholder="">
+                                                    {{--                                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>--}}
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="to_weight">To Date</label>
+                                                    <input type="date" class="form-control" name="date2" id="date2"
+                                                           value="{{str_replace('/','-',request('date2'))}}"
+                                                           aria-describedby="date2" placeholder="">
+                                                    {{--                                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>--}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                             <div class="row">
                                 <div class="custom-control custom-switch">
@@ -217,7 +312,8 @@
                                            value="1"
 
                                     >
-                                    <label class="custom-control-label" for="mutual-collocations">Show Mutual Collocations</label>
+                                    <label class="custom-control-label" for="mutual-collocations">Show Mutual
+                                        Collocations</label>
                                 </div>
                             </div>
                         </div>
@@ -249,11 +345,54 @@
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td>{{$quotes->where('status',\Kaban\General\Enums\EQuoteStatus::pending)->count() }}</td>
-                                        <td>{{$quotes->where('status',\Kaban\General\Enums\EQuoteStatus::hold)->count() }}</td>
-                                        <td>{{$quotes->where('status',\Kaban\General\Enums\EQuoteStatus::active)->count() }}</td>
-                                        <td>{{$quotes->where('status',\Kaban\General\Enums\EQuoteStatus::cancelled)->count() }}</td>
-                                        <td>{{$quotes->where('status',\Kaban\General\Enums\EQuoteStatus::completed)->count() }}</td>
+                                        <td>
+                                            <h4>total
+                                                : {{$quotes->where('status',EQuoteStatus::pending)->count() }}</h4>
+                                            @isset($quoteCounts[EQuoteStatus::pending])
+                                                <hr>
+                                                @foreach($quoteCounts[EQuoteStatus::pending] as $quoteGroup)
+                                                    <div>{{(empty($quoteGroup['uname']) ? 'no user':$quoteGroup['uname']) . ' : '. $quoteGroup['count']}}</div>
+                                                @endforeach
+                                            @endisset
+                                        </td>
+                                        <td>
+                                            <h4>total : {{$quotes->where('status',EQuoteStatus::hold)->count() }}</h4>
+                                            @isset($quoteCounts[EQuoteStatus::hold])
+                                                <hr>
+                                                @foreach($quoteCounts[EQuoteStatus::hold] as $quoteGroup)
+                                                    <div>{{(empty($quoteGroup['uname']) ? 'no user':$quoteGroup['uname']) . ' : '. $quoteGroup['count']}}</div>
+                                                @endforeach
+                                            @endisset
+                                        </td>
+                                        <td>
+                                            <h4>total : {{$quotes->where('status',EQuoteStatus::active)->count() }}</h4>
+                                            @isset($quoteCounts[EQuoteStatus::active])
+                                                <hr>
+                                                @foreach($quoteCounts[EQuoteStatus::active] as $quoteGroup)
+                                                    <div>{{(empty($quoteGroup['uname']) ? 'no user':$quoteGroup['uname']) . ' : '. $quoteGroup['count']}}</div>
+                                                @endforeach
+                                            @endisset
+                                        </td>
+                                        <td>
+                                            <h4>total
+                                                : {{$quotes->where('status',EQuoteStatus::cancelled)->count() }}</h4>
+                                            @isset($quoteCounts[EQuoteStatus::cancelled])
+                                                <hr>
+                                                @foreach($quoteCounts[EQuoteStatus::cancelled] as $quoteGroup)
+                                                    <div>{{(empty($quoteGroup['uname']) ? 'no user':$quoteGroup['uname']) . ' : '. $quoteGroup['count']}}</div>
+                                                @endforeach
+                                            @endisset
+                                        </td>
+                                        <td>
+                                            <h4>total
+                                                : {{$quotes->where('status',EQuoteStatus::completed)->count() }}</h4>
+                                            @isset($quoteCounts[EQuoteStatus::completed])
+                                                <hr>
+                                                @foreach($quoteCounts[EQuoteStatus::completed] as $quoteGroup)
+                                                    <div>{{(empty($quoteGroup['uname']) ? 'no user':$quoteGroup['uname']) . ' : '. $quoteGroup['count']}}</div>
+                                                @endforeach
+                                            @endisset
+                                        </td>
                                     </tr>
 
                                     </tbody>
@@ -288,7 +427,8 @@
                                                     <td>
                                                         @foreach ($quoteUserGroup as $uname=>$quoteGroup)
                                                             @if($uname !='')
-                                                                <span class="comma-seperate">{{($uname ?: 'no username') . '('.count($quoteGroup).') '}}</span>
+                                                                <span
+                                                                    class="comma-seperate">{{($uname ?: 'no username') . '('.count($quoteGroup).') '}}</span>
                                                             @else
                                                                 {{(empty($uname) ? 'no username':'')}}
                                                             @endif
@@ -318,7 +458,11 @@
                                 class="card-header" data-csv-key>
                                 <span
                                     class="title report-card-title">
-                                    <span>{{ __('quote number '.$quote->id).' - '.\Kaban\General\Enums\EQuoteStatus::farsi($quote->status) }}</span>
+                                    <span>{{ __('quote number '.$quote->id).' - '.\Kaban\General\Enums\EQuoteStatus::farsi($quote->status) }}
+                                        @if(isset($quote->user->avatar))- <img
+                                            src="../../cp/Assets/images/avatar/{{$quote->user->avatar}}"
+                                            width="100">@endif
+                                    </span>
                                 <button class="btn btn-success" @click="saveInDatabase($event,{{$quote->id}})">save in database</button>
                                 </span>
                                 <span data-csv-value></span>
@@ -376,7 +520,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Company Name</span>
+                                        <span class="title" data-csv-prefix="Sender">Company Name</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-company_name
                                               class="badge badge-primary badge-pill"
@@ -384,7 +528,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Address</span>
+                                        <span class="title" data-csv-prefix="Sender">Address</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-address
                                               class="badge badge-primary badge-pill"
@@ -392,7 +536,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Zip Code</span>
+                                        <span class="title" data-csv-prefix="Sender">Zip Code</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-zipcode
                                               class="badge badge-primary badge-pill"
@@ -400,7 +544,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Country</span>
+                                        <span class="title" data-csv-prefix="Sender">Country</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-country
                                               class="badge badge-primary badge-pill"
@@ -408,7 +552,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Contact Person</span>
+                                        <span class="title" data-csv-prefix="Sender">Contact Person</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-contact_person
                                               class="badge badge-primary badge-pill"
@@ -416,7 +560,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Telephone</span>
+                                        <span class="title" data-csv-prefix="Sender">Telephone</span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-telephone
                                               class="badge badge-primary badge-pill"
@@ -424,8 +568,9 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">
-                                            <input type="checkbox" value="sender-{{$quote->id}}" v-model="selectedEmail"> Email
+                                        <span class="title" data-csv-prefix="Sender">
+                                            <input type="checkbox" data-target-email value="sender-{{$quote->id}}"
+                                                   v-model="selectedEmail"> Email
                                         </span>
                                         <span data-csv-value
                                               data-sender-{{$quote->id}}-email
@@ -438,7 +583,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Company Name</span>
+                                        <span class="title" data-csv-prefix="Receiver">Company Name</span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-company_name
                                               class="badge badge-primary badge-pill"
@@ -446,23 +591,23 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Address</span>
+                                        <span class="title" data-csv-prefix="Receiver">Address</span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-address
                                               class="badge badge-primary badge-pill"
                                               contenteditable="true">{{$quote->shipInfo->raddress??'---'}}</span>
                                     </li>
-{{--                                    <li class="list-group-item d-flex justify-content-between align-items-center"--}}
-{{--                                        data-csv-key>--}}
-{{--                                        <span class="title">Zip Code</span>--}}
-{{--                                        <span data-csv-value--}}
-{{--                                              data-receiver-{{$quote->id}}-zipcode--}}
-{{--                                              class="badge badge-primary badge-pill"--}}
-{{--                                              contenteditable="true">{{$quote->shipInfo->rzipcode??'---'}}</span>--}}
-{{--                                    </li>--}}
+                                    {{--                                    <li class="list-group-item d-flex justify-content-between align-items-center"--}}
+                                    {{--                                        data-csv-key>--}}
+                                    {{--                                        <span class="title">Zip Code</span>--}}
+                                    {{--                                        <span data-csv-value--}}
+                                    {{--                                              data-receiver-{{$quote->id}}-zipcode--}}
+                                    {{--                                              class="badge badge-primary badge-pill"--}}
+                                    {{--                                              contenteditable="true">{{$quote->shipInfo->rzipcode??'---'}}</span>--}}
+                                    {{--                                    </li>--}}
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Country</span>
+                                        <span class="title" data-csv-prefix="Receiver">Country</span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-country
                                               class="badge badge-primary badge-pill"
@@ -470,7 +615,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Contact Person</span>
+                                        <span class="title" data-csv-prefix="Receiver">Contact Person</span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-contact_person
                                               class="badge badge-primary badge-pill"
@@ -478,7 +623,7 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">Telephone</span>
+                                        <span class="title" data-csv-prefix="Receiver">Telephone</span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-telephone
                                               class="badge badge-primary badge-pill"
@@ -486,8 +631,9 @@
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center"
                                         data-csv-key>
-                                        <span class="title">
-                                           <input type="checkbox" value="receiver-{{$quote->id}}" v-model="selectedEmail"> Email
+                                        <span class="title" data-csv-prefix="Receiver">
+                                           <input type="checkbox" data-target-email value="receiver-{{$quote->id}}"
+                                                  v-model="selectedEmail"> Email
                                         </span>
                                         <span data-csv-value
                                               data-receiver-{{$quote->id}}-email
@@ -505,17 +651,17 @@
                         </span>
                     @endforeach
                 </form>
-{{--                <div>--}}
-{{--                    Please confirm that you have received this confirmation order.<br>--}}
-{{--                    <br>Best Regards<br>--}}
-{{--                    Fazel Zohrabpour<br>--}}
-{{--                    <br>--}}
-{{--                    <div style="font-size:80%;color:#0033cc;">--}}
-{{--                        <img src="https://bookingparcel.com/logo.gif" style="width:215px;height:50px;">--}}
-{{--                        <br>Europost Express (UK) Ltd.<br>4 Corringham Road,<br>--}}
-{{--                        Wembley - Middlesex<br>HA9 9QA- London , UK<br>Tel : +44(0) 7886105417<br>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                {{--                <div>--}}
+                {{--                    Please confirm that you have received this confirmation order.<br>--}}
+                {{--                    <br>Best Regards<br>--}}
+                {{--                    Fazel Zohrabpour<br>--}}
+                {{--                    <br>--}}
+                {{--                    <div style="font-size:80%;color:#0033cc;">--}}
+                {{--                        <img src="https://bookingparcel.com/logo.gif" style="width:215px;height:50px;">--}}
+                {{--                        <br>Europost Express (UK) Ltd.<br>4 Corringham Road,<br>--}}
+                {{--                        Wembley - Middlesex<br>HA9 9QA- London , UK<br>Tel : +44(0) 7886105417<br>--}}
+                {{--                    </div>--}}
+                {{--                </div>--}}
 
             </div>
         </div>
@@ -532,28 +678,36 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="pwd">Predefined message:</label>
-                            <select class="form-control" name="predefined-message" id="predefined-message" v-model="predefinedMessage">
-                                <option :value="message.id" v-for="message in defaultPredefinedMessages">@{{message.title}}</option>
+                            <select class="form-control" name="predefined-message" id="predefined-message"
+                                    v-model="predefinedMessage">
+                                <option :value="message.id" v-for="message in defaultPredefinedMessages">
+                                    @{{message.title}}
+                                </option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <textarea name="message" id="message"></textarea>
                     </div>
+                    <div  class="col-md-12 mt-5">
+                        <h4 class="heading">selected emails to send</h4>
+                        <hr>
+                        <ol v-html="selectedEmailsList"></ol>
+                    </div>
                     {{--                                <ckeditor v-model="editorData" :config="editorConfig"></ckeditor>--}}
                 </div>
             </div>
         </div>
-    </div>v
+    </div>
 @endsection
 
 @section('later-scripts')
-{{--    <script src="../node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>--}}
-{{--    <script src="../node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js"></script>--}}
-{{--<script src="{{asset('A0/node_modules/ckeditor4/ckeditor.js')}}"></script>--}}
-{{--<script src="{{asset('A0/node_modules/ckeditor4-vue/dist/ckeditor.js')}}"></script>--}}
-{{--<script src="../node_modules/ckeditor4-vue/dist/ckeditor.js"></script>--}}
-<script type="text/javascript" src="{{asset('A0/public/ckeditor/ckeditor.js')}}"></script>
+    {{--    <script src="../node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js"></script>--}}
+    {{--    <script src="../node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js"></script>--}}
+    {{--<script src="{{asset('A0/node_modules/ckeditor4/ckeditor.js')}}"></script>--}}
+    {{--<script src="{{asset('A0/node_modules/ckeditor4-vue/dist/ckeditor.js')}}"></script>--}}
+    {{--<script src="../node_modules/ckeditor4-vue/dist/ckeditor.js"></script>--}}
+    <script type="text/javascript" src="{{asset('A0/public/ckeditor/ckeditor.js')}}"></script>
 
     <script>
         const CKEditor = window.CKEditor;
@@ -562,6 +716,14 @@
         var defaultPredefinedMessages = {!! json_encode($defaultPredefinedMessages) !!};
 
         var selectedUser = @json($selectedUser);
+        var searchUsersList = @json($quotes->pluck('user')->filter(function ($user){
+            if ($user) {
+                return true;
+            }
+        })->map(function ($user) {
+                return $user->uname;
+        })->unique()->values());
+
         var selectedFromCountries = @json(request('from_countries'));
         var selectedToCountries = @json(request('to_countries'));
         var selectedCollectionLocations = @json(request('collectionLocations'));
