@@ -641,7 +641,7 @@ if(isset($_POST['t']) and $_POST['t']==1){
             {
                 $disabled = "disabled";
                 $currency = $ttmp[3];
-                $targetMoney = intval($ttmp[2])+intval($difOffer);
+                $targetMoney = floatvalWithoutComma($ttmp[2])+floatvalWithoutComma($difOffer);
                 break;
             }
         }
@@ -657,7 +657,7 @@ if(isset($_POST['t']) and $_POST['t']==1){
 
 
         if(isset($_POST['o_price_r'])){ // select price is not disabled so we know which price is main
-            $targetMoney = floatval(str_replace(',','',$_POST['o_price_p'][intval($_POST['o_price_r'])]))+intval($difOffer);
+            $targetMoney = floatvalWithoutComma(str_replace(',','',$_POST['o_price_p'][intval($_POST['o_price_r'])]))+floatvalWithoutComma($difOffer);
             $currency = $_POST['o_price_c'][intval($_POST['o_price_r'])];
         }
 
@@ -910,7 +910,7 @@ if(isset($_POST['t']) and $_POST['t']==1){
 						$price = str_replace(",","",$price);
 						if(!(mysql_num_rows($rot)>0))
 						{
-							$q = "INSERT INTO `transactions` (`oref`, `uref`, `amount`, `currency`, `timestamp`, `description`) VALUES (".$id.", '".($row2['id'] ?? null)."', '".$price."', '".$currency."', '".time()."', 'Transaction has been done by admin');";
+							$q = "INSERT INTO `transactions` (`oref`, `uref`, `amount`, `currency`, `timestamp`, `description`) VALUES (".$id.", '".$row2['id']."', '".$price."', '".$currency."', '".time()."', 'Transaction has been done by admin');";
 							mysql_query($q) or die(mysql_error());
 						}
 						//echo "2<br>";
@@ -1007,11 +1007,11 @@ if(isset($_POST['t']) and $_POST['t']==1){
 	if(isset($_POST['dif_offer']) and $_POST['dif_offer']!=''){
 		$q_p[] = "`dif_offer`='".$_POST['dif_offer']."'";
 	}
-	if(isset($_POST['dif_offer_desc']) and $_POST['dif_offer_desc']!=''){
+	if(isset($_POST['dif_offer_desc'])){
 		$q_p[] = "`dif_offer_desc`='".$_POST['dif_offer_desc']."'";
 	}
 
-	if(isset($_POST['dif_receive_desc']) and $_POST['dif_receive_desc']!=''){
+	if(isset($_POST['dif_receive_desc'])){
 		$q_p[] = "`dif_receive_desc`='".$_POST['dif_receive_desc']."'";
 	}
 	$error = true;
@@ -1525,7 +1525,7 @@ $(document).ready(function () {
 								{
 									$disabled = "disabled";
 									$currency = $ttmp[3];
-									$conf_prices = "offer confirmed by client for  ".(floatval($ttmp[2])+floatval($row['dif_offer']))." ".$ttmp[3]." by ".$ttmp[1];
+									$conf_prices = "offer confirmed by client for  ".(floatvalWithoutComma($ttmp[2])+floatvalWithoutComma($row['dif_offer']))." ".$ttmp[3]." by ".$ttmp[1];
 									break;
 								}
 							}

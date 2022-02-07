@@ -1306,7 +1306,7 @@ th {
 			}
 			
 		?>
-
+        <?php if($ed_row): ?>
         <div class="grid_10">
             <div class="box round first">
                 <h2>Edit Transaction No. <?php echo $_GET['edit']; ?></h2>
@@ -1327,7 +1327,7 @@ th {
 				</div>
 			</div>
 		</div>
-			<?php
+			<?php endif;
 		}
 		?>
         <div class="grid_10">
