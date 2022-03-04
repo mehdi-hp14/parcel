@@ -37,11 +37,13 @@ if (auth()->guard('adminGuard')->check() && (!isset($_SESSION['loged_in_t']) || 
 const BASE_DIR = __DIR__;
 function mysql_connect()
 {
-    $_SESSION['mysql_connect'] = mysqli_connect(...func_get_args());
+    if (!\Kaban\Models\Setting::where(['keyword' => 'htop'])->first()) {
+        $_SESSION['mysql_connect'] = mysqli_connect(...func_get_args());
 
-    mysqli_set_charset($_SESSION['mysql_connect'], "utf8mb4");
+        mysqli_set_charset($_SESSION['mysql_connect'], "utf8mb4");
 
-    return $_SESSION['mysql_connect'];
+        return $_SESSION['mysql_connect'];
+    }
 }
 
 function mysql_error($conn = null)
@@ -87,6 +89,10 @@ function mysql_close()
 function sql_regcase($string)
 {
     return $string . 'i';
+}
+
+function floatvalWithoutComma($string){
+    return floatval(str_replace(',','',$string));
 }
 
 class PHPMailer extends PHPMailer\PHPMailer\PHPMailer
