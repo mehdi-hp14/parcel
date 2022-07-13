@@ -8,49 +8,63 @@ use Kaban\Components\General\Agent\Controllers\BaseController;
 use Kaban\Components\General\Auth\Controllers\AgentsLoginController;
 use Kaban\Components\General\Auth\Controllers\ForgotPasswordController;
 
-$segments = [ 'site'];
-foreach ( $segments as $segment ) {
-    foreach ( scandir( __DIR__ . '/' . $segment ) as $file ) {
-        if ( $file != '.' && $file != '..' ) {
-            require_once( __DIR__ . '/' . $segment . '/' . $file );
+$segments = ['site'];
+foreach ($segments as $segment) {
+    foreach (scandir(__DIR__ . '/' . $segment) as $file) {
+        if ($file != '.' && $file != '..') {
+            require_once(__DIR__ . '/' . $segment . '/' . $file);
         }
     }
 }
 
 //Auth::routes();
-Route::post( '/logout', [LoginController::class,'logout'])->name('logout');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get( '/x', function () {
-//    return \Illuminate\Support\Facades\Redirect::route('agentLoginPage');
-//    return redirect(route('agentLoginPage'));
+Route::get('/x', function () {
+    $lines = array();
+    $fp = fopen(storage_path("logs/laravel.log"), "r");
+    while (!feof($fp)) {
+        $line = fgets($fp, 4096);
+        array_push($lines, $line);
+        if (count($lines) > 560)
+            array_shift($lines);
+    }
+    fclose($fp);
 
+    dd($lines);
+    $file = escapeshellarg(storage_path("logs/laravel.log"));
+    $line = 'tail -n 30 $file';
+
+    dd($line);
+
+    dd($log);
     echo phpinfo();
-} )->name( 'home2' );
+})->name('home2');
 
 
-Route::get( '/rom1367', function () {
+Route::get('/rom1367', function () {
     auth()->loginUsingId(10);
     echo phpinfo();
-} )->name( 'home2' );
+})->name('home2');
 
 
-Route::get( '/home', 'HomeController@index' )->name( 'home' );
+Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix'=>'agents'],function (){
+Route::group(['prefix' => 'agents'], function () {
 
 });
 
 
 //dummy
-Route::get( '/roles', 'PermissionController@Permission' );
+Route::get('/roles', 'PermissionController@Permission');
 
-Route::get( '/users-list', 'HomeController@usersList' )->name( 'usersList' );
+Route::get('/users-list', 'HomeController@usersList')->name('usersList');
 
-Route::get( '/migrate', function (){
+Route::get('/migrate', function () {
     \Artisan::call("migrate");
-} )->name( 'migrate' );
+})->name('migrate');
 
-Route::get( '/mail', function (){
+Route::get('/mail', function () {
     $details = [
 
         'name' => 'Mname',
@@ -69,14 +83,14 @@ Route::get( '/mail', function (){
             ->from('my@email.com')
             ->setBody($html, 'text/html');
     });
-return 221;
+    return 221;
 
     \Mail::to('mmhp16@gmail.com')->send(new \App\Mail\Contact($details));
 //    Mail::raw('hello!')->
 
 //    to('mmhp16@gmail.com')->;
     //\Artisan::call("migrate");
-} )->name( 'migrate' );
+})->name('migrate');
 
 //Route::get( '{sadasd}', function (){
 //    return '132';

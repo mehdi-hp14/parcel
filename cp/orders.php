@@ -664,7 +664,7 @@ class PView extends SecurePage
 							if($v!=''){
 								$tmp = explode(") ",$v);
 								$ttmp = explode("=>",$tmp[1]);
-								$tmp4 .= ($_c +1).') '.((($_POST['conf_p']=="".$ttmp[2]."_".$ttmp[3]."_".$ttmp[1]."")) ? 'on' : 'off').'=>'.$ttmp[1].'=>'.number_format(str_replace(",","",$ttmp[2]),2).'=>'.$ttmp[3].' | ';
+								$tmp4 .= ($_c +1).') '.((($_POST['conf_p']=="".$ttmp[2]."_".$ttmp[3]."_".$ttmp[1]."")) ? 'on' : 'off').'=>'.$ttmp[1].'=>'.number_format(floatval(str_replace(",","",$ttmp[2]),2)).'=>'.$ttmp[3].' | ';
 								$_c++;
 								if($_POST['conf_p']=="".$ttmp[2]."_".$ttmp[3]."_".$ttmp[1]."")
 								{

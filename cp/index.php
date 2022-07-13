@@ -60,7 +60,9 @@ class PView extends PageView
                     }
                 }
             }
-            $model->dispose();
+            if (isset($model)) {
+                $model->dispose();
+            }
         }
     }
 
