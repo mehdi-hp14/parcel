@@ -841,7 +841,7 @@ $country_iso = array(
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Address</td>
                                     <td style="border-top: none">&nbsp;</td>
-                                    <td align="left"><textarea name="raddress" style="margin: 0px; width: 339px; height: 150px;"><?php echo $row2['raddress'] ?? ''; ?></textarea></td>
+                                    <td align="left"><textarea name="raddress" style="margin: 0px; width: 339px; height: 150px;"><?php echo ($row2['raddress']) ?? ''; ?></textarea></td>
                                 </tr>
                                 <tr style="height: 20.1pt" height="26">
                                     <td style="height: 20.1pt; border-top: none" height="26" align="left"><span style="">&nbsp;</span>Zip Code</td>

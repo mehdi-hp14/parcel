@@ -641,7 +641,7 @@ if(isset($_POST['t']) and $_POST['t']==1){
             {
                 $disabled = "disabled";
                 $currency = $ttmp[3];
-                $targetMoney = intval($ttmp[2])+intval($difOffer);
+                $targetMoney = floatvalWithoutComma($ttmp[2])+floatvalWithoutComma($difOffer);
                 break;
             }
         }
@@ -657,8 +657,8 @@ if(isset($_POST['t']) and $_POST['t']==1){
 
 
         if(isset($_POST['o_price_r'])){ // select price is not disabled so we know which price is main
-            $targetMoney = floatval(str_replace(',','',$_POST['o_price_p'][intval($_POST['o_price_r'])]))+intval($difOffer);
-            $currency = $_POST['o_price_c'][intval($_POST['o_price_r'])];
+            $targetMoney = floatvalWithoutComma(str_replace(',','',$_POST['o_price_p'][floatval($_POST['o_price_r'])]))+floatvalWithoutComma($difOffer);
+            $currency = $_POST['o_price_c'][floatval($_POST['o_price_r'])];
         }
 
 
@@ -675,7 +675,7 @@ if(isset($_POST['t']) and $_POST['t']==1){
             } else{
                 /* there is difference between current transaction values and the quote price values so we fix transaction*/
 
-                if(!isset($currentQuoteTransaction) || (intval($currentQuoteTransaction['amount']) !=$targetMoney || $currency != $currentQuoteTransaction['currency'])){
+                if(!isset($currentQuoteTransaction) || (floatval($currentQuoteTransaction['amount']) !=$targetMoney || $currency != $currentQuoteTransaction['currency'])){
                     $desc = 'Transaction has done by system because of difference between current transaction values and the quote price values';
 
                     mysql_query("DELETE FROM `transactions` WHERE oref={$_GET['id']}");
@@ -1525,7 +1525,7 @@ $(document).ready(function () {
 								{
 									$disabled = "disabled";
 									$currency = $ttmp[3];
-									$conf_prices = "offer confirmed by client for  ".(floatval($ttmp[2])+floatval($row['dif_offer']))." ".$ttmp[3]." by ".$ttmp[1];
+									$conf_prices = "offer confirmed by client for  ".(floatvalWithoutComma($ttmp[2])+floatvalWithoutComma($row['dif_offer']))." ".$ttmp[3]." by ".$ttmp[1];
 									break;
 								}
 							}
